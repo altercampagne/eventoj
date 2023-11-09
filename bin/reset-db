@@ -4,3 +4,4 @@ CURDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 php $CURDIR/console doctrine:database:drop --if-exists --force
 php $CURDIR/console doctrine:database:create --if-not-exists
+php $CURDIR/console doctrine:migration:migrate -n --no-debug
