@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\RegistrationFormDTO;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
@@ -33,8 +34,11 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
-            $user->setPassword($this->userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
+            /** @var RegistrationFormDTO $dto */
+            $dto = $form->getData();
+
+            $user = new User($dto->email, $dto->name);
+            $user->setPassword($this->userPasswordHasher->hashPassword($user, $dto->password));
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();

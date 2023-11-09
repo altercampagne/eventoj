@@ -24,3 +24,6 @@ destroy: ## Destroy all containers, volumes, networks, ...
 ##@ DB commands
 db-reset: ## Reset DB data.
 	@$(DOCKER_COMPOSE) run php bin/reset-db
+
+phpstan: ## Run PHPStan
+	@bin/qa phpstan analyse
