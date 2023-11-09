@@ -1,0 +1,29 @@
+#!/bin/bash
+
+CURDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+RETURN=0
+
+"$CURDIR/domain-checker" membres.altercampagne.local
+
+# Ensure docker is installed
+if ! which docker >/dev/null 2>&1; then
+    echo -e "\033[33mERROR\033[0m"
+    echo -e "\033[33mPlease install docker on your laptop.\033[0m"
+    RETURN=1
+else
+    echo -e "\033[32mdocker correctly installed.\033[0m"
+fi
+
+if [ ! $RETURN -eq 0 ]; then
+    echo ""
+    echo -e "\033[31m###########################################################\033[0m"
+    echo -e "\033[31m#                   AN ERROR OCCURRED.                    #\033[0m"
+    echo -e "\033[31m###########################################################\033[0m"
+    echo -e "\033[31m#                                                         #\033[0m"
+    echo -e "\033[31m# Please follow instructions above et rerun your command. #\033[0m"
+    echo -e "\033[31m#                                                         #\033[0m"
+    echo -e "\033[31m###########################################################\033[0m"
+fi
+
+exit $RETURN

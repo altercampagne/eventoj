@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# See: https://gist.github.com/odolbeau/d961aad7dc026cb2e851e59cdcd3eec6
+
+if [ $# -eq 0 ] || [ -z "$1" ]; then
+    echo -e "Usage: $0 DOMAIN..."
+    echo -e "Check that given DOMAIN(s) are present in /etc/hosts and resolve to localhost"
+    exit 1
+fi
+
+# If the /etc/hosts file does not exists, we don't have any suggestion to do.
+if [ ! -f /etc/hosts ]; then
+    echo -e "\033[31mERROR:\033[0m File \033[33m/etc/hosts\033[0m not found."
+    exit 1
+fi
+
+DOMAINS=$*
+NOT_CONFIGURED_DOMAINS=
+for DOMAIN in $DOMAINS; do
+    if ! grep "127.0.0.1 .*${DOMAIN}.*" /etc/hosts >/dev/null 2>&1; then
+        NOT_CONFIGURED_DOMAINS+="$DOMAIN "
+        echo -e "\033[31mERROR:\033[0m Domain \033[33m$DOMAIN\033[0m is not configured."
+    fi
+done
+
+# Trim leading space
+NOT_CONFIGURED_DOMAINS=`echo $NOT_CONFIGURED_DOMAINS | sed 's/ *$//'`
+
+# If all domains are configured, our job is done!
+if [ -z "$NOT_CONFIGURED_DOMAINS" ]; then
+    echo -e "\033[32mAll domains seem correctly configured.\033[0m"
+
+    exit 0
+fi
+
+COMMAND="echo \"127.0.0.1 ${NOT_CONFIGURED_DOMAINS}\" | sudo tee -a /etc/hosts"
+
+echo
+echo -e "\033[33mYou could update your /etc/hosts file to fix the problem:\033[0m"
+echo -e "${COMMAND}\033[0m"
+echo
+
+exit 1
