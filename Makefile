@@ -4,7 +4,7 @@
 DOCKER_COMPOSE=docker compose $*
 
 help:
-	@echo "\033[1;36mCIKLANTOJ AVAILABLE COMMANDS :\033[0m"
+	@echo "\033[1;36mCIKLANTO AVAILABLE COMMANDS :\033[0m"
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[32m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[33m%s\033[0m\n", substr($$0, 5) } ' Makefile
 
 ##@ Base commands
