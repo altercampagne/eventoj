@@ -47,13 +47,13 @@ class RegisterController extends AbstractController
                     ->from(new Address('members@altercampagne.ovh', 'Altercampagne'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->htmlTemplate('emails/email_confirmation.html.twig')
             );
 
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('security/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }

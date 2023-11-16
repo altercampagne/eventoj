@@ -13,7 +13,7 @@ class HomepageController extends AbstractController
 {
     public function __invoke(): Response
     {
-        return $this->render('homepage/index.html.twig', [
+        return $this->render('homepage.html.twig', [
             'controller_name' => 'HomepageController',
         ]);
     }
