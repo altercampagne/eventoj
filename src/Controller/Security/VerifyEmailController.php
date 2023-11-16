@@ -26,11 +26,11 @@ class VerifyEmailController extends AbstractController
     public function __invoke(Request $request): Response
     {
         if (null === $id = $request->query->get('id')) {
-            return $this->redirectToRoute('security_register');
+            return $this->redirectToRoute('register');
         }
 
         if (null === $user = $this->entityManager->getRepository(User::class)->find($id)) {
-            return $this->redirectToRoute('security_register');
+            return $this->redirectToRoute('register');
         }
 
         try {
@@ -38,12 +38,12 @@ class VerifyEmailController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $this->translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
-            return $this->redirectToRoute('security_register');
+            return $this->redirectToRoute('register');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('security_register');
+        return $this->redirectToRoute('register');
     }
 }

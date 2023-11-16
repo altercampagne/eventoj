@@ -17,7 +17,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/register', name: 'security_register')]
+#[Route('/register', name: 'register')]
 class RegisterController extends AbstractController
 {
     public function __construct(
