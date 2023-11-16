@@ -2,19 +2,40 @@
 
 {% block title %}Évènements proposés par AlterCampagne{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block main %}
+    <div class="container">
 
-<div class="example-wrapper">
-    <h1>Tous les évènements</h1>
+        <div class="row">
+            {% for i in 1..3 %}
+                <div class="col-lg-4 text-center mb-3">
+                    <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+                    <h2 class="fw-normal mt-2">Heading</h2>
+                    <p class="ms-1 me-1">Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+                    <p><a class="btn btn-outline-primary" href="#">View details &raquo;</a></p>
+                </div>
+            {% endfor %}
+        </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/src/Controller/HomepageController.php'|file_link(0) }}">src/Controller/HomepageController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/templates/homepage/index.html.twig'|file_link(0) }}">templates/homepage/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <hr class="mt-5 mb-4">
+
+        <div class="text-center mb-5">
+            <h1 class="fw-bold text-uppercase text-primary">Tous les évènements</h1>
+        </div>
+
+        {% for i in 1..3 %}
+            {% if not loop.first %}
+                <hr class="mt-5 mb-5">
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-7{% if loop.index is odd %} order-md-2{% endif %}">
+                    <h2 class="fw-normal lh-1">First featurette heading. <span class="text-body-secondary">It’ll blow your mind.</span></h2>
+                    <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+                </div>
+                <div class="col-md-5{% if loop.index is odd %} order-md-1{% endif %}">
+                    <svg class="bd-placeholder-img bd-placeholder-img-lg img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"/><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text></svg>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

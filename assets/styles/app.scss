@@ -1,3 +1,8 @@
+$primary: #3f7625;
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';
 
-@import './login.scss';
+@import 'login';
+
+body {
+  padding-top: 7rem;
+}
