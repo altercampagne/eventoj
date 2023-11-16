@@ -1,0 +1,2 @@
+php bin/console sass:build
+php bin/console asset-map:compile
