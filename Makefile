@@ -25,6 +25,13 @@ destroy: ## Destroy all containers, volumes, networks, ...
 db-reset: ## Reset DB data.
 	@$(DOCKER_COMPOSE) run php bin/reset-db
 
+##@ Quality commands
+test: ## Run all tests
+	@$(DOCKER_COMPOSE) run php bin/phpunit
+
+cs-lint: ## Lint all files
+	@$(DOCKER_COMPOSE) run php bin/console lint:twig templates/
+
 phpstan: ## Run PHPStan
 	@bin/qa phpstan analyse
 
