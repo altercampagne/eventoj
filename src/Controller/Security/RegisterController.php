@@ -28,6 +28,10 @@ class RegisterController extends AbstractController
 
     public function __invoke(Request $request): Response
     {
+        if (null !== $this->getUser()) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
 
