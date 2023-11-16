@@ -27,3 +27,11 @@ db-reset: ## Reset DB data.
 
 phpstan: ## Run PHPStan
 	@bin/qa phpstan analyse
+
+cs-fix: ## Fix CS using PHP-CS
+	@bin/qa php-cs-fixer fix
+
+cs-lint: ## Lint all files
+	@$(DOCKER_COMPOSE) run php bin/console lint:twig templates/
+	@$(DOCKER_COMPOSE) run php bin/console lint:yaml config/
+	@bin/qa php-cs-fixer fix --dry-run --diff
