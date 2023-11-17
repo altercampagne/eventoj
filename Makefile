@@ -22,23 +22,26 @@ destroy: ## Destroy all containers, volumes, networks, ...
 	@$(DOCKER_COMPOSE) down --remove-orphans --volumes --rmi=local
 
 ##@ DB commands
-db-reset: ## Reset DB data.
+db-reset: ## Reset DB
 	@$(DOCKER_COMPOSE) run php bin/reset-db
+
+db-reset-test: ## Reset test DB
+	@$(DOCKER_COMPOSE) run -e APP_ENV=test php bin/reset-db
 
 ##@ Quality commands
 test: ## Run all tests
 	@$(DOCKER_COMPOSE) run php bin/phpunit
 
-cs-lint: ## Lint all files
-	@$(DOCKER_COMPOSE) run php bin/console lint:twig templates/
-
 phpstan: ## Run PHPStan
 	@bin/qa phpstan analyse
+
+cs-lint: ## Lint all files
+	@$(DOCKER_COMPOSE) run php bin/console lint:twig templates/
 
 cs-fix: ## Fix CS using PHP-CS
 	@bin/qa php-cs-fixer fix
 
-cs-lint: ## Lint all files
+lint: ## Lint all files
 	@$(DOCKER_COMPOSE) run php bin/console lint:twig templates/
 	@$(DOCKER_COMPOSE) run php bin/console lint:yaml config/
 	@bin/qa php-cs-fixer fix --dry-run --diff
