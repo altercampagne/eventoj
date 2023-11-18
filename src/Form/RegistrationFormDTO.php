@@ -14,6 +14,6 @@ class RegistrationFormDTO
     #[NotBlank]
     public string $name;
     #[NotBlank]
-    #[Length(min: 6, max: 4096)]
+    #[Length(min: 7, max: 4096, minMessage: 'Ce mot de passe est trop court ! Il doit faire au moins {{ limit }} caractères.')]
     public string $password;
 }

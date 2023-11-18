@@ -54,7 +54,7 @@ class RegisterController extends AbstractController
                     ->htmlTemplate('emails/email_confirmation.html.twig')
             );
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('registration_waiting_for_email_validation');
         }
 
         return $this->render('security/register.html.twig', [

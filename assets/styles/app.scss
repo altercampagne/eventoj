@@ -1,8 +1,24 @@
 $primary: #3f7625;
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';
 
+@import 'form';
 @import 'login';
 
 body {
-  padding-top: 7rem;
+    background-color: $gray-100;
+    padding-top: 7rem;
+}
+
+html.simple-full-height-page {
+    &, body {
+        height: 100%;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        text-align: center;
+    }
 }

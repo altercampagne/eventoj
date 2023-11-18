@@ -1,0 +1,12 @@
+form {
+    label.required::after {
+        @extend .ms-2;
+
+        content: '*';
+        color: $red-500;
+    }
+
+    div.help-text {
+        color: $gray-600;
+    }
+}
