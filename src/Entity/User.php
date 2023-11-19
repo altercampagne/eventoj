@@ -27,7 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $name;
 
     /** @var string[] $roles */
-    #[ORM\Column]
+    #[ORM\Column(type: 'text[]')]
     private array $roles = [];
 
     /**
@@ -84,6 +84,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @param string[] $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
      * @see PasswordAuthenticatedUserInterface
      */
     public function getPassword(): ?string
@@ -112,9 +122,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->isVerified;
     }
 
-    public function verifyEmail(): static
+    public function setIsVerified(bool $isVerified): static
     {
-        $this->isVerified = true;
+        $this->isVerified = $isVerified;
 
         return $this;
     }

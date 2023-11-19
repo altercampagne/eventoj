@@ -7,6 +7,31 @@ doctrine:
         #server_version: '15'
 
         profiling_collect_backtrace: '%kernel.debug%'
+
+        types:
+            bool[]: MartinGeorgiev\Doctrine\DBAL\Types\BooleanArray
+            smallint[]: MartinGeorgiev\Doctrine\DBAL\Types\SmallIntArray
+            integer[]: MartinGeorgiev\Doctrine\DBAL\Types\IntegerArray
+            bigint[]: MartinGeorgiev\Doctrine\DBAL\Types\BigIntArray
+            text[]: MartinGeorgiev\Doctrine\DBAL\Types\TextArray
+            jsonb: MartinGeorgiev\Doctrine\DBAL\Types\Jsonb
+            jsonb[]: MartinGeorgiev\Doctrine\DBAL\Types\JsonbArray
+
+        mapping_types:
+            bool[]: bool[]
+            _bool: bool[]
+            smallint[]: smallint[]
+            _int2: smallint[]
+            integer[]: integer[]
+            _int4: integer[]
+            bigint[]: bigint[]
+            _int8: bigint[]
+            text[]: text[]
+            _text: text[]
+            jsonb: jsonb
+            jsonb[]: jsonb[]
+            _jsonb: jsonb[]
+
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
