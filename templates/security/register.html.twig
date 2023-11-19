@@ -4,10 +4,6 @@
 
 {% block main %}
     <div class="container">
-        {% for flash_error in app.flashes('verify_email_error') %}
-            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-        {% endfor %}
-
         <div class="row text-center mb-3">
             <h1 class="fw-bold text-uppercase text-primary">Inscription</h1>
         </div>
