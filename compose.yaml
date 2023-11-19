@@ -26,6 +26,22 @@ services:
     depends_on:
       - database
 
+  messenger-worker:
+    build:
+      context: ./.docker/php
+    volumes:
+      - .:/var/www
+    command: php bin/console messenger:consume
+    depends_on:
+      - database
+
+  sass-builder:
+    build:
+      context: ./.docker/php
+    volumes:
+      - .:/var/www
+    command: php bin/console sass:build --watch
+
   nginx:
     image: nginx:latest
     ports:
