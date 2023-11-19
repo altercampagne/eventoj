@@ -22,7 +22,6 @@ class RegisterTest extends WebTestCase
             'registration_form[email]' => $faker->email(),
             'registration_form[name]' => $faker->name(),
             'registration_form[password]' => 'password',
-            'registration_form[agreeTerms]' => true,
         ]);
 
         $this->assertResponseRedirects();
