@@ -37,11 +37,8 @@ phpstan: ## Run PHPStan
 
 cs-lint: ## Lint all files
 	@$(DOCKER_COMPOSE) run php bin/console lint:twig templates/
+	@$(DOCKER_COMPOSE) run php bin/console lint:yaml config/
+	@bin/qa php-cs-fixer fix --dry-run --diff
 
 cs-fix: ## Fix CS using PHP-CS
 	@bin/qa php-cs-fixer fix
-
-lint: ## Lint all files
-	@$(DOCKER_COMPOSE) run php bin/console lint:twig templates/
-	@$(DOCKER_COMPOSE) run php bin/console lint:yaml config/
-	@bin/qa php-cs-fixer fix --dry-run --diff
