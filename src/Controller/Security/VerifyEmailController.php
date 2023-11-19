@@ -7,6 +7,7 @@ namespace App\Controller\Security;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +22,7 @@ class VerifyEmailController extends AbstractController
         private readonly EntityManagerInterface $entityManager,
         private readonly VerifyEmailHelperInterface $verifyEmailHelper,
         private readonly TranslatorInterface $translator,
+        private readonly Security $security,
     ) {}
 
     public function __invoke(Request $request): Response
@@ -40,15 +42,16 @@ class VerifyEmailController extends AbstractController
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
+
+            $this->security->login($user, 'form_login');
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $this->translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
-            return $this->redirectToRoute('register');
+            return $this->redirectToRoute('homepage');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Ton adresse mail a bien été validée ! 🥳');
 
-        return $this->redirectToRoute('register');
+        return $this->redirectToRoute('homepage');
     }
 }
