@@ -18,11 +18,20 @@ class RegisterTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Inscription');
 
+        $registrationEmail = $faker->email();
+
         $client->submitForm('Je m\'inscris', [
-            'registration_form[email]' => $faker->email(),
+            'registration_form[email]' => $registrationEmail,
             'registration_form[name]' => $faker->name(),
             'registration_form[password]' => 'password',
         ]);
+
+        $this->assertQueuedEmailCount(1);
+
+        /* @phpstan-ignore-next-line */
+        $email = $this->getMailerEvent()->getMessage();
+        $this->assertEmailHasHeader($email, 'subject', 'Merci de confirmer ton adresse mail.');
+        $this->assertEmailAddressContains($email, 'to', $registrationEmail);
 
         $this->assertResponseRedirects();
         $client->followRedirect();
