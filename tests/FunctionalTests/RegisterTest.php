@@ -10,6 +10,8 @@ class RegisterTest extends WebTestCase
 {
     public function testHomepage(): void
     {
+        $faker = \Faker\Factory::create('fr_FR');
+
         $client = static::createClient();
         $client->request('GET', '/register');
 
@@ -17,8 +19,8 @@ class RegisterTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Inscription');
 
         $client->submitForm('Je m\'inscris', [
-            'registration_form[email]' => 'georges.abitnol@gmail.com',
-            'registration_form[name]' => 'Georges Abitbol',
+            'registration_form[email]' => $faker->email(),
+            'registration_form[name]' => $faker->name(),
             'registration_form[password]' => 'password',
             'registration_form[agreeTerms]' => true,
         ]);
