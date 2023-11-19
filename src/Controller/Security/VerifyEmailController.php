@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Security;
 
 use App\Entity\User;
-use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,13 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 #[Route('/verify/email', name: 'security_verify_email')]
 class VerifyEmailController extends AbstractController
 {
     public function __construct(
-        private readonly EmailVerifier $emailVerifier,
         private readonly EntityManagerInterface $entityManager,
+        private readonly VerifyEmailHelperInterface $verifyEmailHelper,
         private readonly TranslatorInterface $translator,
     ) {}
 
@@ -34,7 +34,12 @@ class VerifyEmailController extends AbstractController
         }
 
         try {
-            $this->emailVerifier->handleEmailConfirmation($request, $user);
+            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), (string) $user->getId(), $user->getEmail());
+
+            $user->verifyEmail();
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $this->translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 

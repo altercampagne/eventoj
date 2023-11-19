@@ -17,7 +17,7 @@ class LoginTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Connection');
 
         $client->submitForm('Se connecter', [
-            '_username' => 'admin@altercampagne.ovh',
+            '_username' => 'admin@altercampagne.net',
             '_password' => 'password',
         ]);
 

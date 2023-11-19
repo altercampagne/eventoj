@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Security;
 
+use App\Email\EmailConfirmationSender;
 use App\Entity\User;
 use App\Form\RegistrationFormDTO;
 use App\Form\RegistrationFormType;
-use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegisterController extends AbstractController
 {
     public function __construct(
-        private readonly EmailVerifier $emailVerifier,
+        private readonly EmailConfirmationSender $emailConfirmationSender,
         private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly EntityManagerInterface $entityManager,
     ) {}
@@ -45,14 +43,7 @@ class RegisterController extends AbstractController
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('security_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('members@altercampagne.ovh', 'Altercampagne'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('emails/email_confirmation.html.twig')
-            );
+            $this->emailConfirmationSender->send($user);
 
             return $this->redirectToRoute('registration_waiting_for_email_validation');
         }

@@ -17,7 +17,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $user = new User('admin@altercampagne.ovh', 'Super admin');
+        $user = new User('admin@altercampagne.net', 'Super admin');
         $user->setPassword($this->userPasswordHasher->hashPassword($user, 'password'));
         $manager->persist($user);
 
