@@ -19,12 +19,6 @@ class EmailConfirmationSender
 
     public function send(User $user): void
     {
-        $email = (new TemplatedEmail())
-            ->from(new Address('contact@altercampagne.net', 'Altercampagne'))
-            ->to($user->getEmail())
-            ->subject('Merci de confirmer ton adresse mail.')
-            ->htmlTemplate('emails/email_confirmation.html.twig');
-
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
             'security_verify_email',
             (string) $user->getId(),
@@ -32,12 +26,18 @@ class EmailConfirmationSender
             ['id' => (string) $user->getId()]
         );
 
-        $context = $email->getContext();
-        $context['signedUrl'] = $signatureComponents->getSignedUrl();
-        $context['expiresAtMessageKey'] = $signatureComponents->getExpirationMessageKey();
-        $context['expiresAtMessageData'] = $signatureComponents->getExpirationMessageData();
-
-        $email->context($context);
+        $email = (new TemplatedEmail())
+            ->from(new Address('contact@altercampagne.net', 'Altercampagne'))
+            ->to(new Address($user->getEmail(), $user->getName()))
+            ->subject('Merci de confirmer ton adresse mail.')
+            ->htmlTemplate('emails/email_confirmation.html.twig')
+            ->context([
+                'user' => $user,
+                'signedUrl' => $signatureComponents->getSignedUrl(),
+                'expiresAtMessageKey' => $signatureComponents->getExpirationMessageKey(),
+                'expiresAtMessageData' => $signatureComponents->getExpirationMessageData(),
+            ])
+        ;
 
         $this->mailer->send($email);
     }
