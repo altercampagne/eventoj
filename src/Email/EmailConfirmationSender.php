@@ -21,14 +21,14 @@ class EmailConfirmationSender
     {
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
             'security_verify_email',
-            (string) $user->getId(),
-            $user->getEmail(),
-            ['id' => (string) $user->getId()]
+            (string) $user->id,
+            $user->email,
+            ['id' => (string) $user->id]
         );
 
         $email = (new TemplatedEmail())
             ->from(new Address('contact@altercampagne.net', 'Altercampagne'))
-            ->to(new Address($user->getEmail(), $user->getName()))
+            ->to(new Address($user->email, $user->name))
             ->subject('Merci de confirmer ton adresse mail.')
             ->htmlTemplate('emails/email_confirmation.html.twig')
             ->context([

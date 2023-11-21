@@ -38,7 +38,7 @@ class RegisterController extends AbstractController
             $dto = $form->getData();
 
             $user = new User($dto->email, $dto->name);
-            $user->setPassword($this->userPasswordHasher->hashPassword($user, $dto->password));
+            $user->password = $this->userPasswordHasher->hashPassword($user, $dto->password);
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();

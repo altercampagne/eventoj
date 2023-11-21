@@ -34,8 +34,8 @@ class UserCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('utilisateurice')
             ->setEntityLabelInPlural('utilisateurices')
-            ->setPageTitle('edit', fn (User $user) => "Modifier <b>{$user->getName()}</b>")
-            ->setPageTitle('detail', fn (User $user) => "Utilisateurice <b>{$user->getName()}</b>")
+            ->setPageTitle('edit', fn (User $user) => "Modifier <b>{$user->name}</b>")
+            ->setPageTitle('detail', fn (User $user) => "Utilisateurice <b>{$user->name}</b>")
             ->setSearchFields(['name', 'email'])
         ;
     }
