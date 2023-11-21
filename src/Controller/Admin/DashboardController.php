@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Entity\Alternative;
+use App\Entity\Event;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -37,6 +39,9 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Utilisateurices', 'fas fa-user', User::class);
+        yield MenuItem::section();
+        yield MenuItem::linkToCrud('Evènements', 'fas fa-star', Event::class);
+        yield MenuItem::linkToCrud('Alternatives', 'fas fa-house-chimney-user', Alternative::class);
         yield MenuItem::section();
         yield MenuItem::linkToUrl('Retour au site', null, $this->generateUrl('homepage'));
     }
