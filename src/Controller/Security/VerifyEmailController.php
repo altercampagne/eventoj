@@ -36,9 +36,8 @@ class VerifyEmailController extends AbstractController
         }
 
         try {
-            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), (string) $user->id, $user->email);
-
-            $user->isVerified = true;
+            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), (string) $user->getId(), $user->getEmail());
+            $user->verifyEmail();
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();

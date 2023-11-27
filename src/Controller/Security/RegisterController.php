@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Security;
 
 use App\Email\EmailConfirmationSender;
+use App\Entity\Address;
 use App\Entity\User;
 use App\Form\RegistrationFormDTO;
 use App\Form\RegistrationFormType;
@@ -37,8 +38,21 @@ class RegisterController extends AbstractController
             /** @var RegistrationFormDTO $dto */
             $dto = $form->getData();
 
-            $user = new User($dto->email, $dto->name);
-            $user->password = $this->userPasswordHasher->hashPassword($user, $dto->password);
+            $user = new User(
+                email: $dto->email,
+                firstName: $dto->firstName,
+                lastName: $dto->lastName,
+                birthDate: $dto->birthDate,
+                address: new Address(
+                    addressLine1: $dto->addressLine1,
+                    addressLine2: $dto->addressLine2,
+                    zipCode: $dto->zipCode,
+                    city: $dto->city,
+                    countryCode: $dto->countryCode,
+                ),
+                phoneNumber: $dto->phoneNumber,
+            );
+            $user->setPassword($this->userPasswordHasher->hashPassword($user, $dto->password));
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();

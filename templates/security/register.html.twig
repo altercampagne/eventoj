@@ -13,8 +13,39 @@
                 {{ form_errors(registrationForm) }}
 
                 {{ form_start(registrationForm) }}
+
+                <h3>Quelques informations te concernant</h3>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        {{ form_row(registrationForm.firstName) }}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ form_row(registrationForm.lastName) }}
+                    </div>
+                </div>
+
+                {{ form_row(registrationForm.birthDate) }}
+
+                <h3 class="mt-4">Tes coordonnées</h3>
                 {{ form_row(registrationForm.email) }}
-                {{ form_row(registrationForm.name) }}
+                {{ form_row(registrationForm.phoneNumber) }}
+
+                <h3 class="mt-4">Ton adresse postale</h3>
+                {{ form_row(registrationForm.countryCode) }}
+                {{ form_row(registrationForm.addressLine1) }}
+                {{ form_row(registrationForm.addressLine2) }}
+
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        {{ form_row(registrationForm.zipCode) }}
+                    </div>
+                    <div class="col-12 col-md-8">
+                        {{ form_row(registrationForm.city) }}
+                    </div>
+                </div>
+
+                <h3 class="mt-4">Ton mot de passe</h3>
+
                 {{ form_row(registrationForm.password) }}
 
                 <div class="d-grid gap-2 mt-4">

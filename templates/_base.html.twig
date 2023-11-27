@@ -19,7 +19,7 @@
 
                     {% if app.user is not null %}
                         <span class="navbar-text" id="connected-as">
-                            Connecté en tant que {{ app.user.name }}
+                            Connecté en tant que {{ app.user.fullName }}
                         </span>
                     {% else %}
                         <ul class="navbar-nav">

@@ -21,8 +21,15 @@ class RegisterTest extends WebTestCase
         $registrationEmail = $faker->email();
 
         $client->submitForm('Je m\'inscris', [
+            'registration_form[firstName]' => $faker->firstName(),
+            'registration_form[lastName]' => $faker->lastName(),
+            'registration_form[birthDate]' => $faker->date(),
             'registration_form[email]' => $registrationEmail,
-            'registration_form[name]' => $faker->name(),
+            'registration_form[phoneNumber]' => $faker->phoneNumber(),
+            'registration_form[countryCode]' => 'FR',
+            'registration_form[addressLine1]' => $faker->address(),
+            'registration_form[zipCode]' => $faker->postCode(),
+            'registration_form[city]' => $faker->city(),
             'registration_form[password]' => 'password',
         ]);
 

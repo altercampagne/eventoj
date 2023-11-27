@@ -10,3 +10,5 @@ parameters:
       - tests
     excludePaths:
       - src/Migrations
+    ignoreErrors:
+      - '#Call to an undefined method Faker\\Generator::[a-zA-Z0-9]+\(\)#'

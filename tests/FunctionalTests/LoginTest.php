@@ -25,6 +25,6 @@ class LoginTest extends WebTestCase
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('homepage');
-        $this->assertSelectorTextContains('#connected-as', 'Connecté en tant que Super admin');
+        $this->assertSelectorTextContains('#connected-as', 'Connecté en tant que Super Admin');
     }
 }
