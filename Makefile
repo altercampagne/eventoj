@@ -21,12 +21,21 @@ stop: ## Stop the docker stack
 destroy: ## Destroy all containers, volumes, networks, ...
 	@$(DOCKER_COMPOSE) down --remove-orphans --volumes --rmi=local
 
-##@ DB commands
+bash: ## Enter in the application container directly
+	@$(DOCKER_COMPOSE) exec php /bin/bash
+
+psql: ## Enter in DB container
+	@$(DOCKER_COMPOSE) exec database psql -h database -U app app
+
+##@ Backends commands
 db-reset: ## Reset DB
 	@$(DOCKER_COMPOSE) run php bin/reset-db
 
 db-reset-test: ## Reset test DB
 	@$(DOCKER_COMPOSE) run -e APP_ENV=test php bin/reset-db
+
+messenger-consume: ## Consume messages from async queue
+	@$(DOCKER_COMPOSE) run php bin/console messenger:consume async -vv -l 1 --time-limit=60
 
 ##@ Quality commands
 test: ## Run all tests
