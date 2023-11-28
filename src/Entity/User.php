@@ -8,35 +8,43 @@ use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use libphonenumber\PhoneNumber;
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cette adresse mail')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     private readonly UuidV4 $id;
 
+    #[Assert\NotBlank]
     #[ORM\Column(length: 180, unique: true)]
     private string $email;
 
+    #[Assert\NotBlank]
     #[ORM\Column]
     private string $firstName;
 
+    #[Assert\NotBlank]
     #[ORM\Column]
     private string $lastName;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private \DateTimeImmutable $birthDate;
 
     #[ORM\Embedded(class: Address::class)]
     private Address $address;
 
+    #[Assert\NotBlank]
+    #[AssertPhoneNumber(regionPath: 'address.countryCode')]
     #[ORM\Column(type: 'phone_number')]
     private PhoneNumber $phoneNumber;
 
@@ -59,15 +67,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
-    public function __construct(string $email, string $firstName, string $lastName, \DateTimeImmutable $birthDate, Address $address, PhoneNumber $phoneNumber)
+    public function __construct()
     {
         $this->id = new UuidV4();
-        $this->email = $email;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->birthDate = $birthDate;
-        $this->address = $address;
-        $this->phoneNumber = $phoneNumber;
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -96,9 +98,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @param string[] $roles
      */
-    public function setRoles(array $roles): void
+    public function setRoles(array $roles): self
     {
         $this->roles = array_unique($roles);
+
+        return $this;
     }
 
     /**
@@ -109,9 +113,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): void
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
     /**
@@ -143,14 +149,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function setEmail(string $email): self
     {
-        if ($email === $this->email) {
-            return;
-        }
-
         $this->email = $email;
         $this->isVerified = false;
+
+        return $this;
     }
 
     public function getFirstName(): string
@@ -158,9 +162,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): void
+    public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
+
+        return $this;
     }
 
     public function getLastName(): string
@@ -168,9 +174,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): void
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
     }
 
     public function getFullName(): string
@@ -183,9 +191,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->birthDate;
     }
 
-    public function setBirthDate(\DateTimeImmutable $birthDate): void
+    public function setBirthDate(\DateTimeImmutable $birthDate): self
     {
         $this->birthDate = $birthDate;
+
+        return $this;
     }
 
     public function getAddress(): Address
@@ -193,9 +203,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->address;
     }
 
-    public function setAddress(Address $address): void
+    public function setAddress(Address $address): self
     {
         $this->address = $address;
+
+        return $this;
     }
 
     public function getPhoneNumber(): PhoneNumber
@@ -203,9 +215,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(PhoneNumber $phoneNumber): void
+    public function setPhoneNumber(PhoneNumber $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
     }
 
     public function getBiography(): ?string
@@ -213,9 +227,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->biography;
     }
 
-    public function setBiography(?string $biography): void
+    public function setBiography(?string $biography): self
     {
         $this->biography = $biography;
+
+        return $this;
     }
 
     public function getCreatedAt(): \DateTimeImmutable

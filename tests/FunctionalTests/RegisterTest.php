@@ -26,11 +26,11 @@ class RegisterTest extends WebTestCase
             'registration_form[birthDate]' => $faker->date(),
             'registration_form[email]' => $registrationEmail,
             'registration_form[phoneNumber]' => $faker->phoneNumber(),
-            'registration_form[countryCode]' => 'FR',
-            'registration_form[addressLine1]' => $faker->address(),
-            'registration_form[zipCode]' => $faker->postCode(),
-            'registration_form[city]' => $faker->city(),
-            'registration_form[password]' => 'password',
+            'registration_form[address][countryCode]' => 'FR',
+            'registration_form[address][addressLine1]' => $faker->address(),
+            'registration_form[address][zipCode]' => $faker->postCode(),
+            'registration_form[address][city]' => $faker->city(),
+            'registration_form[plainPassword]' => 'password',
         ]);
 
         $this->assertQueuedEmailCount(1);

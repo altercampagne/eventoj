@@ -31,22 +31,23 @@
                 {{ form_row(registrationForm.phoneNumber) }}
 
                 <h3 class="mt-4">Ton adresse postale</h3>
-                {{ form_row(registrationForm.countryCode) }}
-                {{ form_row(registrationForm.addressLine1) }}
-                {{ form_row(registrationForm.addressLine2) }}
+                {{ form_row(registrationForm.address.addressLine1) }}
+                {{ form_row(registrationForm.address.addressLine2) }}
 
                 <div class="row">
                     <div class="col-12 col-md-4">
-                        {{ form_row(registrationForm.zipCode) }}
+                        {{ form_row(registrationForm.address.zipCode) }}
                     </div>
                     <div class="col-12 col-md-8">
-                        {{ form_row(registrationForm.city) }}
+                        {{ form_row(registrationForm.address.city) }}
                     </div>
                 </div>
 
+                {{ form_row(registrationForm.address.countryCode) }}
+
                 <h3 class="mt-4">Ton mot de passe</h3>
 
-                {{ form_row(registrationForm.password) }}
+                {{ form_row(registrationForm.plainPassword) }}
 
                 <div class="d-grid gap-2 mt-4">
                     <button type="submit" class="btn btn-lg btn-primary">Je m'inscris</button>

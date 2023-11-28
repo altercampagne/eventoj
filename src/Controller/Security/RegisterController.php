@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Security;
 
 use App\Email\EmailConfirmationSender;
-use App\Entity\Address;
 use App\Entity\User;
-use App\Form\RegistrationFormDTO;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,28 +29,14 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('homepage');
         }
 
-        $form = $this->createForm(RegistrationFormType::class);
+        $user = new User();
+        $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var RegistrationFormDTO $dto */
-            $dto = $form->getData();
-
-            $user = new User(
-                email: $dto->email,
-                firstName: $dto->firstName,
-                lastName: $dto->lastName,
-                birthDate: $dto->birthDate,
-                address: new Address(
-                    addressLine1: $dto->addressLine1,
-                    addressLine2: $dto->addressLine2,
-                    zipCode: $dto->zipCode,
-                    city: $dto->city,
-                    countryCode: $dto->countryCode,
-                ),
-                phoneNumber: $dto->phoneNumber,
-            );
-            $user->setPassword($this->userPasswordHasher->hashPassword($user, $dto->password));
+            /** @var string $plainPassword */
+            $plainPassword = $form->get('plainPassword')->getData();
+            $user->setPassword($this->userPasswordHasher->hashPassword($user, $plainPassword));
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
