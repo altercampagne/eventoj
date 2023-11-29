@@ -44,7 +44,7 @@
         "symfony/validator": "6.3.*",
         "symfony/web-link": "6.3.*",
         "symfony/yaml": "6.3.*",
-        "symfonycasts/sass-bundle": "^0.2.4",
+        "symfonycasts/sass-bundle": "^0.3.0",
         "symfonycasts/verify-email-bundle": "^1.14",
         "twbs/bootstrap": "^5.3",
         "twig/cssinliner-extra": "^3.7",
