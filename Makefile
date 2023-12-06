@@ -42,12 +42,15 @@ test: ## Run all tests
 	@$(DOCKER_COMPOSE) run php bin/phpunit
 
 phpstan: ## Run PHPStan
-	@bin/qa phpstan analyse
+	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/phpstan
+	@$(DOCKER_COMPOSE) run php tools/phpstan/vendor/bin/phpstan analyse
 
 cs-lint: ## Lint all files
 	@$(DOCKER_COMPOSE) run php bin/console lint:twig templates/
 	@$(DOCKER_COMPOSE) run php bin/console lint:yaml config/
-	@bin/qa php-cs-fixer fix --dry-run --diff
+	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/php-cs-fixer
+	@$(DOCKER_COMPOSE) run php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
 
 cs-fix: ## Fix CS using PHP-CS
-	@bin/qa php-cs-fixer fix
+	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/php-cs-fixer
+	@$(DOCKER_COMPOSE) run php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix

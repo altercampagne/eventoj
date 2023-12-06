@@ -1,6 +1,0 @@
-#!/bin/bash
-
-CURDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-ROOTDIR="$CURDIR/.."
-
-docker run --init -it --rm -v "$ROOTDIR:/project" -w /project jakzal/phpqa:latest $*
