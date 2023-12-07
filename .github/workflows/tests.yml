@@ -1,0 +1,52 @@
+on: [pull_request]
+name: Tests
+
+jobs:
+  tests:
+    name: PHPUnit
+    runs-on: ubuntu-latest
+
+    services:
+      database:
+        image: postgres:16
+        env:
+          POSTGRES_DB: app
+          POSTGRES_PASSWORD: app
+          POSTGRES_USER: app
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      APP_ENV: test
+      POSTGRES_HOST: localhost
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: intl
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --no-progress --optimize-autoloader
+
+      - name: Install assets
+        run: bin/console importmap:install
+
+      - name: Build assets (SASS)
+        run: bin/console sass:build
+
+      - name: Create database
+        run: bin/reset-db
+
+      - name: Run PHPUnit
+        run: bin/phpunit

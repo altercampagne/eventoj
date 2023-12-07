@@ -8,7 +8,7 @@ help:
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[32m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[33m%s\033[0m\n", substr($$0, 5) } ' Makefile
 
 ##@ Base commands
-install: start db-reset ## Start the docker stack and prepare the application
+install: start db-reset assets-install assets-build ## Start the docker stack and prepare the application
 	@echo "\n"
 	@echo "\033[32m🥳 EVERYTHING IS RUNNING! 🥳\033[0m"
 	@echo "\033[32mVisit http://eventoj.local to continue.\033[0m"
@@ -38,6 +38,13 @@ db-reset-test: ## Reset test DB
 
 messenger-consume: ## Consume messages from async queue
 	@$(DOCKER_COMPOSE) run php bin/console messenger:consume async -vv -l 1 --time-limit=60
+
+##@ Assets commands
+assets-install: ## Download assets dependencies
+	@$(DOCKER_COMPOSE) run php bin/console importmap:install
+
+assets-build: ## Build assets (SASS)
+	@$(DOCKER_COMPOSE) run php bin/console sass:build
 
 ##@ Quality commands
 test: ## Run all tests
