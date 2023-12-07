@@ -4,7 +4,16 @@ CURDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 RETURN=0
 
-"$CURDIR/domain-checker" ciklanto.altercampagne.local
+"$CURDIR/domain-checker" eventoj.local
+
+# Ensure make is installed
+if ! which make >/dev/null 2>&1; then
+    echo -e "\033[33mERROR\033[0m"
+    echo -e "\033[33mPlease install make on your laptop.\033[0m"
+    RETURN=1
+else
+    echo -e "\033[32mmake is correctly installed.\033[0m"
+fi
 
 # Ensure docker is installed
 if ! which docker >/dev/null 2>&1; then
@@ -12,7 +21,7 @@ if ! which docker >/dev/null 2>&1; then
     echo -e "\033[33mPlease install docker on your laptop.\033[0m"
     RETURN=1
 else
-    echo -e "\033[32mdocker correctly installed.\033[0m"
+    echo -e "\033[32mdocker is correctly installed.\033[0m"
 fi
 
 if [ ! $RETURN -eq 0 ]; then

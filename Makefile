@@ -4,12 +4,14 @@
 DOCKER_COMPOSE=docker compose $*
 
 help:
-	@echo "\033[1;36mCIKLANTO AVAILABLE COMMANDS :\033[0m"
+	@echo "\033[1;36mEVENTOJ AVAILABLE COMMANDS :\033[0m"
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[32m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[33m%s\033[0m\n", substr($$0, 5) } ' Makefile
 
 ##@ Base commands
-doctor: ## Check that all needed requirements are installed on your host
-	@./bin/doctor
+install: start db-reset ## Start the docker stack and prepare the application
+	@echo "\n"
+	@echo "\033[32m🥳 EVERYTHING IS RUNNING! 🥳\033[0m"
+	@echo "\033[32mVisit http://eventoj.local to continue.\033[0m"
 
 ##@ Docker commands
 start: ## Start the whole docker stack
