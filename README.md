@@ -1,6 +1,6 @@
 # Eventoj: Events management system
 
-Eventoj (pronounce Eventoy) means ̀"events" in espéranto.
+Eventoj (pronounce "eventoy") means ̀"events" in espéranto.
 
 This application have been built to propulse the events management website of AlterCampagne.
 
