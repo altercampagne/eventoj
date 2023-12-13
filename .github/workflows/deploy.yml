@@ -5,11 +5,13 @@ on:
   push:
     branches:
       - main
+      - production
 
 jobs:
-  build:
+  deploy:
+    name: Deploy
     runs-on: ubuntu-20.04
-    environment: staging
+    environment: ${{ github.ref == 'refs/heads/production' && 'production' || 'staging' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,13 +27,22 @@ jobs:
         with:
           composer-options: "--optimize-autoloader"
 
+      - name: Install assets
+        run: bin/console importmap:install
+
+      - name: Build assets (SASS)
+        run: bin/console sass:build
+
+      - name: Compile asset map
+        run: bin/console asset-map:compile
+
       - name: Deploy files over SSH
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: "-avzr --delete-after"
+          ARGS: "-rlgoDzvcC -i --delete-after --delete-excluded"
           SOURCE: "/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
-          EXCLUDE: "/migrations/, /var/"
+          EXCLUDE: "/migrations/, /var/, /.github/, /tests/, /tools/"
