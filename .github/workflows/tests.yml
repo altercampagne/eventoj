@@ -36,8 +36,10 @@ jobs:
           php-version: 8.2
           extensions: intl
 
-      - name: Install PHP dependencies
-        run: composer install --no-interaction --no-progress --optimize-autoloader
+      - name: Download dependencies
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--optimize-autoloader"
 
       - name: Install assets
         run: bin/console importmap:install
