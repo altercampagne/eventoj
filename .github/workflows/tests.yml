@@ -24,7 +24,7 @@ jobs:
 
     env:
       APP_ENV: test
-      POSTGRES_HOST: localhost
+      DATABASE_HOST: localhost
 
     steps:
       - name: Check out repository code
