@@ -40,9 +40,17 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: "-rlgoDzvcC -i --delete-after --delete-excluded"
+          ARGS: "-rlDzvcC -i --delete"
           SOURCE: "/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
-          EXCLUDE: "/migrations/, /var/, /.github/, /tests/, /tools/"
+          EXCLUDE: "/var/, /.github/, /tests/, /tools/, .env"
+
+      - name: Execute remote ssh commands to finalise deployment
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: ${{ secrets.DOCKER_COMPOSE_EXEC_COMMAND }} bin/post-deploy

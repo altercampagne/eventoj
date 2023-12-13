@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+bin/console cache:clear
+bin/console doctrine:migrations:migrate --no-interaction
