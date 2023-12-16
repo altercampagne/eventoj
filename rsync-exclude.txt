@@ -1,3 +1,7 @@
+# We manually ignore .git directory instead of using --cvs-exclude option. This
+# option also ignore all "core" directories which its problematic beacause we
+# have a assets/vendor/@popperjs/core directory which must be deployed.
+/.git/
 /.github/
 /tests/
 /tools/

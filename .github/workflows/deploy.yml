@@ -40,7 +40,7 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: "-rlDzvcC -i --delete --exclude-from=rsync-exclude.txt"
+          ARGS: "-rlDzvc -i --delete --exclude-from=rsync-exclude.txt"
           SOURCE: "/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.FILES_SENDING_REMOTE_USER }}
