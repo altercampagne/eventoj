@@ -43,13 +43,13 @@ jobs:
           ARGS: "-rlDzvcC -i --delete --exclude-from=rsync-exclude.txt"
           SOURCE: "/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_USER: ${{ secrets.FILES_SENDING_REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
 
       - name: Execute remote ssh commands to finalise deployment
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
+          username: ${{ secrets.POST_DEPLOY_REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: ${{ secrets.DOCKER_COMPOSE_EXEC_COMMAND }} bin/post-deploy
