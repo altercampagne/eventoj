@@ -1,0 +1,89 @@
+name: SchemaSpy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'migrations/**'
+
+jobs:
+  build:
+    name: Build database documentation
+    runs-on: ubuntu-latest
+
+    services:
+      database:
+        image: postgres:16
+        env:
+          POSTGRES_DB: app
+          POSTGRES_PASSWORD: app
+          POSTGRES_USER: app
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_HOST: localhost
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: intl
+
+      - name: Download dependencies
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--optimize-autoloader"
+
+      - name: Create database
+        run: bin/reset-db
+
+      - name: Run SchemaSpy
+        uses: tj-actions/schemaspy@v2
+        with:
+          host: database
+          port: 5432
+          database_name: app
+          database_type: pgsql
+          user: app
+          password: app
+          schema: public
+          output_dir: output
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: output/
+
+  deploy:
+    name: Deploy documentation to Github pages
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
+

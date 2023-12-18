@@ -10,3 +10,10 @@ Clone this repository and run `bin/doctor` to ensure you have everything install
 
 Once it's OK, run `make install` to start the docker stack and prepare the application.
 Go to http://eventoj.local to use the application.
+
+## Development
+
+### Database schema
+
+You can find more information regarding the database schema here: https://altercampagne.github.io/eventoj/
+This site is autmatically generated with SchemaSpy when needed.
