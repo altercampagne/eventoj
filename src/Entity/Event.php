@@ -57,6 +57,7 @@ class Event
      * @var Collection<int, Stage>
      */
     #[ORM\OneToMany(targetEntity: Stage::class, mappedBy: 'event')]
+    #[ORM\OrderBy(['date' => 'ASC'])]
     private Collection $stages;
 
     private function __construct(EventType $type)
@@ -101,6 +102,26 @@ class Event
         $event->childrenCapacity = 6;
 
         return $event;
+    }
+
+    public function isFinished(): bool
+    {
+        if (null === $stage = $this->getLatestStage()) {
+            return false;
+        }
+
+        return new \DateTimeImmutable() > $stage->getDate();
+    }
+
+    public function isBookable(): bool
+    {
+        $now = new \DateTimeImmutable();
+
+        if ($now < $this->openingDateForBookings) {
+            return false;
+        }
+
+        return !$this->isFinished();
     }
 
     public function getId(): UuidV4
@@ -169,5 +190,22 @@ class Event
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return Collection<int, Stage>
+     */
+    public function getStages(): Collection
+    {
+        return $this->stages;
+    }
+
+    public function getLatestStage(): ?Stage
+    {
+        if (false === $stage = $this->stages->last()) {
+            return null;
+        }
+
+        return $stage;
     }
 }
