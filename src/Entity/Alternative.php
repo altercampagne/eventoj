@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -35,10 +37,17 @@ class Alternative
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private readonly \DateTimeImmutable $createdAt;
 
+    /**
+     * @var Collection<int, StageAlternative>
+     */
+    #[ORM\OneToMany(targetEntity: StageAlternative::class, mappedBy: 'alternative')]
+    private Collection $stagesAlternatives;
+
     public function __construct()
     {
         $this->id = new UuidV4();
         $this->createdAt = new \DateTimeImmutable();
+        $this->stagesAlternatives = new ArrayCollection();
     }
 
     public function getId(): UuidV4
@@ -90,5 +99,13 @@ class Alternative
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return Collection<int, StageAlternative>
+     */
+    public function getStagesAlternatives(): Collection
+    {
+        return $this->stagesAlternatives;
     }
 }

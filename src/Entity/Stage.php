@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -46,13 +48,11 @@ class Stage
     ])]
     private StageDifficulty $difficulty;
 
-    #[ORM\ManyToOne(targetEntity: Alternative::class)]
-    #[ORM\JoinColumn(name: 'departure_alternative_id', referencedColumnName: 'id')]
-    private ?Alternative $departureAlternative = null;
-
-    #[ORM\ManyToOne(targetEntity: Alternative::class)]
-    #[ORM\JoinColumn(name: 'arrival_alternative_id', referencedColumnName: 'id')]
-    private ?Alternative $arrivalAlternative = null;
+    /**
+     * @var Collection<int, StageAlternative>
+     */
+    #[ORM\OneToMany(targetEntity: StageAlternative::class, mappedBy: 'stage', cascade: ['persist'])]
+    private Collection $stagesAlternatives;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private readonly \DateTimeImmutable $createdAt;
@@ -64,6 +64,7 @@ class Stage
         $this->type = StageType::CLASSIC;
         $this->difficulty = StageDifficulty::MEDIUM;
         $this->createdAt = new \DateTimeImmutable();
+        $this->stagesAlternatives = new ArrayCollection();
     }
 
     public function getId(): UuidV4
@@ -141,32 +142,27 @@ class Stage
         return $this;
     }
 
-    public function getDepartureAlternative(): ?Alternative
-    {
-        return $this->departureAlternative;
-    }
-
-    public function setDepartureAlternative(?Alternative $departureAlternative): self
-    {
-        $this->departureAlternative = $departureAlternative;
-
-        return $this;
-    }
-
-    public function getArrivalAlternative(): ?Alternative
-    {
-        return $this->arrivalAlternative;
-    }
-
-    public function setArrivalAlternative(?Alternative $arrivalAlternative): self
-    {
-        $this->arrivalAlternative = $arrivalAlternative;
-
-        return $this;
-    }
-
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return Collection<int, StageAlternative>
+     */
+    public function getStagesAlternatives(): Collection
+    {
+        return $this->stagesAlternatives;
+    }
+
+    public function addAlternative(Alternative $alternative, StageAlternativeRelation $relation): self
+    {
+        $this->stagesAlternatives->add((new StageAlternative())
+            ->setStage($this)
+            ->setAlternative($alternative)
+            ->setRelation($relation)
+        );
+
+        return $this;
     }
 }

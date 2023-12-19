@@ -57,7 +57,7 @@ test: ## Run all tests
 
 phpstan: ## Run PHPStan
 	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/phpstan
-	@$(DOCKER_COMPOSE) run php tools/phpstan/vendor/bin/phpstan analyse
+	@$(DOCKER_COMPOSE) run php tools/phpstan/vendor/bin/phpstan analyse --memory-limit=512M
 
 cs-lint: ## Lint all files
 	@$(DOCKER_COMPOSE) run php bin/console lint:twig templates/
