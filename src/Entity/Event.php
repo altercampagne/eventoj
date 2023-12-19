@@ -21,7 +21,9 @@ class Event
     #[ORM\Column(type: 'uuid')]
     private readonly UuidV4 $id;
 
-    #[ORM\Column(type: 'string', enumType: EventType::class)]
+    #[ORM\Column(type: 'string', length: 3, enumType: EventType::class, options: [
+        'comment' => 'Type of event (AT, BT, ADT, EB)',
+    ])]
     private readonly EventType $type;
 
     #[ORM\Column]
@@ -43,7 +45,9 @@ class Event
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $publishedAt = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, options: [
+        'comment' => 'At which date members will be able to register to this event?',
+    ])]
     private \DateTimeImmutable $openingDateForBookings;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]

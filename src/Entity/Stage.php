@@ -23,7 +23,9 @@ class Stage
     #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id')]
     private readonly Event $event;
 
-    #[ORM\Column(type: 'string', enumType: StageType::class)]
+    #[ORM\Column(type: 'string', length: 7, enumType: StageType::class, options: [
+      'comment' => 'Type of this stage (before, after, classic).',
+    ])]
     private StageType $type;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
@@ -39,7 +41,9 @@ class Stage
     #[ORM\Column(type: 'text')]
     private string $description;
 
-    #[ORM\Column(type: 'string', enumType: StageDifficulty::class)]
+    #[ORM\Column(type: 'string', length: 6, enumType: StageDifficulty::class, options: [
+      'comment' => 'Difficulty of this stage (easy, medium, hard).',
+    ])]
     private StageDifficulty $difficulty;
 
     #[ORM\ManyToOne(targetEntity: Alternative::class)]
