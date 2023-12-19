@@ -29,9 +29,14 @@ bash: ## Enter in the application container directly
 psql: ## Enter in DB container
 	@$(DOCKER_COMPOSE) exec database psql -h database -U app app
 
+psql-test: ## Enter in Test DB container
+	@$(DOCKER_COMPOSE) exec database psql -h database -U app app_test
+
 ##@ Backends commands
 db-reset: ## Reset DB
+	@$(DOCKER_COMPOSE) stop messenger-worker
 	@$(DOCKER_COMPOSE) run php bin/reset-db
+	@$(DOCKER_COMPOSE) up -d messenger-worker
 
 db-reset-test: ## Reset test DB
 	@$(DOCKER_COMPOSE) run -e APP_ENV=test php bin/reset-db

@@ -25,16 +25,11 @@ class EventCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('un évènement')
             ->setEntityLabelInPlural('évènements ')
-            ->setPageTitle('edit', fn (Event $event) => "Modifier <b>{$event->name}</b>")
+            ->setPageTitle('edit', fn (Event $event) => "Modifier <b>{$event->getName()}</b>")
             ->setPageTitle('new', 'Ajouter un nouvel évènement')
-            ->setPageTitle('detail', fn (Event $event) => "Evènement <b>{$event->name}</b>")
+            ->setPageTitle('detail', fn (Event $event) => "Evènement <b>{$event->getName()}</b>")
             ->setSearchFields(['name', 'description'])
         ;
-    }
-
-    public function createEntity(string $entityFqcn): Event
-    {
-        return new Event(name: '', description: '');
     }
 
     public function configureFields(string $pageName): iterable

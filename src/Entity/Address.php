@@ -28,7 +28,7 @@ class Address
 
     #[Assert\NotBlank]
     #[ORM\Column(type: Types::STRING, length: 2)]
-    private string $countryCode;
+    private string $countryCode = 'FR';
 
     public function getAddressLine1(): string
     {
