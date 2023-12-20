@@ -95,13 +95,6 @@
     zipcode: "71990"
 
 -
-  name: Aigrefeuille
-  address:
-    address_line1: 4335 rte d'Aigrefeuille
-    city: Charmoy
-    zipcode: "71710"
-
--
   name: Les jardins bénéfiques
   description: |
     L'association les jardins bénéfiques a été créée en avril 2020 au Creusot.
@@ -275,3 +268,12 @@
     address_line1: Route de L’isle sur le Doubs
     city: Uzelle
     zipcode: "25340"
+
+-
+  name: Jardin des potes en ciel
+  description: |
+    A compléter
+  address:
+    address_line1: Rte de la Marne
+    city: Avanne-Aveney
+    zipcode: "25720"
