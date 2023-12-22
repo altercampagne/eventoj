@@ -18,8 +18,6 @@ services:
   php:
     build:
       context: ./.docker/php
-    ports:
-      - '9000:9000'
     volumes:
       - .:/var/www
     depends_on:
