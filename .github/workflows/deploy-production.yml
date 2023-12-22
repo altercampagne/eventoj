@@ -1,0 +1,54 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy-production:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo
+
+      - name: Download dependencies
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--optimize-autoloader"
+
+      - name: Install assets
+        run: bin/console importmap:install
+
+      - name: Build assets (SASS)
+        run: bin/console sass:build
+
+      - name: Compile asset map
+        run: bin/console asset-map:compile
+
+      - name: Deploy files over SSH
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlDzvc -i --delete --exclude-from=rsync-exclude.txt"
+          SOURCE: "/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.FILES_SENDING_REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+
+      - name: Execute remote ssh commands to finalise deployment
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.POST_DEPLOY_REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: ${{ secrets.DOCKER_COMPOSE_EXEC_COMMAND }} bin/post-deploy
