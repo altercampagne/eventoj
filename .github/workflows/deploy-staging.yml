@@ -5,13 +5,28 @@ on:
   push:
     branches:
       - main
-      - production
 
 jobs:
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-20.04
-    environment: ${{ github.ref == 'refs/heads/production' && 'production' || 'staging' }}
+  deploy-staging:
+    name: Deploy to staging
+    runs-on: ubuntu-latest
+    environment: staging
+
+    services:
+      database:
+        image: postgres:16
+        env:
+          POSTGRES_DB: app
+          POSTGRES_PASSWORD: app
+          POSTGRES_USER: app
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    env:
+      DATABASE_HOST: localhost
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,6 +42,9 @@ jobs:
         with:
           composer-options: "--optimize-autoloader"
 
+      - name: Create database
+        run: bin/reset-db
+
       - name: Install assets
         run: bin/console importmap:install
 
@@ -35,6 +53,13 @@ jobs:
 
       - name: Compile asset map
         run: bin/console asset-map:compile
+
+      - name: Create dump (data only) from database
+        uses: addnab/docker-run-action@v3
+        with:
+          image: postgres:16
+          options: -v ${{ github.workspace }}:/data -e PGPASSWORD=app
+          run: pg_dump -h database -U app --data-only --exclude-table='(doctrine_migration_versions|messenger_messages*)' --inserts --on-conflict-do-nothing --file=/data/dump.sql
 
       - name: Deploy files over SSH
         uses: easingthemes/ssh-deploy@main
@@ -53,3 +78,11 @@ jobs:
           username: ${{ secrets.POST_DEPLOY_REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: ${{ secrets.DOCKER_COMPOSE_EXEC_COMMAND }} bin/post-deploy
+
+      - name: Load dump in DB
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.POST_DEPLOY_REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: ${{ secrets.PSQL_COMMAND }} < ${{ secrets.REMOTE_TARGET }}/dump.sql
