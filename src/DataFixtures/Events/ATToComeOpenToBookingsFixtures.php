@@ -29,7 +29,7 @@ class ATToComeOpenToBookingsFixtures extends Fixture implements DependentFixture
             ->setName('AT à venir (ouvert)')
             ->setPublishedAt(new \DateTimeImmutable())
             ->setOpeningDateForBookings(new \DateTimeImmutable())
-            ->setDescription('VOilà un AT dans le futur et dont les réservations sont ouvertes ! 🥳')
+            ->setDescription('Voilà un AT dans le futur et dont les réservations sont ouvertes ! 🥳')
         ;
 
         $startDate = $this->getStartDate();
