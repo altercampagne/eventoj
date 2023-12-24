@@ -60,12 +60,20 @@ class Event
     #[ORM\OrderBy(['date' => 'ASC'])]
     private Collection $stages;
 
+    /**
+     * @var Collection<int, Registration>
+     */
+    #[ORM\OneToMany(targetEntity: Registration::class, mappedBy: 'event')]
+    #[ORM\OrderBy(['createdAt' => 'ASC'])]
+    private Collection $registrations;
+
     private function __construct(EventType $type)
     {
         $this->id = new UuidV4();
         $this->type = $type;
         $this->createdAt = new \DateTimeImmutable();
         $this->stages = new ArrayCollection();
+        $this->registrations = new ArrayCollection();
     }
 
     public static function AT(): self
@@ -207,5 +215,13 @@ class Event
         }
 
         return $stage;
+    }
+
+    /**
+     * @return Collection<int, Registration>
+     */
+    public function getRegistrations(): Collection
+    {
+        return $this->registrations;
     }
 }
