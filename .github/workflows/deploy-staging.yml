@@ -59,7 +59,7 @@ jobs:
         with:
           image: postgres:16
           options: -v ${{ github.workspace }}:/data -e PGPASSWORD=app
-          run: pg_dump -h database -U app --data-only --exclude-table='(doctrine_migration_versions|messenger_messages*)' --inserts --on-conflict-do-nothing --file=/data/dump.sql
+          run: pg_dump -h database -U app --data-only --exclude-table='(user|doctrine_migration_versions|messenger_messages*)' --inserts --on-conflict-do-nothing --file=/data/dump.sql
 
       - name: Deploy files over SSH
         uses: easingthemes/ssh-deploy@main

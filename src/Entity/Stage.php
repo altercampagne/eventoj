@@ -57,6 +57,12 @@ class Stage
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private readonly \DateTimeImmutable $createdAt;
 
+    /**
+     * @var Collection<int, Registration>
+     */
+    #[ORM\ManyToMany(targetEntity: Registration::class, mappedBy: 'stages')]
+    private Collection $registrations;
+
     public function __construct(Event $event)
     {
         $this->id = new UuidV4();
@@ -65,6 +71,7 @@ class Stage
         $this->difficulty = StageDifficulty::MEDIUM;
         $this->createdAt = new \DateTimeImmutable();
         $this->stagesAlternatives = new ArrayCollection();
+        $this->registrations = new ArrayCollection();
     }
 
     public function getId(): UuidV4
@@ -164,5 +171,13 @@ class Stage
         );
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Registration>
+     */
+    public function getRegistrations(): Collection
+    {
+        return $this->registrations;
     }
 }

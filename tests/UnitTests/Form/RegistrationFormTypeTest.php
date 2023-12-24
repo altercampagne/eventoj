@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\Tests\UnitTests\Form;
 
 use App\Form\RegistrationFormType;
+use App\Tests\UnitTests\FormAssertionsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class RegistrationFormTypeTest extends KernelTestCase
 {
+    use FormAssertionsTrait;
+
     public function testSubmitValidData(): void
     {
         $faker = \Faker\Factory::create('fr_FR');
@@ -63,19 +66,11 @@ class RegistrationFormTypeTest extends KernelTestCase
 
         $form->submit($formData);
 
-        $this->assertTrue($form->isSynchronized());
-        $this->assertFalse($form->isValid());
-
-        $errors = [];
-        foreach ($form->getErrors(true) as $error) {
-            $errors[$error->getOrigin()?->getName()] = $error->getMessage();
-        }
-
-        $this->assertSame([
+        $this->assertFormInvalid($form, [
             'email' => 'Il y a déjà un compte avec cette adresse mail',
             'firstName' => 'Cette valeur ne doit pas être vide.',
             'lastName' => 'Cette valeur ne doit pas être vide.',
             'plainPassword' => 'Ton mot de passe doit faire au moins 7 caractères.',
-        ], $errors);
+        ]);
     }
 }

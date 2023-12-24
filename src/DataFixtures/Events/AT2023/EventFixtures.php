@@ -5,17 +5,29 @@ declare(strict_types=1);
 namespace App\DataFixtures\Events\AT2023;
 
 use App\DataFixtures\AlternativeFixtures;
+use App\DataFixtures\FixturesHelperTrait;
 use App\Entity\Alternative;
 use App\Entity\Event;
+use App\Entity\Registration;
 use App\Entity\Stage;
 use App\Entity\StageAlternativeRelation;
 use App\Entity\StageType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Generator;
 
 class EventFixtures extends Fixture implements DependentFixtureInterface
 {
+    use FixturesHelperTrait;
+
+    private readonly Generator $faker;
+
+    public function __construct()
+    {
+        $this->faker = \Faker\Factory::create('fr_FR');
+    }
+
     public function getDependencies(): array
     {
         return [AlternativeFixtures::class];
@@ -44,6 +56,11 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->persist($event);
+
+        for ($i = 0; $i < 100; ++$i) {
+            $registration = $this->generateRegistration($event);
+            $manager->persist($registration);
+        }
 
         $manager->flush();
     }
@@ -296,6 +313,33 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
             ->setDescription('Rangement !')
             ->addAlternative($this->getAlternative('jardin-des-potes-en-ciel'), StageAlternativeRelation::FULL_DAY)
         ;
+    }
+
+    private function generateRegistration(Event $event): Registration
+    {
+        $stages = $event->getStages()->toArray();
+
+        $start = random_int(0, max(\count($stages) - 5, \count($stages)));
+        $stages = \array_slice($stages, $start, $start + 5);
+
+        $registration = new Registration(
+            user: $this->getRandomUser(),
+            event: $event,
+            stages: $stages,
+            pricePerDay: $this->faker->numberBetween(10, 70),
+        );
+
+        // 2 chances out of 3 to have a confirmed reservation
+        if (0 < $this->faker->randomDigit() % 3) {
+            $registration->confirm();
+        }
+
+        // 1 chances out of 5 to have a canceled reservation
+        if (0 === $this->faker->randomDigit() % 5) {
+            $registration->cancel();
+        }
+
+        return $registration;
     }
 
     private function getAlternative(string $slug): Alternative

@@ -2,4 +2,15 @@ form {
     div.help-text {
         color: $gray-600;
     }
+
+    fieldset {
+        all: revert;
+
+        legend {
+            all: revert;
+
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    }
 }
