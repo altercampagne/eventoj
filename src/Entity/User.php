@@ -22,9 +22,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cette adresse mail')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    /**
+     * This property should be marked as readonly but is not due to a bug in Doctrine.
+     *
+     * @see https://github.com/doctrine/orm/issues/9863
+     */
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private readonly UuidV4 $id;
+    private UuidV4 $id;
 
     #[Assert\NotBlank]
     #[ORM\Column(length: 180, unique: true)]

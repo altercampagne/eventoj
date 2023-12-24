@@ -70,10 +70,19 @@ class Registration
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    public function confirm(): void
+    public function canBeConfirmed(): bool
     {
         if (RegistrationStatus::WAITING_PAYMENT !== $this->status) {
-            throw new \LogicException('Cannot confirm a registration which is not in "WAITING_PAYMENT" status.');
+            return false;
+        }
+
+        return $this->event->isBookable();
+    }
+
+    public function confirm(): void
+    {
+        if (!$this->canBeConfirmed()) {
+            throw new \LogicException('Cannot confirm this registration.');
         }
 
         $this->status = RegistrationStatus::CONFIRMED;

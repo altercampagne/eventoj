@@ -17,9 +17,14 @@ use Symfony\Component\Uid\UuidV4;
 #[UniqueEntity(fields: ['slug'], message: 'Il y a déjà un évènement avec ce slug.')]
 class Event
 {
+    /**
+     * This property should be marked as readonly but is not due to a bug in Doctrine.
+     *
+     * @see https://github.com/doctrine/orm/issues/9863
+     */
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private readonly UuidV4 $id;
+    private UuidV4 $id;
 
     #[ORM\Column(type: 'string', length: 3, enumType: EventType::class, options: [
         'comment' => 'Type of event (AT, BT, ADT, EB)',
