@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Entity\Event;
 use App\Entity\Meal;
+use App\Entity\Registration;
 use App\Entity\Stage;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -53,6 +54,20 @@ class EventRegistrationDTO
         });
 
         $this->stageEnd = $stageEnd ?: $stages->last() ?: throw new \RuntimeException('Looks like it is not possible to determine an end date.');
+    }
+
+    public function configureFromRegistration(Registration $registration): void
+    {
+        if (false !== $stage = $registration->getStages()->first()) {
+            $this->stageStart = $stage;
+        }
+        $this->firstMeal = $registration->getFirstMeal();
+        if (false !== $stage = $registration->getStages()->last()) {
+            $this->stageEnd = $stage;
+        }
+        $this->lastMeal = $registration->getLastMeal();
+        $this->needBike = $registration->needBike();
+        $this->pricePerDay = $registration->getPricePerDay() / 100;
     }
 
     #[Assert\Callback]

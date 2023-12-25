@@ -8,6 +8,7 @@ use App\DataFixtures\AlternativeFixtures;
 use App\DataFixtures\FixturesHelperTrait;
 use App\Entity\Alternative;
 use App\Entity\Event;
+use App\Entity\Meal;
 use App\Entity\Registration;
 use App\Entity\Stage;
 use App\Entity\StageAlternativeRelation;
@@ -326,7 +327,12 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
             user: $this->getRandomUser(),
             event: $event,
             stages: $stages,
+            /* @phpstan-ignore-next-line */
+            firstMeal: $this->faker->randomElement(Meal::class),
+            /* @phpstan-ignore-next-line */
+            lastMeal: $this->faker->randomElement(Meal::class),
             pricePerDay: $this->faker->numberBetween(10, 70),
+            needBike: $this->faker->boolean(),
         );
 
         // 2 chances out of 3 to have a confirmed reservation

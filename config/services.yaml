@@ -22,3 +22,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    Helloasso\HelloassoClient:
+      arguments:
+        $clientId: '%env(HELLOASSO_CLIENT_ID)%'
+        $clientSecret: '%env(HELLOASSO_CLIENT_SECRET)%'
+        $organizationSlug: '%env(HELLOASSO_ORGANISATION_SLUG)%'
+        $sandbox: '%env(bool:HELLOASSO_SANDBOX)%'

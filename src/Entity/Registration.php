@@ -31,10 +31,30 @@ class Registration
     ])]
     private RegistrationStatus $status;
 
+    #[ORM\Column(type: 'string', length: 10, enumType: Meal::class, options: [
+        'comment' => 'First meal participant will share with us (breakfast, lunch, dinner)',
+    ])]
+    private readonly Meal $firstMeal;
+
+    #[ORM\Column(type: 'string', length: 10, enumType: Meal::class, options: [
+        'comment' => 'Last meal participant will share with us (breakfast, lunch, dinner)',
+    ])]
+    private readonly Meal $lastMeal;
+
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'The price per day choose by the user.',
     ])]
     private readonly int $pricePerDay;
+
+    #[ORM\Column(type: Types::BOOLEAN, options: [
+        'comment' => 'Does the participant need a loan bike?',
+    ])]
+    private readonly bool $needBike;
+
+    #[ORM\Column(type: Types::STRING, nullable: true, options: [
+        'comment' => 'The checkout intent ID provided by Helloasso',
+    ])]
+    private ?string $helloassoCheckoutIntentId = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private readonly \DateTimeImmutable $createdAt;
@@ -54,18 +74,22 @@ class Registration
      */
     #[ORM\ManyToMany(targetEntity: Stage::class, inversedBy: 'registrations')]
     #[ORM\JoinTable(name: 'stages_registrations')]
+    #[ORM\OrderBy(['date' => 'ASC'])]
     private Collection $stages;
 
     /**
      * @param Stage[] $stages
      */
-    public function __construct(User $user, Event $event, array $stages, int $pricePerDay)
+    public function __construct(User $user, Event $event, array $stages, Meal $firstMeal, Meal $lastMeal, int $pricePerDay, bool $needBike)
     {
         $this->id = new UuidV4();
         $this->user = $user;
         $this->event = $event;
         $this->stages = new ArrayCollection($stages);
+        $this->firstMeal = $firstMeal;
+        $this->lastMeal = $lastMeal;
         $this->pricePerDay = $pricePerDay;
+        $this->needBike = $needBike;
         $this->status = RegistrationStatus::WAITING_PAYMENT;
         $this->createdAt = new \DateTimeImmutable();
     }
@@ -89,10 +113,25 @@ class Registration
         $this->confirmedAt = new \DateTimeImmutable();
     }
 
+    public function isConfirmed(): bool
+    {
+        return RegistrationStatus::CONFIRMED === $this->status;
+    }
+
     public function cancel(): void
     {
         $this->status = RegistrationStatus::CANCELED;
         $this->canceledAt = new \DateTimeImmutable();
+    }
+
+    public function countDaysOfPresence(): int
+    {
+        return $this->stages->count() - 1;
+    }
+
+    public function getTotalPrice(): int
+    {
+        return $this->countDaysOfPresence() * $this->pricePerDay;
     }
 
     public function getId(): UuidV4
@@ -113,6 +152,38 @@ class Registration
     public function getStatus(): RegistrationStatus
     {
         return $this->status;
+    }
+
+    public function getFirstMeal(): Meal
+    {
+        return $this->firstMeal;
+    }
+
+    public function getLastMeal(): Meal
+    {
+        return $this->lastMeal;
+    }
+
+    public function getPricePerDay(): int
+    {
+        return $this->pricePerDay;
+    }
+
+    public function needBike(): bool
+    {
+        return $this->needBike;
+    }
+
+    public function getHelloassoCheckoutIntentId(): ?string
+    {
+        return $this->helloassoCheckoutIntentId;
+    }
+
+    public function setHelloassoCheckoutIntentId(string $helloassoCheckoutIntentId): self
+    {
+        $this->helloassoCheckoutIntentId = $helloassoCheckoutIntentId;
+
+        return $this;
     }
 
     public function getCreatedAt(): \DateTimeImmutable
@@ -142,5 +213,13 @@ class Registration
         $this->canceledAt = $canceledAt;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Stage>
+     */
+    public function getStages(): Collection
+    {
+        return $this->stages;
     }
 }
