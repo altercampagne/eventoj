@@ -30,8 +30,8 @@ class UserFixtures extends Fixture
         $user = new User();
         $user
             ->setEmail('admin@altercampagne.net')
-            ->setFirstName('Super')
-            ->setLastName('Admin')
+            ->setFirstName('John')
+            ->setLastName('Doe')
             ->setBirthDate(\DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-80 years', 'now')))
             ->setAddress($this->getRandomAddress())
             ->setPhoneNumber($this->phoneNumberUtil->parse($this->faker->phoneNumber(), 'FR'))

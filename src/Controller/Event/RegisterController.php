@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Form\EventRegistrationDTO;
 use App\Form\EventRegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,14 +24,22 @@ class RegisterController extends AbstractController
         private readonly EntityManagerInterface $em,
     ) {}
 
-    #[Route('/event/{slug}/register', name: 'event_register')]
-    public function __invoke(Event $event, Request $request): Response
-    {
+    #[Route('/event/{slug}/register/{id?}', name: 'event_register')]
+    public function __invoke(
+        Request $request,
+        #[MapEntity(mapping: ['slug' => 'slug'])]
+        Event $event,
+        #[MapEntity(mapping: ['id' => 'id'])]
+        Registration $registration = null,
+    ): Response {
         if (!$event->isBookable()) {
             return $this->redirectToRoute('event_show', ['slug' => $event->getSlug()]);
         }
 
         $eventRegistrationDTO = new EventRegistrationDTO($event);
+        if (null !== $registration) {
+            $eventRegistrationDTO->configureFromRegistration($registration);
+        }
 
         $form = $this->createForm(EventRegistrationFormType::class, $eventRegistrationDTO, [
             'event' => $event,
@@ -49,7 +58,15 @@ class RegisterController extends AbstractController
                 (int) array_search($eventRegistrationDTO->stageEnd, $stages, true),
             );
 
-            $registration = new Registration($user, $event, $stages, $eventRegistrationDTO->pricePerDay);
+            $registration = new Registration(
+                user: $user,
+                event: $event,
+                stages: $stages,
+                firstMeal: $eventRegistrationDTO->firstMeal,
+                lastMeal: $eventRegistrationDTO->lastMeal,
+                pricePerDay: $eventRegistrationDTO->pricePerDay * 100,
+                needBike: $eventRegistrationDTO->needBike,
+            );
 
             $this->em->persist($registration);
             $this->em->flush();

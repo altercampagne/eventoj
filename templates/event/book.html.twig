@@ -28,7 +28,7 @@
                     <ul class="list-group mt-3">
                         <li class="list-group-item p-3 d-flex justify-content-between align-items-start">
                             <div class="form-check form-switch col-auto">
-                                <input class="form-check-input me-2" type="checkbox" role="switch" id="{{ form.needBike.vars.id }}" name="{{ field_name(form.needBike) }}" value="{{ field_value(form.needBike) }}" />
+                                <input class="form-check-input me-2" type="checkbox" role="switch" id="{{ form.needBike.vars.id }}" name="{{ field_name(form.needBike) }}" value="{{ field_value(form.needBike) }}"{% if form.needBike.vars.checked %} checked{% endif %} />
                                 <label class="form-check-label stretched-link" for="{{ form.needBike.vars.id }}">
                                     J'ai besoin d'un vélo de prêt
                                 </label>
@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="d-grid gap-2 mt-4">
-                        <button type="submit" class="btn btn-lg btn-primary">Passer au paiement</button>
+                        <button type="submit" class="btn btn-lg btn-primary">Régler via Helloasso</button>
                     </div>
 
                 {{ form_end(form) }}
