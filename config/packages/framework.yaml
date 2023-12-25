@@ -5,6 +5,9 @@ framework:
     http_method_override: false
     handle_all_throwables: true
 
+    # localhost, Docker, Kubernetes
+    trusted_proxies: 127.0.0.1, 172.16.0.0/12, 10.0.0.0/8
+
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
     session:
