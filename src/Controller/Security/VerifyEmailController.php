@@ -23,7 +23,8 @@ class VerifyEmailController extends AbstractController
         private readonly VerifyEmailHelperInterface $verifyEmailHelper,
         private readonly TranslatorInterface $translator,
         private readonly Security $security,
-    ) {}
+    ) {
+    }
 
     public function __invoke(Request $request): Response
     {

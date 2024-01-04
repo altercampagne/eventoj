@@ -22,7 +22,8 @@ class RegisterController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
-    ) {}
+    ) {
+    }
 
     #[Route('/event/{slug}/register/{id?}', name: 'event_register')]
     public function __invoke(

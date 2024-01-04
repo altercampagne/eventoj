@@ -15,7 +15,8 @@ class ATToComeOpenToBookingsFixtures extends Fixture implements DependentFixture
 {
     public function __construct(
         private readonly AT2023EventFixtures $at2023EventFixtures,
-    ) {}
+    ) {
+    }
 
     public function getDependencies(): array
     {
