@@ -15,7 +15,8 @@ class EmailConfirmationSender
     public function __construct(
         private VerifyEmailHelperInterface $verifyEmailHelper,
         private MailerInterface $mailer,
-    ) {}
+    ) {
+    }
 
     public function send(User $user): void
     {

@@ -13,7 +13,8 @@ class AlternativeFixtures extends Fixture
 {
     public function __construct(
         private readonly SerializerInterface $serializer,
-    ) {}
+    ) {
+    }
 
     public function load(ObjectManager $manager): void
     {

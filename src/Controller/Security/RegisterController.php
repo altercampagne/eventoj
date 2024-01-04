@@ -21,7 +21,8 @@ class RegisterController extends AbstractController
         private readonly EmailConfirmationSender $emailConfirmationSender,
         private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly EntityManagerInterface $entityManager,
-    ) {}
+    ) {
+    }
 
     public function __invoke(Request $request): Response
     {

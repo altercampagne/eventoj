@@ -14,7 +14,7 @@ class LoginTest extends WebTestCase
         $client->request('GET', '/login');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Connection');
+        $this->assertSelectorTextContains('h1', 'Se connecter');
 
         $client->submitForm('Se connecter', [
             '_username' => 'admin@altercampagne.net',

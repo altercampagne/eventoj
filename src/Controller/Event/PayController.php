@@ -23,7 +23,8 @@ class PayController extends AbstractController
     public function __construct(
         private readonly HelloassoClient $helloassoClient,
         private readonly EntityManagerInterface $em,
-    ) {}
+    ) {
+    }
 
     #[Route('/registration/{id}/pay', name: 'event_registration_pay')]
     public function __invoke(Request $request, Registration $registration): Response

@@ -22,7 +22,8 @@ class PostPaymentController extends AbstractController
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger,
-    ) {}
+    ) {
+    }
 
     #[Route('/registration/{id}/post_payment/back', name: 'event_registration_post_payment_back', defaults: ['type' => 'back'])]
     #[Route('/registration/{id}/post_payment/error', name: 'event_registration_post_payment_error', defaults: ['type' => 'error'])]
