@@ -20,9 +20,10 @@
                         <input type="email" name="_username" class="form-control" id="inputEmail" placeholder="name@example.com" value="{{ last_username }}" autocomplete="email" required autofocus>
                         <label for="inputEmail">Adresse email</label>
                     </div>
-                    <div class="form-floating mb-3">
+                    <div class="form-floating mb-4">
                         <input type="password" name="_password" class="form-control" id="inputPassword" placeholder="Mot de passe" autocomplete="current-password" required>
                         <label for="inputPassword">Mot de passe</label>
+                        <a class="float-end" href="{{ path('forgot_password_request') }}"><small>Mot de passe oublié ?</small></a>
                     </div>
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">

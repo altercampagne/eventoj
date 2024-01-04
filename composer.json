@@ -52,6 +52,7 @@
         "symfony/validator": "7.0.*",
         "symfony/web-link": "7.0.*",
         "symfony/yaml": "7.0.*",
+        "symfonycasts/reset-password-bundle": "^1.20",
         "symfonycasts/sass-bundle": "^0.4",
         "symfonycasts/verify-email-bundle": "^1.14",
         "twbs/bootstrap": "^5.3",
