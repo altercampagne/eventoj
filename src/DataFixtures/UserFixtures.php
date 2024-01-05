@@ -16,6 +16,7 @@ class UserFixtures extends Fixture
 {
     private readonly PhoneNumberUtil $phoneNumberUtil;
     private readonly Generator $faker;
+    private ?string $hashedPassword = null;
 
     public function __construct(
         private readonly UserPasswordHasherInterface $userPasswordHasher,
@@ -37,30 +38,39 @@ class UserFixtures extends Fixture
             ->setPhoneNumber($this->phoneNumberUtil->parse($this->faker->phoneNumber(), 'FR'))
             ->setRoles(['ROLE_ADMIN'])
         ;
-        $hashedPassword = $this->userPasswordHasher->hashPassword($user, 'password');
-        $user->setPassword($hashedPassword);
+        $user->setPassword($this->getHashedPassword());
         $user->verifyEmail();
 
         $manager->persist($user);
 
+        $user = $this->createRandomUser('change-my-password@test-only.user');
+        $manager->persist($user);
+
         for ($i = 0; $i < 50; ++$i) {
-            $user = new User();
-            $user
-                ->setEmail($this->faker->email())
-                ->setFirstName($this->faker->firstName())
-                ->setLastName($this->faker->lastName())
-                ->setBirthDate(\DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-80 years', 'now')))
-                ->setAddress($this->getRandomAddress())
-                ->setPhoneNumber($this->phoneNumberUtil->parse($this->faker->phoneNumber(), 'FR'))
-                ->setRoles(['ROLE_ADMIN'])
-                ->setPassword($hashedPassword)
-            ;
+            $user = $this->createRandomUser();
             $manager->persist($user);
 
             $this->setReference("user-$i", $user);
         }
 
         $manager->flush();
+    }
+
+    private function createRandomUser(string $email = null): User
+    {
+        $user = new User();
+        $user
+            ->setEmail($email ?: $this->faker->email())
+            ->setFirstName($this->faker->firstName())
+            ->setLastName($this->faker->lastName())
+            ->setBirthDate(\DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-80 years', 'now')))
+            ->setAddress($this->getRandomAddress())
+            ->setPhoneNumber($this->phoneNumberUtil->parse($this->faker->phoneNumber(), 'FR'))
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword($this->getHashedPassword())
+        ;
+
+        return $user;
     }
 
     private function getRandomAddress(): Address
@@ -75,5 +85,14 @@ class UserFixtures extends Fixture
         ;
 
         return $address;
+    }
+
+    private function getHashedPassword(): string
+    {
+        if (null === $this->hashedPassword) {
+            return $this->userPasswordHasher->hashPassword(new User(), 'password');
+        }
+
+        return $this->hashedPassword;
     }
 }
