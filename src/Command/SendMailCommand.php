@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Email\EmailConfirmationSender;
+use App\Email\PasswordResetSender;
+use App\Entity\ResetPasswordRequest;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -14,17 +16,20 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\When;
+use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 #[AsCommand(
-    name: 'altercampagne:send-mail',
+    name: 'eventoj:send-mail',
     description: 'This command is useful to send emails for debug purpose.',
 )]
 #[When(env: 'dev')]
 class SendMailCommand extends Command
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private readonly EntityManagerInterface $em,
+        private readonly ResetPasswordHelperInterface $resetPasswordHelper,
         private readonly EmailConfirmationSender $emailConfirmationSender,
+        private readonly PasswordResetSender $passwordResetSender,
     ) {
         parent::__construct();
     }
@@ -32,7 +37,7 @@ class SendMailCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('email', InputArgument::OPTIONAL, 'The email to send. It null, all mails will be sent.')
+            ->addArgument('email', InputArgument::OPTIONAL, 'The email to send. If null, all mails will be sent.')
         ;
     }
 
@@ -45,6 +50,7 @@ class SendMailCommand extends Command
 
         match ($email) {
             'email_confirmation' => $this->sendEmailConfirmation(),
+            'password_reset' => $this->sendPasswordReset(),
             null => $this->sendAllMails(),
             default => throw new \InvalidArgumentException("Unknown mail \"$email\"."),
         };
@@ -57,14 +63,32 @@ class SendMailCommand extends Command
     private function sendAllMails(): void
     {
         $this->sendEmailConfirmation();
+        $this->sendPasswordReset();
     }
 
     private function sendEmailConfirmation(): void
     {
-        if (null === $user = $this->entityManager->getRepository(User::class)->findOneByEmail('admin@altercampagne.net')) {
+        if (null === $user = $this->em->getRepository(User::class)->findOneByEmail('admin@altercampagne.net')) {
             throw new \RuntimeException('No user found. Did you correctly load fixtures?');
         }
 
         $this->emailConfirmationSender->send($user);
+    }
+
+    private function sendPasswordReset(): void
+    {
+        if (null === $user = $this->em->getRepository(User::class)->findOneByEmail('admin@altercampagne.net')) {
+            throw new \RuntimeException('No user found. Did you correctly load fixtures?');
+        }
+
+        $passwordResetRequests = $this->em->getRepository(ResetPasswordRequest::class)->findBy(['user' => $user]);
+        foreach ($passwordResetRequests as $request) {
+            $this->em->remove($request);
+        }
+        $this->em->flush();
+
+        $resetToken = $this->resetPasswordHelper->generateResetToken($user);
+
+        $this->passwordResetSender->send($user, $resetToken);
     }
 }
