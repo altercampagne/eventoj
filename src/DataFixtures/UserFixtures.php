@@ -90,7 +90,7 @@ class UserFixtures extends Fixture
     private function getHashedPassword(): string
     {
         if (null === $this->hashedPassword) {
-            return $this->userPasswordHasher->hashPassword(new User(), 'password');
+            $this->hashedPassword = $this->userPasswordHasher->hashPassword(new User(), 'password');
         }
 
         return $this->hashedPassword;
