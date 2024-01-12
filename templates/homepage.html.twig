@@ -2,44 +2,67 @@
 
 {% block title %}Évènements proposés par AlterCampagne{% endblock %}
 
+{% macro render_event(event) %}
+    <div class="col-12 col-md-6 col-lg-4 text-center mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">{{ event.name }}</h3>
+            </div>
+            <div class="card-body">
+                <twig:UploadedImage path="{{ event.imagePath|default('') }}" width="300" height="300" alt="Illustration {{ event.name }}" class="mb-3" />
+
+                <p class="card-text">{{ event.description }}</p>
+
+                <div class="d-grid gap-2 mt-4">
+                    <a href="{{ path('event_show', { slug: event.slug }) }}" class="btn btn-primary btn-lg">Voir l'évèvenement</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
 {% block main %}
     <div class="container">
+        <div class="text-center">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-9">
+                    <h1 class="fw-bold text-uppercase text-primary">Tous les évènements</h1>
+                    <p class="lead">
+                        Chaque année, l'association AlterCampagne organise des tours à vélos itinérants qui vont à la rencontre des alternatives : les personnes qui, seules ou en collectif, essaient d’améliorer la situation environnementale, climatique et sociale.
+                    </p>
+                </div>
+            </div>
+        </div>
 
-        <div class="row justify-content-center">
-            {% for event in events|slice(0, 3) %}
-                <div class="col-lg-4 text-center mb-3">
-                    {% if event.imagePath is not null %}
-                        <twig:UploadedImage path="{{ event.imagePath }}" width="140" height="140" />
-                    {% else %}
-                        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
-                    {% endif %}
-                    <h2 class="fw-normal mt-2">{{ event.name }}</h2>
-                    <p class="ms-1 me-1">{{ event.description }}</p>
-                    <p><a class="btn btn-outline-primary" href="{{ path('event_show', { slug: event.slug }) }}">View details &raquo;</a></p>
+        <hr class="mb-4">
+
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-uppercase text-primary">Les évènements à venir</h2>
+        </div>
+
+        <div class="row justify-content-center mb-4">
+            {% for event in events|filter(e => not e.isFinished) %}
+                {{ _self.render_event(event) }}
+            {% else %}
+                <div class="row col-12 col-lg-8">
+                    <div class="alert alert-warning text-center">
+                        <strong>Pas d'évènement à venir pour le moment :</strong>
+                        n'hésite pas à revenir un peu plus tard dans l'année pour voir si de nouveaux évènements sont annoncés. :)
+                    </div>
                 </div>
             {% endfor %}
         </div>
 
-        <hr class="mt-5 mb-4">
+        <hr class="mb-4">
 
         <div class="text-center mb-5">
-            <h1 class="fw-bold text-uppercase text-primary">Tous les évènements</h1>
+            <h2 class="fw-bold text-uppercase text-primary">Les évènements passés</h2>
         </div>
 
-        {% for event in events %}
-            {% if not loop.first %}
-                <hr class="mt-5 mb-5">
-            {% endif %}
-
-            <div class="row">
-                <div class="col-md-7{% if loop.index is odd %} order-md-2{% endif %}">
-                    <h2 class="fw-normal lh-1">{{ event.name }} <span class="text-body-secondary">It’ll blow your mind.</span></h2>
-                    <p class="lead">{{ event.description }}</p>
-                </div>
-                <div class="col-md-5{% if loop.index is odd %} order-md-1{% endif %}">
-                    <svg class="bd-placeholder-img bd-placeholder-img-lg img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"/><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text></svg>
-                </div>
-            </div>
-        {% endfor %}
+        <div class="row justify-content-center">
+            {% for event in events|filter(e => e.isFinished) %}
+                {{ _self.render_event(event) }}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
