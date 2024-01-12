@@ -28,3 +28,8 @@ services:
         $clientSecret: '%env(HELLOASSO_CLIENT_SECRET)%'
         $organizationSlug: '%env(HELLOASSO_ORGANISATION_SLUG)%'
         $sandbox: '%env(bool:HELLOASSO_SANDBOX)%'
+
+    App\Twig\Components\UploadedImage:
+      arguments:
+        $cloudimgToken: '%env(CLOUDIMG_TOKEN)%'
+        $cloudimgAlias: '%env(CLOUDIMG_ALIAS)%'

@@ -45,6 +45,7 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
                 Cet été, l’AlterTour roulera du 10 juillet au 19 août, de Montluçon (03) à Besançon (25).
                 Ce sera la 16e édition ! 🥳
                 END)
+            ->setImagePath('event/altertour-2023.jpg')
         ;
 
         $startDate = new \DateTime('2023-07-08');

@@ -49,6 +49,7 @@
         "symfony/translation": "7.0.*",
         "symfony/twig-bundle": "7.0.*",
         "symfony/uid": "7.0.*",
+        "symfony/ux-twig-component": "^2.13",
         "symfony/validator": "7.0.*",
         "symfony/web-link": "7.0.*",
         "symfony/yaml": "7.0.*",

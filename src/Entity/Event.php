@@ -47,6 +47,9 @@ class Event
     #[ORM\Column(type: 'text')]
     private string $description;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $imagePath = null;
+
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $publishedAt = null;
 
@@ -172,6 +175,18 @@ class Event
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagePath;
+    }
+
+    public function setImagePath(?string $imagePath): self
+    {
+        $this->imagePath = $imagePath;
 
         return $this;
     }
