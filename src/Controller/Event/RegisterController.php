@@ -53,10 +53,12 @@ class RegisterController extends AbstractController
 
             $stages = $event->getStages()->toArray();
 
+            $startIndex = (int) array_search($eventRegistrationDTO->stageStart, $stages, true);
+
             $stages = \array_slice(
                 $stages,
-                (int) array_search($eventRegistrationDTO->stageStart, $stages, true),
-                (int) array_search($eventRegistrationDTO->stageEnd, $stages, true),
+                $startIndex,
+                (int) array_search($eventRegistrationDTO->stageEnd, $stages, true) - $startIndex + 1,
             );
 
             $registration = new Registration(
