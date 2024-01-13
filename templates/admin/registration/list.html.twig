@@ -7,4 +7,32 @@
         <h1 class="fw-bold text-uppercase text-primary">Toutes les réservations</h1>
     </div>
 
+    <table class="table table-hover">
+        <tr>
+            <th scope="col">Evènement</th>
+            <th scope="col">Membre</th>
+            <th scope="col">Prix total</th>
+            <th scope="col">Status</th>
+            <th scope="col">Date</th>
+        </tr>
+        {% for registration in registrations %}
+            <tr>
+                <td>{{ registration.event.name }}</td>
+                <td>{{ registration.user.fullName }}</td>
+                <td>
+                    <strong>{{ (registration.totalPrice/100)|format_currency('EUR') }}</strong> ({{ registration.countDaysOfPresence }} x {{ (registration.pricePerDay/100)|format_currency('EUR') }})
+                </td>
+                <td>
+                    {% if registration.isConfirmed %}
+                        <span class="badge bg-success">Confirmée</span>
+                    {% elseif registration.isCanceled %}
+                        <span class="badge bg-danger">Annulée</span>
+                    {% else %}
+                        <span class="badge bg-warning">En attente</span>
+                    {% endif %}
+                </td>
+                <td>{{ registration.createdAt|format_datetime }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

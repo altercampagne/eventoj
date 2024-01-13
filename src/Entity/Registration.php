@@ -118,6 +118,11 @@ class Registration
         return RegistrationStatus::CONFIRMED === $this->status;
     }
 
+    public function isCanceled(): bool
+    {
+        return RegistrationStatus::CANCELED === $this->status;
+    }
+
     public function cancel(): void
     {
         $this->status = RegistrationStatus::CANCELED;
