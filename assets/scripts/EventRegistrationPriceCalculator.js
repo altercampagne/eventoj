@@ -10,11 +10,27 @@ class EventRegistrationPriceCalculator {
     this.finalPrice = document.querySelector('#event-registration-final-price');
 
     this.updateFinalPrice = this.updateFinalPrice.bind(this)
+    this.updateSelectEnd = this.updateSelectEnd.bind(this)
 
-    this.selectStart.addEventListener('change', this.updateFinalPrice);
+    this.selectStart.addEventListener('change', this.updateSelectEnd);
     this.selectEnd.addEventListener('change', this.updateFinalPrice);
     this.pricePerDayInput.addEventListener('change', this.updateFinalPrice);
 
+    this.updateSelectEnd();
+  }
+
+  updateSelectEnd() {
+    const startIndex = this.availableOptions.indexOf(this.selectStart.value);
+
+    // Disable days which cannot be booked in order to have at least 4 days.
+    Array.prototype.forEach.call(this.selectEnd.options, (option) => {
+      option.disabled = option.index <= startIndex + 4;
+    })
+
+    // Update end date if needed
+    if(this.availableOptions.indexOf(this.selectEnd.value) < startIndex + 4) {
+      this.selectEnd.value = this.availableOptions[startIndex + 4];
+    }
     this.updateFinalPrice();
   }
 

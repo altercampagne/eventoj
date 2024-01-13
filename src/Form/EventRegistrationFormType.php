@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Entity\Event;
 use App\Entity\Meal;
+use App\Entity\Stage;
 use App\Form\Type\EventRegistrationStageFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -25,6 +26,14 @@ class EventRegistrationFormType extends AbstractType
             ->add('stageStart', EventRegistrationStageFormType::class, [
                 'label' => 'L\'étape où tu nous rejoins',
                 'event' => $event,
+                'choice_attr' => function (Stage $stage, string $value, string $index) use ($event) {
+                    $position = array_search($stage, $event->getStages()->toArray(), true);
+
+                    // Latest stages cannot be selected because we want registration of at least 4 days.
+                    $disabled = $position >= $event->getStages()->count() - 4;
+
+                    return $disabled ? ['disabled' => 'disabled'] : [];
+                },
             ])
             ->add('firstMeal', EnumType::class, [
                 'label' => 'Le premier repas que tu partageras avec nous',
