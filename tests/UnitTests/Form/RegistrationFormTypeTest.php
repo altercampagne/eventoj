@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Tests\UnitTests\Form;
 
 use App\Form\RegistrationFormType;
+use App\Tests\DatabaseUtilTrait;
 use App\Tests\UnitTests\FormAssertionsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class RegistrationFormTypeTest extends KernelTestCase
 {
+    use DatabaseUtilTrait;
     use FormAssertionsTrait;
 
     public function testSubmitValidData(): void
@@ -49,7 +51,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         $faker = \Faker\Factory::create('fr_FR');
 
         $formData = [
-            'email' => 'admin@altercampagne.net',
+            'email' => $this->getRandomUser()->getEmail(), // Use a random user email to be sure this email exists
             'phoneNumber' => '0101010101',
             'birthDate' => $faker->date(),
             'address' => [

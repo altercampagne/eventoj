@@ -10,27 +10,25 @@ use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RegistrationFormType extends AbstractType
+class ProfileUpdateFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Ton adresse mail',
-                'help' => 'Promis, pas de spam ! 😉',
                 'attr' => [
                     'placeholder' => 'Ton adresse mail',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
+                'help' => '<i class="ms-2 fa-solid fa-triangle-exclamation"></i> En cas de changement, ton adresse mail devra de nouveau être validée.',
+                'help_html' => true,
             ])
             ->add('firstName', TextType::class, [
                 'label' => 'Ton prénom',
@@ -72,27 +70,6 @@ class RegistrationFormType extends AbstractType
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
-                ],
-            ])
-            ->add('plainPassword', PasswordType::class, [
-                'mapped' => false,
-                'label' => 'Ton mot de passe',
-                'help' => 'Au minimum 7 caractères et si possible unique !',
-                'attr' => [
-                    'placeholder' => 'Ton mot de passe',
-                    'autocomplete' => 'new-password',
-                ],
-                'row_attr' => [
-                    'class' => 'form-floating mb-3',
-                ],
-                'constraints' => [
-                    new NotBlank(),
-                    new Length([
-                        'min' => 7,
-                        'minMessage' => 'Ton mot de passe doit faire au moins {{ limit }} caractères.',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
                 ],
             ])
         ;

@@ -1,0 +1,63 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Mettre à jour mon profil{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row text-center mb-3">
+            <h1 class="fw-bold text-uppercase text-primary">Mise à jour de ton profil</h1>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                {{ form_errors(form) }}
+
+                {{ form_start(form) }}
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2">Tes informations personnelles</legend>
+
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.firstName) }}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.lastName) }}
+                            </div>
+                        </div>
+                        {{ form_row(form.birthDate) }}
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2">Tes coordonnées</legend>
+
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.phoneNumber) }}
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2">Ton adresse</legend>
+
+                        {{ form_row(form.address.addressLine1) }}
+                        {{ form_row(form.address.addressLine2) }}
+
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                {{ form_row(form.address.zipCode) }}
+                            </div>
+                            <div class="col-12 col-md-8">
+                                {{ form_row(form.address.city) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.address.countryCode) }}
+                    </fieldset>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-lg btn-primary">Mettre à jour</button>
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
