@@ -16,11 +16,11 @@ class EventRegistrationDTO
     public Event $event;
 
     #[Assert\NotBlank]
-    public Stage $stageStart;
+    public ?Stage $stageStart = null;
     #[Assert\NotBlank]
     public Meal $firstMeal = MEAL::LUNCH;
     #[Assert\NotBlank]
-    public Stage $stageEnd;
+    public ?Stage $stageEnd = null;
     #[Assert\NotBlank]
     public Meal $lastMeal = Meal::LUNCH;
     #[Assert\NotNull]
@@ -73,6 +73,10 @@ class EventRegistrationDTO
     #[Assert\Callback]
     public function validatePeriod(ExecutionContextInterface $context, mixed $payload): void
     {
+        if (null === $this->stageStart || null === $this->stageEnd) {
+            return;
+        }
+
         $now = new \DateTimeImmutable();
         if ($this->stageStart->getDate() < $now) {
             $context->buildViolation('Cette date d\'arrivée est dans le passé.')

@@ -24,7 +24,7 @@ class EventRegistrationPriceCalculator {
 
     // Disable days which cannot be booked in order to have at least 4 days.
     Array.prototype.forEach.call(this.selectEnd.options, (option) => {
-      option.disabled = option.index <= startIndex + 4;
+      option.disabled = option.index < startIndex + 4;
     })
 
     // Update end date if needed
