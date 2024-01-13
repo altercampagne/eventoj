@@ -18,7 +18,6 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.16",
         "doskyft/helloasso-php": "dev-main",
-        "easycorp/easyadmin-bundle": "^4.8",
         "martin-georgiev/postgresql-for-doctrine": "^2.1",
         "odolbeau/phone-number-bundle": "^3.9",
         "phpdocumentor/reflection-docblock": "^5.3",
