@@ -10,6 +10,7 @@ use App\Entity\Alternative;
 use App\Entity\Event;
 use App\Entity\Meal;
 use App\Entity\Registration;
+use App\Entity\RegistrationStatus;
 use App\Entity\Stage;
 use App\Entity\StageAlternativeRelation;
 use App\Entity\StageType;
@@ -50,6 +51,7 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
 
         $startDate = new \DateTime('2023-07-08');
         foreach ($this->getStages($event) as $stage) {
+            $event->addStage($stage);
             $stage->setDate(\DateTimeImmutable::createFromMutable($startDate));
 
             $manager->persist($stage);
@@ -320,8 +322,11 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
     private function generateRegistration(Event $event): Registration
     {
         $stages = $event->getStages()->toArray();
+        if (5 > \count($stages)) {
+            throw new \RuntimeException('Not enough stages in event to generate registrations');
+        }
 
-        $start = random_int(0, max(\count($stages) - 5, \count($stages)));
+        $start = random_int(0, \count($stages) - 5);
         $stages = \array_slice($stages, $start, $start + 5);
 
         $registration = new Registration(
@@ -332,18 +337,20 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
             firstMeal: $this->faker->randomElement(Meal::class),
             /* @phpstan-ignore-next-line */
             lastMeal: $this->faker->randomElement(Meal::class),
-            pricePerDay: $this->faker->numberBetween(10, 70),
+            pricePerDay: $this->faker->numberBetween(10, 70) * 100,
             needBike: $this->faker->boolean(),
         );
 
         // 2 chances out of 3 to have a confirmed reservation
         if (0 < $this->faker->randomDigit() % 3) {
-            $registration->confirm();
+            (new \ReflectionProperty(Registration::class, 'status'))->setValue($registration, RegistrationStatus::CONFIRMED);
+            (new \ReflectionProperty(Registration::class, 'confirmedAt'))->setValue($registration, new \DateTimeImmutable());
         }
 
         // 1 chances out of 5 to have a canceled reservation
         if (0 === $this->faker->randomDigit() % 5) {
-            $registration->cancel();
+            (new \ReflectionProperty(Registration::class, 'status'))->setValue($registration, RegistrationStatus::CANCELED);
+            (new \ReflectionProperty(Registration::class, 'canceledAt'))->setValue($registration, new \DateTimeImmutable());
         }
 
         return $registration;

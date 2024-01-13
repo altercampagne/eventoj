@@ -123,8 +123,21 @@ class Registration
         return RegistrationStatus::CANCELED === $this->status;
     }
 
+    public function canBeCanceled(): bool
+    {
+        if (RegistrationStatus::CANCELED === $this->status) {
+            return false;
+        }
+
+        return $this->event->isBookable();
+    }
+
     public function cancel(): void
     {
+        if (!$this->canBeCanceled()) {
+            throw new \LogicException('Cannot cancel this registration.');
+        }
+
         $this->status = RegistrationStatus::CANCELED;
         $this->canceledAt = new \DateTimeImmutable();
     }

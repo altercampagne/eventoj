@@ -236,6 +236,13 @@ class Event
         return $stage;
     }
 
+    public function addStage(Stage $stage): self
+    {
+        $this->stages->add($stage);
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Registration>
      */
