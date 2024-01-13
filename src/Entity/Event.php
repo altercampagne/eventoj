@@ -6,7 +6,6 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -50,15 +49,15 @@ class Event
     #[ORM\Column(nullable: true)]
     private ?string $imagePath = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $publishedAt = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, options: [
+    #[ORM\Column(options: [
         'comment' => 'At which date members will be able to register to this event?',
     ])]
     private \DateTimeImmutable $openingDateForBookings;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
     /**

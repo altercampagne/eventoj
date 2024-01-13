@@ -56,15 +56,15 @@ class Registration
     ])]
     private ?string $helloassoCheckoutIntentId = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true, options: [
+    #[ORM\Column(nullable: true, options: [
         'comment' => 'Date on which the reservation was confirmed.',
     ])]
     private \DateTimeImmutable $confirmedAt;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true, options: [
+    #[ORM\Column(nullable: true, options: [
         'comment' => 'Date on which the reservation was cancelled.',
     ])]
     private \DateTimeImmutable $canceledAt;

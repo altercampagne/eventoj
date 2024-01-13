@@ -54,7 +54,7 @@ class Stage
     #[ORM\OneToMany(targetEntity: StageAlternative::class, mappedBy: 'stage', cascade: ['persist'])]
     private Collection $stagesAlternatives;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
     /**
