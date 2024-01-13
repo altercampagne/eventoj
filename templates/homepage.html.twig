@@ -11,11 +11,11 @@
             <div class="card-body">
                 <twig:UploadedImage path="{{ event.imagePath|default('') }}" width="300" height="300" alt="Illustration {{ event.name }}" class="mb-3" />
 
-                <p class="card-text">{{ event.description }}</p>
-
-                <div class="d-grid gap-2 mt-4">
-                    <a href="{{ path('event_show', { slug: event.slug }) }}" class="btn btn-primary btn-lg">Voir l'évèvenement</a>
-                </div>
+                {% if event.isBookable %}
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="{{ path('event_register', { slug: event.slug }) }}" class="btn btn-primary btn-lg">M'inscrire</a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

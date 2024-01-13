@@ -34,7 +34,7 @@ class RegisterController extends AbstractController
         Registration $registration = null,
     ): Response {
         if (!$event->isBookable()) {
-            return $this->redirectToRoute('event_show', ['slug' => $event->getSlug()]);
+            throw $this->createNotFoundException();
         }
 
         $eventRegistrationDTO = new EventRegistrationDTO($event);
@@ -75,7 +75,7 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('event_registration_pay', ['id' => (string) $registration->getId()]);
         }
 
-        return $this->render('event/book.html.twig', [
+        return $this->render('event/register.html.twig', [
             'event' => $event,
             'form' => $form,
         ]);
