@@ -1,0 +1,37 @@
+{% extends '_skeleton.html.twig' %}
+
+{% block javascripts %}
+    {{ importmap('admin') }}
+{% endblock %}
+
+{% block body %}
+    <main class="d-flex flex-nowrap">
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
+            <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                <span class="fs-4">ADMIN</span>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" aria-current="page">
+                        <i class="fa-solid fa-ticket me-1"></i>
+                        Réservations
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="container-fluid pt-3">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block main %}{% endblock %}
+        </div>
+    </main>
+{% endblock %}

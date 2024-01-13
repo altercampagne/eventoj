@@ -20,6 +20,10 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'admin' => [
+        'path' => './assets/admin.js',
+        'entrypoint' => true,
+    ],
     'bootstrap' => [
         'version' => '5.3.2',
     ],
@@ -28,6 +32,13 @@ return [
     ],
     'bootstrap/dist/css/bootstrap.min.css' => [
         'version' => '5.3.2',
+        'type' => 'css',
+    ],
+    '@fortawesome/fontawesome-free' => [
+        'version' => '6.5.1',
+    ],
+    '@fortawesome/fontawesome-free/css/all.css' => [
+        'version' => '6.5.1',
         'type' => 'css',
     ],
 ];
