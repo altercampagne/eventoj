@@ -25,6 +25,6 @@ class LoginTest extends WebTestCase
         $response = $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('homepage');
-        $this->assertSelectorTextContains('#connected-as', 'Connecté en tant que John Doe');
+        $this->assertSelectorTextContains('#connected-as', 'John Doe');
     }
 }

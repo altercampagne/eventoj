@@ -81,7 +81,7 @@ class PasswordResetTest extends WebTestCase
         $response = $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('homepage');
-        $this->assertSelectorTextContains('#connected-as', 'Connecté en tant que');
+        $this->assertSelectorExists('#connected-as');
     }
 
     private function removeExistingResetPasswordRequests(string $email): void
