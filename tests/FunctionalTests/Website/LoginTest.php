@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\FunctionalTests;
+namespace App\Tests\FunctionalTests\Website;
 
 use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

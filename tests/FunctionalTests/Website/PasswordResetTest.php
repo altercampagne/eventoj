@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\FunctionalTests;
+namespace App\Tests\FunctionalTests\Website;
 
 use App\Entity\ResetPasswordRequest;
 use Doctrine\ORM\EntityManagerInterface;
