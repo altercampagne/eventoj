@@ -25,6 +25,16 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="{{ path('profile_update') }}">Mon profil</a></li>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('admin') }}">
+                                                <i class="fa-solid fa-screwdriver-wrench me-2"></i>
+                                                Administration
+                                                <i class="fa-solid fa-screwdriver-wrench ms-2"></i>
+                                            </a>
+                                        </li>
+                                    {% endif %}
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="{{ path('logout') }}">Se déconnecter</a></li>
                                 </ul>

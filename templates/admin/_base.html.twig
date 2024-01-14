@@ -5,24 +5,36 @@
 {% endblock %}
 
 {% block body %}
+    {% set current_route = app.request.attributes.get('_route') %}
+
     <main class="d-flex flex-nowrap">
-        <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
-            <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                <span class="fs-4">ADMIN</span>
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-fixed vh-100" style="width: 280px;">
+            <a href="{{ path('admin') }}" class="text-center mb-3 mb-md-0 link-body-emphasis text-decoration-none fs-4">
+                <i class="fa-solid fa-screwdriver-wrench me-2"></i>
+                ADMIN
+                <i class="fa-solid fa-screwdriver-wrench ms-2"></i>
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="{{ path('admin_registration_list') }}" class="nav-link active" aria-current="page">
+                    <a href="{{ path('admin_registration_list') }}" class="nav-link{% if current_route == 'admin_registration_list' %} active{% endif %}" aria-current="page">
                         <i class="fa-solid fa-ticket me-1"></i>
                         Réservations
                     </a>
                 </li>
             </ul>
+
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a href="{{ path('homepage') }}" class="nav-link" aria-current="page">
+                        <i class="fa-solid fa-circle-left me-1"></i>
+                        Revenir au site
+                    </a>
+                </li>
+            </ul>
         </div>
 
-        <div class="container-fluid pt-3">
+        <div class="container-fluid pt-3" style="margin-left: 280px;">
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }}">
