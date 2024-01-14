@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
+#[Route('/event/{slug}/register/{id?}', name: 'event_register')]
 class RegisterController extends AbstractController
 {
     public function __construct(
@@ -25,7 +26,6 @@ class RegisterController extends AbstractController
     ) {
     }
 
-    #[Route('/event/{slug}/register/{id?}', name: 'event_register')]
     public function __invoke(
         Request $request,
         #[MapEntity(mapping: ['slug' => 'slug'])]

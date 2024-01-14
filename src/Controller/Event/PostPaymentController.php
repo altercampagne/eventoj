@@ -17,6 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
+#[Route('/registration/{id}/post_payment/back', name: 'event_registration_post_payment_back', defaults: ['type' => 'back'])]
+#[Route('/registration/{id}/post_payment/error', name: 'event_registration_post_payment_error', defaults: ['type' => 'error'])]
+#[Route('/registration/{id}/post_payment/return', name: 'event_registration_post_payment_return', defaults: ['type' => 'return'])]
 class PostPaymentController extends AbstractController
 {
     public function __construct(
@@ -25,9 +28,6 @@ class PostPaymentController extends AbstractController
     ) {
     }
 
-    #[Route('/registration/{id}/post_payment/back', name: 'event_registration_post_payment_back', defaults: ['type' => 'back'])]
-    #[Route('/registration/{id}/post_payment/error', name: 'event_registration_post_payment_error', defaults: ['type' => 'error'])]
-    #[Route('/registration/{id}/post_payment/return', name: 'event_registration_post_payment_return', defaults: ['type' => 'return'])]
     public function __invoke(Request $request, Registration $registration, HelloassoPaymentReturnType $type): Response
     {
         /** @var User $payer */

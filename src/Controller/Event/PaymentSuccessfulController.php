@@ -12,9 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
+#[Route('/registration/{id}/payment_successful', name: 'event_registration_payment_successful')]
 class PaymentSuccessfulController extends AbstractController
 {
-    #[Route('/registration/{id}/payment_successful', name: 'event_registration_payment_successful')]
     public function __invoke(Request $request, Registration $registration): Response
     {
         if ($registration->getUser() !== $this->getUser()) {
