@@ -17,6 +17,10 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
+                    <a href="{{ path('admin_user_list') }}" class="nav-link{% if current_route == 'admin_user_list' %} active{% endif %}" aria-current="page">
+                        <i class="fa-solid fa-users me-1"></i>
+                        Utilisateurices
+                    </a>
                     <a href="{{ path('admin_registration_list') }}" class="nav-link{% if current_route == 'admin_registration_list' %} active{% endif %}" aria-current="page">
                         <i class="fa-solid fa-ticket me-1"></i>
                         Réservations

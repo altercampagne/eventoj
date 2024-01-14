@@ -66,9 +66,12 @@ class UserFixtures extends Fixture
             ->setBirthDate(\DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-80 years', 'now')))
             ->setAddress($this->getRandomAddress())
             ->setPhoneNumber($this->phoneNumberUtil->parse($this->faker->phoneNumber(), 'FR'))
-            ->setRoles(['ROLE_ADMIN'])
             ->setPassword($this->getHashedPassword())
         ;
+
+        if ($this->faker->boolean()) {
+            $user->verifyEmail();
+        }
 
         return $user;
     }

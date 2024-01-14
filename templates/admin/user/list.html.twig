@@ -1,0 +1,38 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% block title %}Toutes les réservations{% endblock %}
+
+{% block main %}
+    <div class="text-center">
+        <h1 class="fw-bold text-uppercase text-primary">Toustes les utilisateurices</h1>
+    </div>
+
+    <table class="table table-hover">
+        <tr>
+            <th scope="col">Nom complet</th>
+            <th scope="col">Mail</th>
+            <th scope="col">Numéro de téléphone</th>
+            <th scope="col">Date de naissance</th>
+            <th scope="col">Date d'inscription</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>
+                    {{ user.fullName }}
+                    {% if user.isAdmin %}
+                        <span class="badge bg-danger">ADMIN</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ user.email }}
+                    {% if user.isVerified %}
+                        <i class="fa-solid fa-circle-check text-secondary" data-bs-toggle="tooltip" data-bs-title="Email vérifié"></i>
+                    {% endif %}
+                </td>
+                <td>{{ user.phoneNumber|phone_number_format }}</td>
+                <td>{{ user.birthDate|format_date }}</td>
+                <td>{{ user.createdAt|format_datetime }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
