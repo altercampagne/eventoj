@@ -73,11 +73,6 @@ class PostPaymentController extends AbstractController
 
     private function cancel(Registration $registration): RedirectResponse
     {
-        $registration->cancel();
-
-        $this->em->persist($registration);
-        $this->em->flush();
-
         return $this->redirectToRoute('event_register', [
             'slug' => $registration->getEvent()->getSlug(),
             'id' => $registration->getId(),

@@ -27,29 +27,29 @@ class Registration
     private readonly Event $event;
 
     #[ORM\Column(type: 'string', length: 20, enumType: RegistrationStatus::class, options: [
-        'comment' => 'Status of this registration (waiting_payment, confirmed, canceled)',
+        'comment' => 'Status of this registration (waiting_payment, confirmed)',
     ])]
     private RegistrationStatus $status;
 
     #[ORM\Column(type: 'string', length: 10, enumType: Meal::class, options: [
         'comment' => 'First meal participant will share with us (breakfast, lunch, dinner)',
     ])]
-    private readonly Meal $firstMeal;
+    private Meal $firstMeal = Meal::LUNCH;
 
     #[ORM\Column(type: 'string', length: 10, enumType: Meal::class, options: [
         'comment' => 'Last meal participant will share with us (breakfast, lunch, dinner)',
     ])]
-    private readonly Meal $lastMeal;
+    private Meal $lastMeal = Meal::LUNCH;
 
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'The price per day choose by the user.',
     ])]
-    private readonly int $pricePerDay;
+    private int $pricePerDay = 33;
 
     #[ORM\Column(type: Types::BOOLEAN, options: [
         'comment' => 'Does the participant need a loan bike?',
     ])]
-    private readonly bool $needBike;
+    private bool $needBike = false;
 
     #[ORM\Column(type: Types::STRING, nullable: true, options: [
         'comment' => 'The checkout intent ID provided by Helloasso',
@@ -64,11 +64,6 @@ class Registration
     ])]
     private \DateTimeImmutable $confirmedAt;
 
-    #[ORM\Column(nullable: true, options: [
-        'comment' => 'Date on which the reservation was cancelled.',
-    ])]
-    private \DateTimeImmutable $canceledAt;
-
     /**
      * @var Collection<int, Stage>
      */
@@ -77,19 +72,12 @@ class Registration
     #[ORM\OrderBy(['date' => 'ASC'])]
     private Collection $stages;
 
-    /**
-     * @param Stage[] $stages
-     */
-    public function __construct(User $user, Event $event, array $stages, Meal $firstMeal, Meal $lastMeal, int $pricePerDay, bool $needBike)
+    public function __construct(User $user, Event $event)
     {
         $this->id = new UuidV4();
         $this->user = $user;
         $this->event = $event;
-        $this->stages = new ArrayCollection($stages);
-        $this->firstMeal = $firstMeal;
-        $this->lastMeal = $lastMeal;
-        $this->pricePerDay = $pricePerDay;
-        $this->needBike = $needBike;
+        $this->stages = new ArrayCollection();
         $this->status = RegistrationStatus::WAITING_PAYMENT;
         $this->createdAt = new \DateTimeImmutable();
     }
@@ -118,28 +106,9 @@ class Registration
         return RegistrationStatus::CONFIRMED === $this->status;
     }
 
-    public function isCanceled(): bool
+    public function isWaitingPayment(): bool
     {
-        return RegistrationStatus::CANCELED === $this->status;
-    }
-
-    public function canBeCanceled(): bool
-    {
-        if (RegistrationStatus::CANCELED === $this->status) {
-            return false;
-        }
-
-        return $this->event->isBookable();
-    }
-
-    public function cancel(): void
-    {
-        if (!$this->canBeCanceled()) {
-            throw new \LogicException('Cannot cancel this registration.');
-        }
-
-        $this->status = RegistrationStatus::CANCELED;
-        $this->canceledAt = new \DateTimeImmutable();
+        return RegistrationStatus::WAITING_PAYMENT === $this->status;
     }
 
     public function countDaysOfPresence(): int
@@ -177,9 +146,23 @@ class Registration
         return $this->firstMeal;
     }
 
+    public function setFirstMeal(Meal $firstMeal): self
+    {
+        $this->firstMeal = $firstMeal;
+
+        return $this;
+    }
+
     public function getLastMeal(): Meal
     {
         return $this->lastMeal;
+    }
+
+    public function setLastMeal(Meal $lastMeal): self
+    {
+        $this->lastMeal = $lastMeal;
+
+        return $this;
     }
 
     public function getPricePerDay(): int
@@ -187,9 +170,23 @@ class Registration
         return $this->pricePerDay;
     }
 
+    public function setPricePerDay(int $pricePerDay): self
+    {
+        $this->pricePerDay = $pricePerDay;
+
+        return $this;
+    }
+
     public function needBike(): bool
     {
         return $this->needBike;
+    }
+
+    public function setNeedBike(bool $needBike): self
+    {
+        $this->needBike = $needBike;
+
+        return $this;
     }
 
     public function getHelloassoCheckoutIntentId(): ?string
@@ -221,23 +218,21 @@ class Registration
         return $this;
     }
 
-    public function getCanceledAt(): \DateTimeImmutable
-    {
-        return $this->canceledAt;
-    }
-
-    public function setCanceledAt(\DateTimeImmutable $canceledAt): self
-    {
-        $this->canceledAt = $canceledAt;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Stage>
      */
     public function getStages(): Collection
     {
         return $this->stages;
+    }
+
+    /**
+     * @param Stage[] $stages
+     */
+    public function setStages(array $stages): self
+    {
+        $this->stages = new ArrayCollection($stages);
+
+        return $this;
     }
 }

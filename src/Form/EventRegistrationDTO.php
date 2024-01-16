@@ -18,18 +18,18 @@ class EventRegistrationDTO
     #[Assert\NotBlank]
     public ?Stage $stageStart = null;
     #[Assert\NotBlank]
-    public Meal $firstMeal = MEAL::LUNCH;
+    public Meal $firstMeal = MEAL::DINNER;
     #[Assert\NotBlank]
     public ?Stage $stageEnd = null;
     #[Assert\NotBlank]
-    public Meal $lastMeal = Meal::LUNCH;
+    public Meal $lastMeal = Meal::BREAKFAST;
     #[Assert\NotNull]
     public bool $needBike = false;
     #[Assert\NotBlank]
     #[Assert\Range(min: 10, minMessage: 'Le prix minimum par jour est de {{ limit }} €.')]
     public int $pricePerDay = 33;
 
-    public function __construct(Event $event)
+    public function __construct(Event $event, Registration $registration = null)
     {
         $this->event = $event;
 
@@ -54,20 +54,19 @@ class EventRegistrationDTO
         });
 
         $this->stageEnd = $stageEnd ?: $stages->last() ?: throw new \RuntimeException('Looks like it is not possible to determine an end date.');
-    }
 
-    public function configureFromRegistration(Registration $registration): void
-    {
-        if (false !== $stage = $registration->getStages()->first()) {
-            $this->stageStart = $stage;
+        if (null !== $registration) {
+            if (false !== $stage = $registration->getStages()->first()) {
+                $this->stageStart = $stage;
+            }
+            $this->firstMeal = $registration->getFirstMeal();
+            if (false !== $stage = $registration->getStages()->last()) {
+                $this->stageEnd = $stage;
+            }
+            $this->lastMeal = $registration->getLastMeal();
+            $this->needBike = $registration->needBike();
+            $this->pricePerDay = $registration->getPricePerDay() / 100;
         }
-        $this->firstMeal = $registration->getFirstMeal();
-        if (false !== $stage = $registration->getStages()->last()) {
-            $this->stageEnd = $stage;
-        }
-        $this->lastMeal = $registration->getLastMeal();
-        $this->needBike = $registration->needBike();
-        $this->pricePerDay = $registration->getPricePerDay() / 100;
     }
 
     #[Assert\Callback]

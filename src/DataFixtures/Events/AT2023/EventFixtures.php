@@ -332,25 +332,21 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
         $registration = new Registration(
             user: $this->getRandomUser(),
             event: $event,
-            stages: $stages,
-            /* @phpstan-ignore-next-line */
-            firstMeal: $this->faker->randomElement(Meal::class),
-            /* @phpstan-ignore-next-line */
-            lastMeal: $this->faker->randomElement(Meal::class),
-            pricePerDay: $this->faker->numberBetween(10, 70) * 100,
-            needBike: $this->faker->boolean(),
         );
+        $registration
+            ->setStages($stages)
+            /* @phpstan-ignore-next-line */
+            ->setFirstMeal($this->faker->randomElement(Meal::class))
+            /* @phpstan-ignore-next-line */
+            ->setLastMeal($this->faker->randomElement(Meal::class))
+            ->setPricePerDay($this->faker->numberBetween(10, 70) * 100)
+            ->setNeedBike($this->faker->boolean())
+        ;
 
         // 2 chances out of 3 to have a confirmed reservation
         if (0 < $this->faker->randomDigit() % 3) {
             (new \ReflectionProperty(Registration::class, 'status'))->setValue($registration, RegistrationStatus::CONFIRMED);
             (new \ReflectionProperty(Registration::class, 'confirmedAt'))->setValue($registration, new \DateTimeImmutable());
-        }
-
-        // 1 chances out of 5 to have a canceled reservation
-        if (0 === $this->faker->randomDigit() % 5) {
-            (new \ReflectionProperty(Registration::class, 'status'))->setValue($registration, RegistrationStatus::CANCELED);
-            (new \ReflectionProperty(Registration::class, 'canceledAt'))->setValue($registration, new \DateTimeImmutable());
         }
 
         return $registration;

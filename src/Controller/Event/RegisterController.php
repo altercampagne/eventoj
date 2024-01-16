@@ -37,11 +37,7 @@ class RegisterController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $eventRegistrationDTO = new EventRegistrationDTO($event);
-        if (null !== $registration) {
-            $eventRegistrationDTO->configureFromRegistration($registration);
-        }
-
+        $eventRegistrationDTO = new EventRegistrationDTO($event, $registration);
         $form = $this->createForm(EventRegistrationFormType::class, $eventRegistrationDTO, [
             'event' => $event,
         ]);
@@ -50,6 +46,13 @@ class RegisterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */
             $user = $this->getUser();
+
+            if (null === $registration) {
+                $registration = new Registration(
+                    user: $user,
+                    event: $event,
+                );
+            }
 
             $stages = $event->getStages()->toArray();
 
@@ -61,15 +64,13 @@ class RegisterController extends AbstractController
                 (int) array_search($eventRegistrationDTO->stageEnd, $stages, true) - $startIndex + 1,
             );
 
-            $registration = new Registration(
-                user: $user,
-                event: $event,
-                stages: $stages,
-                firstMeal: $eventRegistrationDTO->firstMeal,
-                lastMeal: $eventRegistrationDTO->lastMeal,
-                pricePerDay: $eventRegistrationDTO->pricePerDay * 100,
-                needBike: $eventRegistrationDTO->needBike,
-            );
+            $registration
+                ->setStages($stages)
+                ->setFirstMeal($eventRegistrationDTO->firstMeal)
+                ->setLastMeal($eventRegistrationDTO->lastMeal)
+                ->setPricePerDay($eventRegistrationDTO->pricePerDay * 100)
+                ->setNeedBike($eventRegistrationDTO->needBike)
+            ;
 
             $this->em->persist($registration);
             $this->em->flush();

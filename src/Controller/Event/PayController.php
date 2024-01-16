@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Helloasso\HelloassoClient;
 use Helloasso\Models\Carts\CheckoutPayer;
 use Helloasso\Models\Carts\InitCheckoutBody;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,7 @@ class PayController extends AbstractController
     public function __construct(
         private readonly HelloassoClient $helloassoClient,
         private readonly EntityManagerInterface $em,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -32,9 +34,12 @@ class PayController extends AbstractController
         if ($registration->getUser() !== $this->getUser()) {
             throw $this->createNotFoundException('Current user is not the owner of the given reservation.');
         }
+        if (!$registration->isWaitingPayment()) {
+            $this->addFlash('warning', 'Cette inscription ne peut pas être réglée. Ne le serait-elle pas déjà ?');
 
-        if (!$registration->canBeConfirmed()) {
-            $this->addFlash('error', 'Cette réservation ne peut plus être confirmée.');
+            $this->logger->warning('Trying to pay a registration which is not in waiting payment!', [
+                'registration_id' => (string) $registration->getId(),
+            ]);
 
             return $this->redirectToRoute('homepage');
         }
