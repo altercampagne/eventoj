@@ -77,7 +77,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Registration>
      */
-    #[ORM\OneToMany(targetEntity: Registration::class, mappedBy: 'event')]
+    #[ORM\OneToMany(targetEntity: Registration::class, mappedBy: 'user')]
     #[ORM\OrderBy(['createdAt' => 'ASC'])]
     private Collection $registrations;
 
