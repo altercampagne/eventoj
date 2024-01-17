@@ -40,11 +40,19 @@ when@test:
 when@prod:
     monolog:
         handlers:
-            nested:
+            main:
                 type: stream
                 path: php://stderr
                 level: warning
                 formatter: monolog.formatter.json
+            slack:
+                type: slackwebhook
+                webhook_url: '%env(SLACK_WEBHOOK_URL)%'
+                bot_name: '%env(SLACK_WEBHOOK_BOT_NAME)%'
+                icon_emoji: ':boom:'
+                include_extra: true
+                use_attachment: false
+                level: warning
             console:
                 type: console
                 process_psr_3_messages: false
