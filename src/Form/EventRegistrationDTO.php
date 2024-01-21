@@ -18,7 +18,7 @@ class EventRegistrationDTO
     #[Assert\NotBlank]
     public ?Stage $stageStart = null;
     #[Assert\NotBlank]
-    public Meal $firstMeal = MEAL::DINNER;
+    public Meal $firstMeal = Meal::DINNER;
     #[Assert\NotBlank]
     public ?Stage $stageEnd = null;
     #[Assert\NotBlank]
