@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormInterface;
 trait FormAssertionsTrait
 {
     /**
-     * @param array<string, string> $expectedErrors
+     * @param array<string, string|string[]> $expectedErrors
      */
     public function assertFormInvalid(FormInterface $form, array $expectedErrors = []): void
     {
@@ -21,11 +21,33 @@ trait FormAssertionsTrait
             return;
         }
 
+        $errors = $this->getFlattenErrors($form);
+
+        foreach ($expectedErrors as $field => $expectedErrorsForField) {
+            $this->assertTrue(\array_key_exists($field, $errors), "No error found for field $field");
+            $expectedErrorsForField = (array) $expectedErrorsForField;
+
+            $this->assertSame($expectedErrorsForField, $errors[$field]);
+        }
+    }
+
+    public function assertFormValid(FormInterface $form): void
+    {
+        $this->assertTrue($form->isSynchronized());
+        $this->assertSame([], $this->getFlattenErrors($form));
+        $this->assertTrue($form->isValid());
+    }
+
+    /**
+     * @return array<string, string[]>
+     */
+    private function getFlattenErrors(FormInterface $form): array
+    {
         $errors = [];
         foreach ($form->getErrors(true) as $error) {
-            $errors[$error->getOrigin()?->getName()] = $error->getMessage();
+            $errors[$error->getOrigin()?->getName()][] = $error->getMessage();
         }
 
-        $this->assertSame($expectedErrors, $errors);
+        return $errors;
     }
 }
