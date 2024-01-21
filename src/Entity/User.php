@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Validator\HelloassoName;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -36,10 +37,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $email;
 
     #[Assert\NotBlank]
+    #[HelloassoName]
     #[ORM\Column]
     private string $firstName;
 
     #[Assert\NotBlank]
+    #[HelloassoName]
     #[ORM\Column]
     private string $lastName;
 
