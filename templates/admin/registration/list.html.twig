@@ -24,9 +24,9 @@
                 </td>
                 <td>
                     {% if registration.isConfirmed %}
-                        <span class="badge bg-success"><i class="fa-solid fa-check me-1"></i> Confirmée</span>
+                        <span class="badge text-bg-success"><i class="fa-solid fa-check me-1"></i> Confirmée</span>
                     {% else %}
-                        <span class="badge bg-warning"><i class="fa-regular fa-clock me-1"></i> En attente</span>
+                        <span class="badge text-bg-warning"><i class="fa-regular fa-clock me-1"></i> En attente</span>
                     {% endif %}
                 </td>
                 <td>{{ registration.createdAt|format_datetime }}</td>
