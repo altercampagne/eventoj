@@ -48,7 +48,11 @@ class EventRegistrationFormType extends AbstractType
                 'class' => Meal::class,
             ])
             ->add('needBike', CheckboxType::class)
-            ->add('pricePerDay', IntegerType::class)
+            ->add('pricePerDay', IntegerType::class, [
+                'attr' => [
+                    'min' => 20,
+                ],
+            ])
         ;
     }
 
