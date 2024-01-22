@@ -1,0 +1,45 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% block title %}Admin - Évènements{% endblock %}
+
+{% block main %}
+    <div class="text-center">
+        <h1 class="fw-bold text-uppercase text-primary">Tous les évènements</h1>
+    </div>
+
+    <table class="table table-hover">
+        <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Etapes</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Date</th>
+            <th scope="col">Actions</th>
+        </tr>
+        {% for event in events %}
+            <tr>
+                <td><span class="badge text-bg-secondary">{{ event.type.value }}</span></td>
+                <td>{{ event.name }}</td>
+                <td>{{ event.stages|length }}</td>
+                <td>
+                    {% if event.isFinished %}
+                        <span class="badge text-bg-dark">Terminé</span>
+                    {% else %}
+                        <span class="badge text-bg-warning">Ouvert</span>
+                    {% endif %}
+                </td>
+                <td>{{ event.createdAt|format_datetime }}</td>
+                <td>
+                    <div class="dropdown">
+                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ path('admin_registration_list', { slug: event.slug }) }}"><i class="fa-solid fa-ticket me-1"></i> Voir les réservations</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

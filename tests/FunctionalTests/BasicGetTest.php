@@ -28,6 +28,7 @@ class BasicGetTest extends WebTestCase
         yield ['/_admin', 'Admin - Dashboard', 'Dashboard'];
         yield ['/_admin/users', 'Admin - Utilisateurices', 'Toustes les utilisateurices'];
         yield ['/_admin/registrations', 'Admin - Réservations', 'Toutes les réservations'];
+        yield ['/_admin/events', 'Admin - Évènements', 'Tous les évènements'];
     }
 
     /**
