@@ -43,6 +43,9 @@ class Event
     #[ORM\Column]
     private int $childrenCapacity;
 
+    #[ORM\Column]
+    private int $bikesAvailable;
+
     #[ORM\Column(type: 'text')]
     private string $description;
 
@@ -88,6 +91,7 @@ class Event
         $event = new self(EventType::AT);
         $event->adultsCapacity = 60;
         $event->childrenCapacity = 12;
+        $event->bikesAvailable = 22;
 
         return $event;
     }
@@ -97,6 +101,7 @@ class Event
         $event = new self(EventType::ADT);
         $event->adultsCapacity = 40;
         $event->childrenCapacity = 8;
+        $event->bikesAvailable = 0;
 
         return $event;
     }
@@ -106,6 +111,7 @@ class Event
         $event = new self(EventType::BT);
         $event->adultsCapacity = 40;
         $event->childrenCapacity = 8;
+        $event->bikesAvailable = 0;
 
         return $event;
     }
@@ -115,6 +121,7 @@ class Event
         $event = new self(EventType::EB);
         $event->adultsCapacity = 30;
         $event->childrenCapacity = 6;
+        $event->bikesAvailable = 0;
 
         return $event;
     }
