@@ -14,7 +14,7 @@
             <th scope="col">Etapes</th>
             <th scope="col">Statut</th>
             <th scope="col">Date</th>
-            <th scope="col">Actions</th>
+            <th scope="col"></th>
         </tr>
         {% for event in events %}
             <tr>
@@ -32,7 +32,7 @@
                 <td>{{ event.createdAt|format_datetime }}</td>
                 <td>
                     <div class="dropdown">
-                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button type="button" class="btn py-0" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
                         <ul class="dropdown-menu">
