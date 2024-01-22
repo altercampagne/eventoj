@@ -58,10 +58,10 @@ class Stage
     private readonly \DateTimeImmutable $createdAt;
 
     /**
-     * @var Collection<int, Registration>
+     * @var Collection<int, StageRegistration>
      */
-    #[ORM\ManyToMany(targetEntity: Registration::class, mappedBy: 'stages')]
-    private Collection $registrations;
+    #[ORM\OneToMany(targetEntity: StageRegistration::class, mappedBy: 'stage')]
+    private Collection $stagesRegistrations;
 
     public function __construct(Event $event)
     {
@@ -71,7 +71,7 @@ class Stage
         $this->difficulty = StageDifficulty::MEDIUM;
         $this->createdAt = new \DateTimeImmutable();
         $this->stagesAlternatives = new ArrayCollection();
-        $this->registrations = new ArrayCollection();
+        $this->stagesRegistrations = new ArrayCollection();
     }
 
     public function isBefore(): bool
@@ -199,10 +199,10 @@ class Stage
     }
 
     /**
-     * @return Collection<int, Registration>
+     * @return Collection<int, StageRegistration>
      */
-    public function getRegistrations(): Collection
+    public function getStagesRegistrations(): Collection
     {
-        return $this->registrations;
+        return $this->stagesRegistrations;
     }
 }
