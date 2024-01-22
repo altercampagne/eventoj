@@ -79,7 +79,7 @@ class RegisterController extends AbstractController
                             $stageRegistration->setPresentForLunch(false);
                     }
                 } elseif ($i === \count($bookedStages) - 1) {
-                    switch ($eventRegistrationDTO->firstMeal) {
+                    switch ($eventRegistrationDTO->lastMeal) {
                         case Meal::BREAKFAST:
                             $stageRegistration->setPresentForLunch(false);
                             // no break

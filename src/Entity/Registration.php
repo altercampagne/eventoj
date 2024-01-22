@@ -57,7 +57,7 @@ class Registration
     /**
      * @var Collection<int, StageRegistration>
      */
-    #[ORM\OneToMany(targetEntity: StageRegistration::class, mappedBy: 'registration', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: StageRegistration::class, mappedBy: 'registration', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $stagesRegistrations;
 
     public function __construct(User $user, Event $event)
