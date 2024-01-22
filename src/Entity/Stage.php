@@ -74,6 +74,31 @@ class Stage
         $this->registrations = new ArrayCollection();
     }
 
+    public function isBefore(): bool
+    {
+        return StageType::BEFORE === $this->type;
+    }
+
+    public function isAfter(): bool
+    {
+        return StageType::AFTER === $this->type;
+    }
+
+    public function isDifficultyEasy(): bool
+    {
+        return StageDifficulty::EASY === $this->difficulty;
+    }
+
+    public function isDifficultyMedium(): bool
+    {
+        return StageDifficulty::MEDIUM === $this->difficulty;
+    }
+
+    public function isDifficultyHard(): bool
+    {
+        return StageDifficulty::HARD === $this->difficulty;
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;

@@ -20,7 +20,8 @@
             <tr>
                 <td><span class="badge text-bg-secondary">{{ event.type.value }}</span></td>
                 <td>{{ event.name }}</td>
-                <td>{{ event.stages|length }}</td>
+                <td>
+                    <a href="{{ path('admin_stage_list', { slug: event.slug }) }}">{{ event.stages|length }} étapes</a></td>
                 <td>
                     {% if event.isFinished %}
                         <span class="badge text-bg-dark">Terminé</span>
@@ -35,6 +36,7 @@
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
                         <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ path('admin_stage_list', { slug: event.slug }) }}"><i class="fa-solid fa-map-location-dot me-1"></i> Voir les étapes</a></li>
                             <li><a class="dropdown-item" href="{{ path('admin_registration_list', { slug: event.slug }) }}"><i class="fa-solid fa-ticket me-1"></i> Voir les réservations</a></li>
                         </ul>
                     </div>
