@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\Event;
 
 use App\Entity\Event;
+use App\Entity\Meal;
 use App\Entity\Registration;
+use App\Entity\StageRegistration;
 use App\Entity\User;
 use App\Form\EventRegistrationDTO;
 use App\Form\EventRegistrationFormType;
@@ -58,16 +60,39 @@ class RegisterController extends AbstractController
 
             $startIndex = (int) array_search($eventRegistrationDTO->stageStart, $stages, true);
 
-            $stages = \array_slice(
+            $bookedStages = \array_slice(
                 $stages,
                 $startIndex,
                 (int) array_search($eventRegistrationDTO->stageEnd, $stages, true) - $startIndex + 1,
             );
 
+            $stagesRegistrations = [];
+            for ($i = 0; $i < \count($bookedStages); ++$i) {
+                $stageRegistration = new StageRegistration(stage: $bookedStages[$i], registration: $registration);
+
+                if (0 === $i) {
+                    switch ($eventRegistrationDTO->firstMeal) {
+                        case Meal::LUNCH:
+                            $stageRegistration->setPresentForBreakfast(false);
+                            // no break
+                        case Meal::DINNER:
+                            $stageRegistration->setPresentForLunch(false);
+                    }
+                } elseif ($i === \count($bookedStages) - 1) {
+                    switch ($eventRegistrationDTO->firstMeal) {
+                        case Meal::BREAKFAST:
+                            $stageRegistration->setPresentForLunch(false);
+                            // no break
+                        case Meal::LUNCH:
+                            $stageRegistration->setPresentForDinner(false);
+                    }
+                }
+
+                $stagesRegistrations[] = $stageRegistration;
+            }
+
             $registration
-                ->setStages($stages)
-                ->setFirstMeal($eventRegistrationDTO->firstMeal)
-                ->setLastMeal($eventRegistrationDTO->lastMeal)
+                ->setStagesRegistrations($stagesRegistrations)
                 ->setPricePerDay($eventRegistrationDTO->pricePerDay * 100)
                 ->setNeedBike($eventRegistrationDTO->needBike)
             ;

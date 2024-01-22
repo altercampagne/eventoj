@@ -56,14 +56,20 @@ class EventRegistrationDTO
         $this->stageEnd = $stageEnd ?: $stages->last() ?: throw new \RuntimeException('Looks like it is not possible to determine an end date.');
 
         if (null !== $registration) {
-            if (false !== $stage = $registration->getStages()->first()) {
+            $firstDay = $registration->getStagesRegistrations()->first();
+            $lastDay = $registration->getStagesRegistrations()->last();
+            if (false === $firstDay || false === $lastDay) {
+                throw new \RuntimeException("Given registration ({$registration->getId()} does not contains any stagesRegistrations!");
+            }
+
+            if (false !== $stage = $firstDay->getStage()) {
                 $this->stageStart = $stage;
             }
-            $this->firstMeal = $registration->getFirstMeal();
-            if (false !== $stage = $registration->getStages()->last()) {
+            $this->firstMeal = $firstDay->getFirstMeal();
+            if (false !== $stage = $lastDay->getStage()) {
                 $this->stageEnd = $stage;
             }
-            $this->lastMeal = $registration->getLastMeal();
+            $this->lastMeal = $lastDay->getLastMeal();
             $this->needBike = $registration->needBike();
             $this->pricePerDay = $registration->getPricePerDay() / 100;
         }

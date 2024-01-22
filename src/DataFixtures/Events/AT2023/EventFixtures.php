@@ -8,11 +8,11 @@ use App\DataFixtures\AlternativeFixtures;
 use App\DataFixtures\FixturesHelperTrait;
 use App\Entity\Alternative;
 use App\Entity\Event;
-use App\Entity\Meal;
 use App\Entity\Registration;
 use App\Entity\RegistrationStatus;
 use App\Entity\Stage;
 use App\Entity\StageAlternativeRelation;
+use App\Entity\StageRegistration;
 use App\Entity\StageType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -321,6 +321,11 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
 
     private function generateRegistration(Event $event): Registration
     {
+        $registration = new Registration(
+            user: $this->getRandomUser(),
+            event: $event,
+        );
+
         $stages = $event->getStages()->toArray();
         if (5 > \count($stages)) {
             throw new \RuntimeException('Not enough stages in event to generate registrations');
@@ -328,17 +333,12 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
 
         $start = random_int(0, \count($stages) - 5);
         $stages = \array_slice($stages, $start, $start + 5);
+        $stagesRegistrations = array_map(function (Stage $stage) use ($registration): StageRegistration {
+            return new StageRegistration(stage: $stage, registration: $registration);
+        }, $stages);
 
-        $registration = new Registration(
-            user: $this->getRandomUser(),
-            event: $event,
-        );
         $registration
-            ->setStages($stages)
-            /* @phpstan-ignore-next-line */
-            ->setFirstMeal($this->faker->randomElement(Meal::class))
-            /* @phpstan-ignore-next-line */
-            ->setLastMeal($this->faker->randomElement(Meal::class))
+            ->setStagesRegistrations($stagesRegistrations)
             ->setPricePerDay($this->faker->numberBetween(10, 70) * 100)
             ->setNeedBike($this->faker->boolean())
         ;
