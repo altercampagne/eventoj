@@ -20,7 +20,8 @@ final class Version20240122185757 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE event ADD bikes_available INT NOT NULL');
+        $this->addSql('ALTER TABLE event ADD bikes_available INT NOT NULL DEFAULT 22');
+        $this->addSql('ALTER TABLE event ALTER COLUMN bikes_available DROP DEFAULT');
     }
 
     public function down(Schema $schema): void
