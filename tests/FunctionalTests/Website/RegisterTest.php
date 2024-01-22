@@ -4,18 +4,31 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Website;
 
+use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RegisterTest extends WebTestCase
 {
-    public function testHomepage(): void
+    use DatabaseUtilTrait;
+
+    public function testRegisterStartingFromEventPage(): void
     {
         $faker = \Faker\Factory::create('fr_FR');
 
         $client = static::createClient();
-        $client->request('GET', '/register');
 
+        $event = $this->getBookableEvent();
+        $client->request('GET', "/event/{$event->getSlug()}/register");
+
+        $this->assertResponseRedirects();
+        $client->followRedirect();
         $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('login');
+
+        $client->clickLink('Créer un compte');
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('register');
+
         $this->assertSelectorTextContains('h1', 'Inscription');
 
         $registrationEmail = $faker->email();
@@ -43,7 +56,8 @@ class RegisterTest extends WebTestCase
         $this->assertResponseRedirects();
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertRouteSame('registration_waiting_for_email_validation');
-        $this->assertSelectorTextContains('h1', 'C\'est presque bon !');
+        $this->assertRouteSame('event_register');
+        $this->assertSelectorTextContains('.alert-success', "📢 Ton compte a été créé : tu peux dès maintenant t'inscrire aux évènements de d'Altercampagne !");
+        $this->assertSelectorExists('#connected-as');
     }
 }

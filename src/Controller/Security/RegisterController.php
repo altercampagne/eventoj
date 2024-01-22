@@ -9,18 +9,23 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 #[Route('/register', name: 'register')]
 class RegisterController extends AbstractController
 {
+    use TargetPathTrait;
+
     public function __construct(
         private readonly EmailConfirmationSender $emailConfirmationSender,
         private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly EntityManagerInterface $entityManager,
+        private readonly Security $security,
     ) {
     }
 
@@ -44,7 +49,16 @@ class RegisterController extends AbstractController
 
             $this->emailConfirmationSender->send($user);
 
-            return $this->redirectToRoute('registration_waiting_for_email_validation');
+            // Target path must be used before connected user, because once logged the session have been changed.
+            if (null !== $targetUrl = $this->getTargetPath($request->getSession(), 'main')) {
+                $this->removeTargetPath($request->getSession(), 'main');
+            }
+
+            $this->security->login($user, 'form_login');
+
+            $this->addFlash('success', "📢 Ton compte a été créé : tu peux dès maintenant t'inscrire aux évènements de d'Altercampagne !");
+
+            return $targetUrl ? $this->redirect($targetUrl) : $this->redirectToRoute('homepage');
         }
 
         return $this->render('security/register.html.twig', [
