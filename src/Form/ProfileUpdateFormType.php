@@ -18,6 +18,9 @@ class ProfileUpdateFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var User $user */
+        $user = $options['data'];
+
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Ton adresse mail',
@@ -27,8 +30,8 @@ class ProfileUpdateFormType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'help' => '<i class="ms-2 fa-solid fa-triangle-exclamation"></i> En cas de changement, ton adresse mail devra de nouveau être validée.',
-                'help_html' => true,
+                'help' => $user->isVerified() ? '<i class="ms-2 fa-solid fa-triangle-exclamation"></i> En cas de changement, ton adresse mail devra de nouveau être validée.' : null,
+                'help_html' => $user->isVerified(),
             ])
             ->add('firstName', TextType::class, [
                 'label' => 'Ton prénom',
