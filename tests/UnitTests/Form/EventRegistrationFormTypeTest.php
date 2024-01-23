@@ -74,7 +74,7 @@ class EventRegistrationFormTypeTest extends KernelTestCase
 
         $this->assertFormInvalid($this->form, [
             'event_registration_form' => 'Tu ne peux pas repartir avant même d\'être arrivé.',
-            'pricePerDay' => 'Le prix minimum par jour est de 10 €.',
+            'pricePerDay' => 'Le prix minimum par jour est de 20 €.',
         ]);
     }
 
