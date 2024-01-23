@@ -14,9 +14,14 @@ use Symfony\Component\Uid\UuidV4;
 #[ORM\Table(name: '`registration`')]
 class Registration
 {
+    /**
+     * This property should be marked as readonly but is not due to a bug in Doctrine.
+     *
+     * @see https://github.com/doctrine/orm/issues/9863
+     */
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private readonly UuidV4 $id;
+    private UuidV4 $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'registrations')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]

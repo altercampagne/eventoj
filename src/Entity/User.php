@@ -162,6 +162,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->isVerified;
     }
 
+    public function isChild(): bool
+    {
+        return (new \DateTimeImmutable())->diff($this->birthDate)->y < 13;
+    }
+
     public function verifyEmail(): void
     {
         $this->isVerified = true;

@@ -21,7 +21,7 @@
                         <i class="fa-solid fa-users me-1"></i>
                         Utilisateurices
                     </a>
-                    <a href="{{ path('admin_event_list') }}" class="nav-link{% if current_route == 'admin_event_list' %} active{% endif %}" aria-current="page">
+                    <a href="{{ path('admin_event_list') }}" class="nav-link{% if current_route in ['admin_event_list', 'admin_event_show'] %} active{% endif %}" aria-current="page">
                         <i class="fa-solid fa-calendar-days me-1"></i>
                         Evènements
                     </a>
