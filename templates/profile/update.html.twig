@@ -14,7 +14,7 @@
 
                 {{ form_start(form) }}
                     <fieldset class="form-group border p-3 mt-3">
-                        <legend class="w-auto px-2">Tes informations personnelles</legend>
+                        <legend class="w-auto px-2"><i class="fa-solid fa-id-card me-2"></i> Tes informations personnelles</legend>
 
                         <div class="row">
                             <div class="col-12 col-md-6">
@@ -28,14 +28,14 @@
                     </fieldset>
 
                     <fieldset class="form-group border p-3 mt-3">
-                        <legend class="w-auto px-2">Tes coordonnées</legend>
+                        <legend class="w-auto px-2"><i class="fa-solid fa-address-book me-2"></i> Tes coordonnées</legend>
 
                         {{ form_row(form.email) }}
                         {{ form_row(form.phoneNumber) }}
                     </fieldset>
 
                     <fieldset class="form-group border p-3 mt-3">
-                        <legend class="w-auto px-2">Ton adresse</legend>
+                        <legend class="w-auto px-2"><i class="fa-solid fa-map-location-dot me-2"></i> Ton adresse postale</legend>
 
                         {{ form_row(form.address.addressLine1) }}
                         {{ form_row(form.address.addressLine2) }}

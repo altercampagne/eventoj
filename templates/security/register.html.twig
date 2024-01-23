@@ -13,45 +13,53 @@
                 {{ form_errors(registrationForm) }}
 
                 {{ form_start(registrationForm) }}
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2"><i class="fa-solid fa-id-card me-2"></i> Quelques informations te concernant</legend>
 
-                <h3>Quelques informations te concernant</h3>
-                <div class="row">
-                    <div class="col-12 col-md-6">
-                        {{ form_row(registrationForm.firstName) }}
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                {{ form_row(registrationForm.firstName) }}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{ form_row(registrationForm.lastName) }}
+                            </div>
+                        </div>
+                        {{ form_row(registrationForm.birthDate) }}
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2"><i class="fa-solid fa-address-book me-2"></i> Tes coordonnées</legend>
+
+                        {{ form_row(registrationForm.email) }}
+                        {{ form_row(registrationForm.phoneNumber) }}
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2"><i class="fa-solid fa-map-location-dot me-2"></i> Ton adresse postale</legend>
+                        {{ form_row(registrationForm.address.addressLine1) }}
+                        {{ form_row(registrationForm.address.addressLine2) }}
+
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                {{ form_row(registrationForm.address.zipCode) }}
+                            </div>
+                            <div class="col-12 col-md-8">
+                                {{ form_row(registrationForm.address.city) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(registrationForm.address.countryCode) }}
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2"><i class="fa-solid fa-key me-2"></i> Ton mot de passe</legend>
+
+                        {{ form_row(registrationForm.plainPassword) }}
+                    </fieldset>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-lg btn-primary">Je m'inscris</button>
                     </div>
-                    <div class="col-12 col-md-6">
-                        {{ form_row(registrationForm.lastName) }}
-                    </div>
-                </div>
-
-                {{ form_row(registrationForm.birthDate) }}
-
-                <h3 class="mt-4">Tes coordonnées</h3>
-                {{ form_row(registrationForm.email) }}
-                {{ form_row(registrationForm.phoneNumber) }}
-
-                <h3 class="mt-4">Ton adresse postale</h3>
-                {{ form_row(registrationForm.address.addressLine1) }}
-                {{ form_row(registrationForm.address.addressLine2) }}
-
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        {{ form_row(registrationForm.address.zipCode) }}
-                    </div>
-                    <div class="col-12 col-md-8">
-                        {{ form_row(registrationForm.address.city) }}
-                    </div>
-                </div>
-
-                {{ form_row(registrationForm.address.countryCode) }}
-
-                <h3 class="mt-4">Ton mot de passe</h3>
-
-                {{ form_row(registrationForm.plainPassword) }}
-
-                <div class="d-grid gap-2 mt-4">
-                    <button type="submit" class="btn btn-lg btn-primary">Je m'inscris</button>
-                </div>
 
                 {{ form_end(registrationForm) }}
             </div>
