@@ -1,0 +1,21 @@
+{% extends '_skeleton.html.twig' %}
+
+{% block body %}
+    <div class="d-flex align-items-center justify-content-center vh-100 text-bg-primary flex-column text-center">
+        <h1 class="display-1 fw-bold p-2">
+            {% if status_code == 404 %}
+                🕵<br />Page non trouvée !
+            {% else %}
+                😣<br />Mince, une erreur !
+            {% endif %}
+        </h1>
+        <p>
+            {% if status_code == 404 %}
+                La page demandée n'existe pas ! Le mieux, c'est de repartir de la page d'accueil. 😉
+            {% else %}
+                Il s'agit d'une erreur {{ status_code }}. N'hésite pas à <a href="{{ path('contact') }}" class="text-white">contacter nos équipes</a> en cas de problème !
+            {% endif %}
+        </p>
+        <a href="{{ path('homepage') }}" class="btn btn-lg btn-outline-light mt-4">👉 Retourner à la page d'accueil 👈</a>
+    </div>
+{% endblock %}
