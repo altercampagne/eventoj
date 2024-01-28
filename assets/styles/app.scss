@@ -6,17 +6,3 @@ $primary: #3f7625;
 body {
     background-color: $gray-100;
 }
-
-html.simple-full-height-page {
-    &, body {
-        height: 100%;
-    }
-
-    body {
-        display: flex;
-        align-items: center;
-        padding-top: 40px;
-        padding-bottom: 40px;
-        text-align: center;
-    }
-}
