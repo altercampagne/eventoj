@@ -46,6 +46,7 @@ when@prod:
                 handler: grouped_handler
                 excluded_http_codes: [404, 405]
             grouped_handler:
+              type: group
               members: [stream, slack]
             stream:
                 type: stream
