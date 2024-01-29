@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Event;
 
+use App\Bridge\Helloasso\PaymentReturnType;
 use App\Entity\Registration;
 use App\Entity\User;
-use App\Enum\HelloassoPaymentReturnType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +28,7 @@ class PostPaymentController extends AbstractController
     ) {
     }
 
-    public function __invoke(Request $request, Registration $registration, HelloassoPaymentReturnType $type): Response
+    public function __invoke(Request $request, Registration $registration, PaymentReturnType $type): Response
     {
         /** @var User $payer */
         $payer = $this->getUser();
@@ -37,11 +37,11 @@ class PostPaymentController extends AbstractController
             throw $this->createNotFoundException('Current user is not the owner of the given reservation.');
         }
 
-        if (HelloassoPaymentReturnType::Back === $type) {
+        if (PaymentReturnType::Back === $type) {
             return $this->cancel($registration);
         }
 
-        if (HelloassoPaymentReturnType::Error === $type) {
+        if (PaymentReturnType::Error === $type) {
             $this->logger->error('An error occurred during payment.', [
                 'registration' => $registration,
                 'error' => $request->query->getString('error', 'No error found in query!'),

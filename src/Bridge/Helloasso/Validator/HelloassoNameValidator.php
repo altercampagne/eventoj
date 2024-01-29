@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Validator;
+namespace App\Bridge\Helloasso\Validator;
 
 use Symfony\Component\String\UnicodeString;
 use Symfony\Component\Validator\Constraint;
