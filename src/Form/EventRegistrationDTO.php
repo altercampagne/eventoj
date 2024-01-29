@@ -75,6 +75,22 @@ class EventRegistrationDTO
         }
     }
 
+    /**
+     * @return Stage[]
+     */
+    public function getBookedStages(): array
+    {
+        $stages = $this->event->getStages()->toArray();
+
+        $startIndex = (int) array_search($this->stageStart, $stages, true);
+
+        return \array_slice(
+            $stages,
+            $startIndex,
+            (int) array_search($this->stageEnd, $stages, true) - $startIndex + 1,
+        );
+    }
+
     #[Assert\Callback]
     public function validatePeriod(ExecutionContextInterface $context, mixed $payload): void
     {

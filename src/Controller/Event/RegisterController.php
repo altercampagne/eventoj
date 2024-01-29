@@ -56,16 +56,7 @@ class RegisterController extends AbstractController
                 );
             }
 
-            $stages = $event->getStages()->toArray();
-
-            $startIndex = (int) array_search($eventRegistrationDTO->stageStart, $stages, true);
-
-            $bookedStages = \array_slice(
-                $stages,
-                $startIndex,
-                (int) array_search($eventRegistrationDTO->stageEnd, $stages, true) - $startIndex + 1,
-            );
-
+            $bookedStages = $eventRegistrationDTO->getBookedStages();
             $stagesRegistrations = [];
             for ($i = 0; $i < \count($bookedStages); ++$i) {
                 $stageRegistration = new StageRegistration(stage: $bookedStages[$i], registration: $registration);
