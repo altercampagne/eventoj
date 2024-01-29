@@ -23,6 +23,7 @@ security:
             remember_me:
                 secret: '%kernel.secret%' # required
                 lifetime: 604800 # 1 week in seconds
+            login_throttling: ~
             logout:
                 path: logout
                 # where to redirect after logout
