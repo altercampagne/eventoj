@@ -61,6 +61,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $biography;
 
+    #[ORM\Column(type: 'string', enumType: Diet::class, nullable: true, options: [
+        'comment' => 'Diet of the user (omnivore, vegetarien, vegan)',
+    ])]
+    private ?Diet $diet;
+
+    #[ORM\Column(type: 'boolean', options: [
+        'default' => false,
+    ])]
+    private bool $glutenIntolerant = false;
+
+    #[ORM\Column(type: 'boolean', options: [
+        'default' => false,
+    ])]
+    private bool $lactoseIntolerant = false;
+
+    #[ORM\Column(type: 'string', nullable: true, options: [
+        'comment' => 'Free field to provide more information about user diet.',
+    ])]
+    private ?string $dietDetails = null;
+
     /** @var string[] $roles */
     #[ORM\Column(type: 'text[]')]
     private array $roles = [];
@@ -263,6 +283,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBiography(?string $biography): self
     {
         $this->biography = $biography;
+
+        return $this;
+    }
+
+    public function getDiet(): ?Diet
+    {
+        return $this->diet;
+    }
+
+    public function setDiet(?Diet $diet): self
+    {
+        $this->diet = $diet;
+
+        return $this;
+    }
+
+    public function isGlutenIntolerant(): bool
+    {
+        return $this->glutenIntolerant;
+    }
+
+    public function setGlutenIntolerant(bool $glutenIntolerant): self
+    {
+        $this->glutenIntolerant = $glutenIntolerant;
+
+        return $this;
+    }
+
+    public function isLactoseIntolerant(): bool
+    {
+        return $this->lactoseIntolerant;
+    }
+
+    public function setLactoseIntolerant(bool $lactoseIntolerant): self
+    {
+        $this->lactoseIntolerant = $lactoseIntolerant;
+
+        return $this;
+    }
+
+    public function getDietDetails(): ?string
+    {
+        return $this->dietDetails;
+    }
+
+    public function setDietDetails(?string $dietDetails): self
+    {
+        $this->dietDetails = $dietDetails;
 
         return $this;
     }

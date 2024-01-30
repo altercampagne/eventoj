@@ -52,6 +52,23 @@
                         {{ form_row(form.address.countryCode) }}
                     </fieldset>
 
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2"><i class="fa-solid fa-carrot me-2"></i> Ton alimentation</legend>
+
+                        {{ form_row(form.diet) }}
+
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.glutenIntolerant) }}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.lactoseIntolerant) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.dietDetails) }}
+                    </fieldset>
+
                     <div class="d-grid gap-2 mt-4">
                         <button type="submit" class="btn btn-lg btn-primary">Mettre à jour</button>
                     </div>

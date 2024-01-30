@@ -36,6 +36,10 @@ class ProfileUpdateTest extends WebTestCase
             'profile_update_form[address][addressLine1]' => $faker->address(),
             'profile_update_form[address][zipCode]' => $faker->postCode(),
             'profile_update_form[address][city]' => $faker->city(),
+            'profile_update_form[diet]' => 'vegetarian',
+            'profile_update_form[glutenIntolerant]' => false,
+            'profile_update_form[lactoseIntolerant]' => false,
+            'profile_update_form[dietDetails]' => null,
         ]);
 
         // Email has not been changed so no email have been queued
