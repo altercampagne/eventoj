@@ -38,6 +38,9 @@ class EventRegistrationFormType extends AbstractType
             ->add('firstMeal', EnumType::class, [
                 'label' => 'Le premier repas que tu partageras avec nous',
                 'class' => Meal::class,
+                'attr' => [
+                    'readonly' => 'readonly',
+                ],
             ])
             ->add('stageEnd', EventRegistrationStageFormType::class, [
                 'label' => 'L\'étape où tu nous quittes',

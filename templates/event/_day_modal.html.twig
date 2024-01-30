@@ -1,0 +1,48 @@
+<div class="modal" id="{{ id }}" tabindex="-1" aria-labelledby="{{ title }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="list-group list-group-flush">
+                    {% for stage in event.stages %}
+                        {# Storage this data in a variable to avoid too many computations #}
+                        {% set availability = stage.availability %}
+                        {% set isFull = availability.adults == 0 %}
+
+                        <div
+                            class="list-group-item {% if isFull %}list-group-item-secondary{% else %}list-group-item-action{% endif %} d-flex justify-content-between align-items-center"
+                            {% if isFull %} disabled{% endif %}
+                        >
+                            <div>
+                                <h6 class="mt-0"><b>{{ stage.date|format_date }}</b> - {{ stage.name }}</h6>
+                                {% if not isFull %}
+                                    <div class="text-muted">
+                                        {{ availability.adults }} places (+ {{ availability.children }} places - de 13 ans) et {{ availability.bikes }} vélos disponibles
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div>
+                                {% if isFull %}
+                                    <span class="badge bg-secondary">COMPLET</span>
+                                {% else %}
+                                    <!-- Almost invisible button used for stretched-link -->
+                                    <button class="btn btn-link stretched-link m-0 p-0" data-stage="{{ stage.id }}"></button>
+                                    {% if stage.isBefore %}
+                                        <span class="badge bg-primary bg-opacity-50">BEFORE</span>
+                                    {% elseif stage.isAfter %}
+                                        <span class="badge bg-primary bg-opacity-50">AFTER</span>
+                                    {% endif %}
+                                    {% if availability.bikes == 0 %}
+                                        <span class="badge bg-danger bg-opacity-50">Plus de vélo disponible</span>
+                                    {% endif %}
+                                    {% if availability.adults <= 5 %}
+                                        <span class="badge bg-warning bg-opacity-75">📢 Dernières places !</span>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -99,6 +99,29 @@ class Stage
         return StageDifficulty::HARD === $this->difficulty;
     }
 
+    public function getAvailability(): \stdClass
+    {
+        $adults = $children = $bikes = 0;
+
+        foreach ($this->getConfirmedStagesRegistrations() as $stageRegistration) {
+            if ($stageRegistration->getRegistration()->needBike()) {
+                ++$bikes;
+            }
+
+            if ($stageRegistration->getRegistration()->getUser()->isChild()) {
+                ++$children;
+            } else {
+                ++$adults;
+            }
+        }
+
+        return (object) [
+            'adults' => $this->event->getAdultsCapacity() - $adults,
+            'children' => $this->event->getChildrenCapacity() - $children,
+            'bikes' => $this->event->getBikesAvailable() - $bikes,
+        ];
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;
@@ -204,5 +227,15 @@ class Stage
     public function getStagesRegistrations(): Collection
     {
         return $this->stagesRegistrations;
+    }
+
+    /**
+     * @return Collection<int, StageRegistration>
+     */
+    public function getConfirmedStagesRegistrations(): Collection
+    {
+        return $this->stagesRegistrations->filter(static function (StageRegistration $stageRegistration): bool {
+            return $stageRegistration->getRegistration()->isConfirmed();
+        });
     }
 }

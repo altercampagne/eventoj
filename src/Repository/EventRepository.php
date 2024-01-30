@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Event;
+use App\Entity\RegistrationStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,5 +22,25 @@ class EventRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Event::class);
+    }
+
+    public function findOneBySlugJoinedToAllChildEntities(string $slug): ?Event
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->select('e, s, sr, r, u')
+            ->from(Event::class, 'e')
+            ->innerJoin('e.stages', 's')
+            ->leftJoin('s.stagesRegistrations', 'sr')
+            ->leftJoin('sr.registration', 'r')
+            ->leftJoin('r.user', 'u')
+            ->where('e.slug = :slug')
+            ->andWhere('r.id is null OR r.status = :registration_status')
+            ->setParameter('slug', $slug)
+            ->setParameter('registration_status', RegistrationStatus::CONFIRMED)
+        ;
+
+        /* @phpstan-ignore-next-line */
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }

@@ -30,12 +30,12 @@ class RegisterController extends AbstractController
 
     public function __invoke(
         Request $request,
-        #[MapEntity(mapping: ['slug' => 'slug'])]
-        Event $event,
+        string $slug,
         #[MapEntity(mapping: ['id' => 'id'])]
         Registration $registration = null,
     ): Response {
-        if (!$event->isBookable()) {
+        $event = $this->em->getRepository(Event::class)->findOneBySlugJoinedToAllChildEntities($slug);
+        if (null === $event || !$event->isBookable()) {
             throw $this->createNotFoundException();
         }
 

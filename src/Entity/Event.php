@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: EventRepository::class)]
 #[ORM\Table(name: '`event`')]
 #[UniqueEntity(fields: ['slug'], message: 'Il y a déjà un évènement avec ce slug.')]
 class Event
@@ -124,6 +125,21 @@ class Event
         $event->bikesAvailable = 0;
 
         return $event;
+    }
+
+    public function getAdultsCapacity(): int
+    {
+        return $this->adultsCapacity;
+    }
+
+    public function getChildrenCapacity(): int
+    {
+        return $this->childrenCapacity;
+    }
+
+    public function getBikesAvailable(): int
+    {
+        return $this->bikesAvailable;
     }
 
     public function isFinished(): bool

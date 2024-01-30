@@ -1,3 +1,5 @@
+import { Modal } from 'bootstrap'
+
 class EventRegistrationPriceCalculator {
   constructor() {
     this.selectStart = document.querySelector('#event_registration_form_stageStart');
@@ -15,6 +17,26 @@ class EventRegistrationPriceCalculator {
     this.selectStart.addEventListener('change', this.updateSelectEnd);
     this.selectEnd.addEventListener('change', this.updateFinalPrice);
     this.pricePerDayInput.addEventListener('change', this.updateFinalPrice);
+
+    document.querySelectorAll('div#stageStartModal button[data-stage]').forEach((element) => {
+      element.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        Modal.getInstance(document.querySelector('div#stageStartModal')).hide();
+        this.selectStart.value = event.target.dataset.stage;
+        this.updateSelectEnd();
+      });
+    });
+
+    document.querySelectorAll('div#stageEndModal button[data-stage]').forEach((element) => {
+      element.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        Modal.getInstance(document.querySelector('div#stageEndModal')).hide();
+        this.selectEnd.value = event.target.dataset.stage;
+        this.updateFinalPrice();
+      });
+    });
 
     this.updateSelectEnd();
   }
