@@ -13,9 +13,9 @@
                             {% if isFull %} disabled{% endif %}
                         >
                             <div>
-                                <h6 class="mt-0"><b>{{ stage.date|format_date }}</b> - {{ stage.name }}</h6>
+                                <h6 class="my-0"><b>{{ stage.date|format_date }}</b> - {{ stage.name }}</h6>
                                 {% if not isFull %}
-                                    <div class="text-muted">
+                                    <div class="text-muted stageAvailability mt-2">
                                         {{ availability.adults }} places (+ {{ availability.children }} places - de 13 ans) et {{ availability.bikes }} vélos disponibles
                                     </div>
                                 {% endif %}

@@ -44,13 +44,30 @@ class EventRegistrationPriceCalculator {
   updateSelectEnd() {
     const startIndex = this.availableOptions.indexOf(this.selectStart.value);
 
-    // Disable days which cannot be booked in order to have at least 4 days.
+    // Disable days which cannot be booked (cannot leave BEFORE arriving)
     Array.prototype.forEach.call(this.selectEnd.options, (option) => {
-      option.disabled = option.index < startIndex + 4;
+      option.disabled = option.index <= startIndex;
+
+      let button = document.querySelector('div#stageEndModal button[data-stage="'+option.value+'"]');
+      let listItem = button.closest('div.list-group-item');
+      let details = listItem.querySelector('div.stageAvailability');
+
+      button.disabled = option.disabled;
+      listItem.disabled = option.disabled;
+
+      if (option.disabled) {
+        listItem.classList.add('list-group-item-secondary');
+        listItem.classList.remove('list-group-item-action');
+        details.classList.add('d-none');
+      } else {
+        listItem.classList.remove('list-group-item-secondary');
+        listItem.classList.add('list-group-item-action');
+        details.classList.remove('d-none');
+      }
     })
 
     // Update end date if needed
-    if(this.availableOptions.indexOf(this.selectEnd.value) < startIndex + 4) {
+    if(this.availableOptions.indexOf(this.selectEnd.value) <= startIndex) {
       this.selectEnd.value = this.availableOptions[startIndex + 4];
     }
     this.updateFinalPrice();
