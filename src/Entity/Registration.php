@@ -12,6 +12,7 @@ use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`registration`')]
+#[ORM\Index(name: 'idx_registration_status', fields: ['status'])]
 class Registration
 {
     /**

@@ -14,6 +14,7 @@ use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 #[ORM\Table(name: '`event`')]
+#[ORM\Index(name: 'idx_event_slug', fields: ['slug'])]
 #[UniqueEntity(fields: ['slug'], message: 'Il y a déjà un évènement avec ce slug.')]
 class Event
 {

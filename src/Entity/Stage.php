@@ -15,6 +15,7 @@ use Symfony\Component\Uid\UuidV4;
 #[ORM\Entity]
 #[ORM\Table(name: '`stage`')]
 #[UniqueEntity(fields: ['event.id', 'slug'], message: 'Il y a déjà une étape avec ce slug pour cet évènement.')]
+#[ORM\Index(name: 'idx_stage_slug', fields: ['slug'])]
 class Stage
 {
     #[ORM\Id]
