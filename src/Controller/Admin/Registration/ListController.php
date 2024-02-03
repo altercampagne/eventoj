@@ -21,7 +21,7 @@ class ListController extends AbstractController
     ) {
     }
 
-    public function __invoke(string $slug = null): Response
+    public function __invoke(?string $slug = null): Response
     {
         if (null !== $slug) {
             if (null == $event = $this->em->getRepository(Event::class)->findOneBySlug($slug)) {

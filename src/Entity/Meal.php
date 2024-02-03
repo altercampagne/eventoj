@@ -13,7 +13,7 @@ enum Meal: string implements TranslatableInterface
     case LUNCH = 'lunch';
     case DINNER = 'dinner';
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
         return match ($this) {
             self::BREAKFAST => 'Petit-déjeuner',

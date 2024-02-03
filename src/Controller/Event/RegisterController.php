@@ -32,7 +32,7 @@ class RegisterController extends AbstractController
         Request $request,
         string $slug,
         #[MapEntity(mapping: ['id' => 'id'])]
-        Registration $registration = null,
+        ?Registration $registration = null,
     ): Response {
         $event = $this->em->getRepository(Event::class)->findOneBySlugJoinedToAllChildEntities($slug);
         if (null === $event || !$event->isBookable()) {

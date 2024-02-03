@@ -29,7 +29,7 @@ class EventRegistrationDTO
     #[Assert\Range(min: 20, minMessage: 'Le prix minimum par jour est de {{ limit }} €.')]
     public int $pricePerDay = 33;
 
-    public function __construct(Event $event, Registration $registration = null)
+    public function __construct(Event $event, ?Registration $registration = null)
     {
         $this->event = $event;
 

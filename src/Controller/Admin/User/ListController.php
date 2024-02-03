@@ -20,7 +20,7 @@ class ListController extends AbstractController
     ) {
     }
 
-    public function __invoke(string $slug = null): Response
+    public function __invoke(?string $slug = null): Response
     {
         return $this->render('admin/user/list.html.twig', [
             'users' => $this->em->getRepository(User::class)->findBy([], ['createdAt' => 'DESC']),

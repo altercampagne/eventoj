@@ -34,7 +34,7 @@ class BasicGetTest extends WebTestCase
     /**
      * @dataProvider publicPages
      */
-    public function testPublicPages(string $url, string $expectedTitle, string $expectedH1 = null): void
+    public function testPublicPages(string $url, string $expectedTitle, ?string $expectedH1 = null): void
     {
         $this->checkPage(static::createClient(), $url, $expectedTitle, $expectedH1);
     }
@@ -42,7 +42,7 @@ class BasicGetTest extends WebTestCase
     /**
      * @dataProvider protectedPages
      */
-    public function testProtectedPages(string $url, string $expectedTitle, string $expectedH1 = null): void
+    public function testProtectedPages(string $url, string $expectedTitle, ?string $expectedH1 = null): void
     {
         $client = static::createClient();
         $user = $this->getRandomAdminUser();
@@ -53,7 +53,7 @@ class BasicGetTest extends WebTestCase
         $this->assertSelectorExists('#connected-as');
     }
 
-    private function checkPage(KernelBrowser $client, string $url, string $expectedTitle, string $expectedH1 = null): void
+    private function checkPage(KernelBrowser $client, string $url, string $expectedTitle, ?string $expectedH1 = null): void
     {
         $client->request('GET', $url);
 

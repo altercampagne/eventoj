@@ -47,7 +47,6 @@ class PayController extends AbstractController
         /** @var User $payer */
         $payer = $this->getUser();
 
-        /* @phpstan-ignore-next-line */
         $response = $this->helloassoClient->checkout->create((new InitCheckoutBody())
             ->setTotalAmount($registration->getTotalPrice())
             ->setInitialAmount($registration->getTotalPrice())

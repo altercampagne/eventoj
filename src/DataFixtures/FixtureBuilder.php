@@ -18,14 +18,14 @@ class FixtureBuilder
      * @param string[] $roles
      */
     public static function createUser(
-        string $email = null,
-        string $firstName = null,
-        string $lastName = null,
-        \DateTimeImmutable $birthDate = null,
-        Address $address = null,
-        PhoneNumber $phoneNumber = null,
-        string $password = null,
-        bool $verifyEmail = null,
+        ?string $email = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?\DateTimeImmutable $birthDate = null,
+        ?Address $address = null,
+        ?PhoneNumber $phoneNumber = null,
+        ?string $password = null,
+        ?bool $verifyEmail = null,
         array $roles = [],
         bool $children = false,
     ): User {
@@ -49,10 +49,10 @@ class FixtureBuilder
     }
 
     public static function createAddress(
-        string $addressLine1 = null,
-        string $addressLine2 = null,
-        string $city = null,
-        string $zipCode = null,
+        ?string $addressLine1 = null,
+        ?string $addressLine2 = null,
+        ?string $city = null,
+        ?string $zipCode = null,
         string $countryCode = 'FR',
     ): Address {
         $address = new Address();

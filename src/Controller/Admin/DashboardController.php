@@ -13,7 +13,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/_admin', name: 'admin')]
 class DashboardController extends AbstractController
 {
-    public function __invoke(string $slug = null): Response
+    public function __invoke(?string $slug = null): Response
     {
         return $this->render('admin/dashboard.html.twig');
     }

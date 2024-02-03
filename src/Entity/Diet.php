@@ -13,7 +13,7 @@ enum Diet: string implements TranslatableInterface
     case VEGETARIAN = 'vegetarian';
     case VEGAN = 'vegan';
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
         return match ($this) {
             self::OMNIVORE => 'Omnivore',
