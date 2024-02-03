@@ -44,25 +44,41 @@ class EventRegistrationPriceCalculator {
   updateSelectEnd() {
     const startIndex = this.availableOptions.indexOf(this.selectStart.value);
 
+    const modal = document.querySelector('div#stageEndModal');
+
+    // All stages situated after a "complete" stage must be disabled because
+    // it's not possible to register for a period which includes days which are
+    // already full.
+    let disableNextStages = false;
     // Disable days which cannot be booked (cannot leave BEFORE arriving)
     Array.prototype.forEach.call(this.selectEnd.options, (option) => {
       option.disabled = option.index <= startIndex;
 
-      let button = document.querySelector('div#stageEndModal button[data-stage="'+option.value+'"]');
-      let listItem = button.closest('div.list-group-item');
-      let details = listItem.querySelector('div.stageAvailability');
+      let mustBeDisabled = option.disabled || disableNextStages;
 
-      button.disabled = option.disabled;
-      listItem.disabled = option.disabled;
-
-      if (option.disabled) {
-        listItem.classList.add('list-group-item-secondary');
-        listItem.classList.remove('list-group-item-action');
-        details.classList.add('d-none');
+      let listItem = modal.querySelector('div.list-group-item[data-stage="'+option.value+'"]');
+      // Update list item only if the stage is not full
+      if (listItem.dataset.full == 1) {
+        disableNextStages = true;
       } else {
-        listItem.classList.remove('list-group-item-secondary');
-        listItem.classList.add('list-group-item-action');
-        details.classList.remove('d-none');
+        let button = listItem.querySelector('button[data-stage="'+option.value+'"]');
+        let contentForAvailableStageOnly = listItem.querySelectorAll('.content-for-available-stage-only');
+        let contentForUnavailableStageOnly = listItem.querySelectorAll('.content-for-unavailable-stage-only');
+
+        button.disabled = mustBeDisabled;
+        listItem.disabled = mustBeDisabled;
+
+        if (mustBeDisabled) {
+          listItem.classList.add('list-group-item-secondary');
+          button.classList.add('d-none');
+          contentForAvailableStageOnly.forEach((e) => e.classList.add('d-none'));
+          contentForUnavailableStageOnly.forEach((e) => e.classList.remove('d-none'));
+        } else {
+          listItem.classList.remove('list-group-item-secondary');
+          button.classList.remove('d-none');
+          contentForAvailableStageOnly.forEach((e) => e.classList.remove('d-none'));
+          contentForUnavailableStageOnly.forEach((e) => e.classList.add('d-none'));
+        }
       }
     })
 
