@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Events\AT2023;
 
+use App\DataFixtures\AbstractFixture;
 use App\DataFixtures\AlternativeFixtures;
-use App\DataFixtures\FixturesHelperTrait;
+use App\DataFixtures\FixtureBuilder;
 use App\Entity\Alternative;
 use App\Entity\Event;
 use App\Entity\Registration;
@@ -14,22 +15,12 @@ use App\Entity\Stage;
 use App\Entity\StageAlternativeRelation;
 use App\Entity\StageRegistration;
 use App\Entity\StageType;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\Entity\User;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Generator;
 
-class EventFixtures extends Fixture implements DependentFixtureInterface
+class EventFixtures extends AbstractFixture implements DependentFixtureInterface
 {
-    use FixturesHelperTrait;
-
-    private readonly Generator $faker;
-
-    public function __construct()
-    {
-        $this->faker = \Faker\Factory::create('fr_FR');
-    }
-
     public function getDependencies(): array
     {
         return [AlternativeFixtures::class];
@@ -62,7 +53,10 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($event);
 
         for ($i = 0; $i < 100; ++$i) {
-            $registration = $this->generateRegistration($event);
+            $user = FixtureBuilder::createUser();
+            $manager->persist($user);
+
+            $registration = $this->generateRegistration($event, $user);
             $manager->persist($registration);
         }
 
@@ -319,10 +313,10 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
         ;
     }
 
-    private function generateRegistration(Event $event): Registration
+    private function generateRegistration(Event $event, User $user): Registration
     {
         $registration = new Registration(
-            user: $this->getRandomUser(),
+            user: $user,
             event: $event,
         );
 
@@ -339,12 +333,12 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
 
         $registration
             ->setStagesRegistrations($stagesRegistrations)
-            ->setPricePerDay($this->faker->numberBetween(10, 70) * 100)
-            ->setNeedBike($this->faker->boolean())
+            ->setPricePerDay($this->getFaker()->numberBetween(10, 70) * 100)
+            ->setNeedBike($this->getFaker()->boolean())
         ;
 
         // 2 chances out of 3 to have a confirmed reservation
-        if (0 < $this->faker->randomDigit() % 3) {
+        if (0 < $this->getFaker()->randomDigit() % 3) {
             (new \ReflectionProperty(Registration::class, 'status'))->setValue($registration, RegistrationStatus::CONFIRMED);
             (new \ReflectionProperty(Registration::class, 'confirmedAt'))->setValue($registration, new \DateTimeImmutable());
         }

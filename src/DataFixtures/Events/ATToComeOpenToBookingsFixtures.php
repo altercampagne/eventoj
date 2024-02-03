@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Events;
 
+use App\DataFixtures\AbstractFixture;
 use App\DataFixtures\AlternativeFixtures;
 use App\DataFixtures\Events\AT2023\EventFixtures as AT2023EventFixtures;
 use App\Entity\Event;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ATToComeOpenToBookingsFixtures extends Fixture implements DependentFixtureInterface
+class ATToComeOpenToBookingsFixtures extends AbstractFixture implements DependentFixtureInterface
 {
     public function __construct(
         private readonly AT2023EventFixtures $at2023EventFixtures,

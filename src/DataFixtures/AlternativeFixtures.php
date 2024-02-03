@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Alternative;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class AlternativeFixtures extends Fixture
+class AlternativeFixtures extends AbstractFixture
 {
     public function __construct(
         private readonly SerializerInterface $serializer,
