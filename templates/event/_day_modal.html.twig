@@ -72,13 +72,11 @@
                             </div>
 
                             {% if not isFull %}
-                                <div class="stageAvailability">
-                                    <div class="collapse bg-light p-2 pb-3" id="details-{{ stage.id }}">
-                                        <div class="row">
-                                            {{ _self.render_availability('Adultes', availability.adults, event.adultsCapacity) }}
-                                            {{ _self.render_availability('- de 13 ans', availability.children, event.childrenCapacity) }}
-                                            {{ _self.render_availability('Vélos', availability.bikes, event.bikesAvailable) }}
-                                        </div>
+                                <div class="stageAvailability container">
+                                    <div class="collapse bg-light row p-2 pb-3" id="details-{{ stage.id }}">
+                                        {{ _self.render_availability('Adultes', availability.adults, event.adultsCapacity) }}
+                                        {{ _self.render_availability('- de 13 ans', availability.children, event.childrenCapacity) }}
+                                        {{ _self.render_availability('Vélos', availability.bikes, event.bikesAvailable) }}
                                     </div>
                                 </div>
                             {% endif %}
