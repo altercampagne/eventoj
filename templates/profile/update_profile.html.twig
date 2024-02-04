@@ -1,0 +1,41 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Mettre à jour de ton profil{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row text-center mb-3">
+            <h1 class="fw-bold text-uppercase text-primary">Mise à jour de ton profil</h1>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                {{ form_errors(form) }}
+
+                {{ form_start(form) }}
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2"><i class="fa-solid fa-carrot me-2"></i> Ton alimentation</legend>
+
+                        {{ form_row(form.diet) }}
+
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.glutenIntolerant) }}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.lactoseIntolerant) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.dietDetails) }}
+                    </fieldset>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-lg btn-primary">Mettre à jour</button>
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

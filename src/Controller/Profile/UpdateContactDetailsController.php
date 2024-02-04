@@ -6,7 +6,7 @@ namespace App\Controller\Profile;
 
 use App\Email\EmailConfirmationSender;
 use App\Entity\User;
-use App\Form\ProfileUpdateFormType;
+use App\Form\ContactDetailsUpdateFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-#[Route('/me/profile', name: 'profile_update')]
-class UpdateController extends AbstractController
+#[Route('/me/details', name: 'profile_update_contact_details')]
+class UpdateContactDetailsController extends AbstractController
 {
     public function __construct(
         private readonly EmailConfirmationSender $emailConfirmationSender,
@@ -30,7 +30,7 @@ class UpdateController extends AbstractController
         $user = $this->getUser();
         $currentEmail = $user->getEmail();
 
-        $form = $this->createForm(ProfileUpdateFormType::class, $user);
+        $form = $this->createForm(ContactDetailsUpdateFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -46,13 +46,13 @@ class UpdateController extends AbstractController
 
                 $this->addFlash('info', 'Ton adresse mail a été modifiée, merci de la valider grâce au mail qui vient de t\'être envoyé.');
             } else {
-                $this->addFlash('success', 'Ton profil a bien été mis à jour !');
+                $this->addFlash('success', 'Tes coordonnées ont bien été mises à jour !');
             }
 
-            return $this->redirectToRoute('profile_update');
+            return $this->redirectToRoute('profile_update_contact_details');
         }
 
-        return $this->render('profile/update.html.twig', [
+        return $this->render('profile/update_contact_details.html.twig', [
             'form' => $form->createView(),
         ]);
     }

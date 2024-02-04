@@ -24,7 +24,8 @@
                                     {{ app.user.fullName }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="{{ path('profile_update') }}">Mon profil</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('profile_update_profile') }}">Mon profil</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('profile_update_contact_details') }}">Mes coordonnées</a></li>
                                     {% if is_granted('ROLE_ADMIN') %}
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
