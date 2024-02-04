@@ -56,8 +56,21 @@ class RegisterTest extends WebTestCase
         $this->assertResponseRedirects();
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertRouteSame('event_register');
+        $this->assertRouteSame('profile_update_profile');
         $this->assertSelectorTextContains('.alert-success', "📢 Ton compte a été créé : tu peux dès maintenant t'inscrire aux évènements de d'Altercampagne !");
         $this->assertSelectorExists('#connected-as');
+
+        $client->submitForm('Mettre à jour', [
+            'profile_update_form[diet]' => 'vegetarian',
+            'profile_update_form[glutenIntolerant]' => false,
+            'profile_update_form[lactoseIntolerant]' => false,
+            'profile_update_form[dietDetails]' => null,
+            'profile_update_form[biography]' => 'I\'m only an humble test user.',
+        ]);
+
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('event_register');
     }
 }

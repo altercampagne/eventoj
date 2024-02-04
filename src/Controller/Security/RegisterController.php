@@ -56,9 +56,13 @@ class RegisterController extends AbstractController
 
             $this->security->login($user, 'form_login');
 
+            if (null !== $targetUrl) {
+                $this->saveTargetPath($request->getSession(), 'main', $targetUrl);
+            }
+
             $this->addFlash('success', "📢 Ton compte a été créé : tu peux dès maintenant t'inscrire aux évènements de d'Altercampagne !");
 
-            return $targetUrl ? $this->redirect($targetUrl) : $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('profile_update_profile');
         }
 
         return $this->render('security/register.html.twig', [

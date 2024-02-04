@@ -12,11 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 #[IsGranted('ROLE_USER')]
 #[Route('/me/profile', name: 'profile_update_profile')]
 class UpdateProfileController extends AbstractController
 {
+    use TargetPathTrait;
+
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
     ) {
@@ -36,7 +39,11 @@ class UpdateProfileController extends AbstractController
 
             $this->addFlash('success', 'Ton profil a bien été mis à jour !');
 
-            return $this->redirectToRoute('profile_update_profile');
+            if (null !== $targetUrl = $this->getTargetPath($request->getSession(), 'main')) {
+                $this->removeTargetPath($request->getSession(), 'main');
+            }
+
+            return $targetUrl ? $this->redirect($targetUrl) : $this->redirectToRoute('profile_update_profile');
         }
 
         return $this->render('profile/update_profile.html.twig', [
