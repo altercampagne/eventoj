@@ -38,7 +38,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ path('admin_event_show', { slug: event.slug }) }}"><i class="fa-solid fa-eye me-1"></i> Voir le détail</a></li>
                             <li><a class="dropdown-item" href="{{ path('admin_stage_list', { slug: event.slug }) }}"><i class="fa-solid fa-map-location-dot me-1"></i> Voir les étapes</a></li>
-                            <li><a class="dropdown-item" href="{{ path('admin_registration_list', { slug: event.slug }) }}"><i class="fa-solid fa-ticket me-1"></i> Voir les réservations</a></li>
+                            <li><a class="dropdown-item" href="{{ path('admin_registration_list', { event: event.slug }) }}"><i class="fa-solid fa-ticket me-1"></i> Voir les réservations</a></li>
                         </ul>
                     </div>
                 </td>
