@@ -63,7 +63,7 @@ class HelloassoNameValidator extends ConstraintValidator
             return;
         }
 
-        if (\in_array($value, self::FORBIDDEN_VALUES)) {
+        if (\in_array(mb_strtolower($value), self::FORBIDDEN_VALUES)) {
             $this->context->buildViolation($constraint->forbiddenValueMessage)
                 ->setParameter('{{ value }}', $value)
                 ->addViolation();
