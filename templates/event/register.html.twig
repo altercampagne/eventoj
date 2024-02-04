@@ -19,7 +19,7 @@
                         <div class="input-group mb-3" data-bs-toggle="modal" data-bs-target="#stageStartModal">
                             {{ form_widget(form.stageStart, { attr: { onmousedown: "(function(e){ e.preventDefault(); })(event)" }}) }}
                             <button type="button" class="btn btn-outline-primary">
-                                Choisir mon jour d'arrivée
+                                Choisir<span class="d-none d-sm-inline"> mon jour d'arrivée</span>
                             </button>
                         </div>
                         {{ form_row(form.firstMeal) }}
@@ -31,7 +31,7 @@
                         <div class="input-group mb-3" data-bs-toggle="modal" data-bs-target="#stageEndModal">
                             {{ form_widget(form.stageEnd, { attr: { onmousedown: "(function(e){ e.preventDefault(); })(event)" }}) }}
                             <button type="button" class="btn btn-outline-primary">
-                                Choisir mon jour de départ
+                                Choisir<span class="d-none d-sm-inline"> mon jour de départ</span>
                             </button>
                         </div>
                         {{ form_row(form.lastMeal) }}
