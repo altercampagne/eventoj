@@ -38,6 +38,20 @@ class EventRegistrationPriceCalculator {
       });
     });
 
+    // Togle details links on click
+    document.querySelectorAll('.label-details-show').forEach((element) => {
+      element.addEventListener('click', (event) => {
+        event.target.classList.add('d-none');
+        event.target.closest('div.list-group-item[data-stage]').querySelector('.label-details-hide').classList.remove('d-none');
+      });
+    });
+    document.querySelectorAll('.label-details-hide').forEach((element) => {
+      element.addEventListener('click', (event) => {
+        event.target.classList.add('d-none');
+        event.target.closest('div.list-group-item[data-stage]').querySelector('.label-details-show').classList.remove('d-none');
+      });
+    });
+
     this.updateSelectEnd();
   }
 

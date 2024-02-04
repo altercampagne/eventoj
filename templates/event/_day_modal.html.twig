@@ -46,7 +46,12 @@
                                                 aria-expanded="false"
                                                 aria-controls="details-{{ stage.id }}"
                                             >
-                                                <i class="fa-solid fa-caret-right"></i> afficher les détails
+                                                <span class="label-details-show">
+                                                    <i class="fa-solid fa-caret-right"></i> afficher les détails
+                                                </span>
+                                                <span class="label-details-hide d-none">
+                                                    <i class="fa-solid fa-caret-down"></i> masquer les détails
+                                                </span>
                                             </button>
                                             {% if stage.isBefore %}
                                                 <span class="badge bg-primary bg-opacity-50">BEFORE</span>
