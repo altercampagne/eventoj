@@ -30,6 +30,28 @@
                         {{ form_row(form.dietDetails) }}
                     </fieldset>
 
+                    {% if form.hasDrivingLicence is defined %}
+                        <ul class="list-group mt-3">
+                            <li class="list-group-item p-3 d-flex justify-content-between align-items-start">
+                                <div class="form-check form-switch col-auto">
+                                    <input class="form-check-input me-2" type="checkbox" role="switch" id="{{ form.hasDrivingLicence.vars.id }}" name="{{ field_name(form.hasDrivingLicence) }}" value="{{ field_value(form.hasDrivingLicence) }}"{% if form.hasDrivingLicence.vars.checked %} checked{% endif %} />
+                                    <label class="form-check-label" for="{{ form.hasDrivingLicence.vars.id }}">
+                                        J'ai mon permis B
+                                    </label>
+                                </div>
+                                <a href="#" class="text-primary float-end me-2" data-bs-toggle="tooltip" data-bs-title="Ce n'est pas parce que tu as le permis que tu seras forcément assigné·e à la conduite des véhicules !">
+                                    (plus d'infos)
+                                </a>
+                            </li>
+                        </ul>
+                    {% endif %}
+
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2"><i class="fa-solid fa-user me-2"></i> Ta présentation</legend>
+
+                        {{ form_row(form.biography) }}
+                    </fieldset>
+
                     <div class="d-grid gap-2 mt-4">
                         <button type="submit" class="btn btn-lg btn-primary">Mettre à jour</button>
                     </div>

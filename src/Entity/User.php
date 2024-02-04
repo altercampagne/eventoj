@@ -82,6 +82,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     ])]
     private ?string $dietDetails = null;
 
+    #[ORM\Column(type: 'boolean', options: [
+        'default' => false,
+    ])]
+    private bool $hasDrivingLicence = false;
+
     /** @var string[] $roles */
     #[ORM\Column(type: 'text[]')]
     private array $roles = [];
@@ -186,6 +191,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function isChild(): bool
     {
         return (new \DateTimeImmutable())->diff($this->birthDate)->y < 13;
+    }
+
+    public function isAdult(): bool
+    {
+        return (new \DateTimeImmutable())->diff($this->birthDate)->y >= 18;
     }
 
     public function verifyEmail(): void
@@ -332,6 +342,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDietDetails(?string $dietDetails): self
     {
         $this->dietDetails = $dietDetails;
+
+        return $this;
+    }
+
+    public function hasDrivingLicence(): bool
+    {
+        return $this->hasDrivingLicence;
+    }
+
+    public function setHasDrivingLicence(bool $hasDrivingLicence): self
+    {
+        $this->hasDrivingLicence = $hasDrivingLicence;
 
         return $this;
     }

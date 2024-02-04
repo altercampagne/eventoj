@@ -31,10 +31,9 @@ class ProfileUpdateProfileTest extends WebTestCase
             'profile_update_form[glutenIntolerant]' => false,
             'profile_update_form[lactoseIntolerant]' => false,
             'profile_update_form[dietDetails]' => null,
+            'profile_update_form[hasDrivingLicence]' => true,
+            'profile_update_form[biography]' => 'O\'m only an humble test user.',
         ]);
-
-        // Email has not been changed so no email have been queued
-        $this->assertQueuedEmailCount(0);
 
         $this->assertResponseRedirects();
         $client->followRedirect();

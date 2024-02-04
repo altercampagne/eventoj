@@ -45,7 +45,24 @@ class ProfileUpdateFormType extends AbstractType
                 'help_html' => true,
                 'required' => false,
             ])
+            ->add('biography', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Ta présentation',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+                'help' => 'N\'hésite pas à nous en dire un peu plus te concernant. 😊',
+                'required' => false,
+            ])
         ;
+
+        if ($user->isAdult()) {
+            $builder->add('hasDrivingLicence', CheckboxType::class, [
+                'required' => false,
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
