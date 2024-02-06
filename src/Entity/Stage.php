@@ -28,7 +28,7 @@ class Stage
     private UuidV4 $id;
 
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'stages')]
-    #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id', nullable: false)]
     private readonly Event $event;
 
     #[ORM\Column(type: 'string', length: 7, enumType: StageType::class, options: [

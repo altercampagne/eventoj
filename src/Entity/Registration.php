@@ -25,11 +25,11 @@ class Registration
     private UuidV4 $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'registrations')]
-    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private readonly User $user;
 
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'registrations')]
-    #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id', nullable: false)]
     private readonly Event $event;
 
     #[ORM\Column(type: 'string', length: 20, enumType: RegistrationStatus::class, options: [
@@ -58,7 +58,7 @@ class Registration
     #[ORM\Column(nullable: true, options: [
         'comment' => 'Date on which the reservation was confirmed.',
     ])]
-    private \DateTimeImmutable $confirmedAt;
+    private ?\DateTimeImmutable $confirmedAt = null;
 
     /**
      * @var Collection<int, StageRegistration>
@@ -194,7 +194,7 @@ class Registration
         return $this->createdAt;
     }
 
-    public function getConfirmedAt(): \DateTimeImmutable
+    public function getConfirmedAt(): ?\DateTimeImmutable
     {
         return $this->confirmedAt;
     }
