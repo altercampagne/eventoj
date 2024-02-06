@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Email\EmailConfirmationSender;
+use App\Email\EventReminderSender;
 use App\Email\PasswordResetSender;
+use App\Entity\Registration;
 use App\Entity\ResetPasswordRequest;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,6 +32,7 @@ class SendMailCommand extends Command
         private readonly ResetPasswordHelperInterface $resetPasswordHelper,
         private readonly EmailConfirmationSender $emailConfirmationSender,
         private readonly PasswordResetSender $passwordResetSender,
+        private readonly EventReminderSender $eventReminderSender,
     ) {
         parent::__construct();
     }
@@ -51,6 +54,7 @@ class SendMailCommand extends Command
         match ($email) {
             'email_confirmation' => $this->sendEmailConfirmation(),
             'password_reset' => $this->sendPasswordReset(),
+            'event_reminder' => $this->sendEventReminder(),
             null => $this->sendAllMails(),
             default => throw new \InvalidArgumentException("Unknown mail \"$email\"."),
         };
@@ -64,6 +68,7 @@ class SendMailCommand extends Command
     {
         $this->sendEmailConfirmation();
         $this->sendPasswordReset();
+        $this->sendEventReminder();
     }
 
     private function sendEmailConfirmation(): void
@@ -90,5 +95,10 @@ class SendMailCommand extends Command
         $resetToken = $this->resetPasswordHelper->generateResetToken($user);
 
         $this->passwordResetSender->send($user, $resetToken);
+    }
+
+    private function sendEventReminder(): void
+    {
+        $this->eventReminderSender->send($this->em->getRepository(Registration::class)->findAll()[0]);
     }
 }
