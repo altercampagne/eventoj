@@ -110,6 +110,24 @@ class Registration
         return $this->stagesRegistrations->count() - 1;
     }
 
+    public function getStageRegistrationStart(): ?StageRegistration
+    {
+        if (false !== $stageRegistration = $this->stagesRegistrations->first()) {
+            return $stageRegistration;
+        }
+
+        return null;
+    }
+
+    public function getStageRegistrationEnd(): ?StageRegistration
+    {
+        if (false !== $stageRegistration = $this->stagesRegistrations->last()) {
+            return $stageRegistration;
+        }
+
+        return null;
+    }
+
     public function getTotalPrice(): int
     {
         return $this->countDaysOfPresence() * $this->pricePerDay;

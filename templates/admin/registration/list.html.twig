@@ -1,36 +1,38 @@
 {% extends 'admin/_base.html.twig' %}
 
-{% block title %}Admin - Réservations{% endblock %}
+{% set title = 'Toutes les réservations' %}
 
 {% block main %}
-    <div class="text-center">
-        <h1 class="fw-bold text-uppercase text-primary">Toutes les réservations</h1>
-    </div>
-
     <table class="table table-hover">
-        <tr>
-            <th scope="col">Evènement</th>
-            <th scope="col">Membre</th>
-            <th scope="col">Prix total</th>
-            <th scope="col">Status</th>
-            <th scope="col">Date</th>
-        </tr>
-        {% for registration in registrations %}
+        <thead>
             <tr>
-                <td>{{ registration.event.name }}</td>
-                <td>{{ registration.user.fullName }}</td>
-                <td>
-                    <strong>{{ (registration.totalPrice/100)|format_currency('EUR', { fraction_digit: 0 }) }}</strong> ({{ registration.countDaysOfPresence }} x {{ (registration.pricePerDay/100)|format_currency('EUR', { fraction_digit: 0 }) }})
-                </td>
-                <td>
-                    {% if registration.isConfirmed %}
-                        <span class="badge text-bg-success"><i class="fa-solid fa-check me-1"></i> Confirmée</span>
-                    {% else %}
-                        <span class="badge text-bg-warning"><i class="fa-regular fa-clock me-1"></i> En attente</span>
-                    {% endif %}
-                </td>
-                <td>{{ registration.createdAt|format_datetime }}</td>
+                <th scope="col">Evènement</th>
+                <th scope="col">Membre</th>
+                <th scope="col">Prix total</th>
+                <th scope="col">Status</th>
+                <th scope="col">Date</th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for registration in registrations %}
+                <tr data-href="{{ path('admin_registration_show', { id: registration.id }) }}">
+                    <td>
+                        {{ registration.event.name }}
+                    </td>
+                    <td>{{ registration.user.fullName }}</td>
+                    <td>
+                        <strong>{{ (registration.totalPrice/100)|format_currency('EUR', { fraction_digit: 0 }) }}</strong> ({{ registration.countDaysOfPresence }} x {{ (registration.pricePerDay/100)|format_currency('EUR', { fraction_digit: 0 }) }})
+                    </td>
+                    <td>
+                        {% if registration.isConfirmed %}
+                            <span class="badge text-bg-success"><i class="fa-solid fa-check me-1"></i> Confirmée</span>
+                        {% else %}
+                            <span class="badge text-bg-warning"><i class="fa-regular fa-clock me-1"></i> En attente</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ registration.createdAt|format_datetime }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}

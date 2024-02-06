@@ -1,0 +1,26 @@
+<div class="card border-primary-subtle">
+    <div class="card-header bg-success-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'utilisateurice {{ user.fullname }}">
+        <i class="fa-solid fa-users me-2"></i>
+        {{ user.fullname }}
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <i
+                class="fa-solid fa-at fa-fw me-1 text-{{ user.isVerified ? 'success' : 'danger' }}"
+                data-bs-toggle="tooltip"
+                data-bs-title="Email{% if not user.isVerified %} non{% endif %} vérifié"
+            ></i>
+            <a href="mailto:{{ user.email}}">
+                {{ user.email }}
+            </a>
+        </li>
+        <li class="list-group-item">
+            <i class="fa-solid fa-phone fa-fw me-1"></i>
+            <a href="phone:{{ user.phoneNumber|phone_number_format }}">
+                {{ user.phoneNumber|phone_number_format }}
+            </a>
+        </li>
+    </ul>
+
+    <a href="{{ path('admin_user_show', { id: user.id }) }}" class="btn btn-link btn-sm">Voir ce·tte utilisateurice</a>
+</div>

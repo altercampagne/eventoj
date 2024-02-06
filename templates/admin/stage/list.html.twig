@@ -1,12 +1,8 @@
 {% extends 'admin/_base.html.twig' %}
 
-{% block title %}Admin - Étapes {{ event.name }}{% endblock %}
+{% set title = event.name ~ ': toutes les étapes' %}
 
 {% block main %}
-    <div class="text-center">
-        <h1 class="fw-bold text-uppercase text-primary">{{ event.name }}: toutes les étapes</h1>
-    </div>
-
     <table class="table table-hover">
         <tr>
             <th scope="col">Date</th>

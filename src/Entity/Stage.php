@@ -18,9 +18,14 @@ use Symfony\Component\Uid\UuidV4;
 #[ORM\Index(name: 'idx_stage_slug', fields: ['slug'])]
 class Stage
 {
+    /**
+     * This property should be marked as readonly but is not due to a bug in Doctrine.
+     *
+     * @see https://github.com/doctrine/orm/issues/9863
+     */
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private readonly UuidV4 $id;
+    private UuidV4 $id;
 
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'stages')]
     #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id')]
