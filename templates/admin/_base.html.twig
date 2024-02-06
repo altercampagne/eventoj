@@ -4,6 +4,10 @@
     {{ importmap('admin') }}
 {% endblock %}
 
+{% block title %}
+    Admin {% if title is defined %} - {{ title }}{% endif %}
+{% endblock %}
+
 {% block body %}
     {% set current_route = app.request.attributes.get('_route') %}
 
@@ -17,7 +21,7 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="{{ path('admin_user_list') }}" class="nav-link{% if current_route == 'admin_user_list' %} active{% endif %}" aria-current="page">
+                    <a href="{{ path('admin_user_list') }}" class="nav-link{% if current_route in ['admin_user_list', 'admin_user_show'] %} active{% endif %}" aria-current="page">
                         <i class="fa-solid fa-users me-1"></i>
                         Utilisateurices
                     </a>
@@ -25,7 +29,7 @@
                         <i class="fa-solid fa-calendar-days me-1"></i>
                         Evènements
                     </a>
-                    <a href="{{ path('admin_registration_list') }}" class="nav-link{% if current_route == 'admin_registration_list' %} active{% endif %}" aria-current="page">
+                    <a href="{{ path('admin_registration_list') }}" class="nav-link{% if current_route in ['admin_registration_list', 'admin_registration_show'] %} active{% endif %}" aria-current="page">
                         <i class="fa-solid fa-ticket me-1"></i>
                         Réservations
                     </a>
@@ -52,6 +56,10 @@
                     </div>
                 {% endfor %}
             {% endfor %}
+
+            <div class="text-center mb-4">
+                <h1 class="fw-bold text-uppercase text-primary">{{ title|default('No title defined') }}</h1>
+            </div>
 
             {% block main %}{% endblock %}
         </div>

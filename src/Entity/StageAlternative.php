@@ -16,11 +16,11 @@ class StageAlternative
     private readonly UuidV4 $id;
 
     #[ORM\ManyToOne(targetEntity: Stage::class, inversedBy: 'stagesAlternatives')]
-    #[ORM\JoinColumn(name: 'stage_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'stage_id', referencedColumnName: 'id', nullable: false)]
     private Stage $stage;
 
     #[ORM\ManyToOne(targetEntity: Alternative::class, inversedBy: 'stagesAlternatives')]
-    #[ORM\JoinColumn(name: 'alternative_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'alternative_id', referencedColumnName: 'id', nullable: false)]
     private Alternative $alternative;
 
     #[ORM\Column(type: 'string', length: 10, enumType: StageAlternativeRelation::class, options: [

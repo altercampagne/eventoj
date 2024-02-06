@@ -8,12 +8,13 @@ use App\Entity\Event;
 use App\Entity\Registration;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/_admin/registrations/{slug}', name: 'admin_registration_list')]
+#[Route('/_admin/registrations', name: 'admin_registration_list')]
 class ListController extends AbstractController
 {
     public function __construct(
@@ -21,9 +22,9 @@ class ListController extends AbstractController
     ) {
     }
 
-    public function __invoke(?string $slug = null): Response
+    public function __invoke(Request $request): Response
     {
-        if (null !== $slug) {
+        if (null !== $slug = $request->query->get('event')) {
             if (null == $event = $this->em->getRepository(Event::class)->findOneBySlug($slug)) {
                 throw $this->createNotFoundException("No event $slug found.");
             }

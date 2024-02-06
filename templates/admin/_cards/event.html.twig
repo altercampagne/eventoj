@@ -1,0 +1,19 @@
+<div class="card border-info-subtle">
+    <div class="card-header bg-info-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'évènement {{ event.name }}">
+        <i class="fa-solid fa-calendar-days me-2"></i>
+        {{ event.name }}
+        <span class="float-end badge bg-info">{{ event.type.value }}</span>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <i class="fa-solid fa-map-location-dot fa-fw me-1"></i>
+            {{ event.stages|length }} étapes
+        </li>
+        <li class="list-group-item">
+            <i class="fa-solid fa-calendar-days fa-fw me-1"></i>
+            Du <b>{{ (event.stages|first).date|format_date('long') }}</b> au <b>{{ (event.stages|last).date|format_date('long') }}</b>
+        </li>
+    </ul>
+
+    <a href="{{ path('admin_event_show', { slug: event.slug }) }}" class="btn btn-link btn-sm">Voir l'évènement</a>
+</div>

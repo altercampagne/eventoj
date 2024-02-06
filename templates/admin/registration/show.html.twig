@@ -1,0 +1,51 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = 'Inscription de ' ~ registration.user.fullname ~ ' à ' ~ registration.event.name %}
+
+{% block main %}
+    {% set arrivalDate = registration.stageRegistrationStart.stage.date|format_date('long') %}
+    {% set departureDate = registration.stageRegistrationEnd.stage.date|format_date('long') %}
+
+    <div class="row">
+        <div class="col-8">
+            {% if registration.isConfirmed %}
+                <div class="alert bg-success-subtle text-success">
+                    <i class="fa-solid fa-circle-check me-1"></i> Inscription confirmée le <b>{{ registration.confirmedAt|format_datetime('long', 'short') }}</b>
+                </div>
+            {% elseif registration.isWaitingPayment %}
+                <div class="alert bg-warning-subtle text-secondary">
+                    <i class="fa-solid fa-circle-check me-1"></i> Inscription en attente de paiement
+                </div>
+            {% endif %}
+            <div class="card">
+                <div class="card-body">
+                    Inscription de <b>{{ registration.countDaysOfPresence }} jours</b> entre le <b>{{ arrivalDate }}</b> et le <b>{{ departureDate }}</b>.
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="fa-solid fa-plane-arrival fa-fw me-1"></i> Arrivée prévue le {{ arrivalDate }} ({{ registration.stageRegistrationStart.stage.name }}) pour le {{ registration.stageRegistrationStart.firstMeal|trans|lower }}
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa-solid fa-plane-departure fa-fw me-1"></i> Arrivée prévue le {{ departureDate }} ({{ registration.stageRegistrationEnd.stage.name }}) pour le {{ registration.stageRegistrationStart.lastMeal|trans|lower }}
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa-solid fa-euro fa-fw me-1"></i> Prix de cette inscription : <strong>{{ (registration.totalPrice/100)|format_currency('EUR', { fraction_digit: 0 }) }}</strong> ({{ registration.countDaysOfPresence }} x {{ (registration.pricePerDay/100)|format_currency('EUR', { fraction_digit: 0 }) }})
+                    </li>
+                    <li class="list-group-item list-group-item-light py-1 fw-light fs-6">
+                        <small>Créée le {{ registration.createdAt|format_datetime('long', 'short') }}</small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-4 border-start">
+            <div class="row row-cols-1 g-4">
+                <div class="col">
+                    {{ include('admin/_cards/user.html.twig', { user: registration.user }, with_context = false) }}
+                </div>
+                <div class="col">
+                    {{ include('admin/_cards/event.html.twig', { event: registration.event }, with_context = false) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

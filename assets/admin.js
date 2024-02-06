@@ -5,3 +5,9 @@ import './styles/admin/admin.scss'
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
+
+document.querySelectorAll('tr[data-href]').forEach((element) => {
+  element.addEventListener('click', () => {
+    window.location = element.dataset.href;
+  });
+});

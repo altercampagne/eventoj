@@ -107,6 +107,8 @@ class RegistrationFormTypeTest extends KernelTestCase
         yield ['nom', 'Cette chaîne n\'est pas autorisée.'];
         yield ['prénom', 'Cette chaîne n\'est pas autorisée.'];
         yield ['test', 'Cette chaîne n\'est pas autorisée.'];
+        yield ['firsTNAme', 'Cette chaîne n\'est pas autorisée.'];
+        yield ['Lastname', 'Cette chaîne n\'est pas autorisée.'];
     }
 
     /**

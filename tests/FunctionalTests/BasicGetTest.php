@@ -21,14 +21,14 @@ class BasicGetTest extends WebTestCase
     }
 
     /**
-     * @return iterable<array{string, string, ?string}>
+     * @return iterable<array{string, string}>
      */
-    public static function protectedPages(): iterable
+    public static function adminPages(): iterable
     {
-        yield ['/_admin', 'Admin - Dashboard', 'Dashboard'];
-        yield ['/_admin/users', 'Admin - Utilisateurices', 'Toustes les utilisateurices'];
-        yield ['/_admin/registrations', 'Admin - Réservations', 'Toutes les réservations'];
-        yield ['/_admin/events', 'Admin - Évènements', 'Tous les évènements'];
+        yield ['/_admin', 'Dashboard'];
+        yield ['/_admin/users', 'Toustes les utilisateurices'];
+        yield ['/_admin/registrations', 'Toutes les réservations'];
+        yield ['/_admin/events', 'Tous les évènements'];
     }
 
     /**
@@ -40,15 +40,15 @@ class BasicGetTest extends WebTestCase
     }
 
     /**
-     * @dataProvider protectedPages
+     * @dataProvider adminPages
      */
-    public function testProtectedPages(string $url, string $expectedTitle, ?string $expectedH1 = null): void
+    public function testAdminPages(string $url, string $expectedTitle): void
     {
         $client = static::createClient();
         $user = $this->getRandomAdminUser();
         $client->loginUser($user);
 
-        $this->checkPage($client, $url, $expectedTitle, $expectedH1);
+        $this->checkPage($client, $url, 'Admin - '.$expectedTitle, $expectedTitle);
 
         $this->assertSelectorExists('#connected-as');
     }
