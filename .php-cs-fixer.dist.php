@@ -18,6 +18,7 @@ return (new PhpCsFixer\Config())
         '@Symfony' => true,
         '@Symfony:risky' => true,
         'declare_strict_types' => true,
+        'nullable_type_declaration_for_default_null_value' => true,
     ])
     ->setRiskyAllowed(true)
     ->setFinder($finder)

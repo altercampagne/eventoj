@@ -45,3 +45,35 @@ jobs:
 
       - name: PHP-CS-Fixer
         run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php-cs-fixer.dist.php
+
+  linters:
+    name: 🧹 Linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: Download dependencies
+        uses: ramsey/composer-install@v2
+
+      - name: Lint YAML files
+        shell: bash
+        run: bin/console lint:yaml config --parse-tags
+
+      - name: Lint Parameters and Services
+        shell: bash
+        run: bin/console lint:container --no-debug
+
+      - name: Lint Composer config
+        shell: bash
+        run: composer validate
+
+      - name: Check if any dependencies are compromised
+        shell: bash
+        run: composer audit
