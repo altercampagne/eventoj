@@ -1,6 +1,8 @@
 {
     "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
+    "name": "altercampagne/eventoj",
+    "description": "Altercampagne's booking system",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
