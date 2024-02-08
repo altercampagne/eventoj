@@ -16,7 +16,7 @@ class ProfileUpdateProfileTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = FixtureBuilder::createUser(children: false);
+        $user = FixtureBuilder::createUser(birthDate: new \DateTimeImmutable('-20 years'));
         $this->save($user);
 
         $client->loginUser($user);
