@@ -156,7 +156,7 @@ class RegistrationFormTypeTest extends KernelTestCase
             'lastName' => $faker->lastName(),
             'birthDate' => $faker->date(),
             'email' => $faker->email(),
-            'phoneNumber' => $faker->phoneNumber(),
+            'phoneNumber' => '0606060606',
             'address' => [
                 'countryCode' => 'FR',
                 'addressLine1' => $faker->address(),

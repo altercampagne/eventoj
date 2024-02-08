@@ -9,9 +9,21 @@ use App\Entity\User;
 use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\EntityManagerInterface;
 
 trait DatabaseUtilTrait
 {
+    public function save(object ...$objects): void
+    {
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+
+        foreach ($objects as $object) {
+            $em->persist($object);
+        }
+        $em->flush();
+    }
+
     protected function getRandomUser(): User
     {
         /** @var UserRepository $repository */

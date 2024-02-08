@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Website;
 
+use App\DataFixtures\Util\FixtureBuilder;
 use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -11,13 +12,12 @@ class ProfileUpdateProfileTest extends WebTestCase
 {
     use DatabaseUtilTrait;
 
-    public function testUpdate(): void
+    public function testUpdateWithAdult(): void
     {
-        $faker = \Faker\Factory::create('fr_FR');
-
         $client = static::createClient();
 
-        $user = $this->getRandomUser();
+        $user = FixtureBuilder::createUser(children: false);
+        $this->save($user);
 
         $client->loginUser($user);
 

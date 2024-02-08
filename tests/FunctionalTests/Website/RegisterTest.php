@@ -38,7 +38,7 @@ class RegisterTest extends WebTestCase
             'registration_form[lastName]' => $faker->lastName(),
             'registration_form[birthDate]' => $faker->date(),
             'registration_form[email]' => $registrationEmail,
-            'registration_form[phoneNumber]' => $faker->phoneNumber(),
+            'registration_form[phoneNumber]' => '0606060606',
             'registration_form[address][countryCode]' => 'FR',
             'registration_form[address][addressLine1]' => $faker->address(),
             'registration_form[address][zipCode]' => $faker->postCode(),

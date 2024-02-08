@@ -60,7 +60,7 @@ class FixtureBuilder
         $address = new Address();
         $address
             ->setAddressLine1($addressLine1 ?? self::getFaker()->streetAddress())
-            ->setAddressLine2($addressLine2 ?? self::getFaker()->optional(20)->streetAddress())
+            ->setAddressLine2($addressLine2 ?? self::getFaker()->optional(0.2)->streetAddress())
             ->setCity($city ?? self::getFaker()->city())
             ->setZipCode($zipCode ?? self::getFaker()->postCode())
             ->setCountryCode($countryCode)
