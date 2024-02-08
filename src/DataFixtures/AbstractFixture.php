@@ -19,14 +19,4 @@ abstract class AbstractFixture extends Fixture
 
         return $this->faker;
     }
-
-    /**
-     * Use Reflection to set a protected / private property.
-     */
-    protected function setProperty(object $object, string $property, mixed $value): void
-    {
-        $reflectionProperty = new \ReflectionProperty($object::class, $property);
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($object, $value);
-    }
 }

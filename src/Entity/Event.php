@@ -68,7 +68,7 @@ class Event
     /**
      * @var Collection<int, Stage>
      */
-    #[ORM\OneToMany(targetEntity: Stage::class, mappedBy: 'event')]
+    #[ORM\OneToMany(targetEntity: Stage::class, mappedBy: 'event', cascade: ['persist'])]
     #[ORM\OrderBy(['date' => 'ASC'])]
     private Collection $stages;
 

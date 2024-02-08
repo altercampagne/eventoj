@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Util\FixtureBuilder;
 use Doctrine\Persistence\ObjectManager;
 
 class UserFixtures extends AbstractFixture

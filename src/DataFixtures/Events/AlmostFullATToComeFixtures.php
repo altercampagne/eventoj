@@ -6,8 +6,7 @@ namespace App\DataFixtures\Events;
 
 use App\DataFixtures\AbstractFixture;
 use App\DataFixtures\AlternativeFixtures;
-use App\DataFixtures\FixtureBuilder;
-use App\Entity\Event;
+use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Registration;
 use App\Entity\Stage;
 use App\Entity\StageRegistration;
@@ -23,37 +22,11 @@ class AlmostFullATToComeFixtures extends AbstractFixture implements DependentFix
 
     public function load(ObjectManager $manager): void
     {
-        $event = Event::AT();
-        $event
-            ->setName('AT presque complet')
-            ->setPublishedAt(new \DateTimeImmutable())
-            ->setOpeningDateForBookings(new \DateTimeImmutable())
-            ->setDescription('Voilà un AT dans le futur et dont les réservations sont ouvertes mais presque pleines ! 🥳')
-        ;
-        $this->setProperty($event, 'adultsCapacity', 10);
-        $this->setProperty($event, 'childrenCapacity', 5);
-        $this->setProperty($event, 'bikesAvailable', 5);
-
+        $event = FixtureBuilder::createAT(
+            name: 'AT presque complet',
+            description: 'Voilà un AT dans le futur et dont les réservations sont ouvertes mais presque pleines ! 🥳',
+        );
         $manager->persist($event);
-
-        $date = new \DateTimeImmutable('first day of July');
-        if ($date < new \DateTimeImmutable()) {
-            $date = $date->modify('+1 year');
-        }
-
-        $stages = [];
-        for ($i = 1; $i <= 31; ++$i) {
-            $stage = (new Stage($event))
-                ->setName("Day #$i")
-                ->setDescription("Jour #$i")
-            ;
-            $stage->setDate($date);
-
-            $date = $date->modify('+1 day');
-
-            $manager->persist($stage);
-            $stages[] = $stage;
-        }
 
         foreach ($this->getStaysConfiguration() as $stay) {
             $user = FixtureBuilder::createUser(children: $stay['children'] ?? false);
@@ -65,7 +38,9 @@ class AlmostFullATToComeFixtures extends AbstractFixture implements DependentFix
 
             $stagesRegistrations = [];
             for ($i = $stay['start']; $i <= $stay['end']; ++$i) {
-                $stagesRegistrations[] = new StageRegistration(stage: $stages[$i - 1], registration: $registration);
+                /** @var Stage $stage */
+                $stage = $event->getStages()->get($i - 1);
+                $stagesRegistrations[] = new StageRegistration(stage: $stage, registration: $registration);
             }
 
             $registration->setStagesRegistrations($stagesRegistrations);

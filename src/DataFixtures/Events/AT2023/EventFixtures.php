@@ -6,7 +6,7 @@ namespace App\DataFixtures\Events\AT2023;
 
 use App\DataFixtures\AbstractFixture;
 use App\DataFixtures\AlternativeFixtures;
-use App\DataFixtures\FixtureBuilder;
+use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Alternative;
 use App\Entity\Event;
 use App\Entity\Registration;
