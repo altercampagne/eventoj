@@ -28,9 +28,6 @@
                     <li class="list-group-item">
                         <i class="fa-solid fa-plane-departure fa-fw me-1"></i> Arrivée prévue le {{ departureDate }} ({{ registration.stageRegistrationEnd.stage.name }}) pour le {{ registration.stageRegistrationStart.lastMeal|trans|lower }}
                     </li>
-                    <li class="list-group-item">
-                        <i class="fa-solid fa-euro fa-fw me-1"></i> Prix de cette inscription : <strong>{{ (registration.totalPrice/100)|format_currency('EUR', { fraction_digit: 0 }) }}</strong> ({{ registration.countDaysOfPresence }} x {{ (registration.pricePerDay/100)|format_currency('EUR', { fraction_digit: 0 }) }})
-                    </li>
                     <li class="list-group-item list-group-item-light py-1 fw-light fs-6">
                         <small>Créée le {{ registration.createdAt|format_datetime('long', 'short') }}</small>
                     </li>

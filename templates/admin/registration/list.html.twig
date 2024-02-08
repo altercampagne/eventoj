@@ -21,7 +21,7 @@
                     </td>
                     <td>{{ registration.user.fullName }}</td>
                     <td>
-                        <strong>{{ (registration.totalPrice/100)|format_currency('EUR', { fraction_digit: 0 }) }}</strong> ({{ registration.countDaysOfPresence }} x {{ (registration.pricePerDay/100)|format_currency('EUR', { fraction_digit: 0 }) }})
+                        {{ registration.countDaysOfPresence }} x {{ (registration.pricePerDay/100)|format_currency('EUR', { fraction_digit: 0 }) }}
                     </td>
                     <td>
                         {% if registration.isConfirmed %}

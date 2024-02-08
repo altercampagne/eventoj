@@ -68,7 +68,7 @@ class Event
     /**
      * @var Collection<int, Stage>
      */
-    #[ORM\OneToMany(targetEntity: Stage::class, mappedBy: 'event')]
+    #[ORM\OneToMany(targetEntity: Stage::class, mappedBy: 'event', cascade: ['persist'])]
     #[ORM\OrderBy(['date' => 'ASC'])]
     private Collection $stages;
 
@@ -145,7 +145,7 @@ class Event
 
     public function isFinished(): bool
     {
-        if (null === $stage = $this->getLatestStage()) {
+        if (null === $stage = $this->getLastStage()) {
             return false;
         }
 
@@ -251,7 +251,16 @@ class Event
         return $this->stages;
     }
 
-    public function getLatestStage(): ?Stage
+    public function getFirstStage(): ?Stage
+    {
+        if (false === $stage = $this->stages->first()) {
+            return null;
+        }
+
+        return $stage;
+    }
+
+    public function getLastStage(): ?Stage
     {
         if (false === $stage = $this->stages->last()) {
             return null;

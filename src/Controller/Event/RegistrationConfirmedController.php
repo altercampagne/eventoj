@@ -12,8 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-#[Route('/registration/{id}/payment_successful', name: 'event_registration_payment_successful')]
-class PaymentSuccessfulController extends AbstractController
+#[Route('/registration/{id}/confirmed', name: 'event_registration_confirmed')]
+class RegistrationConfirmedController extends AbstractController
 {
     public function __invoke(Request $request, Registration $registration): Response
     {
@@ -23,8 +23,7 @@ class PaymentSuccessfulController extends AbstractController
 
         if (!$registration->isConfirmed()) {
             return $this->redirectToRoute('event_register', [
-                'id' => $registration->getEvent()->getId(),
-                'registration' => $registration->getId(),
+                'slug' => $registration->getEvent()->getSlug(),
             ]);
         }
 

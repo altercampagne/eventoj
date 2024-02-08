@@ -13,7 +13,6 @@
                 <thead>
                     <tr>
                         <th scope="col">Utilisateurice</th>
-                        <th scope="col">Prix total</th>
                         <th scope="col">Date</th>
                     </tr>
                 </thead>
@@ -21,9 +20,6 @@
                     {% for registration in event.registrations|filter(r => r.isConfirmed) %}
                         <tr data-href="{{ path('admin_registration_show', { id: registration.id }) }}">
                             <td>{{ registration.user.fullName }}</td>
-                            <td>
-                                <strong>{{ (registration.totalPrice/100)|format_currency('EUR', { fraction_digit: 0 }) }}</strong> ({{ registration.countDaysOfPresence }} x {{ (registration.pricePerDay/100)|format_currency('EUR', { fraction_digit: 0 }) }})
-                            </td>
                             <td>{{ registration.createdAt|format_datetime }}</td>
                         </tr>
                     {% endfor %}

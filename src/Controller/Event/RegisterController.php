@@ -12,7 +12,6 @@ use App\Entity\User;
 use App\Form\EventRegistrationDTO;
 use App\Form\EventRegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-#[Route('/event/{slug}/register/{id?}', name: 'event_register')]
+#[Route('/event/{slug}/register', name: 'event_register')]
 class RegisterController extends AbstractController
 {
     public function __construct(
@@ -31,13 +30,16 @@ class RegisterController extends AbstractController
     public function __invoke(
         Request $request,
         string $slug,
-        #[MapEntity(mapping: ['id' => 'id'])]
-        ?Registration $registration = null,
     ): Response {
         $event = $this->em->getRepository(Event::class)->findOneBySlugJoinedToAllChildEntities($slug);
         if (null === $event || !$event->isBookable()) {
             throw $this->createNotFoundException();
         }
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $registration = $this->em->getRepository(Registration::class)->findOngoingRegistrationForEventAndUser($event, $user);
 
         $eventRegistrationDTO = new EventRegistrationDTO($event, $registration);
         $form = $this->createForm(EventRegistrationFormType::class, $eventRegistrationDTO, [

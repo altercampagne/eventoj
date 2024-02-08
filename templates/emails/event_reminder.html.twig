@@ -1,0 +1,51 @@
+{% apply inky_to_html|inline_css(source('@styles/foundation-emails.css'))|inline_css %}
+    <style>
+        body, html, .body {
+            background: #f3f3f3 !important;
+        }
+
+        .container.header, .container.footer {
+            background: #f3f3f3;
+        }
+    </style>
+
+    <spacer size="16"></spacer>
+
+    <container class="header">
+        <row>
+            <columns>
+                <h1 class="text-center">C'est bientôt le moment de nous rejoindre {{ registration.user.fullName }} !</h1>
+            </columns>
+        </row>
+    </container>
+
+    <container>
+        <row>
+            <columns>
+
+                <spacer size="32"></spacer>
+
+                <h4>Prépare tes sacoches, vérifie tes billets et prépare-toi ! 🥳</h4>
+
+                <spacer size="32"></spacer>
+
+                <p>Dans quelques jours, tu vas rejoindre tout plein de personnes trop sympas pour pédaler avec elle !</p>
+            </columns>
+        </row>
+
+        <spacer size="16"></spacer>
+    </container>
+
+    <container class="header">
+        <row>
+            <columns>
+                <center>
+                    <menu>
+                        <item href="https://www.altercampagne.net/">Site web</item>
+                        <item href="{{ url('homepage') }}">Réservation</item>
+                    </menu>
+                </center>
+            </columns>
+        </row>
+    </container>
+{% endapply %}

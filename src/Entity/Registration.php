@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\RegistrationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: RegistrationRepository::class)]
 #[ORM\Table(name: '`registration`')]
 #[ORM\Index(name: 'idx_registration_status', fields: ['status'])]
 class Registration
@@ -46,11 +47,6 @@ class Registration
         'comment' => 'Does the participant need a loan bike?',
     ])]
     private bool $needBike = false;
-
-    #[ORM\Column(type: Types::STRING, nullable: true, options: [
-        'comment' => 'The checkout intent ID provided by Helloasso',
-    ])]
-    private ?string $helloassoCheckoutIntentId = null;
 
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
@@ -128,11 +124,6 @@ class Registration
         return null;
     }
 
-    public function getTotalPrice(): int
-    {
-        return $this->countDaysOfPresence() * $this->pricePerDay;
-    }
-
     public function getId(): UuidV4
     {
         return $this->id;
@@ -177,18 +168,6 @@ class Registration
         return $this;
     }
 
-    public function getHelloassoCheckoutIntentId(): ?string
-    {
-        return $this->helloassoCheckoutIntentId;
-    }
-
-    public function setHelloassoCheckoutIntentId(string $helloassoCheckoutIntentId): self
-    {
-        $this->helloassoCheckoutIntentId = $helloassoCheckoutIntentId;
-
-        return $this;
-    }
-
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
@@ -222,5 +201,23 @@ class Registration
         $this->stagesRegistrations = new ArrayCollection($stagesRegistrations);
 
         return $this;
+    }
+
+    public function getFirstStageRegistration(): ?StageRegistration
+    {
+        if (false === $stagesRegistration = $this->stagesRegistrations->first()) {
+            return null;
+        }
+
+        return $stagesRegistration;
+    }
+
+    public function getLastStageRegistration(): ?StageRegistration
+    {
+        if (false === $stagesRegistration = $this->stagesRegistrations->last()) {
+            return null;
+        }
+
+        return $stagesRegistration;
     }
 }

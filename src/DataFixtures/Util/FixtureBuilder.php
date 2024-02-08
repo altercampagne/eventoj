@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Util;
 
 use App\Entity\Address;
+use App\Entity\Event;
+use App\Entity\Stage;
 use App\Entity\User;
 use Faker\Generator;
 use libphonenumber\PhoneNumber;
@@ -65,6 +67,44 @@ class FixtureBuilder
         ;
 
         return $address;
+    }
+
+    public static function createAT(
+        ?string $name = null,
+        ?string $description = null,
+        int $adultsCapacity = 10,
+        int $childrenCapacity = 5,
+        int $bikesAvailable = 5,
+    ): Event {
+        $event = Event::AT();
+        $event
+            ->setName($name ?? self::getFaker()->word())
+            ->setPublishedAt(new \DateTimeImmutable())
+            ->setOpeningDateForBookings(new \DateTimeImmutable())
+            ->setDescription($description ?? self::getFaker()->sentence())
+        ;
+        ReflectionHelper::setProperty($event, 'adultsCapacity', $adultsCapacity);
+        ReflectionHelper::setProperty($event, 'childrenCapacity', $childrenCapacity);
+        ReflectionHelper::setProperty($event, 'bikesAvailable', $bikesAvailable);
+
+        $date = new \DateTimeImmutable('first day of July');
+        if ($date < new \DateTimeImmutable()) {
+            $date = $date->modify('+1 year');
+        }
+
+        for ($i = 1; $i <= 31; ++$i) {
+            $stage = (new Stage($event))
+                ->setName("Day #$i")
+                ->setDescription("Jour #$i")
+            ;
+            $stage->setDate($date);
+
+            $date = $date->modify('+1 day');
+
+            $event->addStage($stage);
+        }
+
+        return $event;
     }
 
     private static function getFaker(): Generator
