@@ -93,7 +93,7 @@ class RegisterController extends AbstractController
             $this->em->persist($registration);
             $this->em->flush();
 
-            return $this->redirectToRoute('event_registration_overview', ['id' => (string) $registration->getId()]);
+            return $this->redirectToRoute('event_registration_pay', ['id' => (string) $registration->getId()]);
         }
 
         return $this->render('event/register.html.twig', [

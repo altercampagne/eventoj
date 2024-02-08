@@ -13,10 +13,11 @@
 
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8">
+                {{ form_start(form) }}
 
                 <h2 class="fw-bold text-uppercase text-secondary fs-3">L'évènement</h2>
 
-                <ul class="list-group mt-3 list-group-item-primary">
+                <ul class="list-group mt-3">
                     <li class="list-group-item p-3">
                         <div class="row">
                             <div class="col-12 col-sm-6">
@@ -48,37 +49,42 @@
                     <h2 class="fw-bold text-uppercase text-secondary fs-3">Ton tarif</h2>
                 </div>
 
-                <div class="alert bg-warning">
-                    Pour le moment, le calcul du prix n'est pas parfait : le prix de l'adhésion n'est pas prix en compte et le prix minimum n'est pas plafonné à un nombre de jours donné.
-                </div>
+                <ul class="list-group mt-3">
+                    {% for label, amount in bill.lines %}
+                        <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                            {{ label }}
+                            <span class="text-primary me-2">
+                                {% if 0 == amount %}GRATUIT{% else %}{{ (amount/100)|format_currency('EUR', { fraction_digit: 0 }) }}{% endif %}
+                            </span>
+                        </li>
+                    {% endfor %}
+                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-5 fw-bold">
+                        Total
+                        <span class="text-primary me-2">
+                            {{ (bill.amount/100)|format_currency('EUR', { fraction_digit: 0 }) }}
+                        </span>
+                    </li>
+                </ul>
 
                 <ul class="list-group mt-3">
-                    {% if registration.needBike %}
-                        <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                            Vélo de prêt
-                            <span class="text-primary me-2">GRATUIT</span>
-                        </li>
-                    {% endif %}
-
-                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                        Adhésion
-                        <span class="text-primary me-2">10 €</span>
-                    </li>
-
-                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                        Inscription à l'évènement
-                        <span class="text-primary me-2">{{ (registration.totalPrice/100)|format_currency('EUR', { fraction_digit: 0 }) }}</span>
+                    <li class="list-group-item list-group-item-{{ form.acceptCharter.vars.errors|length > 0 ? 'danger' : 'light' }} d-flex justify-content-between justify-content-sm-start align-items-center text-secondary">
+                        <input class="form-check-input me-3 me-sm-2" type="checkbox" value="" id="{{ form.acceptCharter.vars.id }}" name="{{ field_name(form.acceptCharter) }}" required>
+                        <label class="form-check-label" for="{{ form.acceptCharter.vars.id }}">
+                            J'ai lu et j'accepte <a href="">la charte de bonne conduite</a> ainsi que <a href="">le règlement intérieur</a> de l'association.
+                        </label>
                     </li>
                 </ul>
 
                 <div class="d-grid gap-2 mt-4">
-                    <a href="{{ path('event_registration_pay', { id: registration.id }) }}" class="btn btn-lg btn-primary">
-                        Régler {{ (registration.totalPrice/100)|format_currency('EUR', { fraction_digit: 0 }) }} via Helloasso
-                    </a>
+                    <button href="{{ path('event_registration_pay', { id: registration.id }) }}" class="btn btn-lg btn-primary" type="submit">
+                        Régler {{ (bill.amount/100)|format_currency('EUR', { fraction_digit: 0 }) }} via Helloasso
+                    </button>
                     <a href="{{ path('event_register', { slug: registration.event.slug }) }}" class="btn btn-link btn-sm">
                         Modifier mon inscription
                     </a>
                 </div>
+
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

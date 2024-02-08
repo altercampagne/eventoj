@@ -48,11 +48,6 @@ class Registration
     ])]
     private bool $needBike = false;
 
-    #[ORM\Column(type: Types::STRING, nullable: true, options: [
-        'comment' => 'The checkout intent ID provided by Helloasso',
-    ])]
-    private ?string $helloassoCheckoutIntentId = null;
-
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
@@ -129,11 +124,6 @@ class Registration
         return null;
     }
 
-    public function getTotalPrice(): int
-    {
-        return $this->countDaysOfPresence() * $this->pricePerDay;
-    }
-
     public function getId(): UuidV4
     {
         return $this->id;
@@ -174,18 +164,6 @@ class Registration
     public function setNeedBike(bool $needBike): self
     {
         $this->needBike = $needBike;
-
-        return $this;
-    }
-
-    public function getHelloassoCheckoutIntentId(): ?string
-    {
-        return $this->helloassoCheckoutIntentId;
-    }
-
-    public function setHelloassoCheckoutIntentId(string $helloassoCheckoutIntentId): self
-    {
-        $this->helloassoCheckoutIntentId = $helloassoCheckoutIntentId;
 
         return $this;
     }
