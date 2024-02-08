@@ -56,7 +56,7 @@ class PostPaymentController extends AbstractController
                 'code' => $code,
             ]);
 
-            $this->addFlash('error', 'Le paiement a été refusé et ton inscription n\'a pas pu être validée.');
+            $this->addFlash('danger', 'Le paiement a été refusé et ton inscription n\'a pas pu être validée.');
 
             return $this->cancel($registration);
         }
@@ -75,7 +75,6 @@ class PostPaymentController extends AbstractController
     {
         return $this->redirectToRoute('event_register', [
             'slug' => $registration->getEvent()->getSlug(),
-            'id' => $registration->getId(),
         ]);
     }
 }

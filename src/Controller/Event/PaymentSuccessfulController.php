@@ -24,7 +24,6 @@ class PaymentSuccessfulController extends AbstractController
         if (!$registration->isConfirmed()) {
             return $this->redirectToRoute('event_register', [
                 'id' => $registration->getEvent()->getId(),
-                'registration' => $registration->getId(),
             ]);
         }
 
