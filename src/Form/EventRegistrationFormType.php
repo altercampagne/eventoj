@@ -54,6 +54,7 @@ class EventRegistrationFormType extends AbstractType
             ->add('pricePerDay', IntegerType::class, [
                 'attr' => [
                     'min' => 20,
+                    'class' => 'form-control-lg',
                 ],
             ])
         ;

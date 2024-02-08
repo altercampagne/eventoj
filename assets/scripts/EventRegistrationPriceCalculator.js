@@ -7,7 +7,7 @@ class EventRegistrationPriceCalculator {
 
     this.availableOptions = [...this.selectStart.options].map(o => o.value);
 
-    this.daysOfPresenceInput = document.querySelector('#event-registration-days-of-presence');
+    this.daysOfPresenceElement = document.querySelector('#event-registration-days-of-presence');
     this.pricePerDayInput = document.querySelector('#event_registration_form_pricePerDay');
     this.finalPrice = document.querySelector('#event-registration-final-price');
 
@@ -106,9 +106,9 @@ class EventRegistrationPriceCalculator {
   updateFinalPrice() {
     const numberOfDays = this.availableOptions.indexOf(this.selectEnd.value) - this.availableOptions.indexOf(this.selectStart.value);
 
-    this.daysOfPresenceInput.value = numberOfDays;
+    this.daysOfPresenceElement.innerText = numberOfDays;
 
-    this.finalPrice.textContent = numberOfDays*this.pricePerDayInput.value + 10;
+    this.finalPrice.textContent = numberOfDays*this.pricePerDayInput.value;
   }
 }
 
