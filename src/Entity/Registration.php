@@ -62,6 +62,13 @@ class Registration
     #[ORM\OneToMany(targetEntity: StageRegistration::class, mappedBy: 'registration', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $stagesRegistrations;
 
+    /**
+     * @var Collection<int, Payment>
+     */
+    #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'registration')]
+    #[ORM\OrderBy(['createdAt' => 'ASC'])]
+    private Collection $payments;
+
     public function __construct(User $user, Event $event)
     {
         $this->id = new UuidV4();
@@ -70,6 +77,7 @@ class Registration
         $this->stagesRegistrations = new ArrayCollection();
         $this->status = RegistrationStatus::WAITING_PAYMENT;
         $this->createdAt = new \DateTimeImmutable();
+        $this->payments = new ArrayCollection();
     }
 
     public function canBeConfirmed(): bool
@@ -219,5 +227,20 @@ class Registration
         }
 
         return $stagesRegistration;
+    }
+
+    /**
+     * @return Collection<int, Payment>
+     */
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
+
+    public function getApprovedPayment(): ?Payment
+    {
+        return $this->payments->findFirst(static function (int $key, Payment $payment): bool {
+            return $payment->isApproved();
+        });
     }
 }

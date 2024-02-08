@@ -34,6 +34,14 @@
                                             <i class="fa-solid fa-at me-2"></i> Mes coordonnées
                                         </a>
                                     </li>
+                                    {% if app.user.registrations|length > 0 %}
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('profile_registrations') }}">
+                                                <i class="fa-solid fa-ticket me-2"></i> Mes participations
+                                            </a>
+                                        </li>
+                                    {% endif %}
                                     {% if is_granted('ROLE_ADMIN') %}
                                         <li><hr class="dropdown-divider"></li>
                                         <li>

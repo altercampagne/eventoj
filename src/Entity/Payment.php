@@ -21,7 +21,7 @@ class Payment
     #[ORM\JoinColumn(name: 'payer_id', referencedColumnName: 'id', nullable: false)]
     private readonly User $payer;
 
-    #[ORM\ManyToOne(targetEntity: Registration::class)]
+    #[ORM\ManyToOne(targetEntity: Registration::class, inversedBy: 'payments')]
     #[ORM\JoinColumn(name: 'registration_id', referencedColumnName: 'id', nullable: false)]
     private readonly Registration $registration;
 
