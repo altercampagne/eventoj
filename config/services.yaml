@@ -33,3 +33,7 @@ services:
       arguments:
         $cloudimgToken: '%env(CLOUDIMG_TOKEN)%'
         $cloudimgAlias: '%env(CLOUDIMG_ALIAS)%'
+
+    App\Twig\Runtime\PriceExtensionRuntime:
+      arguments:
+        $intlExtension: '@twig.extension.intl'

@@ -54,14 +54,14 @@
                         <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
                             {{ label }}
                             <span class="text-primary me-2">
-                                {% if 0 == amount %}GRATUIT{% else %}{{ (amount/100)|format_currency('EUR', { fraction_digit: 0 }) }}{% endif %}
+                                {% if 0 == amount %}GRATUIT{% else %}{{ amount|format_price }}{% endif %}
                             </span>
                         </li>
                     {% endfor %}
                     <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-5 fw-bold">
                         Total
                         <span class="text-primary me-2">
-                            {{ (bill.amount/100)|format_currency('EUR', { fraction_digit: 0 }) }}
+                            {{ bill.amount|format_price }}
                         </span>
                     </li>
                 </ul>
@@ -77,7 +77,7 @@
 
                 <div class="d-grid gap-2 mt-4">
                     <button href="{{ path('event_registration_pay', { id: registration.id }) }}" class="btn btn-lg btn-primary" type="submit">
-                        Régler {{ (bill.amount/100)|format_currency('EUR', { fraction_digit: 0 }) }} via Helloasso
+                        Régler {{ bill.amount|format_price }} via Helloasso
                     </button>
                     <a href="{{ path('event_register', { slug: registration.event.slug }) }}" class="btn btn-link btn-sm">
                         Modifier mon inscription
