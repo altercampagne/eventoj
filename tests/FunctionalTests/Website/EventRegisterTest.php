@@ -16,9 +16,7 @@ class EventRegisterTest extends WebTestCase
     {
         $faker = \Faker\Factory::create('fr_FR');
 
-        $client = static::createClient([], [
-            'HTTPS' => true,
-        ]);
+        $client = static::createClient();
 
         $user = $this->getRandomUser();
         $client->loginUser($user);
@@ -46,6 +44,6 @@ class EventRegisterTest extends WebTestCase
         $client->followRedirect();
 
         $this->assertResponseIsSuccessful();
-        $this->assertRouteSame('event_registration_overview');
+        $this->assertRouteSame('event_registration_pay');
     }
 }
