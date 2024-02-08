@@ -224,4 +224,22 @@ class Registration
 
         return $this;
     }
+
+    public function getFirstStageRegistration(): ?StageRegistration
+    {
+        if (false === $stagesRegistration = $this->stagesRegistrations->first()) {
+            return null;
+        }
+
+        return $stagesRegistration;
+    }
+
+    public function getLastStageRegistration(): ?StageRegistration
+    {
+        if (false === $stagesRegistration = $this->stagesRegistrations->last()) {
+            return null;
+        }
+
+        return $stagesRegistration;
+    }
 }

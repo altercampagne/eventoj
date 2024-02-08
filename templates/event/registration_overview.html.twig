@@ -1,0 +1,85 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Ton inscription pour {{ registration.event.name }}{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row text-center mb-3">
+            <h1 class="fw-bold text-uppercase text-primary">Récapitulatif</h1>
+            <p class="text-body-secondary">
+                Vérifie bien toutes les informations ci-dessous avant de passer au paiement. :)
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+
+                <h2 class="fw-bold text-uppercase text-secondary fs-3">L'évènement</h2>
+
+                <ul class="list-group mt-3 list-group-item-primary">
+                    <li class="list-group-item p-3">
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <h5 class="mb-sm-0">{{ registration.event.name }}</h5>
+                            </div>
+                            <div class="col-12 col-sm-6 text-sm-end">
+                                <p class="mb-0">
+                                    Du {{ registration.event.firstStage.date|format_date(pattern='d MMMM') }} au {{ registration.event.lastStage.date|format_date('long') }}
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Tes étapes</h2>
+                </div>
+
+                <ul class="list-group mt-3">
+                    <li class="list-group-item p-3">
+                        <span class="fw-bold text-uppercase text-decoration-underline">Arrivée</span> prévue le <b>{{ registration.firstStageRegistration.stage.date|format_date('full') }}</b> pour le <b>{{ registration.firstStageRegistration.firstMeal|trans|lower }}</b>.
+                    </li>
+                    <li class="list-group-item p-3">
+                        <span class="fw-bold text-uppercase text-decoration-underline">Départ</span> prévu le <b>{{ registration.lastStageRegistration.stage.date|format_date('full') }}</b> pour le <b>{{ registration.lastStageRegistration.lastMeal|trans|lower }}</b>.
+                    </li>
+                </ul>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Ton tarif</h2>
+                </div>
+
+                <div class="alert bg-warning">
+                    Pour le moment, le calcul du prix n'est pas parfait : le prix de l'adhésion n'est pas prix en compte et le prix minimum n'est pas plafonné à un nombre de jours donné.
+                </div>
+
+                <ul class="list-group mt-3">
+                    {% if registration.needBike %}
+                        <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                            Vélo de prêt
+                            <span class="text-primary me-2">GRATUIT</span>
+                        </li>
+                    {% endif %}
+
+                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                        Adhésion
+                        <span class="text-primary me-2">10 €</span>
+                    </li>
+
+                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                        Inscription à l'évènement
+                        <span class="text-primary me-2">{{ (registration.totalPrice/100)|format_currency('EUR', { fraction_digit: 0 }) }}</span>
+                    </li>
+                </ul>
+
+                <div class="d-grid gap-2 mt-4">
+                    <a href="{{ path('event_registration_pay', { id: registration.id }) }}" class="btn btn-lg btn-primary">
+                        Régler {{ (registration.totalPrice/100)|format_currency('EUR', { fraction_digit: 0 }) }} via Helloasso
+                    </a>
+                    <a href="{{ path('event_register', { slug: registration.event.slug }) }}" class="btn btn-link btn-sm">
+                        Modifier mon inscription
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
