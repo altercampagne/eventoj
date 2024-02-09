@@ -117,12 +117,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OrderBy(['createdAt' => 'ASC'])]
     private Collection $payments;
 
+    /**
+     * @var Collection<int, Companion>
+     */
+    #[ORM\OneToMany(targetEntity: Companion::class, mappedBy: 'user')]
+    #[ORM\OrderBy(['createdAt' => 'ASC'])]
+    private Collection $companions;
+
     public function __construct()
     {
         $this->id = new UuidV4();
         $this->createdAt = new \DateTimeImmutable();
         $this->registrations = new ArrayCollection();
         $this->payments = new ArrayCollection();
+        $this->companions = new ArrayCollection();
     }
 
     /**
@@ -385,5 +393,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPayments(): Collection
     {
         return $this->payments;
+    }
+
+    /**
+     * @return Collection<int, Companion>
+     */
+    public function getCompanions(): Collection
+    {
+        return $this->companions;
     }
 }
