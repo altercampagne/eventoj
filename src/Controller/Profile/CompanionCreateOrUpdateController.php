@@ -41,13 +41,15 @@ class CompanionCreateOrUpdateController extends AbstractController
             $this->em->persist($companion);
             $this->em->flush();
 
-            if (null !== $backToEvent) {
-                $this->addFlash('success', "{$companion->getFullName()} ajouté !");
-
-                return $this->redirectToRoute('event_register', ['slug' => $backToEvent]);
+            if ($creation ?? false) {
+                $this->addFlash('success', "{$companion->getFullName()} a bien été ajouté·e !");
+            } else {
+                $this->addFlash('success', "{$companion->getFullName()} a bien été modifié·e !");
             }
 
-            $this->addFlash('success', "{$companion->getFullName()} est à jour !");
+            if (null !== $backToEvent) {
+                return $this->redirectToRoute('event_register', ['slug' => $backToEvent]);
+            }
 
             return $this->redirectToRoute('profile_companions');
         }
