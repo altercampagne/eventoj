@@ -24,7 +24,7 @@ trait FormAssertionsTrait
         $errors = $this->getFlattenErrors($form);
 
         foreach ($expectedErrors as $field => $expectedErrorsForField) {
-            $this->assertTrue(\array_key_exists($field, $errors), "No error found for field $field");
+            $this->assertTrue(\array_key_exists($field, $errors), "No error found for field $field. Existing errors : ".print_r($errors, true));
             $expectedErrorsForField = (array) $expectedErrorsForField;
 
             $this->assertSame($expectedErrorsForField, $errors[$field]);

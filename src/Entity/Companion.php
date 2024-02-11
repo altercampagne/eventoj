@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Bridge\Helloasso\Validator\HelloassoName;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use libphonenumber\PhoneNumber;
@@ -16,6 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'companion')]
 class Companion
 {
+    use PersonTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     private readonly UuidV4 $id;
@@ -68,11 +72,18 @@ class Companion
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
+    /**
+     * @var Collection<int, Registration>
+     */
+    #[ORM\ManyToMany(targetEntity: Registration::class, mappedBy: 'companions')]
+    private Collection $registrations;
+
     public function __construct(User $user)
     {
         $this->id = new UuidV4();
         $this->user = $user;
         $this->createdAt = new \DateTimeImmutable();
+        $this->registrations = new ArrayCollection();
     }
 
     public function getId(): UuidV4
@@ -102,11 +113,6 @@ class Companion
         $this->lastName = $lastName;
 
         return $this;
-    }
-
-    public function getFullName(): string
-    {
-        return $this->firstName.' '.$this->lastName;
     }
 
     public function getBirthDate(): \DateTimeImmutable
@@ -145,7 +151,7 @@ class Companion
         return $this;
     }
 
-    public function getDiet(): ?Diet
+    public function getDiet(): Diet
     {
         return $this->diet;
     }
@@ -191,5 +197,13 @@ class Companion
         $this->dietDetails = $dietDetails;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Registration>
+     */
+    public function getRegistrations(): Collection
+    {
+        return $this->registrations;
     }
 }

@@ -105,20 +105,22 @@ class Stage
         return StageDifficulty::HARD === $this->difficulty;
     }
 
+    public function isOver(): bool
+    {
+        return $this->date < new \DateTimeImmutable();
+    }
+
     public function getAvailability(): \stdClass
     {
         $adults = $children = $bikes = 0;
 
         foreach ($this->getConfirmedStagesRegistrations() as $stageRegistration) {
-            if ($stageRegistration->getRegistration()->needBike()) {
-                ++$bikes;
-            }
+            $registration = $stageRegistration->getRegistration();
+            $children = $registration->countChildren();
 
-            if ($stageRegistration->getRegistration()->getUser()->isChild()) {
-                ++$children;
-            } else {
-                ++$adults;
-            }
+            $bikes += $registration->getNeededBike();
+            $children += $children;
+            $adults += $registration->countPeople() - $children;
         }
 
         return (object) [

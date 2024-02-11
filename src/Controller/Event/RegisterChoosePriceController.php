@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller\Event;
 
+use App\Entity\Event;
 use App\Entity\Payment;
 use App\Entity\Registration;
 use App\Entity\User;
-use App\Form\EventRegistrationPayFormType;
+use App\Form\EventRegistration\ChoosePriceFormType;
+use App\Form\EventRegistration\EventRegistrationDTO;
 use App\Service\PriceCalculation\RegistrationPriceCalculator;
 use Doctrine\ORM\EntityManagerInterface;
 use Helloasso\HelloassoClient;
@@ -22,8 +24,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-#[Route('/registration/{id}/pay', name: 'event_registration_pay')]
-class RegistrationPayController extends AbstractController
+#[Route('/event/{slug}/register/price', name: 'event_register_choose_price')]
+class RegisterChoosePriceController extends AbstractController
 {
     public function __construct(
         private readonly RegistrationPriceCalculator $registrationPriceCalculator,
@@ -33,10 +35,17 @@ class RegistrationPayController extends AbstractController
     ) {
     }
 
-    public function __invoke(Request $request, Registration $registration): Response
+    public function __invoke(Request $request, Event $event): Response
     {
-        if ($registration->getUser() !== $this->getUser()) {
-            throw $this->createNotFoundException('Current user is not the owner of the given reservation.');
+        if (!$event->isBookable()) {
+            throw $this->createNotFoundException();
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (null === $registration = $this->em->getRepository(Registration::class)->findOngoingRegistrationForEventAndUser($event, $user)) {
+            return $this->redirectToRoute('event_register', ['slug' => $event->getSlug()]);
         }
         if (!$registration->isWaitingPayment()) {
             $this->addFlash('warning', 'Cette inscription ne peut pas être réglée. Ne le serait-elle pas déjà ?');
@@ -50,10 +59,14 @@ class RegistrationPayController extends AbstractController
 
         $bill = $this->registrationPriceCalculator->calculate($registration);
 
-        $form = $this->createForm(EventRegistrationPayFormType::class);
+        $eventRegistrationDTO = new EventRegistrationDTO($registration);
+        $form = $this->createForm(ChoosePriceFormType::class, $eventRegistrationDTO);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $registration->setPricePerDay($eventRegistrationDTO->pricePerDay * 100);
+            $this->em->persist($registration);
+
             /** @var User $payer */
             $payer = $this->getUser();
 
@@ -90,7 +103,7 @@ class RegistrationPayController extends AbstractController
             return $this->redirect($initCheckoutResponse->getRedirectUrl());
         }
 
-        return $this->render('event/registration_pay.html.twig', [
+        return $this->render('event/register_choose_price.html.twig', [
             'registration' => $registration,
             'bill' => $bill,
             'form' => $form->createView(),

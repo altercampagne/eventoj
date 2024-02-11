@@ -9,8 +9,8 @@ use App\Entity\Meal;
 use App\Entity\Registration;
 use App\Entity\StageRegistration;
 use App\Entity\User;
-use App\Form\EventRegistrationDTO;
-use App\Form\EventRegistrationFormType;
+use App\Form\EventRegistration\ChooseDatesFormType;
+use App\Form\EventRegistration\EventRegistrationDTO;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,8 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-#[Route('/event/{slug}/register', name: 'event_register')]
-class RegisterController extends AbstractController
+#[Route('/event/{slug}/register/dates', name: 'event_register_choose_dates')]
+class RegisterChooseDatesController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
@@ -39,24 +39,19 @@ class RegisterController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        $registration = $this->em->getRepository(Registration::class)->findOngoingRegistrationForEventAndUser($event, $user);
+        if (null === $registration = $this->em->getRepository(Registration::class)->findOngoingRegistrationForEventAndUser($event, $user)) {
+            return $this->redirectToRoute('event_register', ['slug' => $event->getSlug()]);
+        }
 
-        $eventRegistrationDTO = new EventRegistrationDTO($event, $registration);
-        $form = $this->createForm(EventRegistrationFormType::class, $eventRegistrationDTO, [
-            'event' => $event,
+        $eventRegistrationDTO = new EventRegistrationDTO($registration);
+        $form = $this->createForm(ChooseDatesFormType::class, $eventRegistrationDTO, [
+            'registration' => $registration,
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */
             $user = $this->getUser();
-
-            if (null === $registration) {
-                $registration = new Registration(
-                    user: $user,
-                    event: $event,
-                );
-            }
 
             $bookedStages = $eventRegistrationDTO->getBookedStages();
             $stagesRegistrations = [];
@@ -87,17 +82,17 @@ class RegisterController extends AbstractController
             $registration
                 ->setStagesRegistrations($stagesRegistrations)
                 ->setPricePerDay($eventRegistrationDTO->pricePerDay * 100)
-                ->setNeedBike($eventRegistrationDTO->needBike)
+                ->setNeededBike($eventRegistrationDTO->neededBike)
             ;
 
             $this->em->persist($registration);
             $this->em->flush();
 
-            return $this->redirectToRoute('event_registration_pay', ['id' => (string) $registration->getId()]);
+            return $this->redirectToRoute('event_register_choose_price', ['slug' => $event->getSlug()]);
         }
 
-        return $this->render('event/register.html.twig', [
-            'event' => $event,
+        return $this->render('event/register_choose_dates.html.twig', [
+            'registration' => $registration,
             'form' => $form,
         ]);
     }

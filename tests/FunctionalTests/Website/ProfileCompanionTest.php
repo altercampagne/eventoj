@@ -32,7 +32,7 @@ class ProfileCompanionTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_companion_create');
 
-        $client->submitForm('C\'est tout bon !', [
+        $client->submitForm('Ajouter', [
             'companion_form[firstName]' => 'Companion',
             'companion_form[lastName]' => 'ForTests',
             'companion_form[birthDate]' => (new \DateTimeImmutable('-11 years'))->format('Y-m-d'),
@@ -47,14 +47,14 @@ class ProfileCompanionTest extends WebTestCase
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_companions');
-        $this->assertSelectorTextContains('.alert-success', 'Companion ForTests est à jour !');
+        $this->assertSelectorTextContains('.alert-success', 'Companion ForTests a bien été ajouté·e !');
         $this->assertSelectorTextContains('.card-body', "Pas d'information de contact");
 
         $client->clickLink('Modifier Companion ForTests');
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_companion_update');
 
-        $client->submitForm('C\'est tout bon !', [
+        $client->submitForm('Modifier', [
             'companion_form[firstName]' => 'Companion',
             'companion_form[lastName]' => 'ForTests',
             'companion_form[birthDate]' => (new \DateTimeImmutable('-11 years'))->format('Y-m-d'),
@@ -71,8 +71,46 @@ class ProfileCompanionTest extends WebTestCase
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_companions');
-        $this->assertSelectorTextContains('.alert-success', 'Companion ForTests est à jour !');
+        $this->assertSelectorTextContains('.alert-success', 'Companion ForTests a bien été modifié·e !');
         $this->assertSelectorTextContains('.card-body', 'contact@yopmail.com');
         $this->assertSelectorTextContains('.card-body', '+33 6 06 06 06 06');
+    }
+
+    public function testCreateFromEventRegisterGoesBackToEvent(): void
+    {
+        $client = static::createClient();
+
+        $user = FixtureBuilder::createUser();
+        $event = FixtureBuilder::createAT();
+        $this->save($user, $event);
+
+        $client->loginUser($user);
+
+        $client->request('GET', "/event/{$event->getSlug()}/register");
+
+        $this->assertSelectorNotExists('input[data-fullname="Companion ForTests"]');
+
+        $client->clickLink('Ajouter une·e compagnon·e');
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('profile_companion_create');
+
+        $client->submitForm('Ajouter', [
+            'companion_form[firstName]' => 'Companion',
+            'companion_form[lastName]' => 'ForTests',
+            'companion_form[birthDate]' => (new \DateTimeImmutable('-11 years'))->format('Y-m-d'),
+            'companion_form[diet]' => 'vegetarian',
+            'companion_form[glutenIntolerant]' => false,
+            'companion_form[lactoseIntolerant]' => false,
+            'companion_form[dietDetails]' => null,
+        ]);
+
+        $this->assertSelectorNotExists('.invalid-feedback', 'Form contains errors');
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('event_register');
+
+        $this->assertSelectorTextContains('.alert-success', 'Companion ForTests a bien été ajouté·e !');
+        $this->assertSelectorExists('input[data-fullname="Companion ForTests"]');
     }
 }

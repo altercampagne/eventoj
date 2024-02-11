@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\PriceCalculation;
 
 use App\Entity\Registration;
-use App\Entity\User;
 
 final class RegistrationPriceCalculator
 {
@@ -13,21 +12,40 @@ final class RegistrationPriceCalculator
     {
         $bill = new Bill();
 
-        if ($registration->needBike()) {
+        if (1 === $registration->getNeededBike()) {
             $bill->addLine('Vélo de prêt', 0);
+        } elseif (1 < $registration->getNeededBike()) {
+            $bill->addLine("{$registration->getNeededBike()} vélos de prêt", 0);
         }
 
-        if ($this->needMembership($registration->getUser())) {
-            $bill->addLine('Adhésion à l\'association', 1000);
+        $nbPersons = $registration->countPeople();
+        $nbChilds = $registration->countChildren();
+        $nbAdults = $nbPersons - $nbChilds;
+
+        if (0 < $nbAdults) {
+            if (1 === $nbAdults) {
+                $bill->addLine('Adhésion adulte', 1000);
+            } else {
+                $bill->addLine("$nbAdults adhésions adulte", 1000 * $nbAdults);
+            }
         }
 
-        $bill->addLine('Inscription à l\'évènement', $registration->countDaysOfPresence() * $registration->getPricePerDay());
+        if (0 < $nbChilds) {
+            if (1 === $nbChilds) {
+                $bill->addLine('Adhésion - de 13 ans', 500);
+            } else {
+                $bill->addLine("$nbChilds adhésions - de 13 ans", 500 * $nbChilds);
+            }
+        }
+
+        $registrationPrice = $registration->countDaysOfPresence() * $registration->getPricePerDay();
+
+        if (1 === $nbPersons) {
+            $bill->addLine('Inscription à l\'évènement', $registrationPrice);
+        } else {
+            $bill->addLine("$nbPersons inscriptions à l'évènement", $registrationPrice * $nbPersons);
+        }
 
         return $bill;
-    }
-
-    private function needMembership(User $user): bool
-    {
-        return true;
     }
 }

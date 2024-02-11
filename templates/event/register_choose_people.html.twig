@@ -1,0 +1,69 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}{{ event.name }}{% endblock %}
+
+{# Remove header & footer to avoid distractions #}
+{% block header '' %}
+{% block footer '' %}
+
+{% block main %}
+    <div class="container">
+        <twig:RegistrationBreadcrump step="choose_people" event="{{ event }}" />
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 col-md-6 m-auto">
+                <h2 class="fw-bold text-secondary mb-3">Qui voyage ?</h2>
+
+                {{ form_start(form) }}
+                <ul class="list-group">
+                    <li class="list-group-item d-flex align-items-center">
+                        <input class="form-check-input" type="checkbox" name="self" checked disabled />
+                        <div class="ms-3">
+                            <span class="fs-5"><b>{{ app.user.fullName }}</b> (c'est toi !)</span></br >
+                            <span class="text-secondary">({{ app.user.birthDate|format_date('short') }})</span>
+                        </div>
+                    </li>
+                    {% for companionForm in form.companions %}
+                        <li class="list-group-item d-flex align-items-center">
+                            {{ form_widget(companionForm) }}
+                            <div class="ms-2">
+                                <label class="form-check-label stretched-link" for="{{ companionForm.vars.id }}">{{ companionForm.vars.attr['data-fullname'] }}</label><br />
+                                <span class="text-secondary">({{ companionForm.vars.attr['data-birthdate'] }})</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="d-grid mt-2">
+                    <a href="{{ path('profile_companion_create', { backToEvent: event.slug }) }}" class="btn btn-link">
+                        Ajouter une·e compagnon·e
+                    </a>
+                </div>
+
+                <h2 class="fw-bold text-secondary mt-4 mb-3">Besoin de vélo ?</h2>
+
+                {% if form.neededBike.vars.errors|length > 0 %}
+                    <div class="alert alert-danger p-2">
+                        {{ form_errors(form.neededBike) }}
+                    </div>
+                {% endif %}
+                <ul class="list-group mt-3">
+                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center{% if form.neededBike.vars.errors|length > 0 %} border-danger{% endif %}">
+                        <label class="form-check-label" for="{{ form.neededBike.vars.id }}">
+                            Vélos nécessaires
+                        </label>
+                        <div class="col-auto">
+                            {{ form_widget(form.neededBike, { attr: { size: 2 }}) }}
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="d-grid gap-2 mt-4 mb-5">
+                    <button type="submit" class="btn btn-lg btn-primary">Étape suivante</button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

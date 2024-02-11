@@ -58,7 +58,9 @@
                     </fieldset>
 
                     <div class="d-grid gap-2 mt-4">
-                        <button type="submit" class="btn btn-lg btn-primary">C'est tout bon !</button>
+                        <button type="submit" class="btn btn-lg btn-primary">
+                            {% if creation %}Ajouter{% else %}Modifier{% endif %}
+                        </button>
                     </div>
 
                 {{ form_end(form) }}

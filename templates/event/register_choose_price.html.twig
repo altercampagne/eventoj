@@ -1,0 +1,149 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Ton inscription pour {{ registration.event.name }}{% endblock %}
+
+{# Remove header & footer to avoid distractions #}
+{% block header '' %}
+{% block footer '' %}
+
+{% block main %}
+    <div class="container">
+        <twig:RegistrationBreadcrump step="choose_price" event="{{ registration.event }}" />
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 col-md-6 m-auto">
+                {{ form_start(form) }}
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Participant·es</h2>
+                    <a href="{{ path('event_register_choose_people', { slug: registration.event.slug }) }}">
+                        <small>Modifier</small>
+                    </a>
+                </div>
+
+                <ul class="list-group mt-3">
+                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="fw-bold text-uppercase">{{ app.user.fullname }}</span>
+                            <small class="text-secondary ms-1">({{ app.user.birthDate|format_date('short') }})</small>
+                        </div>
+                        <span class="badge bg-secondary">Adulte</span>
+                    </li>
+                    {% for companion in registration.companions %}
+                        <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="fw-bold text-uppercase">{{ companion.fullName }}</span>
+                                <small class="text-secondary ms-1">({{ companion.birthDate|format_date('short') }})</small>
+                            </div>
+                            <span class="badge bg-secondary">{{ companion.isChild ? '- de 13 ans' : 'Adulte' }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Étapes choisies</h2>
+                    <a href="{{ path('event_register_choose_dates', { slug: registration.event.slug }) }}">
+                        <small>Modifier</small>
+                    </a>
+                </div>
+
+                <ul class="list-group mt-3">
+                    <li class="list-group-item p-3">
+                        <span class="fw-bold text-uppercase text-decoration-underline">Arrivée</span> prévue le <b>{{ registration.firstStageRegistration.stage.date|format_date('full') }}</b> pour le <b>{{ registration.firstStageRegistration.firstMeal|trans|lower }}</b>.
+                    </li>
+                    <li class="list-group-item p-3">
+                        <span class="fw-bold text-uppercase text-decoration-underline">Départ</span> prévu le <b>{{ registration.lastStageRegistration.stage.date|format_date('full') }}</b> pour le <b>{{ registration.lastStageRegistration.lastMeal|trans|lower }}</b>.
+                    </li>
+                </ul>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Tarif</h2>
+                </div>
+
+                <ul class="list-group mt-3">
+                    <li class="list-group-item p-3 list-group-item-danger fw-bold text-center">
+                        La mise à jour du prix n'est pas encore fonctionnelle, je suis en attente d'information avant de pouvoir l'implémenter.
+                    </li>
+                </ul>
+                <ul class="list-group mt-3">
+                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center list-group-item-primary">
+                        <label class="form-check-label fs-5" for="{{ form.pricePerDay.vars.id }}">
+                            Prix à la journée <small><a data-bs-toggle="offcanvas" href="#priceExplanationOffcanvas" aria-controls="#priceExplanationOffcanvas">(plus d'infos)</a></small>
+                        </label>
+                        <div class="col-auto">
+                            {{ form_widget(form.pricePerDay, { attr: { size: 3 }}) }}
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="list-group mt-3">
+                    {% for label, amount in bill.lines %}
+                        <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                            {{ label }}
+                            <span class="text-primary me-2">
+                                {% if 0 == amount %}GRATUIT{% else %}{{ amount|format_price }}{% endif %}
+                            </span>
+                        </li>
+                    {% endfor %}
+                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-4 fw-bold p-3">
+                        Total
+                        <span class="text-primary me-2">
+                            {{ bill.amount|format_price }}
+                        </span>
+                    </li>
+                </ul>
+
+                <ul class="list-group mt-3">
+                    <li class="list-group-item list-group-item-{{ form.acceptCharter.vars.errors|length > 0 ? 'danger' : 'light' }} d-flex justify-content-between justify-content-sm-start align-items-center text-secondary">
+                        <input class="form-check-input me-3 me-sm-2" type="checkbox" value="" id="{{ form.acceptCharter.vars.id }}" name="{{ field_name(form.acceptCharter) }}" required>
+                        <label class="form-check-label" for="{{ form.acceptCharter.vars.id }}">
+                            J'ai lu et j'accepte <a href="">la charte de bonne conduite</a> ainsi que <a href="">le règlement intérieur</a> de l'association.
+                        </label>
+                    </li>
+                </ul>
+
+                <div class="d-grid gap-2 mt-4 mb-5">
+                    <button href="{{ path('event_register_choose_price', { slug: registration.event.slug }) }}" class="btn btn-lg btn-primary" type="submit">
+                        Régler {{ bill.amount|format_price }} via Helloasso
+                    </button>
+                    <a href="{{ path('event_register', { slug: registration.event.slug }) }}" class="btn btn-link btn-sm">
+                        Modifier mon inscription
+                    </a>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="priceExplanationOffcanvas" aria-labelledby="Explications concernant le prix libre">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Le prix libre</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                <p>
+                    Il nous tient à cœur d'être le plus inclusif possible en proposant des tarifs adaptés à chacun·e. Malheureusement, ces dernières années l'association n'a pas atteint l'équilibre économique et se trouve dans une situation de vigilance financière.
+                    Le prix d'équilibre (= nécessaire au bon fonctionnement annuel de l'association) est de 33€ par personne et par jour.
+                </p>
+
+                <h5>A quoi correspond ce tarif ?</h5>
+                (AJOUTER CAMEMBERT)
+
+                <p>
+                    Le tarif inscrit automatiquement dans le formulaire d'inscription est le prix d'équilibre de 33€, à vous de le moduler en fonction de vos revenus.
+                </p>
+
+                <div class="alert alert-warning">
+                    <b>Attention :</b> afin de permettre au plus grand nombre de bénéficier du tarif minimum, il est limité à 7 jours maximum par personne. Au delà, le prix d'équilibre sera automatiquement appliqué.
+                </div>
+
+                <p>
+                    Pour choisir consciemment le tarif qui vous correspond, merci de vous référer à la grille tarifaire ci-dessous :
+                    => Grille tarifaire / revenus / (cf avec Clément GT Compta)
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
