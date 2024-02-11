@@ -21,7 +21,8 @@ class ChooseDatesFormType extends AbstractType
         $builder
             ->add('stageStart', StageFormType::class, [
                 'label' => 'L\'étape où tu nous rejoins',
-                'event' => $registration->getEvent(),
+                'registration' => $registration,
+                'when' => 'start',
                 'attr' => [
                     'class' => 'form-control-lg',
                 ],
@@ -35,7 +36,8 @@ class ChooseDatesFormType extends AbstractType
             ])
             ->add('stageEnd', StageFormType::class, [
                 'label' => 'L\'étape où tu nous quittes',
-                'event' => $registration->getEvent(),
+                'registration' => $registration,
+                'when' => 'end',
                 'attr' => [
                     'class' => 'form-control-lg',
                 ],

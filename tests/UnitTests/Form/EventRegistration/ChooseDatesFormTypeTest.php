@@ -61,10 +61,10 @@ class ChooseDatesFormTypeTest extends KernelTestCase
     {
         $this->form->submit([
             /* @phpstan-ignore-next-line */
-            'stageStart' => (string) $this->event->getStages()->last()->getId(),
+            'stageStart' => (string) $this->event->getStages()[10]->getId(),
             'firstMeal' => Meal::LUNCH->value,
             /* @phpstan-ignore-next-line */
-            'stageEnd' => (string) $this->event->getStages()->first()->getId(),
+            'stageEnd' => (string) $this->event->getStages()[5]->getId(),
             'lastMeal' => Meal::LUNCH->value,
         ]);
 

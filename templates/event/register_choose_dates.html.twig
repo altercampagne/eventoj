@@ -59,13 +59,15 @@
 
                     {% include 'event/_day_modal.html.twig' with {
                         title: 'Choix du jour d\'arrivée',
-                        event: registration.event,
+                        registration: registration,
+                        choices: form.stageStart.vars.choices,
                         modal: 'start',
                     } only %}
 
                     {% include 'event/_day_modal.html.twig' with {
                         title: 'Choix du jour de départ',
-                        event: registration.event,
+                        registration: registration,
+                        choices: form.stageEnd.vars.choices,
                         modal: 'end',
                     } only %}
 

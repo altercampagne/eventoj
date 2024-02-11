@@ -105,6 +105,11 @@ class Stage
         return StageDifficulty::HARD === $this->difficulty;
     }
 
+    public function isOver(): bool
+    {
+        return $this->date < new \DateTimeImmutable();
+    }
+
     public function getAvailability(): \stdClass
     {
         $adults = $children = $bikes = 0;
