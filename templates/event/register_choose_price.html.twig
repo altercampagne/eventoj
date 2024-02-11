@@ -14,23 +14,6 @@
             <div class="col-12 col-sm-8 col-md-6 m-auto">
                 {{ form_start(form) }}
 
-                <h2 class="fw-bold text-uppercase text-secondary fs-3">L'évènement</h2>
-
-                <ul class="list-group mt-3">
-                    <li class="list-group-item p-3">
-                        <div class="row">
-                            <div class="col-12 col-sm-6">
-                                <h5 class="mb-sm-0">{{ registration.event.name }}</h5>
-                            </div>
-                            <div class="col-12 col-sm-6 text-sm-end">
-                                <p class="mb-0">
-                                    Du {{ registration.event.firstStage.date|format_date(pattern='d MMMM') }} au {{ registration.event.lastStage.date|format_date('long') }}
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-
                 <div class="d-flex justify-content-between align-items-center mt-4">
                     <h2 class="fw-bold text-uppercase text-secondary fs-3">Participant·es</h2>
                     <a href="{{ path('event_register_choose_people', { slug: registration.event.slug }) }}">
@@ -58,7 +41,7 @@
                 </ul>
 
                 <div class="d-flex justify-content-between align-items-center mt-4">
-                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Tes étapes</h2>
+                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Étapes choisies</h2>
                     <a href="{{ path('event_register_choose_dates', { slug: registration.event.slug }) }}">
                         <small>Modifier</small>
                     </a>
@@ -74,12 +57,12 @@
                 </ul>
 
                 <div class="d-flex justify-content-between align-items-center mt-4">
-                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Ton tarif</h2>
+                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Tarif</h2>
                 </div>
 
                 <ul class="list-group mt-3">
-                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                        <label class="form-check-label" for="{{ form.pricePerDay.vars.id }}">
+                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center list-group-item-primary">
+                        <label class="form-check-label fs-5" for="{{ form.pricePerDay.vars.id }}">
                             Prix à la journée <small><a data-bs-toggle="offcanvas" href="#priceExplanationOffcanvas" aria-controls="#priceExplanationOffcanvas">(plus d'infos)</a></small>
                         </label>
                         <div class="col-auto">
@@ -97,7 +80,7 @@
                             </span>
                         </li>
                     {% endfor %}
-                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-5 fw-bold">
+                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-4 fw-bold p-3">
                         Total
                         <span class="text-primary me-2">
                             {{ bill.amount|format_price }}
