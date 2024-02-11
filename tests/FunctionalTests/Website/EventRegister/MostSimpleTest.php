@@ -7,7 +7,6 @@ namespace App\Tests\FunctionalTests\Website;
 use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Meal;
 use App\Tests\DatabaseUtilTrait;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class MostSimpleTest extends WebTestCase
@@ -20,10 +19,7 @@ class MostSimpleTest extends WebTestCase
         $faker = \Faker\Factory::create('fr_FR');
 
         $event = FixtureBuilder::createAT();
-        /** @var EntityManagerInterface $em */
-        $em = $this->getContainer()->get(EntityManagerInterface::class);
-        $em->persist($event);
-        $em->flush();
+        $this->save($event);
 
         $user = $this->getRandomUser();
         $client->loginUser($user);
