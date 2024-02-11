@@ -59,7 +59,7 @@ class RegisterChoosePriceController extends AbstractController
 
         $bill = $this->registrationPriceCalculator->calculate($registration);
 
-        $eventRegistrationDTO = new EventRegistrationDTO($event, $registration);
+        $eventRegistrationDTO = new EventRegistrationDTO($registration);
         $form = $this->createForm(ChoosePriceFormType::class, $eventRegistrationDTO);
         $form->handleRequest($request);
 

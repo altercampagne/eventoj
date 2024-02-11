@@ -43,9 +43,9 @@ class RegisterChooseDatesController extends AbstractController
             return $this->redirectToRoute('event_register', ['slug' => $event->getSlug()]);
         }
 
-        $eventRegistrationDTO = new EventRegistrationDTO($event, $registration);
+        $eventRegistrationDTO = new EventRegistrationDTO($registration);
         $form = $this->createForm(ChooseDatesFormType::class, $eventRegistrationDTO, [
-            'event' => $event,
+            'registration' => $registration,
         ]);
         $form->handleRequest($request);
 

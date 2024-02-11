@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form\EventRegistration;
 
 use App\Entity\Companion;
-use App\Entity\User;
+use App\Entity\Registration;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -16,8 +16,8 @@ class ChoosePeopleFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var User $user */
-        $user = $options['user'];
+        /** @var Registration $registration */
+        $registration = $options['registration'];
 
         $builder
             ->add('companions', EntityType::class, [
@@ -27,7 +27,7 @@ class ChoosePeopleFormType extends AbstractType
                 'choice_label' => false,
                 'multiple' => true,
                 'expanded' => true,
-                'choices' => $user->getCompanions(),
+                'choices' => $registration->getUser()->getCompanions(),
                 'choice_attr' => static function (Companion $companion): array {
                     return [
                         'data-fullname' => $companion->getFullName(),
@@ -42,8 +42,8 @@ class ChoosePeopleFormType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired('user');
-        $resolver->setAllowedTypes('user', User::class);
+        $resolver->setRequired('registration');
+        $resolver->setAllowedTypes('registration', Registration::class);
 
         $resolver->setDefaults([
             'data_class' => EventRegistrationDTO::class,

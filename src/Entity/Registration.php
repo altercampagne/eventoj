@@ -41,7 +41,7 @@ class Registration
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'The price per day choose by the user.',
     ])]
-    private int $pricePerDay = 33;
+    private int $pricePerDay = 3300;
 
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'How many bikes are needed by participants?',

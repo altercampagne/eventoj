@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\EventRegistration;
 
-use App\Entity\Event;
 use App\Entity\Meal;
+use App\Entity\Registration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,13 +15,13 @@ class ChooseDatesFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var Event $event */
-        $event = $options['event'];
+        /** @var Registration $registration */
+        $registration = $options['registration'];
 
         $builder
             ->add('stageStart', StageFormType::class, [
                 'label' => 'L\'étape où tu nous rejoins',
-                'event' => $event,
+                'event' => $registration->getEvent(),
                 'attr' => [
                     'class' => 'form-control-lg',
                 ],
@@ -35,7 +35,7 @@ class ChooseDatesFormType extends AbstractType
             ])
             ->add('stageEnd', StageFormType::class, [
                 'label' => 'L\'étape où tu nous quittes',
-                'event' => $event,
+                'event' => $registration->getEvent(),
                 'attr' => [
                     'class' => 'form-control-lg',
                 ],
@@ -52,8 +52,8 @@ class ChooseDatesFormType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired('event');
-        $resolver->setAllowedTypes('event', Event::class);
+        $resolver->setRequired('registration');
+        $resolver->setAllowedTypes('registration', Registration::class);
 
         $resolver->setDefaults([
             'data_class' => EventRegistrationDTO::class,

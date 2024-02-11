@@ -4,43 +4,43 @@ declare(strict_types=1);
 
 namespace App\Tests\UnitTests\Form\EventRegistration;
 
+use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Event;
 use App\Entity\Meal;
+use App\Entity\Registration;
+use App\Entity\User;
 use App\Form\EventRegistration\ChooseDatesFormType;
 use App\Form\EventRegistration\EventRegistrationDTO;
+use App\Tests\DatabaseUtilTrait;
 use App\Tests\UnitTests\FormAssertionsTrait;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 class ChooseDatesFormTypeTest extends KernelTestCase
 {
+    use DatabaseUtilTrait;
     use FormAssertionsTrait;
 
     private Event $event;
+    private User $user;
+    private Registration $registration;
     private FormInterface $form;
 
     protected function setUp(): void
     {
-        /** @var EntityManagerInterface $em */
-        $em = $this->getContainer()->get(EntityManagerInterface::class);
+        $this->user = FixtureBuilder::createUser();
+        $this->event = FixtureBuilder::createAT();
+        $this->save($this->user, $this->event);
 
-        $event = $em->getRepository(Event::class)->findOneBy([
-            'slug' => 'at-a-venir-ouvert',
-        ]);
-
-        if (null === $event) {
-            throw new \RuntimeException('Unable to find test event!');
-        }
-
-        $this->event = $event;
+        $this->registration = new Registration($this->user, $this->event);
 
         /** @var FormFactoryInterface $formFactory */
         $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
-        $this->form = $formFactory->create(ChooseDatesFormType::class, new EventRegistrationDTO($event), [
+        $this->form = $formFactory->create(ChooseDatesFormType::class, new EventRegistrationDTO($this->registration), [
             'csrf_protection' => false,
-            'event' => $this->event,
+            'registration' => $this->registration,
         ]);
     }
 
@@ -86,6 +86,77 @@ class ChooseDatesFormTypeTest extends KernelTestCase
 
         $this->assertFormInvalid($this->form, [
             'choose_dates_form' => 'Tu dois rester au minimum une journée sur l\'évènement.',
+        ]);
+    }
+
+    public function testWithTooManyChildren(): void
+    {
+        $companions = [];
+        $ids = [];
+        for ($i = 0; $i < $this->event->getChildrenCapacity() + 2; ++$i) {
+            $companion = FixtureBuilder::createCompanion(user: $this->user, children: true);
+            $ids[] = (string) $companion->getId();
+            $companions[] = $companion;
+        }
+        $this->registration->setCompanions(new ArrayCollection($companions));
+        $this->save($this->registration, ...$companions);
+
+        $this->form->submit([
+            /* @phpstan-ignore-next-line */
+            'stageStart' => (string) $this->event->getStages()[0]->getId(),
+            'firstMeal' => Meal::LUNCH->value,
+            /* @phpstan-ignore-next-line */
+            'stageEnd' => (string) $this->event->getStages()[6]->getId(),
+            'lastMeal' => Meal::LUNCH->value,
+        ]);
+
+        $this->assertFormInvalid($this->form, [
+            'choose_dates_form' => 'Il n\'y a pas assez de disponibilités sur la période sélectionnée.',
+        ]);
+    }
+
+    public function testWithTooManyAdults(): void
+    {
+        $companions = [];
+        $ids = [];
+        for ($i = 0; $i < $this->event->getAdultsCapacity() + 2; ++$i) {
+            $companion = FixtureBuilder::createCompanion(user: $this->user, children: false);
+            $ids[] = (string) $companion->getId();
+            $companions[] = $companion;
+        }
+        $this->registration->setCompanions(new ArrayCollection($companions));
+        $this->save($this->registration, ...$companions);
+
+        $this->form->submit([
+            /* @phpstan-ignore-next-line */
+            'stageStart' => (string) $this->event->getStages()[0]->getId(),
+            'firstMeal' => Meal::LUNCH->value,
+            /* @phpstan-ignore-next-line */
+            'stageEnd' => (string) $this->event->getStages()[6]->getId(),
+            'lastMeal' => Meal::LUNCH->value,
+        ]);
+
+        $this->assertFormInvalid($this->form, [
+            'choose_dates_form' => 'Il n\'y a pas assez de disponibilités sur la période sélectionnée.',
+        ]);
+    }
+
+    public function testWithTooManyBikes(): void
+    {
+        $this->registration->setNeededBike($this->event->getBikesAvailable() + 1);
+        $this->save($this->registration);
+
+        $this->form->submit([
+            /* @phpstan-ignore-next-line */
+            'stageStart' => (string) $this->event->getStages()[0]->getId(),
+            'firstMeal' => Meal::LUNCH->value,
+            /* @phpstan-ignore-next-line */
+            'stageEnd' => (string) $this->event->getStages()[6]->getId(),
+            'lastMeal' => Meal::LUNCH->value,
+        ]);
+
+        $this->assertFormInvalid($this->form, [
+            'choose_dates_form' => 'Il n\'y a pas assez de vélos disponibles sur la période sélectionnée.',
         ]);
     }
 }

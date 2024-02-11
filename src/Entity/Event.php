@@ -269,6 +269,18 @@ class Event
         return $stage;
     }
 
+    public function getNextComingStage(): ?Stage
+    {
+        $now = new \DateTimeImmutable();
+        foreach ($this->stages as $stage) {
+            if ($stage->getDate() > $now) {
+                return $stage;
+            }
+        }
+
+        return null;
+    }
+
     public function addStage(Stage $stage): self
     {
         $this->stages->add($stage);

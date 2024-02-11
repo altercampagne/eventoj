@@ -6,6 +6,7 @@ namespace App\Tests\UnitTests\Form\EventRegistration;
 
 use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Companion;
+use App\Entity\Registration;
 use App\Entity\User;
 use App\Form\EventRegistration\ChoosePeopleFormType;
 use App\Form\EventRegistration\EventRegistrationDTO;
@@ -27,15 +28,16 @@ class ChoosePeopleFormTypeTest extends KernelTestCase
     {
         $user = FixtureBuilder::createUser();
         $event = FixtureBuilder::createAT();
-        $this->save($user, $event, FixtureBuilder::createCompanion(user: $user, children: false), FixtureBuilder::createCompanion(user: $user, children: true));
+        $registration = new Registration($user, $event);
+        $this->save($user, $event, $registration, FixtureBuilder::createCompanion(user: $user, children: false), FixtureBuilder::createCompanion(user: $user, children: true));
 
         $this->user = $user;
 
         /** @var FormFactoryInterface $formFactory */
         $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
-        $this->form = $formFactory->create(ChoosePeopleFormType::class, new EventRegistrationDTO($event), [
+        $this->form = $formFactory->create(ChoosePeopleFormType::class, new EventRegistrationDTO($registration), [
             'csrf_protection' => false,
-            'user' => $user,
+            'registration' => $registration,
         ]);
     }
 

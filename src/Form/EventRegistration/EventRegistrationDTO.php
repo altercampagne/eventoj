@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Form\EventRegistration;
 
 use App\Entity\Companion;
-use App\Entity\Event;
 use App\Entity\Meal;
 use App\Entity\Registration;
 use App\Entity\Stage;
@@ -15,7 +14,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class EventRegistrationDTO
 {
-    public Event $event;
+    private readonly Registration $registration;
 
     #[Assert\NotBlank(groups: ['choose_dates'])]
     public ?Stage $stageStart = null;
@@ -36,52 +35,36 @@ class EventRegistrationDTO
      */
     public Collection $companions;
 
-    public function __construct(Event $event, ?Registration $registration = null)
+    public function __construct(Registration $registration)
     {
-        $this->event = $event;
+        $this->registration = $registration;
 
-        $stages = $this->event->getStages();
-
-        if (0 == \count($stages)) {
+        if (0 == \count($registration->getEvent()->getStages())) {
             throw new \RuntimeException('Cannot register to an event without stages.');
         }
 
-        $now = new \DateTimeImmutable();
-        if (null === $stageStart = $stages->findFirst(static function (int $key, Stage $stage) use ($now): bool {
-            return $stage->getDate() > $now;
-        })) {
-            throw new \RuntimeException('Cannot register to a past event.');
+        if (false !== $stageRegistration = $registration->getStagesRegistrations()->first()) {
+            $this->stageStart = $stage = $stageRegistration->getStage();
+            $this->firstMeal = $stageRegistration->getFirstMeal();
+        } else {
+            if (null === $stageStart = $registration->getEvent()->getNextComingStage()) {
+                throw new \RuntimeException('Cannot register to an event without coming stages');
+            }
+
+            $endDate = $stageStart->getDate()->modify('+4 days');
+            $stageEnd = $registration->getEvent()->getStages()->findFirst(static function (int $key, Stage $stage) use ($endDate): bool {
+                return $stage->getDate() >= $endDate;
+            });
+
+            $this->stageEnd = $stageEnd ?: $registration->getEvent()->getStages()->last() ?: throw new \RuntimeException('Looks like it is not possible to determine an end date.');
         }
 
-        $this->stageStart = $stageStart;
-
-        $endDate = $stageStart->getDate()->modify('+4 days');
-        $stageEnd = $stages->findFirst(static function (int $key, Stage $stage) use ($endDate): bool {
-            return $stage->getDate() >= $endDate;
-        });
-
-        $this->stageEnd = $stageEnd ?: $stages->last() ?: throw new \RuntimeException('Looks like it is not possible to determine an end date.');
-
-        if (null === $registration) {
-            return;
+        if (false !== $stageRegistration = $registration->getStagesRegistrations()->last()) {
+            $this->stageEnd = $stage = $stageRegistration->getStage();
+            $this->lastMeal = $stageRegistration->getLastMeal();
         }
 
         $this->companions = $registration->getCompanions();
-
-        $firstDay = $registration->getStagesRegistrations()->first();
-        $lastDay = $registration->getStagesRegistrations()->last();
-        if (false === $firstDay || false === $lastDay) {
-            return;
-        }
-
-        if (false !== $stage = $firstDay->getStage()) {
-            $this->stageStart = $stage;
-        }
-        $this->firstMeal = $firstDay->getFirstMeal();
-        if (false !== $stage = $lastDay->getStage()) {
-            $this->stageEnd = $stage;
-        }
-        $this->lastMeal = $lastDay->getLastMeal();
         $this->neededBike = $registration->getNeededBike();
         $this->pricePerDay = $registration->getPricePerDay() / 100;
     }
@@ -91,7 +74,7 @@ class EventRegistrationDTO
      */
     public function getBookedStages(): array
     {
-        $stages = $this->event->getStages()->toArray();
+        $stages = $this->registration->getEvent()->getStages()->toArray();
 
         $startIndex = (int) array_search($this->stageStart, $stages, true);
 
@@ -103,7 +86,7 @@ class EventRegistrationDTO
     }
 
     #[Assert\Callback(groups: ['choose_people'])]
-    public function validateNeededBIke(ExecutionContextInterface $context, mixed $payload): void
+    public function validateNeededBike(ExecutionContextInterface $context, mixed $payload): void
     {
         if ($this->neededBike > \count($this->companions) + 1) {
             $context->buildViolation('Plus d\'un vélo par personne, ça fait beaucoup ! 🤯')
@@ -140,6 +123,28 @@ class EventRegistrationDTO
         if ($numberOfDays < 1) {
             $context->buildViolation('Tu dois rester au minimum une journée sur l\'évènement.')
                 ->addViolation();
+        }
+
+        foreach ($this->getBookedStages() as $stage) {
+            $availability = $stage->getAvailability();
+            if ($availability->children < $this->registration->countChildren()) {
+                $context->buildViolation('Il n\'y a pas assez de disponibilités sur la période sélectionnée.')
+                        ->addViolation();
+
+                return;
+            }
+            if ($availability->adults < $this->registration->countPeople() - $this->registration->countChildren()) {
+                $context->buildViolation('Il n\'y a pas assez de disponibilités sur la période sélectionnée.')
+                        ->addViolation();
+
+                return;
+            }
+            if ($availability->bikes < $this->registration->getNeededBike()) {
+                $context->buildViolation('Il n\'y a pas assez de vélos disponibles sur la période sélectionnée.')
+                        ->addViolation();
+
+                return;
+            }
         }
     }
 }

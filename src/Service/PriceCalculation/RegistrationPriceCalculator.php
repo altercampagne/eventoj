@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Service\PriceCalculation;
 
-use App\Entity\Companion;
 use App\Entity\Registration;
 
 final class RegistrationPriceCalculator
@@ -19,11 +18,9 @@ final class RegistrationPriceCalculator
             $bill->addLine("{$registration->getNeededBike()} vélos de prêt", 0);
         }
 
-        $nbPersons = \count($registration->getCompanions()) + 1;
-        $nbChilds = \count($registration->getCompanions()->filter(static function (Companion $companion): bool {
-            return $companion->isChild();
-        }));
-        $nbAdults = \count($registration->getCompanions()) - $nbChilds + 1;
+        $nbPersons = $registration->countPeople();
+        $nbChilds = $registration->countChildren();
+        $nbAdults = $nbPersons - $nbChilds;
 
         if (0 < $nbAdults) {
             if (1 === $nbAdults) {

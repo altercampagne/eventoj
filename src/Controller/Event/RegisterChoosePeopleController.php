@@ -35,24 +35,19 @@ class RegisterChoosePeopleController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        $registration = $this->em->getRepository(Registration::class)->findOngoingRegistrationForEventAndUser($event, $user);
+        if (null === $registration = $this->em->getRepository(Registration::class)->findOngoingRegistrationForEventAndUser($event, $user)) {
+            $registration = new Registration($user, $event);
+        }
 
-        $eventRegistrationDTO = new EventRegistrationDTO($event, $registration);
+        $eventRegistrationDTO = new EventRegistrationDTO($registration);
         $form = $this->createForm(ChoosePeopleFormType::class, $eventRegistrationDTO, [
-            'user' => $user,
+            'registration' => $registration,
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */
             $user = $this->getUser();
-
-            if (null === $registration) {
-                $registration = new Registration(
-                    user: $user,
-                    event: $event,
-                );
-            }
 
             $registration
                 ->setNeededBike($eventRegistrationDTO->neededBike)
