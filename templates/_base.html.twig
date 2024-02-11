@@ -35,13 +35,11 @@
                                                 <i class="fa-solid fa-at me-2"></i> Mes coordonnées
                                             </a>
                                         </li>
-                                        {% if false %}
-                                            <li>
-                                                <a class="dropdown-item" href="{{ path('profile_companions') }}">
-                                                    <i class="fa-solid fa-users me-2"></i> Mes compagnon·es
-                                                </a>
-                                            </li>
-                                        {% endif %}
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('profile_companions') }}">
+                                                <i class="fa-solid fa-users me-2"></i> Mes compagnon·es
+                                            </a>
+                                        </li>
                                         {% if app.user.registrations|length > 0 %}
                                             <li>
                                                 <a class="dropdown-item" href="{{ path('profile_registrations') }}">
