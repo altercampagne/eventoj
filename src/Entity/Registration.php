@@ -286,4 +286,11 @@ class Registration
 
         return $this;
     }
+
+    public function addCompanion(Companion $companion): self
+    {
+        $this->companions->add($companion);
+
+        return $this;
+    }
 }

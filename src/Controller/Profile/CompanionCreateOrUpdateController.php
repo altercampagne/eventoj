@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-#[Route('/me/companions/create', name: 'profile_companion_create')]
+#[Route('/me/companions/create/{backToEvent}', name: 'profile_companion_create')]
 #[Route('/me/companions/{id}', name: 'profile_companion_update')]
 class CompanionCreateOrUpdateController extends AbstractController
 {
@@ -24,7 +24,7 @@ class CompanionCreateOrUpdateController extends AbstractController
     ) {
     }
 
-    public function __invoke(Request $request, ?Companion $companion): Response
+    public function __invoke(Request $request, ?Companion $companion, ?string $backToEvent = null): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -40,6 +40,12 @@ class CompanionCreateOrUpdateController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($companion);
             $this->em->flush();
+
+            if (null !== $backToEvent) {
+                $this->addFlash('success', "{$companion->getFullName()} ajouté !");
+
+                return $this->redirectToRoute('event_register', ['slug' => $backToEvent]);
+            }
 
             $this->addFlash('success', "{$companion->getFullName()} est à jour !");
 

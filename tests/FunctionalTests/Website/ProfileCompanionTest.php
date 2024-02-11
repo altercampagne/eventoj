@@ -75,4 +75,41 @@ class ProfileCompanionTest extends WebTestCase
         $this->assertSelectorTextContains('.card-body', 'contact@yopmail.com');
         $this->assertSelectorTextContains('.card-body', '+33 6 06 06 06 06');
     }
+
+    public function testCreateFromEventRegisterGoesBackToEvent(): void
+    {
+        $client = static::createClient();
+
+        $user = FixtureBuilder::createUser();
+        $event = FixtureBuilder::createAT();
+        $this->save($user, $event);
+
+        $client->loginUser($user);
+
+        $client->request('GET', "/event/{$event->getSlug()}/register");
+
+        $this->assertSelectorNotExists('input[data-fullname="Companion ForTests"]');
+
+        $client->clickLink('Ajouter une·e compagnon·e');
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('profile_companion_create');
+
+        $client->submitForm('C\'est tout bon !', [
+            'companion_form[firstName]' => 'Companion',
+            'companion_form[lastName]' => 'ForTests',
+            'companion_form[birthDate]' => (new \DateTimeImmutable('-11 years'))->format('Y-m-d'),
+            'companion_form[diet]' => 'vegetarian',
+            'companion_form[glutenIntolerant]' => false,
+            'companion_form[lactoseIntolerant]' => false,
+            'companion_form[dietDetails]' => null,
+        ]);
+
+        $this->assertSelectorNotExists('.invalid-feedback', 'Form contains errors');
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('event_register');
+
+        $this->assertSelectorExists('input[data-fullname="Companion ForTests"]');
+    }
 }
