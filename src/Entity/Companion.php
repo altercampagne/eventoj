@@ -18,6 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'companion')]
 class Companion
 {
+    use PersonTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     private readonly UuidV4 $id;
@@ -84,11 +86,6 @@ class Companion
         $this->registrations = new ArrayCollection();
     }
 
-    public function isChild(): bool
-    {
-        return (new \DateTimeImmutable())->diff($this->birthDate)->y < 13;
-    }
-
     public function getId(): UuidV4
     {
         return $this->id;
@@ -116,11 +113,6 @@ class Companion
         $this->lastName = $lastName;
 
         return $this;
-    }
-
-    public function getFullName(): string
-    {
-        return $this->firstName.' '.$this->lastName;
     }
 
     public function getBirthDate(): \DateTimeImmutable

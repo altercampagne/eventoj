@@ -24,6 +24,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(name: 'idx_user_email', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use PersonTrait;
+
     /**
      * This property should be marked as readonly but is not due to a bug in Doctrine.
      *
@@ -204,16 +206,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->isVerified;
     }
 
-    public function isChild(): bool
-    {
-        return (new \DateTimeImmutable())->diff($this->birthDate)->y < 13;
-    }
-
-    public function isAdult(): bool
-    {
-        return (new \DateTimeImmutable())->diff($this->birthDate)->y >= 18;
-    }
-
     public function verifyEmail(): void
     {
         $this->isVerified = true;
@@ -259,11 +251,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->lastName = $lastName;
 
         return $this;
-    }
-
-    public function getFullName(): string
-    {
-        return $this->firstName.' '.$this->lastName;
     }
 
     public function getBirthDate(): \DateTimeImmutable
