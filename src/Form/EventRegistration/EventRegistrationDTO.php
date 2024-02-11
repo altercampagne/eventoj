@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Form;
+namespace App\Form\EventRegistration;
 
+use App\Entity\Companion;
 use App\Entity\Event;
 use App\Entity\Meal;
 use App\Entity\Registration;
 use App\Entity\Stage;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -15,19 +17,24 @@ class EventRegistrationDTO
 {
     public Event $event;
 
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(groups: ['choose_dates'])]
     public ?Stage $stageStart = null;
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(groups: ['choose_dates'])]
     public Meal $firstMeal = Meal::DINNER;
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(groups: ['choose_dates'])]
     public ?Stage $stageEnd = null;
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(groups: ['choose_dates'])]
     public Meal $lastMeal = Meal::BREAKFAST;
-    #[Assert\NotNull]
-    public bool $needBike = false;
-    #[Assert\NotBlank]
-    #[Assert\Range(min: 20, minMessage: 'Le prix minimum par jour est de {{ limit }} €.')]
+    #[Assert\NotNull(groups: ['choose_dates'])]
+    public int $neededBike = 0;
+    #[Assert\NotBlank(groups: ['choose_dates'])]
+    #[Assert\Range(min: 20, minMessage: 'Le prix minimum par jour est de {{ limit }} €.', groups: ['choose_dates'])]
     public int $pricePerDay = 33;
+
+    /**
+     * @var Collection<int, Companion>
+     */
+    public Collection $companions;
 
     public function __construct(Event $event, ?Registration $registration = null)
     {
@@ -55,24 +62,28 @@ class EventRegistrationDTO
 
         $this->stageEnd = $stageEnd ?: $stages->last() ?: throw new \RuntimeException('Looks like it is not possible to determine an end date.');
 
-        if (null !== $registration) {
-            $firstDay = $registration->getStagesRegistrations()->first();
-            $lastDay = $registration->getStagesRegistrations()->last();
-            if (false === $firstDay || false === $lastDay) {
-                throw new \RuntimeException("Given registration ({$registration->getId()} does not contains any stagesRegistrations!");
-            }
-
-            if (false !== $stage = $firstDay->getStage()) {
-                $this->stageStart = $stage;
-            }
-            $this->firstMeal = $firstDay->getFirstMeal();
-            if (false !== $stage = $lastDay->getStage()) {
-                $this->stageEnd = $stage;
-            }
-            $this->lastMeal = $lastDay->getLastMeal();
-            $this->needBike = $registration->needBike();
-            $this->pricePerDay = $registration->getPricePerDay() / 100;
+        if (null === $registration) {
+            return;
         }
+
+        $this->companions = $registration->getCompanions();
+
+        $firstDay = $registration->getStagesRegistrations()->first();
+        $lastDay = $registration->getStagesRegistrations()->last();
+        if (false === $firstDay || false === $lastDay) {
+            return;
+        }
+
+        if (false !== $stage = $firstDay->getStage()) {
+            $this->stageStart = $stage;
+        }
+        $this->firstMeal = $firstDay->getFirstMeal();
+        if (false !== $stage = $lastDay->getStage()) {
+            $this->stageEnd = $stage;
+        }
+        $this->lastMeal = $lastDay->getLastMeal();
+        $this->neededBike = $registration->getNeededBike();
+        $this->pricePerDay = $registration->getPricePerDay() / 100;
     }
 
     /**
@@ -91,7 +102,17 @@ class EventRegistrationDTO
         );
     }
 
-    #[Assert\Callback]
+    #[Assert\Callback(groups: ['choose_people'])]
+    public function validateNeededBIke(ExecutionContextInterface $context, mixed $payload): void
+    {
+        if ($this->neededBike > \count($this->companions) + 1) {
+            $context->buildViolation('Plus d\'un vélo par personne, ça fait beaucoup ! 🤯')
+                ->atPath('neededBike')
+                ->addViolation();
+        }
+    }
+
+    #[Assert\Callback(groups: ['choose_dates'])]
     public function validatePeriod(ExecutionContextInterface $context, mixed $payload): void
     {
         if (null === $this->stageStart || null === $this->stageEnd) {
@@ -116,8 +137,8 @@ class EventRegistrationDTO
         }
 
         $numberOfDays = (int) $this->stageStart->getDate()->diff($this->stageEnd->getDate())->format('%a');
-        if ($numberOfDays < 4) {
-            $context->buildViolation('Tu dois rester au minimum 4 jours sur l\'évènement.')
+        if ($numberOfDays < 1) {
+            $context->buildViolation('Tu dois rester au minimum une journée sur l\'évènement.')
                 ->addViolation();
         }
     }

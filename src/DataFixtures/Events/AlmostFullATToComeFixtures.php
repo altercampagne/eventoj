@@ -34,7 +34,7 @@ class AlmostFullATToComeFixtures extends AbstractFixture implements DependentFix
 
             $registration = new Registration($user, $event);
             $registration->setPricePerDay($stay['price'] ?? $this->getFaker()->numberBetween(20, 55) * 100);
-            $registration->setNeedBike($stay['need_bike'] ?? false);
+            $registration->setNeededBike($stay['needed_bike'] ?? 0);
 
             $stagesRegistrations = [];
             for ($i = $stay['start']; $i <= $stay['end']; ++$i) {
@@ -53,13 +53,13 @@ class AlmostFullATToComeFixtures extends AbstractFixture implements DependentFix
     }
 
     /**
-     * @return iterable<array{start: int, end: int, price?: int, need_bike?: bool, children?: bool}>
+     * @return iterable<array{start: int, end: int, price?: int, needed_bike?: int, children?: bool}>
      */
     private function getStaysConfiguration(): iterable
     {
-        yield ['start' => 1, 'end' => 31, 'need_bike' => true];
-        yield ['start' => 1, 'end' => 31, 'need_bike' => true];
-        yield ['start' => 1, 'end' => 31, 'need_bike' => true];
+        yield ['start' => 1, 'end' => 31, 'needed_bike' => 1];
+        yield ['start' => 1, 'end' => 31, 'needed_bike' => 1];
+        yield ['start' => 1, 'end' => 31, 'needed_bike' => 1];
         yield ['start' => 1, 'end' => 31, 'children' => true];
         yield ['start' => 1, 'end' => 31, 'children' => true];
         yield ['start' => 1, 'end' => 31, 'children' => true];
@@ -68,7 +68,7 @@ class AlmostFullATToComeFixtures extends AbstractFixture implements DependentFix
         yield ['start' => 5, 'end' => 31];
         yield ['start' => 7, 'end' => 25];
         yield ['start' => 7, 'end' => 25];
-        yield ['start' => 9, 'end' => 14, 'need_bike' => true];
+        yield ['start' => 9, 'end' => 14, 'needed_bike' => 1];
         yield ['start' => 13, 'end' => 20];
         yield ['start' => 13, 'end' => 20, 'children' => true];
         yield ['start' => 19, 'end' => 25, 'children' => true];

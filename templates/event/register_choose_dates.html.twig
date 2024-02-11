@@ -1,0 +1,76 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}{{ registration.event.name }}{% endblock %}
+
+{# Remove header & footer to avoid distractions #}
+{% block header '' %}
+{% block footer '' %}
+
+{% block main %}
+    <div class="container">
+        <twig:RegistrationBreadcrump step="choose_dates" event="{{ registration.event }}" />
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 col-md-6 m-auto">
+                <h2 class="fw-bold text-secondary mb-3">Choix des dates</h2>
+
+                {{ form_errors(form) }}
+
+                {{ form_start(form) }}
+                    <fieldset class="form-group border p-3">
+                        <legend class="w-auto px-2">Ton arrivée</legend>
+                        {{ form_label(form.stageStart) }}
+                        <div class="input-group mb-3" data-bs-toggle="modal" data-bs-target="#stageStartModal">
+                            {{ form_widget(form.stageStart, { attr: { onmousedown: "(function(e){ e.preventDefault(); })(event)" }}) }}
+                            <button type="button" class="btn btn-outline-primary">
+                                Choisir<span class="d-none d-sm-inline"> mon jour d'arrivée</span>
+                            </button>
+                        </div>
+                        {{ form_row(form.firstMeal) }}
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2">Ton départ</legend>
+                        {{ form_label(form.stageEnd) }}
+                        <div class="input-group mb-3" data-bs-toggle="modal" data-bs-target="#stageEndModal">
+                            {{ form_widget(form.stageEnd, { attr: { onmousedown: "(function(e){ e.preventDefault(); })(event)" }}) }}
+                            <button type="button" class="btn btn-outline-primary">
+                                Choisir<span class="d-none d-sm-inline"> mon jour de départ</span>
+                            </button>
+                        </div>
+                        {{ form_row(form.lastMeal) }}
+                    </fieldset>
+
+                    <ul class="list-group mt-3">
+                        <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                Nombre de jours de présence<br />
+                                <small class="text-secondary">Calculé en fonction de tes dates d'arrivée et de départ</small>
+                            </div>
+                            <div class="col-auto fw-bold">
+                                <span id="event-registration-days-of-presence">10</span> jours
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-lg btn-primary">Étape suivante</button>
+                    </div>
+
+                    {% include 'event/_day_modal.html.twig' with {
+                        title: 'Choix du jour d\'arrivée',
+                        event: registration.event,
+                        modal: 'start',
+                    } only %}
+
+                    {% include 'event/_day_modal.html.twig' with {
+                        title: 'Choix du jour de départ',
+                        event: registration.event,
+                        modal: 'end',
+                    } only %}
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

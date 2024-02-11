@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\DataFixtures\Util;
 
 use App\Entity\Address;
+use App\Entity\Companion;
+use App\Entity\Diet;
 use App\Entity\Event;
 use App\Entity\Stage;
 use App\Entity\User;
@@ -105,6 +107,35 @@ class FixtureBuilder
         }
 
         return $event;
+    }
+
+    public static function createCompanion(
+        ?User $user = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?\DateTimeImmutable $birthDate = null,
+        ?string $email = null,
+        ?PhoneNumber $phoneNumber = null,
+        Diet $diet = Diet::VEGETARIAN,
+        bool $glutenIntolerant = false,
+        bool $lactoseIntolerant = false,
+        ?string $dietDetails = null,
+        bool $children = false,
+    ): Companion {
+        $companion = new Companion($user ?: self::createUser());
+        $companion
+            ->setFirstName($firstName ?? self::getFaker()->firstName())
+            ->setLastName($lastName ?? self::getFaker()->lastName())
+            ->setBirthDate($birthDate ?? \DateTimeImmutable::createFromMutable($children ? self::getFaker()->dateTimeBetween('-12 years', 'now') : self::getFaker()->dateTimeBetween('-80 years', '-14 years')))
+            ->setEmail($email ?? self::getFaker()->optional()->email())
+            ->setPhoneNumber($phoneNumber ?? PhoneNumberUtil::getInstance()->parse(self::getFaker()->phoneNumber(), 'FR'))
+            ->setDiet($diet)
+            ->setGlutenIntolerant($glutenIntolerant)
+            ->setLactoseIntolerant($lactoseIntolerant)
+            ->setDietDetails($dietDetails)
+        ;
+
+        return $companion;
     }
 
     private static function getFaker(): Generator

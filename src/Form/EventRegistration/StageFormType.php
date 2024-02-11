@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Type;
+namespace App\Form\EventRegistration;
 
 use App\Entity\Event;
 use App\Entity\Stage;
@@ -11,7 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EventRegistrationStageFormType extends AbstractType
+class StageFormType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {

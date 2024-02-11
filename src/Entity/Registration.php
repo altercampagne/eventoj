@@ -43,10 +43,10 @@ class Registration
     ])]
     private int $pricePerDay = 33;
 
-    #[ORM\Column(type: Types::BOOLEAN, options: [
-        'comment' => 'Does the participant need a loan bike?',
+    #[ORM\Column(type: Types::INTEGER, options: [
+        'comment' => 'How many bikes are needed by participants?',
     ])]
-    private bool $needBike = false;
+    private int $neededBike = 0;
 
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
@@ -69,6 +69,13 @@ class Registration
     #[ORM\OrderBy(['createdAt' => 'ASC'])]
     private Collection $payments;
 
+    /**
+     * @var Collection<int, Companion>
+     */
+    #[ORM\ManyToMany(targetEntity: Companion::class, inversedBy: 'registrations')]
+    #[ORM\JoinTable(name: 'registrations_companions')]
+    private Collection $companions;
+
     public function __construct(User $user, Event $event)
     {
         $this->id = new UuidV4();
@@ -78,6 +85,7 @@ class Registration
         $this->status = RegistrationStatus::WAITING_PAYMENT;
         $this->createdAt = new \DateTimeImmutable();
         $this->payments = new ArrayCollection();
+        $this->companions = new ArrayCollection();
     }
 
     public function canBeConfirmed(): bool
@@ -132,6 +140,23 @@ class Registration
         return null;
     }
 
+    public function countPeople(): int
+    {
+        return $this->companions->count() + 1;
+    }
+
+    public function countChildren(): int
+    {
+        $count = 0;
+        foreach ($this->companions as $companion) {
+            if ($companion->isChild()) {
+                ++$count;
+            }
+        }
+
+        return $count;
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;
@@ -164,14 +189,14 @@ class Registration
         return $this;
     }
 
-    public function needBike(): bool
+    public function getNeededBike(): int
     {
-        return $this->needBike;
+        return $this->neededBike;
     }
 
-    public function setNeedBike(bool $needBike): self
+    public function setNeededBike(int $neededBike): self
     {
-        $this->needBike = $needBike;
+        $this->neededBike = $neededBike;
 
         return $this;
     }
@@ -242,5 +267,23 @@ class Registration
         return $this->payments->findFirst(static function (int $key, Payment $payment): bool {
             return $payment->isApproved();
         });
+    }
+
+    /**
+     * @return Collection<int, Companion>
+     */
+    public function getCompanions(): Collection
+    {
+        return $this->companions;
+    }
+
+    /**
+     * @param Collection<int, Companion> $companions
+     */
+    public function setCompanions(Collection $companions): self
+    {
+        $this->companions = $companions;
+
+        return $this;
     }
 }

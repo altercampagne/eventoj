@@ -2,20 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Form;
+namespace App\Form\EventRegistration;
 
 use App\Entity\Event;
 use App\Entity\Meal;
-use App\Entity\Stage;
-use App\Form\Type\EventRegistrationStageFormType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EventRegistrationFormType extends AbstractType
+class ChooseDatesFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -23,37 +19,31 @@ class EventRegistrationFormType extends AbstractType
         $event = $options['event'];
 
         $builder
-            ->add('stageStart', EventRegistrationStageFormType::class, [
+            ->add('stageStart', StageFormType::class, [
                 'label' => 'L\'étape où tu nous rejoins',
                 'event' => $event,
-                'choice_attr' => function (Stage $stage, string $value, string $index) use ($event) {
-                    $position = array_search($stage, $event->getStages()->toArray(), true);
-
-                    // Latest stages cannot be selected because we want registration of at least 4 days.
-                    $disabled = $position >= $event->getStages()->count() - 4;
-
-                    return $disabled ? ['disabled' => 'disabled'] : [];
-                },
+                'attr' => [
+                    'class' => 'form-control-lg',
+                ],
             ])
             ->add('firstMeal', EnumType::class, [
                 'label' => 'Le premier repas que tu partageras avec nous',
                 'class' => Meal::class,
                 'attr' => [
-                    'readonly' => 'readonly',
+                    'class' => 'form-control-lg',
                 ],
             ])
-            ->add('stageEnd', EventRegistrationStageFormType::class, [
+            ->add('stageEnd', StageFormType::class, [
                 'label' => 'L\'étape où tu nous quittes',
                 'event' => $event,
+                'attr' => [
+                    'class' => 'form-control-lg',
+                ],
             ])
             ->add('lastMeal', EnumType::class, [
                 'label' => 'Le dernier repas avant ton départ',
                 'class' => Meal::class,
-            ])
-            ->add('needBike', CheckboxType::class)
-            ->add('pricePerDay', IntegerType::class, [
                 'attr' => [
-                    'min' => 20,
                     'class' => 'form-control-lg',
                 ],
             ])
@@ -67,6 +57,7 @@ class EventRegistrationFormType extends AbstractType
 
         $resolver->setDefaults([
             'data_class' => EventRegistrationDTO::class,
+            'validation_groups' => 'choose_dates',
         ]);
     }
 }

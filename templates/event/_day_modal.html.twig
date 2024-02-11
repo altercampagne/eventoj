@@ -17,12 +17,14 @@
 </div>
 {% endmacro %}
 
-<div class="modal" id="{{ id }}" tabindex="-1" aria-labelledby="{{ title }}" aria-hidden="true">
+<div class="modal" id="stage{{ modal|title }}Modal" tabindex="-1" aria-labelledby="{{ title }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-fullscreen-sm-down">
         <div class="modal-content">
             <div class="modal-body p-0">
                 <div class="list-group list-group-flush">
-                    {% for stage in event.stages %}
+                    {% set start = modal == 'start' ? 0 : 1 %}
+
+                    {% for stage in event.stages|slice(start, event.stages|length - 1) %}
                         {# Storage this data in a variable to avoid too many computations #}
                         {% set availability = stage.availability %}
                         {% set isFull = availability.adults == 0 %}
@@ -68,7 +70,7 @@
                                     {% endif %}
                                 </div>
                                 <div>
-                                    <button class="btn btn-sm btn-primary {{ isFull ? 'd-none' }}" data-stage="{{ stage.id }}">GO !</button>
+                                    <button type="button" class="btn btn-sm btn-primary {{ isFull ? 'd-none' }}" data-stage="{{ stage.id }}">GO !</button>
                                     <span class="badge bg-secondary d-none content-for-unavailable-stage-only">INDISPONIBLE</span>
                                     {% if isFull %}
                                         <span class="badge bg-secondary">COMPLET</span>

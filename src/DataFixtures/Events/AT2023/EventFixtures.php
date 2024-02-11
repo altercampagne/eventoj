@@ -334,7 +334,7 @@ class EventFixtures extends AbstractFixture implements DependentFixtureInterface
         $registration
             ->setStagesRegistrations($stagesRegistrations)
             ->setPricePerDay($this->getFaker()->numberBetween(10, 70) * 100)
-            ->setNeedBike($this->getFaker()->boolean())
+            ->setNeededBike($this->getFaker()->boolean() ? 1 : 0)
         ;
 
         // 2 chances out of 3 to have a confirmed reservation

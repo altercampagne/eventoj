@@ -62,13 +62,12 @@
                                 {% set children = 0 %}
                                 {% set bikes = 0 %}
                                 {% for stageRegistration in stage.stagesRegistrations %}
-                                    {% if stageRegistration.registration.needBike %}
-                                        {% set bikes = bikes + 1 %}
-                                    {% endif %}
+                                    {% set bikes = bikes + stageRegistration.registration.neededBike %}
+
                                     {% if stageRegistration.registration.user.isChild %}
-                                        {% set children = children + 1 %}
+                                        {% set children = children + stageRegistration.registration.countChildren %}
                                     {% else %}
-                                        {% set adults = adults + 1 %}
+                                        {% set adults = adults + stageRegistration.registration.countPeople - stageRegistration.registration.countChildren %}
                                     {% endif %}
                                 {% endfor %}
                                 <div data-bs-toggle="tooltip" data-bs-title="Nombre d'adultes participant ce jour-là.">

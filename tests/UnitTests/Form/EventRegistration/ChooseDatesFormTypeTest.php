@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\UnitTests\Form;
+namespace App\Tests\UnitTests\Form\EventRegistration;
 
 use App\Entity\Event;
 use App\Entity\Meal;
-use App\Form\EventRegistrationDTO;
-use App\Form\EventRegistrationFormType;
+use App\Form\EventRegistration\ChooseDatesFormType;
+use App\Form\EventRegistration\EventRegistrationDTO;
 use App\Tests\UnitTests\FormAssertionsTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
-class EventRegistrationFormTypeTest extends KernelTestCase
+class ChooseDatesFormTypeTest extends KernelTestCase
 {
     use FormAssertionsTrait;
 
@@ -38,7 +38,7 @@ class EventRegistrationFormTypeTest extends KernelTestCase
 
         /** @var FormFactoryInterface $formFactory */
         $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
-        $this->form = $formFactory->create(EventRegistrationFormType::class, new EventRegistrationDTO($event), [
+        $this->form = $formFactory->create(ChooseDatesFormType::class, new EventRegistrationDTO($event), [
             'csrf_protection' => false,
             'event' => $this->event,
         ]);
@@ -53,8 +53,6 @@ class EventRegistrationFormTypeTest extends KernelTestCase
             /* @phpstan-ignore-next-line */
             'stageEnd' => (string) $this->event->getStages()->last()->getId(),
             'lastMeal' => Meal::LUNCH->value,
-            'needBike' => false,
-            'pricePerDay' => 33,
         ]);
         $this->assertTrue($this->form->isValid());
     }
@@ -68,13 +66,10 @@ class EventRegistrationFormTypeTest extends KernelTestCase
             /* @phpstan-ignore-next-line */
             'stageEnd' => (string) $this->event->getStages()->first()->getId(),
             'lastMeal' => Meal::LUNCH->value,
-            'needBike' => false,
-            'pricePerDay' => 0,
         ]);
 
         $this->assertFormInvalid($this->form, [
-            'event_registration_form' => 'Tu ne peux pas repartir avant même d\'être arrivé.',
-            'pricePerDay' => 'Le prix minimum par jour est de 20 €.',
+            'choose_dates_form' => 'Tu ne peux pas repartir avant même d\'être arrivé.',
         ]);
     }
 
@@ -82,17 +77,15 @@ class EventRegistrationFormTypeTest extends KernelTestCase
     {
         $this->form->submit([
             /* @phpstan-ignore-next-line */
-            'stageStart' => (string) $this->event->getStages()[0]->getId(),
+            'stageStart' => (string) $this->event->getStages()[3]->getId(),
             'firstMeal' => Meal::LUNCH->value,
             /* @phpstan-ignore-next-line */
-            'stageEnd' => (string) $this->event->getStages()[1]->getId(),
+            'stageEnd' => (string) $this->event->getStages()[3]->getId(),
             'lastMeal' => Meal::LUNCH->value,
-            'needBike' => false,
-            'pricePerDay' => 33,
         ]);
 
         $this->assertFormInvalid($this->form, [
-            'event_registration_form' => 'Tu dois rester au minimum 4 jours sur l\'évènement.',
+            'choose_dates_form' => 'Tu dois rester au minimum une journée sur l\'évènement.',
         ]);
     }
 }
