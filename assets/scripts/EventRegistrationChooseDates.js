@@ -5,7 +5,13 @@ class EventRegistrationChooseDates {
     this.selectStart = document.querySelector('#choose_dates_form_stageStart');
     this.selectEnd = document.querySelector('#choose_dates_form_stageEnd');
 
-    this.availableOptions = [...this.selectStart.options].map(o => o.value);
+    // To retrieve all available options, we need to concat / unique both
+    // stageStart & stageEnd options. This is because we don't have the last
+    // day in stageStart (and we don't have the first one in stageEnd)
+    this.availableOptions = [...this.selectStart.options].map(o => o.value)
+      .concat([...this.selectEnd.options].map(o => o.value))
+      .filter((value, index, array) => array.indexOf(value) === index)
+    ;
 
     this.daysOfPresenceElement = document.querySelector('#event-registration-days-of-presence');
 
