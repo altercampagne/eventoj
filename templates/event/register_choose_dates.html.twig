@@ -7,8 +7,8 @@
 {% block footer '' %}
 
 {% block main %}
-    <div class="container">
-        <twig:RegistrationBreadcrump step="choose_dates" event="{{ registration.event }}" />
+    <div class="container mb-5">
+        <twig:EventRegistration:Breadcrump step="choose_dates" event="{{ registration.event }}" />
 
         <div class="row justify-content-center">
             <div class="col-12 col-sm-8 col-md-6 m-auto">
@@ -53,9 +53,7 @@
                         </li>
                     </ul>
 
-                    <div class="d-grid gap-2 mt-4 mb-5">
-                        <button type="submit" class="btn btn-lg btn-primary">Étape suivante</button>
-                    </div>
+                    <twig:EventRegistration:Buttons step="choose_dates" />
 
                     {% include 'event/_day_modal.html.twig' with {
                         title: 'Choix du jour d\'arrivée',

@@ -7,8 +7,8 @@
 {% block footer '' %}
 
 {% block main %}
-    <div class="container">
-        <twig:RegistrationBreadcrump step="choose_price" event="{{ registration.event }}" />
+    <div class="container mb-5">
+        <twig:EventRegistration:Breadcrump step="choose_price" event="{{ registration.event }}" />
 
         <div class="row justify-content-center">
             <div class="col-12 col-sm-8 col-md-6 m-auto">
@@ -102,14 +102,9 @@
                     </li>
                 </ul>
 
-                <div class="d-grid gap-2 mt-4 mb-5">
-                    <button href="{{ path('event_register_choose_price', { slug: registration.event.slug }) }}" class="btn btn-lg btn-primary" type="submit">
-                        Régler {{ bill.amount|format_price }} via Helloasso
-                    </button>
-                    <a href="{{ path('event_register', { slug: registration.event.slug }) }}" class="btn btn-link btn-sm">
-                        Modifier mon inscription
-                    </a>
-                </div>
+                <twig:EventRegistration:Buttons step="choose_people">
+                    Régler {{ bill.amount|format_price }} via Helloasso
+                </twig:EventRegistration:Buttons>
 
                 {{ form_end(form) }}
             </div>

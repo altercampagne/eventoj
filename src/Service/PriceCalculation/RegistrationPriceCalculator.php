@@ -41,9 +41,9 @@ final class RegistrationPriceCalculator
         $registrationPrice = $registration->countDaysOfPresence() * $registration->getPricePerDay();
 
         if (1 === $nbPersons) {
-            $bill->addLine('Inscription à l\'évènement', $registrationPrice);
+            $bill->addLine("{$registration->countDaysOfPresence()} jours sur l'évènement", $registrationPrice);
         } else {
-            $bill->addLine("$nbPersons inscriptions à l'évènement", $registrationPrice * $nbPersons);
+            $bill->addLine("$nbPersons x {$registration->countDaysOfPresence()} jours sur l'évènement", $registrationPrice * $nbPersons);
         }
 
         return $bill;
