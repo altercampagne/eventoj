@@ -13,6 +13,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Utilisateurice</th>
+                        <th scope="col">Durée</th>
                         <th scope="col">Date</th>
                     </tr>
                 </thead>
@@ -20,6 +21,7 @@
                     {% for registration in event.registrations|filter(r => r.isConfirmed) %}
                         <tr data-href="{{ path('admin_registration_show', { id: registration.id }) }}">
                             <td>{{ registration.user.fullName }}</td>
+                            <td>{{ registration.countDaysOfPresence }} jours</td>
                             <td>{{ registration.createdAt|format_datetime }}</td>
                         </tr>
                     {% endfor %}

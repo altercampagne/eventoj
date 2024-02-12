@@ -28,6 +28,18 @@
                     <li class="list-group-item">
                         <i class="fa-solid fa-plane-departure fa-fw me-1"></i> Arrivée prévue le {{ departureDate }} ({{ registration.stageRegistrationEnd.stage.name }}) pour le {{ registration.stageRegistrationStart.lastMeal|trans|lower }}
                     </li>
+                    {% if registration.companions|length > 0 %}
+                        <li class="list-group-item">
+                            <i class="fa-solid fa-users fa-fw me-1"></i> Companions :
+                            <ul>
+                                {% for companion in registration.companions %}
+                                    <li>
+                                        {{ companion.fullname }} <span class="text-secondary">({{ companion.birthDate|format_date('short') }})</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endif %}
                     <li class="list-group-item list-group-item-light py-1 fw-light fs-6">
                         <small>Créée le {{ registration.createdAt|format_datetime('long', 'short') }}</small>
                     </li>
