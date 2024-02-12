@@ -77,6 +77,7 @@ class CompanionFormType extends AbstractType
             ->add('diet', EnumType::class, [
                 'label' => 'Son régime alimentaire',
                 'class' => Diet::class,
+                'placeholder' => 'Choix du régime alimentaire',
             ])
             ->add('glutenIntolerant', CheckboxType::class, [
                 'label' => 'Intolérance au gluten',

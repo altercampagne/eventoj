@@ -24,6 +24,7 @@ class ProfileUpdateFormType extends AbstractType
             ->add('diet', EnumType::class, [
                 'label' => 'Ton régime alimentaire',
                 'class' => Diet::class,
+                'placeholder' => 'Choix du régime alimentaire',
             ])
             ->add('glutenIntolerant', CheckboxType::class, [
                 'label' => 'Intolérance au gluten',
