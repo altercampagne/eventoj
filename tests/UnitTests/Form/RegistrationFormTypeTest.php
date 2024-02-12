@@ -35,7 +35,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         $formData = [
             'email' => $this->getRandomUser()->getEmail(), // Use a random user email to be sure this email exists
             'phoneNumber' => '0101010101',
-            'birthDate' => $faker->date(),
+            'birthDate' => (new \DateTimeImmutable('-10 years'))->format('Y-m-d'),
             'address' => [
                 'countryCode' => 'FR',
             ],
@@ -55,6 +55,7 @@ class RegistrationFormTypeTest extends KernelTestCase
             'firstName' => 'Cette valeur ne doit pas être vide.',
             'lastName' => 'Cette valeur ne doit pas être vide.',
             'plainPassword' => 'Ton mot de passe doit faire au moins 7 caractères.',
+            'birthDate' => 'Tu dois être majeur pour pouvoir t\'inscrire.',
         ]);
     }
 
@@ -154,7 +155,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         return [
             'firstName' => $faker->firstName(),
             'lastName' => $faker->lastName(),
-            'birthDate' => $faker->date(),
+            'birthDate' => (new \DateTimeImmutable('-20 years'))->format('Y-m-d'),
             'email' => $faker->email(),
             'phoneNumber' => '0606060606',
             'address' => [

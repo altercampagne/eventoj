@@ -36,7 +36,7 @@ class RegisterTest extends WebTestCase
         $client->submitForm('Je m\'inscris', [
             'registration_form[firstName]' => $faker->firstName(),
             'registration_form[lastName]' => $faker->lastName(),
-            'registration_form[birthDate]' => $faker->date(),
+            'registration_form[birthDate]' => (new \DateTimeImmutable('-20 years'))->format('Y-m-d'),
             'registration_form[email]' => $registrationEmail,
             'registration_form[phoneNumber]' => '0606060606',
             'registration_form[address][countryCode]' => 'FR',

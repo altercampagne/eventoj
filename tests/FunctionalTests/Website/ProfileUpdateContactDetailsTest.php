@@ -29,7 +29,7 @@ class ProfileUpdateContactDetailsTest extends WebTestCase
         $client->submitForm('Mettre à jour', [
             'contact_details_update_form[firstName]' => 'First',
             'contact_details_update_form[lastName]' => 'Last',
-            'contact_details_update_form[birthDate]' => $faker->date(),
+            'contact_details_update_form[birthDate]' => (new \DateTimeImmutable('-20 years'))->format('Y-m-d'),
             'contact_details_update_form[email]' => $user->getEmail(),
             'contact_details_update_form[phoneNumber]' => '0606060606',
             'contact_details_update_form[address][countryCode]' => 'FR',
@@ -66,7 +66,7 @@ class ProfileUpdateContactDetailsTest extends WebTestCase
         $client->submitForm('Mettre à jour', [
             'contact_details_update_form[firstName]' => $faker->firstName(),
             'contact_details_update_form[lastName]' => $faker->lastName(),
-            'contact_details_update_form[birthDate]' => $faker->date(),
+            'contact_details_update_form[birthDate]' => (new \DateTimeImmutable('-20 years'))->format('Y-m-d'),
             'contact_details_update_form[email]' => $newEmail,
             'contact_details_update_form[phoneNumber]' => '0606060606',
             'contact_details_update_form[address][countryCode]' => 'FR',
