@@ -17,29 +17,33 @@
                 {{ form_errors(form) }}
 
                 {{ form_start(form) }}
-                    <fieldset class="form-group border p-3">
-                        <legend class="w-auto px-2">Ton arrivée</legend>
-                        {{ form_label(form.stageStart) }}
-                        <div class="input-group mb-3" data-bs-toggle="modal" data-bs-target="#stageStartModal">
-                            {{ form_widget(form.stageStart, { attr: { onmousedown: "(function(e){ e.preventDefault(); })(event)" }}) }}
-                            <button type="button" class="btn btn-outline-primary">
-                                Choisir<span class="d-none d-sm-inline"> mon jour d'arrivée</span>
-                            </button>
+                    <div class="card card-hover mb-3" data-bs-toggle="modal" data-bs-target="#stageStartModal">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h3 class="card-title fs-4">Arrivée</h3>
+                                <p>
+                                    <b id="stageStartLabel">{{ form.stageStart.vars.data.name }}</b> pour le <b id="firstMealLabel">{{ form.firstMeal.vars.data|trans }}</b>
+                                    <!-- Almost invisible button -->
+                                    <button type="button" class="btn m-0 p-0 stretched-link float-end"></button>
+                                </p>
+                            </div>
+                            <i class="fa-solid fa-chevron-right"></i>
                         </div>
-                        {{ form_row(form.firstMeal) }}
-                    </fieldset>
+                    </div>
 
-                    <fieldset class="form-group border p-3 mt-3">
-                        <legend class="w-auto px-2">Ton départ</legend>
-                        {{ form_label(form.stageEnd) }}
-                        <div class="input-group mb-3" data-bs-toggle="modal" data-bs-target="#stageEndModal">
-                            {{ form_widget(form.stageEnd, { attr: { onmousedown: "(function(e){ e.preventDefault(); })(event)" }}) }}
-                            <button type="button" class="btn btn-outline-primary">
-                                Choisir<span class="d-none d-sm-inline"> mon jour de départ</span>
-                            </button>
+                    <div class="card card-hover mb-3" data-bs-toggle="modal" data-bs-target="#stageEndModal">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h3 class="card-title fs-4">Arrivée</h3>
+                                <p>
+                                    <b id="stageEndLabel">{{ form.stageEnd.vars.data.name }}</b> pour le <b id="lastMealLabel">{{ form.lastMeal.vars.data|trans }}</b>
+                                    <!-- Almost invisible button -->
+                                    <button type="button" class="btn m-0 p-0 stretched-link float-end"></button>
+                                </p>
+                            </div>
+                            <i class="fa-solid fa-chevron-right"></i>
                         </div>
-                        {{ form_row(form.lastMeal) }}
-                    </fieldset>
+                    </div>
 
                     <ul class="list-group mt-3">
                         <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
@@ -58,16 +62,20 @@
                     {% include 'event/_day_modal.html.twig' with {
                         title: 'Choix du jour d\'arrivée',
                         registration: registration,
-                        choices: form.stageStart.vars.choices,
+                        form: form.stageStart,
                         modal: 'start',
                     } only %}
 
                     {% include 'event/_day_modal.html.twig' with {
                         title: 'Choix du jour de départ',
                         registration: registration,
-                        choices: form.stageEnd.vars.choices,
+                        form: form.stageEnd,
                         modal: 'end',
                     } only %}
+
+                    <div class="d-none">
+                        {{ form_rest(form) }}
+                    </div>
 
                 {{ form_end(form) }}
             </div>

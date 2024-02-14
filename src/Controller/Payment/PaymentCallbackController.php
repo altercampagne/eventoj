@@ -14,12 +14,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-#[Route('/payment/{id}/post_payment/back', name: 'payment_callback_back', defaults: ['type' => 'back'])]
-#[Route('/payment/{id}/post_payment/error', name: 'payment_callback_error', defaults: ['type' => 'error'])]
-#[Route('/payment/{id}/post_payment/return', name: 'payment_callback_return', defaults: ['type' => 'return'])]
+#[Route('/payment/{id}/post_payment/back', name: 'payment_callback_back', defaults: ['type' => 'back'], requirements: ['id' => Requirement::UUID_V4])]
+#[Route('/payment/{id}/post_payment/error', name: 'payment_callback_error', defaults: ['type' => 'error'], requirements: ['id' => Requirement::UUID_V4])]
+#[Route('/payment/{id}/post_payment/return', name: 'payment_callback_return', defaults: ['type' => 'return'], requirements: ['id' => Requirement::UUID_V4])]
 class PaymentCallbackController extends AbstractController
 {
     public function __construct(

@@ -8,10 +8,11 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/_admin/users/{id}', name: 'admin_user_show')]
+#[Route('/_admin/users/{id}', name: 'admin_user_show', requirements: ['id' => Requirement::UUID_V4])]
 class ShowController extends AbstractController
 {
     public function __invoke(User $user): Response

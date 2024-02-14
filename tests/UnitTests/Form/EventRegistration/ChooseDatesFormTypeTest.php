@@ -156,7 +156,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
         ]);
 
         $this->assertFormInvalid($this->form, [
-            'choose_dates_form' => 'Il n\'y a pas assez de vélos disponibles sur la période sélectionnée.',
+            'choose_dates_form' => 'Il n\'y a pas assez de disponibilités sur la période sélectionnée.',
         ]);
     }
 }

@@ -3,7 +3,9 @@ import { Modal } from 'bootstrap'
 class EventRegistrationChooseDates {
   constructor() {
     this.selectStart = document.querySelector('#choose_dates_form_stageStart');
+    this.firstMeal = document.querySelector('#choose_dates_form_firstMeal');
     this.selectEnd = document.querySelector('#choose_dates_form_stageEnd');
+    this.lastMeal = document.querySelector('#choose_dates_form_lastMeal');
 
     // To retrieve all available options, we need to concat / unique both
     // stageStart & stageEnd options. This is because we don't have the last
@@ -26,6 +28,9 @@ class EventRegistrationChooseDates {
 
         Modal.getInstance(document.querySelector('div#stageStartModal')).hide();
         this.selectStart.value = event.target.dataset.stage;
+        this.firstMeal.value = event.target.dataset.meal;
+        document.querySelector('#stageStartLabel').innerHTML = event.target.dataset.stageLabel;
+        document.querySelector('#firstMealLabel').innerHTML = event.target.dataset.mealLabel;
         this.updateSelectEnd();
       });
     });
@@ -36,21 +41,10 @@ class EventRegistrationChooseDates {
 
         Modal.getInstance(document.querySelector('div#stageEndModal')).hide();
         this.selectEnd.value = event.target.dataset.stage;
+        this.lastMeal.value = event.target.dataset.meal;
+        document.querySelector('#stageEndLabel').innerHTML = event.target.dataset.stageLabel;
+        document.querySelector('#lastMealLabel').innerHTML = event.target.dataset.mealLabel;
         this.updateNumberOfDays();
-      });
-    });
-
-    // Togle details links on click
-    document.querySelectorAll('.label-details-show').forEach((element) => {
-      element.addEventListener('click', (event) => {
-        event.target.classList.add('d-none');
-        event.target.closest('div.list-group-item[data-stage]').querySelector('.label-details-hide').classList.remove('d-none');
-      });
-    });
-    document.querySelectorAll('.label-details-hide').forEach((element) => {
-      element.addEventListener('click', (event) => {
-        event.target.classList.add('d-none');
-        event.target.closest('div.list-group-item[data-stage]').querySelector('.label-details-show').classList.remove('d-none');
       });
     });
 
@@ -73,45 +67,105 @@ class EventRegistrationChooseDates {
       this.selectEnd.value = this.availableOptions[endIndex];
     }
 
+    this.updateAccordionValue(modal, this.selectEnd);
+
     // All stages situated after a "complete" stage must be disabled because
     // it's not possible to register for a period which includes days which are
     // already full.
     let disableNextStages = false;
-    // Disable days which cannot be booked (cannot leave BEFORE arriving)
-    Array.prototype.forEach.call(this.selectEnd.options, (option) => {
-      option.disabled = option.index <= startIndex && !option.selected;
+    // Disable days which cannot be booked :
+    // - days before arrival
+    // - days after a complete stage
+    Array.prototype.forEach.call(this.availableOptions, (option) => {
+      let item = modal.querySelector('div.accordion-item[data-stage="'+option+'"]');
 
-      let mustBeDisabled = option.disabled || disableNextStages;
+      let index = this.availableOptions.indexOf(option);
+      // The option is BEFORE the stageStart
+      if (index < startIndex) {
+        this.disableAccordionItem(item);
 
-      let listItem = modal.querySelector('div.list-group-item[data-stage="'+option.value+'"]');
-      if (listItem != null) { // Because latest choice have been removed from the list
-        // Update list item only if the stage is not full
-        if (listItem.dataset.full == 1) {
-          disableNextStages = true;
-        } else {
-          let button = listItem.querySelector('button[data-stage="'+option.value+'"]');
-          let contentForAvailableStageOnly = listItem.querySelectorAll('.content-for-available-stage-only');
-          let contentForUnavailableStageOnly = listItem.querySelectorAll('.content-for-unavailable-stage-only');
-
-          button.disabled = mustBeDisabled;
-          listItem.disabled = mustBeDisabled;
-
-          if (mustBeDisabled) {
-            listItem.classList.add('list-group-item-secondary');
-            button.classList.add('d-none');
-            contentForAvailableStageOnly.forEach((e) => e.classList.add('d-none'));
-            contentForUnavailableStageOnly.forEach((e) => e.classList.remove('d-none'));
-          } else {
-            listItem.classList.remove('list-group-item-secondary');
-            button.classList.remove('d-none');
-            contentForAvailableStageOnly.forEach((e) => e.classList.remove('d-none'));
-            contentForUnavailableStageOnly.forEach((e) => e.classList.add('d-none'));
-          }
-        }
+        return;
       }
+
+      // Same day !
+      if (index == startIndex) {
+        if (this.firstMeal.value == 'dinner') {
+          this.disableAccordionItem(item);
+
+          return;
+        }
+        item.querySelector('button.choose-meal-button[data-meal="breakfast"]').classList.add('d-none');
+        if (this.firstMeal.value == 'lunch') {
+          item.querySelector('button.choose-meal-button[data-meal="lunch"]').classList.add('d-none');
+        }
+
+        return;
+      }
+
+      // If the list item is already full or almost, we don't have anyhting
+      // special to do, except saving this info to disable all following
+      // options
+      if (item.dataset.full == 1) {
+        disableNextStages = true;
+
+        return;
+      }
+
+      if (disableNextStages) {
+        this.disableAccordionItem(item);
+
+        return;
+      }
+
+      this.enableAccordionItem(item);
     })
 
     this.updateNumberOfDays();
+  }
+
+  updateAccordionValue(modal, select) {
+    modal.querySelectorAll('.accordion-item').forEach((item) => {
+      let selected = item.dataset.stage == select.value;
+      let button = item.querySelector('button.accordion-button');
+      let collapse = item.querySelector('div.accordion-collapse');
+
+      button.attributes.getNamedItem('aria-expanded').nodeValue = selected;
+      if (selected) {
+        button.classList.remove('collapsed');
+        collapse.classList.add('show');
+      } else {
+        button.classList.add('collapsed');
+        collapse.classList.remove('show');
+      }
+    })
+  }
+
+  disableAccordionItem(item) {
+      let collapseButton = item.querySelector('button.accordion-button');
+
+      collapseButton.classList.add('bg-secondary-subtle');
+      collapseButton.classList.add('p-2');
+
+      item.querySelectorAll('button.choose-meal-button').forEach((button) => {
+        button.classList.add('d-none');
+      });
+
+      if (!item.dataset.full) {
+        item.querySelector('span.badge-not-available').classList.remove('d-none');
+      }
+  }
+
+  enableAccordionItem(item) {
+      let collapseButton = item.querySelector('button.accordion-button');
+
+      collapseButton.classList.remove('bg-secondary-subtle');
+      collapseButton.classList.remove('p-2');
+
+      item.querySelectorAll('button.choose-meal-button').forEach((button) => {
+        button.classList.remove('d-none');
+      });
+
+      item.querySelector('span.badge-not-available').classList.add('d-none');
   }
 
   updateNumberOfDays() {

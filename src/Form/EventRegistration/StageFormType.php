@@ -23,30 +23,12 @@ class StageFormType extends AbstractType
         $resolver->setDefaults([
             'class' => Stage::class,
             'choices' => static function (Options $options): iterable {
-                $stages = $options['registration']->getEvent()->getStages()->filter(static function (Stage $stage): bool {
+                return $options['registration']->getEvent()->getStages()->filter(static function (Stage $stage): bool {
                     return !$stage->isOver();
                 });
-                if (0 === \count($stages)) {
-                    throw new \LogicException('All stages are over, this is not supposed to happen here!');
-                }
-
-                if ('start' === $options['when']) {
-                    return $stages->slice(0, \count($stages) - 1);
-                }
-
-                return $stages->slice(1, \count($stages) - 1);
             },
             'choice_label' => static function (Stage $stage): string {
                 return $stage->getDate()->format('d/m').' - '.$stage->getName();
-            },
-            'choice_attr' => static function (Stage $stage): array {
-                $availability = $stage->getAvailability();
-
-                return [
-                    'data-availability-adults' => $availability->adults,
-                    'data-availability-children' => $availability->children,
-                    'data-availability-bikes' => $availability->bikes,
-                ];
             },
         ]);
     }

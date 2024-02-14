@@ -1,0 +1,18 @@
+{% set name = availability.booked > 1 ? name ~ 's' : name %}
+
+<div
+    class="progress mb-2 border"
+    role="progressbar"
+    aria-label="{{ name|title }} pour le {{ availability.meal|trans|lower }} du {{ availability.stage.date|format_date('short') }}"
+    aria-valuenow="{{ availability.max - availability.availability }}"
+    aria-valuemin="0"
+    aria-valuemax="{{ availability.max }}"
+    style="height: 25px"
+>
+    <div
+        class="progress-bar overflow-visible text-dark bg-{{ availability.percent > 75 ? 'danger' : availability.percent > 50 ? 'warning' : 'success' }}-subtle ps-2"
+        style="width: {{ availability.percent }}%"
+    >
+        {{ availability.booked }} {{ name }} sur {{ availability.max }}
+    </div>
+</div>
