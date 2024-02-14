@@ -15,6 +15,7 @@ install: vendors-install start db-reset assets-install assets-build ## Start the
 
 vendors-install: ## Install vendors
 	@$(DOCKER_COMPOSE) exec php composer ins
+	@$(DOCKER_COMPOSE) exec php bin/console importmap:install
 
 ##@ Docker commands
 start: ## Start the whole docker stack
