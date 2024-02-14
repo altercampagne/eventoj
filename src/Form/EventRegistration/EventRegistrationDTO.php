@@ -44,12 +44,13 @@ class EventRegistrationDTO
         }
 
         if (false !== $stageRegistration = $registration->getStagesRegistrations()->first()) {
-            $this->stageStart = $stage = $stageRegistration->getStage();
+            $this->stageStart = $stageRegistration->getStage();
             $this->firstMeal = $stageRegistration->getFirstMeal();
         } else {
             if (null === $stageStart = $registration->getEvent()->getNextComingStage()) {
                 throw new \RuntimeException('Cannot register to an event without coming stages');
             }
+            $this->stageStart = $stageStart;
 
             $endDate = $stageStart->getDate()->modify('+4 days');
             $stageEnd = $registration->getEvent()->getStages()->findFirst(static function (int $key, Stage $stage) use ($endDate): bool {
@@ -60,7 +61,7 @@ class EventRegistrationDTO
         }
 
         if (false !== $stageRegistration = $registration->getStagesRegistrations()->last()) {
-            $this->stageEnd = $stage = $stageRegistration->getStage();
+            $this->stageEnd = $stageRegistration->getStage();
             $this->lastMeal = $stageRegistration->getLastMeal();
         }
 
@@ -127,20 +128,8 @@ class EventRegistrationDTO
 
         foreach ($this->getBookedStages() as $stage) {
             $availability = $stage->getAvailability();
-            if ($availability->children < $this->registration->countChildren()) {
+            if (!$availability->isEnoughForRegistration($this->registration)) {
                 $context->buildViolation('Il n\'y a pas assez de disponibilités sur la période sélectionnée.')
-                        ->addViolation();
-
-                return;
-            }
-            if ($availability->adults < $this->registration->countPeople() - $this->registration->countChildren()) {
-                $context->buildViolation('Il n\'y a pas assez de disponibilités sur la période sélectionnée.')
-                        ->addViolation();
-
-                return;
-            }
-            if ($availability->bikes < $this->registration->getNeededBike()) {
-                $context->buildViolation('Il n\'y a pas assez de vélos disponibles sur la période sélectionnée.')
                         ->addViolation();
 
                 return;

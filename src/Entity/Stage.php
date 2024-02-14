@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Service\Availability\StageAvailability;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -110,24 +111,9 @@ class Stage
         return $this->date < new \DateTimeImmutable();
     }
 
-    public function getAvailability(): \stdClass
+    public function getAvailability(): StageAvailability
     {
-        $adults = $children = $bikes = 0;
-
-        foreach ($this->getConfirmedStagesRegistrations() as $stageRegistration) {
-            $registration = $stageRegistration->getRegistration();
-            $children = $registration->countChildren();
-
-            $bikes += $registration->getNeededBike();
-            $children += $children;
-            $adults += $registration->countPeople() - $children;
-        }
-
-        return (object) [
-            'adults' => $this->event->getAdultsCapacity() - $adults,
-            'children' => $this->event->getChildrenCapacity() - $children,
-            'bikes' => $this->event->getBikesAvailable() - $bikes,
-        ];
+        return new StageAvailability($this);
     }
 
     public function getId(): UuidV4

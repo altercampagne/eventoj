@@ -1,94 +1,82 @@
-{% macro render_availability(name, value, max) %}
-{% set percent = (max - value) * 100 / max %}
+{% macro render_meal_availability(mealAvailability, registration) %}
+    {% set hasAvailability = mealAvailability.isEnoughForRegistration(registration) %}
 
-<div class="col-12 col-sm-4">
-    <div class="row">
-        <div class="col-4 col-sm-12">
-            <div class="text-center">{{ name }}</div>
-        </div>
-        <div class="col col-sm-12 align-self-center">
-            <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="{{ max - value }}" aria-valuemin="0" aria-valuemax="{{ max }}">
-                <div class="progress-bar text-bg-{{ percent > 75 ? 'danger' : percent > 50 ? 'warning' : 'success' }}" style="width: {{ percent }}%">
-                    {{ max -value }} / {{ max }}
-                </div>
-            </div>
+    <div class="col-12 col-md-4 position-relative px-3 py-2">
+        <h4 class="text-center fs-5 mb-4">{{ mealAvailability.meal|trans }}</h4>
+
+        <twig:EventRegistration:AvailabilityProgressBar availability="{{ mealAvailability.adults }}" name="adulte" />
+        <twig:EventRegistration:AvailabilityProgressBar availability="{{ mealAvailability.children }}" name="enfant" />
+        <twig:EventRegistration:AvailabilityProgressBar availability="{{ mealAvailability.bikes }}" name="vélo" />
+
+        <div class="d-grid gap-2 px-3">
+            {% if hasAvailability %}
+                <button
+                    type="button"
+                    class="btn btn-primary choose-meal-button mt-4"
+                    data-stage="{{ mealAvailability.stage.id }}"
+                    data-stage-label="{{ mealAvailability.stage.name }}"
+                    data-meal="{{ mealAvailability.meal.value }}"
+                    data-meal-label="{{ mealAvailability.meal|trans }}"
+                >
+                    Choisir
+                </button>
+            {% endif %}
         </div>
     </div>
-</div>
 {% endmacro %}
+
+{% set choices = form.vars.choices %}
 
 <div class="modal" id="stage{{ modal|title }}Modal" tabindex="-1" aria-labelledby="{{ title }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-fullscreen-sm-down">
         <div class="modal-content">
             <div class="modal-body p-0">
-                <div class="list-group list-group-flush">
+                <div class="accordion accordion-flush" id="accordion-{{ modal|title }}">
                     {% set start = modal == 'start' ? 0 : 1 %}
 
                     {% for choice in choices %}
                         {% set stage = choice.data %}
                         {# Storage this data in a variable to avoid too many computations #}
                         {% set availability = stage.availability %}
-                        {% set isFull = availability.children < registration.countChildren or availability.bikes < registration.neededBike or availability.adults < (registration.countPeople - registration.countChildren) %}
+                        {% set isStageFull = not availability.isEnoughForRegistration(registration) %}
+                        {% set isSelected = form.vars.value == choice.value %}
 
                         <div
-                            class="list-group-item {% if isFull %}list-group-item-secondary{% endif %} pb-0 px-0"
-                            {% if isFull %} disabled{% endif %}
-                            data-full={{ isFull ? 1 : 0 }}
-                            data-stage="{{ choice.value }}"
+                            class="accordion-item"
+                            data-stage="{{ stage.id }}"
+                            data-full="{{ isStageFull }}"
+                            data-breakfast-full="{{ not availability.breakfast.isEnoughForRegistration(registration) }}"
+                            data-lunch-full="{{ not availability.lunch.isEnoughForRegistration(registration) }}"
+                            data-dinner-full="{{ not availability.dinner.isEnoughForRegistration(registration) }}"
                         >
-                            <div class="d-flex justify-content-between align-items-center px-2 pb-2">
-                                <div>
-                                    <h6 class="my-0"><b>{{ stage.date|format_date }}</b> - {{ stage.name }}</h6>
-                                    {% if not isFull %}
-                                        <div class="content-for-available-stage-only">
-                                            <button
-                                                class="btn btn-link btn-sm text-muted content-for-available-stage-only"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#details-{{ stage.id }}"
-                                                type="button"
-                                                aria-expanded="false"
-                                                aria-controls="details-{{ stage.id }}"
-                                            >
-                                                <span class="label-details-show">
-                                                    <i class="fa-solid fa-caret-right"></i> afficher les détails
-                                                </span>
-                                                <span class="label-details-hide d-none">
-                                                    <i class="fa-solid fa-caret-down"></i> masquer les détails
-                                                </span>
-                                            </button>
-                                            {% if stage.isBefore %}
-                                                <span class="badge bg-primary bg-opacity-50">BEFORE</span>
-                                            {% elseif stage.isAfter %}
-                                                <span class="badge bg-primary bg-opacity-50">AFTER</span>
-                                            {% endif %}
-                                            {% if availability.bikes == 0 %}
-                                                <span class="badge bg-danger bg-opacity-50">Plus de vélo disponible</span>
-                                            {% endif %}
-                                            {% if availability.adults <= 5 %}
-                                                <span class="badge bg-warning bg-opacity-75">📢 Dernières places !</span>
-                                            {% endif %}
-                                        </div>
+                            <h2 class="accordion-header">
+                                <button
+                                    class="accordion-button{% if not isSelected %} collapsed{% endif %}{{ isStageFull ? ' bg-secondary-subtle p-2' }}"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-{{ modal|title }}-{{ stage.id }}"
+                                    aria-expanded="{{ isSelected ? 'true' : 'false' }}"
+                                    aria-controls="#collapse-{{ modal|title }}-{{ stage.id }}"
+                                >
+                                    {% if isStageFull %}
+                                        <span class="badge bg-secondary me-2">COMPLET</span>
                                     {% endif %}
-                                </div>
-                                <div>
-                                    <button type="button" class="btn btn-sm btn-primary {{ isFull ? 'd-none' }}" data-stage="{{ stage.id }}">GO !</button>
-                                    <span class="badge bg-secondary d-none content-for-unavailable-stage-only">INDISPONIBLE</span>
-                                    {% if isFull %}
-                                        <span class="badge bg-secondary">COMPLET</span>
-                                    {% endif %}
-                                </div>
-                            </div>
+                                    <span class="badge bg-secondary me-2 d-none badge-not-available">INDISPONIBLE</span>
+                                    <span>
+                                        <b>{{ stage.date|format_date }}</b> - {{ stage.name }}
+                                    </span>
+                                </button>
+                            </h2>
 
-                            {% if not isFull %}
-                                <div class="stageAvailability container">
-                                    <div class="collapse bg-light row p-2 pb-3" id="details-{{ stage.id }}">
-                                        {{ _self.render_availability('Adultes', availability.adults, stage.event.adultsCapacity) }}
-                                        {{ _self.render_availability('- de 13 ans', availability.children, stage.event.childrenCapacity) }}
-                                        {{ _self.render_availability('Vélos', availability.bikes, stage.event.bikesAvailable) }}
+                            <div id="collapse-{{ modal|title }}-{{ stage.id }}" class="accordion-collapse collapse{% if isSelected %} show{% endif %}" data-bs-parent="#accordion-{{ modal|title }}">
+                                <div class="accordion-body bg-primary" style="--bs-bg-opacity: .05;">
+                                    <div class="row">
+                                        {{ _self.render_meal_availability(availability.breakfast, registration) }}
+                                        {{ _self.render_meal_availability(availability.lunch, registration) }}
+                                        {{ _self.render_meal_availability(availability.dinner, registration) }}
                                     </div>
                                 </div>
-                            {% endif %}
-
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
