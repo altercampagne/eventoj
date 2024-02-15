@@ -60,11 +60,11 @@ class RegisterChooseDatesController extends AbstractController
 
                 if (0 === $i) {
                     switch ($eventRegistrationDTO->firstMeal) {
-                        case Meal::LUNCH:
-                            $stageRegistration->setPresentForBreakfast(false);
-                            // no break
                         case Meal::DINNER:
                             $stageRegistration->setPresentForLunch(false);
+                            // no break
+                        case Meal::LUNCH:
+                            $stageRegistration->setPresentForBreakfast(false);
                     }
                 } elseif ($i === \count($bookedStages) - 1) {
                     switch ($eventRegistrationDTO->lastMeal) {
