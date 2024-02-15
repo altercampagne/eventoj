@@ -73,22 +73,6 @@ class ChooseDatesFormTypeTest extends KernelTestCase
         ]);
     }
 
-    public function testWithTooShortPeriod(): void
-    {
-        $this->form->submit([
-            /* @phpstan-ignore-next-line */
-            'stageStart' => (string) $this->event->getStages()[3]->getId(),
-            'firstMeal' => Meal::LUNCH->value,
-            /* @phpstan-ignore-next-line */
-            'stageEnd' => (string) $this->event->getStages()[3]->getId(),
-            'lastMeal' => Meal::LUNCH->value,
-        ]);
-
-        $this->assertFormInvalid($this->form, [
-            'choose_dates_form' => 'Tu dois rester au minimum une journée sur l\'évènement.',
-        ]);
-    }
-
     public function testWithTooManyChildren(): void
     {
         $companions = [];

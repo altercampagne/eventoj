@@ -120,12 +120,6 @@ class EventRegistrationDTO
                 ->addViolation();
         }
 
-        $numberOfDays = (int) $this->stageStart->getDate()->diff($this->stageEnd->getDate())->format('%a');
-        if ($numberOfDays < 1) {
-            $context->buildViolation('Tu dois rester au minimum une journée sur l\'évènement.')
-                ->addViolation();
-        }
-
         foreach ($this->getBookedStages() as $stage) {
             $availability = $stage->getAvailability();
             if (!$availability->isEnoughForRegistration($this->registration)) {
