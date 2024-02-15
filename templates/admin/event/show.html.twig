@@ -25,7 +25,7 @@
                     {% if event.isPublished %}
                         <li class="list-group-item">
                             <i class="fa-solid fa-clock fa-fw me-1"></i>
-                            Publié le {{ event.publishedAt|format_datetime('long', 'long') }}
+                            Publié le {{ event.publishedAt|format_datetime('long', 'short') }}
                         </li>
                     {% endif %}
                 </ul>
@@ -39,6 +39,12 @@
                     {% endif %}
                 </div>
             </div>
+            <div class="p-2 text-secondary">
+                <small>
+                    Créé le <b>{{ event.createdAt|format_datetime('long', 'short') }}</b><br />
+                    Dernière mise à jour le {{ event.updatedAt|format_datetime('long', 'short') }}
+                </small>
+            </div>
         </div>
 
         <div class="col-12 col-md-9">
@@ -49,7 +55,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link{% if tab == 'registrations' %} active{% endif %}{% if not event.isBookable %} disabled{% endif %}" href="{{ path('admin_event_show_registrations', { slug: event.slug }) }}">
+                    <a class="nav-link{% if tab == 'registrations' %} active{% endif %}{% if event .registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_registrations', { slug: event.slug }) }}">
                         Inscriptions
                     </a>
                 </li>

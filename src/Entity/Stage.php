@@ -65,6 +65,10 @@ class Stage
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
+    #[ORM\Column(nullable: true)]
+    #[Gedmo\Timestampable(on: 'update')]
+    private ?\DateTimeImmutable $updatedAt;
+
     /**
      * @var Collection<int, StageRegistration>
      */
@@ -195,6 +199,11 @@ class Stage
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 
     /**

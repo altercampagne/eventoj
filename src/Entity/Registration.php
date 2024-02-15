@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity(repositoryClass: RegistrationRepository::class)]
@@ -51,6 +52,10 @@ class Registration
 
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
+
+    #[ORM\Column(nullable: true)]
+    #[Gedmo\Timestampable(on: 'update')]
+    private ?\DateTimeImmutable $updatedAt;
 
     #[ORM\Column(nullable: true, options: [
         'comment' => 'Date on which the reservation was confirmed.',
@@ -205,6 +210,11 @@ class Registration
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 
     public function getConfirmedAt(): ?\DateTimeImmutable

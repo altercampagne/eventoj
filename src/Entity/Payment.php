@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity]
@@ -52,6 +53,10 @@ class Payment
 
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
+
+    #[ORM\Column(nullable: true)]
+    #[Gedmo\Timestampable(on: 'update')]
+    private ?\DateTimeImmutable $updatedAt;
 
     public function __construct(User $payer, int $amount, Registration $registration)
     {
@@ -150,5 +155,10 @@ class Payment
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 }
