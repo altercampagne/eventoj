@@ -14,7 +14,7 @@
                     type="button"
                     class="btn btn-primary choose-meal-button mt-4"
                     data-stage="{{ mealAvailability.stage.id }}"
-                    data-stage-label="{{ mealAvailability.stage.name }}"
+                    data-stage-label="{{ mealAvailability.stage.date|format_date('long') }}"
                     data-meal="{{ mealAvailability.meal.value }}"
                     data-meal-label="{{ mealAvailability.meal|trans }}"
                 >

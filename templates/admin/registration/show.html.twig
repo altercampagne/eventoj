@@ -26,7 +26,7 @@
                         <i class="fa-solid fa-plane-arrival fa-fw me-1"></i> Arrivée prévue le {{ arrivalDate }} ({{ registration.stageRegistrationStart.stage.name }}) pour le {{ registration.stageRegistrationStart.firstMeal|trans|lower }}
                     </li>
                     <li class="list-group-item">
-                        <i class="fa-solid fa-plane-departure fa-fw me-1"></i> Arrivée prévue le {{ departureDate }} ({{ registration.stageRegistrationEnd.stage.name }}) pour le {{ registration.stageRegistrationStart.lastMeal|trans|lower }}
+                        <i class="fa-solid fa-plane-departure fa-fw me-1"></i> Départ prévu le {{ departureDate }} ({{ registration.stageRegistrationEnd.stage.name }}) pour le {{ registration.stageRegistrationStart.lastMeal|trans|lower }}
                     </li>
                     {% if registration.companions|length > 0 %}
                         <li class="list-group-item">

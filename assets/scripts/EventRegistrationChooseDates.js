@@ -59,7 +59,7 @@ class EventRegistrationChooseDates {
     // If the selected start date is after the current end date, we put an end
     // date 4 days after the start date (of possible, otherwise we select the
     // latest available date)
-    if(this.availableOptions.indexOf(this.selectEnd.value) <= startIndex) {
+    if(this.availableOptions.indexOf(this.selectEnd.value) < startIndex) {
       let endIndex = startIndex + 4;
       if (endIndex > this.selectEnd.options.length - 1) {
         endIndex = this.selectEnd.options.length - 1;

@@ -14,34 +14,32 @@
             <div class="col-12 col-sm-8 col-md-6 m-auto">
                 <h2 class="fw-bold text-secondary mb-3">Choix des dates</h2>
 
+                <div class="alert alert-info">
+                    <b>Information utile :</b> Tu peux choisir tes dates d'arrivée et de départ en cliquant sur les liens "Modifier" ci-dessous puis en cliquant sur le bouton choisir qui correspond à ton premier repas avec nous (pour ta date de départ) ou à ton dernier repas (pour ta date de départ).
+                </div>
                 {{ form_errors(form) }}
 
                 {{ form_start(form) }}
+
+                    <h3 class="fw-bold text-secondary mb-3">Date d'arrivée</h3>
+
                     <div class="card card-hover mb-3" data-bs-toggle="modal" data-bs-target="#stageStartModal">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
-                                <h3 class="card-title fs-4">Arrivée</h3>
-                                <p>
-                                    <b id="stageStartLabel">{{ form.stageStart.vars.data.name }}</b> pour le <b id="firstMealLabel">{{ form.firstMeal.vars.data|trans }}</b>
-                                    <!-- Almost invisible button -->
-                                    <button type="button" class="btn m-0 p-0 stretched-link float-end"></button>
-                                </p>
+                                le <b id="stageStartLabel">{{ form.stageStart.vars.data.date|format_date('long') }}</b> pour le <b id="firstMealLabel">{{ form.firstMeal.vars.data|trans }}</b>
                             </div>
-                            <i class="fa-solid fa-chevron-right"></i>
+                            <button type="button" class="btn btn-link stretched-link">Modifier</button>
                         </div>
                     </div>
+
+                    <h3 class="fw-bold text-secondary mb-3 fs-3">Date de départ</h3>
 
                     <div class="card card-hover mb-3" data-bs-toggle="modal" data-bs-target="#stageEndModal">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
-                                <h3 class="card-title fs-4">Arrivée</h3>
-                                <p>
-                                    <b id="stageEndLabel">{{ form.stageEnd.vars.data.name }}</b> pour le <b id="lastMealLabel">{{ form.lastMeal.vars.data|trans }}</b>
-                                    <!-- Almost invisible button -->
-                                    <button type="button" class="btn m-0 p-0 stretched-link float-end"></button>
-                                </p>
+                                le <b id="stageEndLabel">{{ form.stageEnd.vars.data.date|format_date('long') }}</b> après le <b id="lastMealLabel">{{ form.lastMeal.vars.data|trans }}</b>
                             </div>
-                            <i class="fa-solid fa-chevron-right"></i>
+                            <button type="button" class="btn btn-link stretched-link">Modifier</button>
                         </div>
                     </div>
 
@@ -52,7 +50,7 @@
                                 <small class="text-secondary">Calculé en fonction de tes dates d'arrivée et de départ</small>
                             </div>
                             <div class="col-auto fw-bold">
-                                <span id="event-registration-days-of-presence">10</span> jours
+                                <span id="event-registration-days-of-presence">-</span> jours
                             </div>
                         </li>
                     </ul>
