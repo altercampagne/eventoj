@@ -17,7 +17,7 @@ class AddressFormType extends AbstractType
     {
         $builder
             ->add('countryCode', CountryType::class, [
-                'label' => 'Ton pays',
+                'label' => 'Pays',
                 'attr' => [
                     'placeholder' => 'Ton pays',
                 ],
@@ -27,7 +27,7 @@ class AddressFormType extends AbstractType
                 'preferred_choices' => ['FR', 'BE'],
             ])
             ->add('addressLine1', TextType::class, [
-                'label' => 'Ton addresse',
+                'label' => 'Addresse',
                 'attr' => [
                     'placeholder' => 'Ton address',
                 ],
@@ -46,7 +46,7 @@ class AddressFormType extends AbstractType
                 'required' => false,
             ])
             ->add('zipCode', TextType::class, [
-                'label' => 'Ton code postal',
+                'label' => 'Code postal',
                 'attr' => [
                     'placeholder' => 'Ton code postal',
                 ],
@@ -55,7 +55,7 @@ class AddressFormType extends AbstractType
                 ],
             ])
             ->add('city', TextType::class, [
-                'label' => 'Ta ville',
+                'label' => 'Ville',
                 'attr' => [
                     'placeholder' => 'Ta ville',
                 ],

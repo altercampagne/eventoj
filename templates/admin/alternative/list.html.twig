@@ -1,0 +1,38 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = 'Tous les évènements' %}
+
+{% block main %}
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Toutes les alternatives</h2>
+
+        <a href="{{ path('admin_alternative_create') }}" class="btn btn-primary">
+            Créer une nouvelle alternative
+        </a>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Évènements</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for alternative in alternatives %}
+                <tr data-href="{{ path('admin_alternative_update', { slug: alternative.slug }) }}">
+                    <td>{{ alternative.name }}</td>
+                    <td>
+                        {% for event in alternative.events %}
+                            <span class="badge bg-secondary">{{ event.name }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>{{ alternative.description|u.truncate(100, '...', false) }}</td>
+                    <td>{{ alternative.createdAt|format_datetime }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

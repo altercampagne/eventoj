@@ -1,0 +1,51 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = creation ? 'Création d\'une alternative' : alternative.name %}
+
+{% block main %}
+    <div class="container">
+        <div class="row text-center mb-3">
+            <h1 class="fw-bold text-uppercase text-primary">
+            </h1>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10">
+                {{ form_errors(form) }}
+
+                {{ form_start(form) }}
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-rectangle-list me-2"></i> Description de l'alternative</legend>
+
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.description) }}
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-map-location-dot me-2"></i> Adresse de l'alternative</legend>
+                        {{ form_row(form.address.addressLine1) }}
+                        {{ form_row(form.address.addressLine2) }}
+
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                {{ form_row(form.address.zipCode) }}
+                            </div>
+                            <div class="col-12 col-md-8">
+                                {{ form_row(form.address.city) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.address.countryCode) }}
+                    </fieldset>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-lg btn-primary">
+                            {% if creation %}Ajouter{% else %}Modifier{% endif %}
+                        </button>
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
