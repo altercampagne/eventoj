@@ -41,7 +41,8 @@
                         </li>
                     {% endif %}
                     <li class="list-group-item list-group-item-light py-1 fw-light fs-6">
-                        <small>Créée le {{ registration.createdAt|format_datetime('long', 'short') }}</small>
+                        <small>Créée le {{ registration.createdAt|format_datetime('long', 'short') }}</small><br />
+                        <small>Mise à jour le {{ registration.createdAt|format_datetime('long', 'short') }}</small>
                     </li>
                 </ul>
             </div>
