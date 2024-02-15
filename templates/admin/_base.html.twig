@@ -11,44 +11,46 @@
 {% block body %}
     {% set current_route = app.request.attributes.get('_route') %}
 
-    <main class="d-flex flex-nowrap">
-        <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-fixed vh-100" style="width: 280px;">
-            <a href="{{ path('admin') }}" class="text-center mb-3 mb-md-0 link-body-emphasis text-decoration-none fs-4">
+    <nav class="navbar navbar-expand-lg bg-danger" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ path('admin') }}">
                 <i class="fa-solid fa-screwdriver-wrench me-2"></i>
                 ADMIN
                 <i class="fa-solid fa-screwdriver-wrench ms-2"></i>
             </a>
-            <hr>
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item">
-                    <a href="{{ path('admin_user_list') }}" class="nav-link{% if current_route starts with 'admin_user_' %} active{% endif %}" aria-current="page">
-                        <i class="fa-solid fa-users me-1"></i>
-                        Utilisateurices
-                    </a>
-                    <a href="{{ path('admin_event_list') }}" class="nav-link{% if current_route starts with 'admin_event_' %} active{% endif %}" aria-current="page">
-                        <i class="fa-solid fa-calendar-days me-1"></i>
-                        Evènements
-                    </a>
-                    <a href="{{ path('admin_registration_list') }}" class="nav-link{% if current_route starts with 'admin_registration_' %} active{% endif %}" aria-current="page">
-                        <i class="fa-solid fa-ticket me-1"></i>
-                        Réservations
-                    </a>
-                </li>
-            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="{{ path('admin_user_list') }}" class="nav-link{% if current_route starts with 'admin_user_' %} active{% endif %}" aria-current="page">
+                            Utilisateurices
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('admin_event_list') }}" class="nav-link{% if current_route starts with 'admin_event_' %} active{% endif %}" aria-current="page">
+                            Evènements
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('admin_registration_list') }}" class="nav-link{% if current_route starts with 'admin_registration_' %} active{% endif %}" aria-current="page">
+                            Réservations
+                        </a>
+                    </li>
+                    <!-- Used for test purpose -->
+                    <li class="nav-item d-none" id="connected-as">{{ app.user.fullName }}</li>
+                </ul>
 
-            <ul class="nav nav-pills flex-column">
-                <li class="nav-item">
-                    <a href="{{ path('homepage') }}" class="nav-link" aria-current="page">
-                        <i class="fa-solid fa-circle-left me-1"></i>
-                        Revenir au site
-                    </a>
-                </li>
-                <!-- Used for test purpose -->
-                <li class="nav-item d-none" id="connected-as">{{ app.user.fullName }}</li>
-            </ul>
+                <a href="{{ path('homepage') }}" class="nav-link text-light" aria-current="page">
+                    <i class="fa-solid fa-xmark" data-bs-toggle="tooltip" title="Retour au site"></i>
+                </a>
+            </div>
         </div>
+    </nav>
 
-        <div class="container-fluid pt-3" style="margin-left: 280px;">
+    <main class="d-flex flex-nowrap">
+        <div class="container-fluid pt-3">
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }}">
