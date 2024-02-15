@@ -53,4 +53,12 @@ final class StageAvailability
             && $this->dinner->isEnoughForRegistration($registration)
         ;
     }
+
+    /**
+     * @return MealAvailability[]
+     */
+    public function getMealAvailabilities(): array
+    {
+        return [$this->breakfast, $this->lunch, $this->dinner];
+    }
 }

@@ -2,14 +2,26 @@
 
 {% set tab = 'stages' %}
 
+{% macro item_availability(availability, icon, legend) %}
+{% set color = availability.percent >= 100 ? 'danger': availability.percent > 50 ? 'warning' : 'success' %}
+
+    <div data-bs-toggle="tooltip" data-bs-title="{{ legend }}">
+        <span class="badge text-bg-{{ color }} ms-2">
+            <i class="fa-solid fa-{{ icon }}"></i>
+            {{ availability.booked }} / {{ availability.max }}
+        </span>
+    </div>
+{% endmacro %}
+
 {% block tab_content %}
     <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col">Date</th>
                 <th scope="col">Nom</th>
-                <th scope="col">Difficulté</th>
-                <th scope="col">Participations</th>
+                <th scope="col">Petit-déjeuner</th>
+                <th scope="col">Déjeuner</th>
+                <th scope="col">Diner</th>
             </tr>
         </thead>
         <tbody>
@@ -20,38 +32,15 @@
                         {% if stage.isBefore or stage.isAfter %}<span class="badge text-bg-secondary">{{ stage.type.value|upper }}</span>{% endif %}
                         {{ stage.name }}
                     </td>
-                    <td>
-                        {% if stage.isDifficultyEasy %}
-                            <span class="badge text-bg-success">Facile</span>
-                        {% elseif stage.isDifficultyMedium %}
-                            <span class="badge text-bg-warning">Moyenne</span>
-                        {% else %}
-                            <span class="badge text-bg-danger">Difficile</span>
-                        {% endif %}
-                    </td>
-                    <td class="d-flex">
-                        {% set adults = 0 %}
-                        {% set children = 0 %}
-                        {% set bikes = 0 %}
-                        {% for stageRegistration in stage.stagesRegistrations %}
-                            {% set bikes = bikes + stageRegistration.registration.neededBike %}
-
-                            {% if stageRegistration.registration.user.isChild %}
-                                {% set children = children + stageRegistration.registration.countChildren %}
-                            {% else %}
-                                {% set adults = adults + stageRegistration.registration.countPeople - stageRegistration.registration.countChildren %}
-                            {% endif %}
-                        {% endfor %}
-                        <div data-bs-toggle="tooltip" data-bs-title="Nombre d'adultes participant ce jour-là.">
-                            <i class="fa-solid fa-person"></i> <span class="badge text-bg-primary">{{ adults }}</span>
-                        </div>
-                        <div data-bs-toggle="tooltip" data-bs-title="Nombre d'enfants participant ce jour-là.">
-                            <i class="fa-solid fa-child ms-2"></i> <span class="badge text-bg-primary">{{ children }}</span>
-                        </div>
-                        <div data-bs-toggle="tooltip" data-bs-title="Nombre de vélos nécessaires ce jour-là.">
-                            <i class="fa-solid fa-bicycle ms-2"></i> <span class="badge text-bg-primary">{{ bikes }}</span>
-                        </div>
-                    </td>
+                    {% for availability in stage.availability.mealAvailabilities %}
+                        <td>
+                            <div class="d-flex align-items-center">
+                                {{ _self.item_availability(availability.adults, 'user', 'Nombre d\'adultes participants au '~availability.meal|trans|lower) }}
+                                {{ _self.item_availability(availability.children, 'child', 'Nombre d\'enfants participants au '~availability.meal|trans|lower) }}
+                                {{ _self.item_availability(availability.bikes, 'bicycle', 'Nombre de de vélos nécessaires au moment du '~availability.meal|trans|lower) }}
+                            </div>
+                        </td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
