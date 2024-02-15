@@ -33,7 +33,7 @@
                 <div class="d-grid gap-2 p-2">
                     <a href="{{ path('admin_event_update', { slug: event.slug }) }}" class="btn btn-outline-primary">Modifier l'évènement</a>
                     {% if not event.isPublished %}
-                        <a href="{{ path('admin_event_publish', { slug: event.slug }) }}" class="btn btn-outline-primary">
+                        <a href="{{ path('admin_event_publish', { slug: event.slug }) }}" class="btn btn-outline-success">
                             Publier l'évènement
                         </a>
                     {% endif %}
