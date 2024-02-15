@@ -14,6 +14,7 @@ use Symfony\Component\Uid\UuidV4;
 #[ORM\Entity(repositoryClass: RegistrationRepository::class)]
 #[ORM\Table(name: '`registration`')]
 #[ORM\Index(name: 'idx_registration_status', fields: ['status'])]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class Registration
 {
     /**

@@ -10,6 +10,7 @@ use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`stages_registrations`')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class StageRegistration
 {
     #[ORM\Id]

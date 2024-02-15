@@ -11,6 +11,7 @@ use Symfony\Component\Uid\UuidV4;
 #[ORM\Entity]
 #[ORM\Table(name: '`payment`')]
 #[ORM\Index(name: 'idx_payment_status', fields: ['status'])]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class Payment
 {
     #[ORM\Id]

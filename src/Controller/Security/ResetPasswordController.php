@@ -26,7 +26,7 @@ class ResetPasswordController extends AbstractController
 
     public function __construct(
         private readonly ResetPasswordHelperInterface $resetPasswordHelper,
-        private readonly EntityManagerInterface $entityManager,
+        private readonly EntityManagerInterface $em,
         private readonly PasswordResetSender $passwordResetSender,
     ) {
     }
@@ -44,7 +44,7 @@ class ResetPasswordController extends AbstractController
             /** @var string $email */
             $email = $form->get('email')->getData();
 
-            $user = $this->entityManager->getRepository(User::class)->findOneBy([
+            $user = $this->em->getRepository(User::class)->findOneBy([
                 'email' => $email,
             ]);
 
@@ -129,7 +129,8 @@ class ResetPasswordController extends AbstractController
             $password = $form->get('plainPassword')->getData();
 
             $user->setPassword($passwordHasher->hashPassword($user, $password));
-            $this->entityManager->flush();
+            $this->em->persist($user);
+            $this->em->flush();
 
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();

@@ -9,6 +9,7 @@ use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`stages_alternatives`')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class StageAlternative
 {
     #[ORM\Id]

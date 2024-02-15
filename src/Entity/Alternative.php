@@ -15,6 +15,7 @@ use Symfony\Component\Uid\UuidV4;
 #[ORM\Table(name: '`alternative`')]
 #[UniqueEntity(fields: ['slug'], message: 'Il y a déjà une alternative avec ce slug.')]
 #[ORM\Index(name: 'idx_alternative_slug', fields: ['slug'])]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class Alternative
 {
     #[ORM\Id]

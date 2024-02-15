@@ -16,6 +16,7 @@ use Symfony\Component\Uid\UuidV4;
 #[ORM\Table(name: '`event`')]
 #[ORM\Index(name: 'idx_event_slug', fields: ['slug'])]
 #[UniqueEntity(fields: ['slug'], message: 'Il y a déjà un évènement avec ce slug.')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class Event
 {
     /**
