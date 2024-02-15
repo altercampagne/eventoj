@@ -43,7 +43,7 @@ final class CreateOrUpdateController extends AbstractController
             return $this->redirectToRoute('admin_event_show', ['slug' => $event->getSlug()]);
         }
 
-        return $this->render('admin/event/create.html.twig', [
+        return $this->render('admin/event/edit.html.twig', [
             'creation' => $creation,
             'event' => $event,
             'form' => $form->createView(),
