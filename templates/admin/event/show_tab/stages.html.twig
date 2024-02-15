@@ -15,13 +15,14 @@
 
 {% block tab_content %}
     <div class="d-flex justify-content-end mb-2">
-        <a
+        <div{% if event.isPublished %} data-bs-toggle="tooltip" title="Il n'est plus possible d'ajouter des étapes à un évènement publié"{% endif %}>
+            <a
                 href="{{ path('admin_stage_create', { slug: event.slug }) }}"
-            class="btn btn-outline-success{% if event.isPublished %} disabled{% endif %}"
-            {% if event.isPublished %}data-bs-toggle="tooltip" title="Il n'est plus possible d'ajouter des étapes à un évènement publié"{% endif %}
-        >
-            Ajouter une nouvelle étape
-        </a>
+                class="btn btn-outline-success{% if event.isPublished %} disabled{% endif %}"
+            >
+                Ajouter une nouvelle étape
+            </a>
+        </div>
     </div>
 
     <table class="table table-hover">
