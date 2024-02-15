@@ -3,29 +3,63 @@
 {% set title = 'Tous les évènements' %}
 
 {% block main %}
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Évènements en cours ou à venir</h2>
+
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Créer un nouvel évènement
+            </button>
+            <ul class="dropdown-menu">
+                {% for type in enum('\\App\\Entity\\EventType').cases %}
+                    <li>
+                        <a class="dropdown-item" href="{{ path('admin_event_create', { type: type.value }) }}">
+                            {{ type|trans }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
     <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col">Type</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Etapes</th>
-                <th scope="col">Statut</th>
                 <th scope="col">Date</th>
             </tr>
         </thead>
         <tbody>
-            {% for event in events %}
+            {% for event in events|filter(e => not e.isFinished) %}
                 <tr data-href="{{ path('admin_event_show', { slug: event.slug }) }}">
                     <td><span class="badge text-bg-secondary">{{ event.type.value }}</span></td>
                     <td>{{ event.name }}</td>
                     <td>{{ event.stages|length }} étapes</td>
-                    <td>
-                        {% if event.isFinished %}
-                            <span class="badge text-bg-dark">Terminé</span>
-                        {% else %}
-                            <span class="badge text-bg-warning">Ouvert</span>
-                        {% endif %}
-                    </td>
+                    <td>{{ event.createdAt|format_datetime }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2 class="mt-5">Évènements terminés</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Etapes</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events|filter(e => e.isFinished) %}
+                <tr data-href="{{ path('admin_event_show', { slug: event.slug }) }}">
+                    <td><span class="badge text-bg-secondary">{{ event.type.value }}</span></td>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.stages|length }} étapes</td>
                     <td>{{ event.createdAt|format_datetime }}</td>
                 </tr>
             {% endfor %}

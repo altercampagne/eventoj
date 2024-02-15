@@ -86,6 +86,17 @@ class Event
         $this->createdAt = new \DateTimeImmutable();
         $this->stages = new ArrayCollection();
         $this->registrations = new ArrayCollection();
+        $this->openingDateForBookings = new \DateTimeImmutable('+6 months');
+    }
+
+    public static function createFromType(EventType $type): self
+    {
+        return match ($type) {
+            EventType::AT => self::AT(),
+            EventType::ADT => self::ADT(),
+            EventType::BT => self::BT(),
+            EventType::EB => self::EB(),
+        };
     }
 
     public static function AT(): self
@@ -133,14 +144,35 @@ class Event
         return $this->adultsCapacity;
     }
 
+    public function setAdultsCapacity(int $adultsCapacity): self
+    {
+        $this->adultsCapacity = $adultsCapacity;
+
+        return $this;
+    }
+
     public function getChildrenCapacity(): int
     {
         return $this->childrenCapacity;
     }
 
+    public function setChildrenCapacity(int $childrenCapacity): self
+    {
+        $this->childrenCapacity = $childrenCapacity;
+
+        return $this;
+    }
+
     public function getBikesAvailable(): int
     {
         return $this->bikesAvailable;
+    }
+
+    public function setBikesAvailable(int $bikesAvailable): self
+    {
+        $this->bikesAvailable = $bikesAvailable;
+
+        return $this;
     }
 
     public function isFinished(): bool

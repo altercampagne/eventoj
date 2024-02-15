@@ -30,8 +30,9 @@ class FixtureBuilder
         ?PhoneNumber $phoneNumber = null,
         ?string $password = null,
         ?bool $verifyEmail = null,
-        array $roles = [],
+        ?array $roles = null,
         bool $children = false,
+        bool $admin = false,
     ): User {
         $user = new User();
         $user
@@ -41,7 +42,7 @@ class FixtureBuilder
             ->setBirthDate($birthDate ?? \DateTimeImmutable::createFromMutable($children ? self::getFaker()->dateTimeBetween('-12 years', 'now') : self::getFaker()->dateTimeBetween('-80 years', '-14 years')))
             ->setAddress($address ?? self::createAddress())
             ->setPhoneNumber($phoneNumber ?? PhoneNumberUtil::getInstance()->parse(self::getFaker()->phoneNumber(), 'FR'))
-            ->setRoles($roles)
+            ->setRoles($roles ?? $admin ? ['ROLE_ADMIN'] : [])
             ->setPassword($password ?? '$2y$04$MOoNnQXwXZsqcL2X073nO.qb/ChqT84weFdkGOpdyGkrc8ByNRn42') // "password"
         ;
 

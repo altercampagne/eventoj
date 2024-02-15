@@ -29,7 +29,7 @@ class EventRepository extends ServiceEntityRepository
         $qb
             ->select('e, s, sr, r, u, c')
             ->from(Event::class, 'e')
-            ->innerJoin('e.stages', 's')
+            ->leftJoin('e.stages', 's')
             ->leftJoin('s.stagesRegistrations', 'sr')
             ->leftJoin('sr.registration', 'r')
             ->leftJoin('r.user', 'u')

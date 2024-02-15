@@ -1,0 +1,51 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = creation ? 'Création d\'un évènement de type '~(event.type|trans) : 'Modification de l\'évènement '~form.vars.data.name %}
+
+{% block main %}
+    <div class="container">
+        <div class="row text-center mb-3">
+            <h1 class="fw-bold text-uppercase text-primary">
+            </h1>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                {{ form_errors(form) }}
+
+                {{ form_start(form) }}
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-calendar-days me-2"></i> Description de l'évènement</legend>
+
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.description) }}
+                        {{ form_row(form.openingDateForBookings) }}
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-chart-simple me-2"></i> Jauges de capacité</legend>
+
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                {{ form_row(form.adultsCapacity) }}
+                            </div>
+                            <div class="col-12 col-md-4">
+                                {{ form_row(form.childrenCapacity) }}
+                            </div>
+                            <div class="col-12 col-md-4">
+                                {{ form_row(form.bikesAvailable) }}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-lg btn-primary">
+                            {% if creation %}Ajouter{% else %}Modifier{% endif %}
+                        </button>
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

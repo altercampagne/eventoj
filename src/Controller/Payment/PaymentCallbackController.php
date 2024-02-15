@@ -71,7 +71,9 @@ class PaymentCallbackController extends AbstractController
         $this->em->persist($payment->getRegistration());
         $this->em->flush();
 
-        return $this->redirectToRoute('event_registration_confirmed', ['id' => $payment->getRegistration()->getId()]);
+        $this->addFlash('success', 'Ta participation a bien été enregistrée ! 🥳');
+
+        return $this->redirectToRoute('profile_registrations');
     }
 
     private function fail(Payment $payment): RedirectResponse

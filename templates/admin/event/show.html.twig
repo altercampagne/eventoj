@@ -1,91 +1,51 @@
 {% extends 'admin/_base.html.twig' %}
 
-{% set title = 'Évènement ' ~ event.name %}
+{% set title = event.name %}
 
 {% block main %}
     <div class="row">
-        <div class="col-6">
-            <div class="text-center">
-                <h2 class="fw-bold text-uppercase text-primary">Liste des inscriptions validées</h2>
-            </div>
+        <div class="col-12 col-md-3">
+            <div class="card border-primary-subtle">
+                <div class="card-header bg-primary-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'évènement {{ event.name }}">
+                    <i class="fa-solid fa-calendar-days me-2"></i>
+                    {{ event.name }}
+                    <span class="float-end badge bg-primary">{{ event.type.value }}</span>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="fa-solid fa-map-location-dot fa-fw me-1"></i>
+                        {{ event.stages|length }} étapes
+                    </li>
+                    {% if event.stages|length > 0 %}
+                        <li class="list-group-item">
+                            <i class="fa-solid fa-calendar-days fa-fw me-1"></i>
+                            Du <b>{{ (event.stages|first).date|format_date('long') }}</b> au <b>{{ (event.stages|last).date|format_date('long') }}</b>
+                        </li>
+                    {% endif %}
+                </ul>
 
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Utilisateurice</th>
-                        <th scope="col">Durée</th>
-                        <th scope="col">Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for registration in event.registrations|filter(r => r.isConfirmed) %}
-                        <tr data-href="{{ path('admin_registration_show', { id: registration.id }) }}">
-                            <td>{{ registration.user.fullName }}</td>
-                            <td>{{ registration.countDaysOfPresence }} jours</td>
-                            <td>{{ registration.createdAt|format_datetime }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                <div class="d-grip gap-2 p-2">
+                    <a href="{{ path('admin_event_update', { slug: event.slug }) }}" class="btn btn-outline-primary d-block">Modifier l'évènement</a>
+                </div>
+            </div>
         </div>
-        <div class="col-6 border-start">
-            <div class="text-center">
-                <h2 class="fw-bold text-uppercase text-primary">Détails des étapes</h2>
+
+        <div class="col-12 col-md-9">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link{% if tab == 'stages' %} active{% endif %}" href="{{ path('admin_event_show_stages', { slug: event.slug }) }}">
+                        Étapes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if tab == 'registrations' %} active{% endif %}{% if not event.isBookable %} disabled{% endif %}" href="{{ path('admin_event_show_registrations', { slug: event.slug }) }}">
+                        Inscriptions
+                    </a>
+                </li>
+            </ul>
+            <div class="border border-top-0 border-secondary-outline rounded-bottom p-3">
+                {% block tab_content '' %}
             </div>
-
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Difficulté</th>
-                        <th scope="col">Participations</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for stage in event.stages %}
-                        <tr>
-                            <td>{{ stage.date|format_date }}</td>
-                            <td>
-                                {% if stage.isBefore or stage.isAfter %}<span class="badge text-bg-secondary">{{ stage.type.value|upper }}</span>{% endif %}
-                                {{ stage.name }}
-                            </td>
-                            <td>
-                                {% if stage.isDifficultyEasy %}
-                                    <span class="badge text-bg-success">Facile</span>
-                                {% elseif stage.isDifficultyMedium %}
-                                    <span class="badge text-bg-warning">Moyenne</span>
-                                {% else %}
-                                    <span class="badge text-bg-danger">Difficile</span>
-                                {% endif %}
-                            </td>
-                            <td class="d-flex">
-                                {% set adults = 0 %}
-                                {% set children = 0 %}
-                                {% set bikes = 0 %}
-                                {% for stageRegistration in stage.stagesRegistrations %}
-                                    {% set bikes = bikes + stageRegistration.registration.neededBike %}
-
-                                    {% if stageRegistration.registration.user.isChild %}
-                                        {% set children = children + stageRegistration.registration.countChildren %}
-                                    {% else %}
-                                        {% set adults = adults + stageRegistration.registration.countPeople - stageRegistration.registration.countChildren %}
-                                    {% endif %}
-                                {% endfor %}
-                                <div data-bs-toggle="tooltip" data-bs-title="Nombre d'adultes participant ce jour-là.">
-                                    <i class="fa-solid fa-person"></i> <span class="badge text-bg-primary">{{ adults }}</span>
-                                </div>
-                                <div data-bs-toggle="tooltip" data-bs-title="Nombre d'enfants participant ce jour-là.">
-                                    <i class="fa-solid fa-child ms-2"></i> <span class="badge text-bg-primary">{{ children }}</span>
-                                </div>
-                                <div data-bs-toggle="tooltip" data-bs-title="Nombre de vélos nécessaires ce jour-là.">
-                                    <i class="fa-solid fa-bicycle ms-2"></i> <span class="badge text-bg-primary">{{ bikes }}</span>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
         </div>
     </div>
 {% endblock %}
