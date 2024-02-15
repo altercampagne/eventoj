@@ -78,17 +78,21 @@ class FixtureBuilder
         int $adultsCapacity = 10,
         int $childrenCapacity = 5,
         int $bikesAvailable = 5,
+        bool $published = true,
     ): Event {
         $event = Event::AT();
         $event
             ->setName($name ?? self::getFaker()->word())
-            ->setPublishedAt(new \DateTimeImmutable())
             ->setOpeningDateForBookings(new \DateTimeImmutable())
             ->setDescription($description ?? self::getFaker()->sentence())
         ;
         ReflectionHelper::setProperty($event, 'adultsCapacity', $adultsCapacity);
         ReflectionHelper::setProperty($event, 'childrenCapacity', $childrenCapacity);
         ReflectionHelper::setProperty($event, 'bikesAvailable', $bikesAvailable);
+
+        if ($published) {
+            $event->setPublishedAt(new \DateTimeImmutable());
+        }
 
         $date = new \DateTimeImmutable('first day of July');
         if ($date < new \DateTimeImmutable()) {
