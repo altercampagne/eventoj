@@ -185,8 +185,17 @@ class Event
         return new \DateTimeImmutable() > $stage->getDate();
     }
 
+    public function isPublished(): bool
+    {
+        return null !== $this->publishedAt;
+    }
+
     public function isBookable(): bool
     {
+        if (!$this->isPublished()) {
+            return false;
+        }
+
         $now = new \DateTimeImmutable();
 
         if ($now < $this->openingDateForBookings) {
@@ -254,6 +263,10 @@ class Event
 
     public function setPublishedAt(?\DateTimeImmutable $publishedAt): self
     {
+        if ($this->isPublished()) {
+            throw new \LogicException('Event is already published !');
+        }
+
         $this->publishedAt = $publishedAt;
 
         return $this;

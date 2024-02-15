@@ -22,10 +22,21 @@
                             Du <b>{{ (event.stages|first).date|format_date('long') }}</b> au <b>{{ (event.stages|last).date|format_date('long') }}</b>
                         </li>
                     {% endif %}
+                    {% if event.isPublished %}
+                        <li class="list-group-item">
+                            <i class="fa-solid fa-clock fa-fw me-1"></i>
+                            Publié le {{ event.publishedAt|format_datetime('long', 'long') }}
+                        </li>
+                    {% endif %}
                 </ul>
 
-                <div class="d-grip gap-2 p-2">
-                    <a href="{{ path('admin_event_update', { slug: event.slug }) }}" class="btn btn-outline-primary d-block">Modifier l'évènement</a>
+                <div class="d-grid gap-2 p-2">
+                    <a href="{{ path('admin_event_update', { slug: event.slug }) }}" class="btn btn-outline-primary">Modifier l'évènement</a>
+                    {% if not event.isPublished %}
+                        <a href="{{ path('admin_event_publish', { slug: event.slug }) }}" class="btn btn-outline-primary">
+                            Publier l'évènement
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
