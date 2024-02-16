@@ -14,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/_admin/alternatives/create', name: 'admin_alternative_create')]
-#[Route('/_admin/alternatives/{slug}/update', name: 'admin_alternative_update')]
+#[Route('/alternatives/create', name: 'admin_alternative_create')]
+#[Route('/alternatives/{slug}/update', name: 'admin_alternative_update')]
 final class CreateOrUpdateController extends AbstractController
 {
     public function __construct(

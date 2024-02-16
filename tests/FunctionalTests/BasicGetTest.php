@@ -25,7 +25,7 @@ class BasicGetTest extends WebTestCase
      */
     public static function adminPages(): iterable
     {
-        yield ['/_admin', 'Dashboard'];
+        yield ['/_admin/', 'Dashboard'];
         yield ['/_admin/users', 'Toustes les utilisateurices'];
         yield ['/_admin/registrations', 'Toutes les réservations'];
         yield ['/_admin/events', 'Tous les évènements'];

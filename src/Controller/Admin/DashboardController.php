@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/_admin', name: 'admin')]
+#[Route('/', name: 'admin')]
 class DashboardController extends AbstractController
 {
     public function __invoke(?string $slug = null): Response

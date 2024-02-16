@@ -4,6 +4,13 @@ controllers:
         namespace: App\Controller
     type: attribute
 
+controllers_admin:
+    resource:
+        path: ../src/Controller/Admin
+        namespace: App\Controller\Admin
+    type: attribute
+    prefix: /_admin
+
 contact:
     path: /contact
     controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController

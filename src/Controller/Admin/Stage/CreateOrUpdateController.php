@@ -22,7 +22,7 @@ final class CreateOrUpdateController extends AbstractController
     ) {
     }
 
-    #[Route('/_admin/stages/create/{slug}', name: 'admin_stage_create')]
+    #[Route('/stages/create/{slug}', name: 'admin_stage_create')]
     public function create(Request $request, Event $event): Response
     {
         $stage = new Stage($event);
@@ -33,7 +33,7 @@ final class CreateOrUpdateController extends AbstractController
         return $this->update($request, $stage, true);
     }
 
-    #[Route('/_admin/stages/{slug}/update', name: 'admin_stage_update')]
+    #[Route('/stages/{slug}/update', name: 'admin_stage_update')]
     public function update(Request $request, Stage $stage, bool $creation = false): Response
     {
         $form = $this->createForm(StageFormType::class, $stage);

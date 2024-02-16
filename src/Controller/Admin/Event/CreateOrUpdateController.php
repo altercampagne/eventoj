@@ -22,13 +22,13 @@ final class CreateOrUpdateController extends AbstractController
     ) {
     }
 
-    #[Route('/_admin/events/create/{type}', name: 'admin_event_create')]
+    #[Route('/events/create/{type}', name: 'admin_event_create')]
     public function create(Request $request, EventType $type): Response
     {
         return $this->update($request, Event::createFromType($type), true);
     }
 
-    #[Route('/_admin/events/{slug}/update', name: 'admin_event_update')]
+    #[Route('/events/{slug}/update', name: 'admin_event_update')]
     public function update(Request $request, Event $event, bool $creation = false): Response
     {
         $form = $this->createForm(EventFormType::class, $event);

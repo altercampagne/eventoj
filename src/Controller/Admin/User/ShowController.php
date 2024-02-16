@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/_admin/users/{id}', name: 'admin_user_show', requirements: ['id' => Requirement::UUID_V4])]
+#[Route('/users/{id}', name: 'admin_user_show', requirements: ['id' => Requirement::UUID_V4])]
 class ShowController extends AbstractController
 {
     public function __invoke(User $user): Response

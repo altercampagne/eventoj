@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/_admin/events/{slug}/publish', name: 'admin_event_publish')]
+#[Route('/events/{slug}/publish', name: 'admin_event_publish')]
 class PublishController extends AbstractController
 {
     public function __construct(

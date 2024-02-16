@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/_admin/alternatives', name: 'admin_alternative_list')]
+#[Route('/alternatives', name: 'admin_alternative_list')]
 class ListController extends AbstractController
 {
     public function __construct(

@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/_admin/alternatives/{slug}', name: 'admin_alternative_show')]
+#[Route('/alternatives/{slug}', name: 'admin_alternative_show')]
 class ShowController extends AbstractController
 {
     public function __invoke(Alternative $alternative): Response
