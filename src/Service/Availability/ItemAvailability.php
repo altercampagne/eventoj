@@ -21,6 +21,11 @@ final class ItemAvailability
 
     public function getPercent(): float
     {
+        // This can happen for bikes
+        if (0 === $this->max) {
+            return 0;
+        }
+
         return (float) ($this->max - $this->availability) * 100 / $this->max;
     }
 
