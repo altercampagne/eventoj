@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Stage;
+namespace App\Admin\Controller\Stage;
 
+use App\Admin\Form\StageFormType;
 use App\Entity\Event;
 use App\Entity\Stage;
-use App\Form\Admin\StageFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

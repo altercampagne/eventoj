@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Event;
+namespace App\Admin\Controller\Event;
 
 use App\Entity\Event;
 use Doctrine\ORM\EntityManagerInterface;

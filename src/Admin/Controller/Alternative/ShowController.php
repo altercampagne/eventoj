@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Alternative;
+namespace App\Admin\Controller\Alternative;
 
 use App\Entity\Alternative;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

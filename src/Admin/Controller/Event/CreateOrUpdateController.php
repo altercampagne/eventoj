@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Event;
+namespace App\Admin\Controller\Event;
 
+use App\Admin\Form\EventFormType;
 use App\Entity\Event;
 use App\Entity\EventType;
-use App\Form\Admin\EventFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

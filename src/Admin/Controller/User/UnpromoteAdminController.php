@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\User;
+namespace App\Admin\Controller\User;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,8 +14,8 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/users/{id}/promote', name: 'admin_user_promote_admin', requirements: ['id' => Requirement::UUID_V4])]
-class PromoteAdminController extends AbstractController
+#[Route('/users/{id}/unpromote', name: 'admin_user_unpromote_admin', requirements: ['id' => Requirement::UUID_V4])]
+class UnpromoteAdminController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
@@ -24,12 +24,12 @@ class PromoteAdminController extends AbstractController
 
     public function __invoke(Request $request, User $user): Response
     {
-        $user->setRoles(['ROLE_ADMIN']);
+        $user->setRoles([]);
 
         $this->em->persist($user);
         $this->em->flush();
 
-        $this->addFlash('success', "{$user->getFullName()} est maintenant admin!");
+        $this->addFlash('success', "{$user->getFullName()} n'est plus admin!");
 
         if (null !== $targetUrl = $request->headers->get('Referer')) {
             return $this->redirect($targetUrl);

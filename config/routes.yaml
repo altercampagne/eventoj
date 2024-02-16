@@ -6,8 +6,8 @@ controllers:
 
 controllers_admin:
     resource:
-        path: ../src/Controller/Admin
-        namespace: App\Controller\Admin
+        path: ../src/Admin/Controller
+        namespace: App\Admin\Controller
     type: attribute
     prefix: /_admin
 

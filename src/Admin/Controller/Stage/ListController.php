@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Stage;
+namespace App\Admin\Controller\Stage;
 
 use App\Entity\Event;
 use App\Entity\Stage;

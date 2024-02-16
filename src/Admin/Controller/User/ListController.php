@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Event;
+namespace App\Admin\Controller\User;
 
-use App\Entity\Event;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/events', name: 'admin_event_list')]
+#[Route('/users', name: 'admin_user_list')]
 class ListController extends AbstractController
 {
     public function __construct(
@@ -20,10 +20,10 @@ class ListController extends AbstractController
     ) {
     }
 
-    public function __invoke(): Response
+    public function __invoke(?string $slug = null): Response
     {
-        return $this->render('admin/event/list.html.twig', [
-            'events' => $this->em->getRepository(Event::class)->findBy([], ['createdAt' => 'DESC']),
+        return $this->render('admin/user/list.html.twig', [
+            'users' => $this->em->getRepository(User::class)->findBy([], ['createdAt' => 'DESC']),
         ]);
     }
 }

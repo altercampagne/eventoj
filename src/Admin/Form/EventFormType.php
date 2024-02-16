@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin;
+namespace App\Admin\Form;
 
 use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;

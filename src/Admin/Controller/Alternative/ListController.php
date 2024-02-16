@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\User;
+namespace App\Admin\Controller\Alternative;
 
-use App\Entity\User;
+use App\Entity\Alternative;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/users', name: 'admin_user_list')]
+#[Route('/alternatives', name: 'admin_alternative_list')]
 class ListController extends AbstractController
 {
     public function __construct(
@@ -20,10 +20,10 @@ class ListController extends AbstractController
     ) {
     }
 
-    public function __invoke(?string $slug = null): Response
+    public function __invoke(): Response
     {
-        return $this->render('admin/user/list.html.twig', [
-            'users' => $this->em->getRepository(User::class)->findBy([], ['createdAt' => 'DESC']),
+        return $this->render('admin/alternative/list.html.twig', [
+            'alternatives' => $this->em->getRepository(Alternative::class)->findAllJoinedToEvents(),
         ]);
     }
 }

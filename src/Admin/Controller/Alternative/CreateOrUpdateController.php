@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Alternative;
+namespace App\Admin\Controller\Alternative;
 
+use App\Admin\Form\AlternativeFormType;
 use App\Entity\Alternative;
-use App\Form\Admin\AlternativeFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

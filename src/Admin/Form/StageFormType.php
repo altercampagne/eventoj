@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin;
+namespace App\Admin\Form;
 
 use App\Entity\Stage;
 use App\Entity\StageDifficulty;

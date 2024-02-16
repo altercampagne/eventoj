@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Registration;
+namespace App\Admin\Controller\Registration;
 
 use App\Entity\Event;
 use App\Entity\Registration;
