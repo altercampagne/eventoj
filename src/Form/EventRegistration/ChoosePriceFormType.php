@@ -27,7 +27,10 @@ class ChoosePriceFormType extends AbstractType
                 'required' => true,
                 'label' => false,
                 'constraints' => [
-                    new Assert\IsTrue(),
+                    new Assert\IsTrue(
+                        message: 'L\'acceptation de la charte n\'est pas optionnelle !',
+                        groups: ['choose_price'],
+                    ),
                 ],
             ])
         ;
@@ -37,6 +40,7 @@ class ChoosePriceFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => EventRegistrationDTO::class,
+            'validation_groups' => 'choose_price',
         ]);
     }
 }
