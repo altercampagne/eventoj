@@ -13,9 +13,9 @@ trait FormAssertionsTrait
      */
     public function assertFormInvalid(FormInterface $form, array $expectedErrors = []): void
     {
-        $this->assertTrue($form->isSubmitted());
-        $this->assertTrue($form->isSynchronized());
-        $this->assertFalse($form->isValid());
+        $this->assertTrue($form->isSubmitted(), 'Form has not been submitted!');
+        $this->assertTrue($form->isSynchronized(), 'Form is not synchronized!');
+        $this->assertFalse($form->isValid(), 'Form is valid!');
 
         if (0 === \count($expectedErrors)) {
             return;
