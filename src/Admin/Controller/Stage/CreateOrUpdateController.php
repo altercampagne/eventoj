@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Admin\Controller\Stage;
 
 use App\Admin\Form\StageFormType;
+use App\Admin\Security\Permission;
 use App\Entity\Event;
 use App\Entity\Stage;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
 final class CreateOrUpdateController extends AbstractController
 {
     public function __construct(
@@ -22,6 +22,7 @@ final class CreateOrUpdateController extends AbstractController
     ) {
     }
 
+    #[IsGranted(Permission::STAGE_CREATE->value)]
     #[Route('/stages/create/{slug}', name: 'admin_stage_create')]
     public function create(Request $request, Event $event): Response
     {
@@ -33,6 +34,7 @@ final class CreateOrUpdateController extends AbstractController
         return $this->update($request, $stage, true);
     }
 
+    #[IsGranted(Permission::STAGE_UPDATE->value, 'stage')]
     #[Route('/stages/{slug}/update', name: 'admin_stage_update')]
     public function update(Request $request, Stage $stage, bool $creation = false): Response
     {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Admin\Controller\Alternative;
 
 use App\Admin\Form\AlternativeFormType;
+use App\Admin\Security\Permission;
 use App\Entity\Alternative;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,9 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
-#[Route('/alternatives/create', name: 'admin_alternative_create')]
-#[Route('/alternatives/{slug}/update', name: 'admin_alternative_update')]
 final class CreateOrUpdateController extends AbstractController
 {
     public function __construct(
@@ -23,14 +21,17 @@ final class CreateOrUpdateController extends AbstractController
     ) {
     }
 
-    public function __invoke(Request $request, ?Alternative $alternative = null): Response
+    #[IsGranted(Permission::ALTERNATIVE_CREATE->value)]
+    #[Route('/alternatives/create', name: 'admin_alternative_create')]
+    public function create(Request $request): Response
     {
-        $creation = false;
-        if (null === $alternative) {
-            $creation = true;
-            $alternative = new Alternative();
-        }
+        return $this->update($request, new Alternative(), true);
+    }
 
+    #[IsGranted(Permission::ALTERNATIVE_UPDATE->value, 'alternative')]
+    #[Route('/alternatives/{slug}/update', name: 'admin_alternative_update')]
+    public function update(Request $request, Alternative $alternative, bool $creation = false): Response
+    {
         $form = $this->createForm(AlternativeFormType::class, $alternative);
         $form->handleRequest($request);
 

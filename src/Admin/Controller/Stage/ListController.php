@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller\Stage;
 
+use App\Admin\Security\Permission;
 use App\Entity\Event;
 use App\Entity\Stage;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted(Permission::STAGE_LIST->value)]
 #[Route('/stages/{slug}', name: 'admin_stage_list')]
 class ListController extends AbstractController
 {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller\User;
 
+use App\Admin\Security\Permission;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted(Permission::USER_UNPROMOTE->value, 'user')]
 #[Route('/users/{id}/unpromote', name: 'admin_user_unpromote_admin', requirements: ['id' => Requirement::UUID_V4])]
 class UnpromoteAdminController extends AbstractController
 {

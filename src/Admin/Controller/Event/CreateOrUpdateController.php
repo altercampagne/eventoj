@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Admin\Controller\Event;
 
 use App\Admin\Form\EventFormType;
+use App\Admin\Security\Permission;
 use App\Entity\Event;
 use App\Entity\EventType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
 final class CreateOrUpdateController extends AbstractController
 {
     public function __construct(
@@ -22,12 +22,14 @@ final class CreateOrUpdateController extends AbstractController
     ) {
     }
 
+    #[IsGranted(Permission::EVENT_CREATE->value)]
     #[Route('/events/create/{type}', name: 'admin_event_create')]
     public function create(Request $request, EventType $type): Response
     {
         return $this->update($request, Event::createFromType($type), true);
     }
 
+    #[IsGranted(Permission::EVENT_UPDATE->value, 'event')]
     #[Route('/events/{slug}/update', name: 'admin_event_update')]
     public function update(Request $request, Event $event, bool $creation = false): Response
     {
