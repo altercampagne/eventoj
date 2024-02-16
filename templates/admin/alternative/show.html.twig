@@ -1,0 +1,39 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = alternative.name %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <div class="card border-primary-subtle">
+                <div class="card-header bg-primary-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'alternative {{ alternative.name }}">
+                    <i class="fa-solid fa-location-dot me-2"></i>
+                    {{ alternative.name }}
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Évènements rattachés :
+                        {% for event in alternative.events %}
+                            <a href="{{ path ('admin_event_show', { slug: event.slug }) }}" class="text-decoration-none">
+                                <span class="badge bg-secondary">{{ event.name }}</span>
+                            </a>
+                        {% endfor %}
+                    </li>
+                    <li class="list-group-item">
+                        {{ alternative.description }}
+                    </li>
+                </ul>
+
+                <div class="d-grid gap-2 p-2">
+                    <a href="{{ path('admin_alternative_update', { slug: alternative.slug }) }}" class="btn btn-outline-primary">Modifier l'alternative</a>
+                </div>
+            </div>
+            <div class="p-2 text-secondary">
+                <small>
+                    Créé le <b>{{ alternative.createdAt|format_datetime('long', 'short') }}</b><br />
+                    Dernière mise à jour le {{ alternative.updatedAt|format_datetime('long', 'short') }}
+                </small>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -40,10 +40,10 @@ class AlternativeCreateAndUpdateTest extends WebTestCase
         $this->assertResponseRedirects();
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertRouteSame('admin_alternative_list');
+        $this->assertRouteSame('admin_alternative_show');
         $this->assertSelectorTextContains('.alert-success', 'L\'alternative a bien été créée ! 🥳');
 
-        $client->request('GET', '/_admin/alternatives/alternative-de-test/update');
+        $client->clickLink('Modifier l\'alternative');
         $this->assertResponseIsSuccessful();
 
         $client->submitForm('Modifier', [
@@ -54,7 +54,7 @@ class AlternativeCreateAndUpdateTest extends WebTestCase
         $this->assertResponseRedirects();
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertRouteSame('admin_alternative_list');
+        $this->assertRouteSame('admin_alternative_show');
         $this->assertSelectorTextContains('.alert-success', 'L\'alternative a bien été modifiée ! 🥳');
     }
 }

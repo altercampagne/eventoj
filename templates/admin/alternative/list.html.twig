@@ -22,7 +22,7 @@
         </thead>
         <tbody>
             {% for alternative in alternatives %}
-                <tr data-href="{{ path('admin_alternative_update', { slug: alternative.slug }) }}">
+                <tr data-href="{{ path('admin_alternative_show', { slug: alternative.slug }) }}">
                     <td>{{ alternative.name }}</td>
                     <td>
                         {% for event in alternative.events %}

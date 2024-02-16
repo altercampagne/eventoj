@@ -40,7 +40,7 @@ final class CreateOrUpdateController extends AbstractController
 
             $this->addFlash('success', sprintf('L\'alternative a bien été %s ! 🥳', $creation ? 'créée' : 'modifiée'));
 
-            return $this->redirectToRoute('admin_alternative_list');
+            return $this->redirectToRoute('admin_alternative_show', ['slug' => $alternative->getSlug()]);
         }
 
         return $this->render('admin/alternative/edit.html.twig', [
