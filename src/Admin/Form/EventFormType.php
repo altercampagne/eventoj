@@ -8,6 +8,7 @@ use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -72,6 +73,19 @@ class EventFormType extends AbstractType
                     'class' => 'form-floating mb-3',
                 ],
                 'disabled' => $event->isBookable(),
+            ])
+            ->add('breakEvenPricePerDay', MoneyType::class, [
+                'currency' => false,
+                'label' => 'Prix d\'équilibre (en euros)',
+                'attr' => [
+                    'placeholder' => 'Prix d\'équilibre (en euros)',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+                'help' => 'C\'est le prix qui sera suggéré par défaut lors de l\'inscription à l\'évènement',
+                'divisor' => 100,
+                'scale' => 0,
             ])
         ;
     }

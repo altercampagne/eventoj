@@ -28,7 +28,7 @@ class EventRegistrationDTO
     public int $neededBike = 0;
     #[Assert\NotBlank(groups: ['choose_dates'])]
     #[Assert\Range(min: 20, minMessage: 'Le prix minimum par jour est de {{ limit }} €.', groups: ['choose_dates'])]
-    public int $pricePerDay = 33;
+    public int $pricePerDay;
 
     /**
      * @var Collection<int, Companion>

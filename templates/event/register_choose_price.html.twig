@@ -120,14 +120,14 @@
             <div>
                 <p>
                     Il nous tient à cœur d'être le plus inclusif possible en proposant des tarifs adaptés à chacun·e. Malheureusement, ces dernières années l'association n'a pas atteint l'équilibre économique et se trouve dans une situation de vigilance financière.
-                    Le prix d'équilibre (= nécessaire au bon fonctionnement annuel de l'association) est de 33€ par personne et par jour.
+                    Le prix d'équilibre (= nécessaire au bon fonctionnement annuel de l'association) est de {{ registration.event.breakEvenPricePerDay|format_price }} par personne et par jour.
                 </p>
 
                 <h5>A quoi correspond ce tarif ?</h5>
                 (AJOUTER CAMEMBERT)
 
                 <p>
-                    Le tarif inscrit automatiquement dans le formulaire d'inscription est le prix d'équilibre de 33€, à vous de le moduler en fonction de vos revenus.
+                Le tarif inscrit automatiquement dans le formulaire d'inscription est le prix d'équilibre de {{ registration.event.breakEvenPricePerDay|format_price }}, à vous de le moduler en fonction de vos revenus.
                 </p>
 
                 <div class="alert alert-warning">

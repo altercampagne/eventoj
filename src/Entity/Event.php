@@ -49,6 +49,11 @@ class Event
     #[ORM\Column]
     private int $bikesAvailable;
 
+    #[ORM\Column(options: [
+        'comment' => 'The average price per day at which we need to sell tickets in order to break even on this event',
+    ])]
+    private int $breakEvenPricePerDay;
+
     #[ORM\Column(type: 'text')]
     private string $description;
 
@@ -92,6 +97,7 @@ class Event
         $this->stages = new ArrayCollection();
         $this->registrations = new ArrayCollection();
         $this->openingDateForBookings = new \DateTimeImmutable('+6 months');
+        $this->breakEvenPricePerDay = 3400;
     }
 
     public static function createFromType(EventType $type): self
@@ -176,6 +182,18 @@ class Event
     public function setBikesAvailable(int $bikesAvailable): self
     {
         $this->bikesAvailable = $bikesAvailable;
+
+        return $this;
+    }
+
+    public function getBreakEvenPricePerDay(): int
+    {
+        return $this->breakEvenPricePerDay;
+    }
+
+    public function setBreakEvenPricePerDay(int $breakEvenPricePerDay): self
+    {
+        $this->breakEvenPricePerDay = $breakEvenPricePerDay;
 
         return $this;
     }

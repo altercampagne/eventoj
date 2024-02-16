@@ -43,7 +43,7 @@ class Registration
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'The price per day choose by the user.',
     ])]
-    private int $pricePerDay = 3300;
+    private int $pricePerDay;
 
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'How many bikes are needed by participants?',
@@ -92,6 +92,7 @@ class Registration
         $this->createdAt = new \DateTimeImmutable();
         $this->payments = new ArrayCollection();
         $this->companions = new ArrayCollection();
+        $this->pricePerDay = $event->getBreakEvenPricePerDay();
     }
 
     public function canBeConfirmed(): bool
