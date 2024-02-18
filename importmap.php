@@ -45,4 +45,11 @@ return [
         'version' => '6.5.1',
         'type' => 'css',
     ],
+    'trix' => [
+        'version' => '2.0.10',
+    ],
+    'trix/dist/trix.min.css' => [
+        'version' => '2.0.10',
+        'type' => 'css',
+    ],
 ];

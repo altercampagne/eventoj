@@ -28,9 +28,9 @@
                 <p>
                     Du <b>{{ event.firstStage.date|format_date('long') }}</b> au <b>{{ event.lastStage.date|format_date('long') }}</b>
                 </p>
-                <p>
-                    {{ event.description }}
-                </p>
+                <div class="bg-white p-3 rounded border border-secondary-outline">
+                    {{ event.description|raw }}
+                </div>
 
                 <div class="d-md-none text-center pb-4">
                     {% if event.isBookable %}

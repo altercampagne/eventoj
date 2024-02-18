@@ -1,6 +1,8 @@
 import { Tooltip } from 'bootstrap'
 import '@fortawesome/fontawesome-free'
 import '@fortawesome/fontawesome-free/css/all.css'
+import 'trix'
+import 'trix/dist/trix.min.css'
 import './styles/admin/admin.scss'
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')

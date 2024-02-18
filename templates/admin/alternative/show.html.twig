@@ -9,6 +9,7 @@
                 <div class="card-header bg-primary-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'alternative {{ alternative.name }}">
                     <i class="fa-solid fa-location-dot me-2"></i>
                     {{ alternative.name }}
+                    <a href="{{ path('alternative_show', { slug: alternative.slug }) }}" class="float-end">Voir sur le site</a>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">

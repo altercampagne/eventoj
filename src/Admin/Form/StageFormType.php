@@ -10,7 +10,6 @@ use App\Entity\StageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -51,7 +50,7 @@ class StageFormType extends AbstractType
                     'class' => 'form-floating mb-3',
                 ],
             ])
-            ->add('description', TextareaType::class, [
+            ->add('description', TrixType::class, [
                 'label' => 'Description de l\'étape',
                 'attr' => [
                     'placeholder' => 'Description de l\'étape',

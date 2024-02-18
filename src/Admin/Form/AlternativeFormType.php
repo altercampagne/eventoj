@@ -7,7 +7,6 @@ namespace App\Admin\Form;
 use App\Entity\Alternative;
 use App\Form\AddressFormType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,11 +25,10 @@ class AlternativeFormType extends AbstractType
                     'class' => 'form-floating mb-3',
                 ],
             ])
-            ->add('description', TextareaType::class, [
+            ->add('description', TrixType::class, [
                 'label' => 'Description de l\'alternative',
                 'attr' => [
                     'placeholder' => 'Description de l\'alternative',
-                    'style' => 'height: 300px',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',

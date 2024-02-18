@@ -1,0 +1,9 @@
+{% block trix_row -%}
+    <fieldset class="form-group border px-3 pb-3 bg-white mb-3 rounded">
+        <legend class="w-auto px-2"><i class="fa-solid fa-pen me-2"></i> {{ form_label(form) }}</legend>
+
+        <trix-editor input="{{ id }}"></trix-editor>
+        {%- set type = type|default('hidden') -%}
+        {{- block('form_widget_simple') -}}
+    </fieldset>
+{%- endblock trix_row %}
