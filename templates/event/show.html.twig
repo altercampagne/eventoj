@@ -22,8 +22,8 @@
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-12 col-md-3 col-lg-4">
-                <twig:UploadedImage path="{{ event.imagePath|default('') }}" width="450" height="450" alt="Illustration {{ event.name }}" class="mb-3 img-fluid img-thumbnail" />
+            <div class="col-12 col-md-4 col-lg-5">
+                <twig:UploadedImage path="{{ event.imagePath|default('') }}" width="550" height="550" alt="Illustration {{ event.name }}" class="mb-3 img-fluid img-thumbnail" />
                 <h2 class="text-secondary">Détails de l'évènement</h2>
                 <p>
                     Du <b>{{ event.firstStage.date|format_date('long') }}</b> au <b>{{ event.lastStage.date|format_date('long') }}</b>
@@ -42,7 +42,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col-12 col-md-9 col-lg-8">
+            <div class="col-12 col-md-8 col-lg-7">
                 <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link fs-3 active" id="stages-tab" data-bs-toggle="tab" data-bs-target="#stages-tab-pane" type="button" role="tab" aria-controls="stages-tab-pane" aria-selected="true">
