@@ -23,6 +23,23 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    public function findOneBySlugJoinedWithStagesAndAlternatives(string $slug): ?Event
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->select('e, s, sa, a')
+            ->from(Event::class, 'e')
+            ->leftJoin('e.stages', 's')
+            ->leftJoin('s.stagesAlternatives', 'sa')
+            ->leftJoin('sa.alternative', 'a')
+            ->where('e.slug = :slug')
+            ->setParameter('slug', $slug)
+        ;
+
+        /* @phpstan-ignore-next-line */
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     public function findOneBySlugJoinedToAllChildEntities(string $slug): ?Event
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

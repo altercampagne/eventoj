@@ -30,6 +30,16 @@ class Address
     #[ORM\Column(type: Types::STRING, length: 2)]
     private string $countryCode = 'FR';
 
+    public function __toString(): string
+    {
+        $addressLine = $this->addressLine1;
+        if (null !== $this->addressLine2) {
+            $addressLine .= " {$this->addressLine2}";
+        }
+
+        return sprintf('%s, %s %s', $addressLine, $this->zipCode, $this->city);
+    }
+
     public function getAddressLine1(): string
     {
         return $this->addressLine1;

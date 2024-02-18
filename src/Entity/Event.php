@@ -361,6 +361,43 @@ class Event
         return $this;
     }
 
+    public function getPreviousStage(Stage $stage): ?Stage
+    {
+        if (false === $index = $this->stages->indexOf($stage)) {
+            throw new \LogicException('Given stage does not belong to this event!');
+        }
+
+        if (0 === $index) {
+            return null;
+        }
+
+        return $this->stages->get(--$index);
+    }
+
+    public function getNextStage(Stage $stage): ?Stage
+    {
+        if (false === $index = $this->stages->indexOf($stage)) {
+            throw new \LogicException('Given stage does not belong to this event!');
+        }
+
+        return $this->stages->get(++$index);
+    }
+
+    /**
+     * @return Alternative[]
+     */
+    public function getAlternatives(): array
+    {
+        $alternatives = [];
+        foreach ($this->stages as $stage) {
+            foreach ($stage->getStagesAlternatives() as $stageAlternative) {
+                $alternatives[] = $stageAlternative->getAlternative();
+            }
+        }
+
+        return array_unique($alternatives, \SORT_REGULAR);
+    }
+
     /**
      * @return Collection<int, Registration>
      */

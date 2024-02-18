@@ -1,0 +1,85 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}{{ stage.event.name ~ ' - ' ~ stage.name }}{% endblock %}
+
+{% block main %}
+    <div class="container mt-n4">
+        <div class="alert alert-warning">
+            <b>Page en construction :</b> Cette page est encore loin d'être terminée et certains blocs ne sont présents que pour donner un aperçu de la possible mise en page qui pourrait être faite
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                {% if previous_stage is not null %}
+                    <a href="{{ path('event_stage_show', { event_slug: stage.event.slug, stage_slug: previous_stage.slug }) }}" class="text-secondary">
+                        <i class="fa-solid fa-chevron-left me-2"></i> {{ previous_stage.date|format_date('long') }}<span class="d-none d-md-inline"> - {{ previous_stage.name }}</span>
+                    </a>
+                {% endif %}
+            </div>
+            <div>
+                {% if next_stage is not null %}
+                    <a href="{{ path('event_stage_show', { event_slug: stage.event.slug, stage_slug: next_stage.slug }) }}" class="text-secondary">
+                        {{ next_stage.date|format_date('long') }}<span class="d-none d-md-inline"> - {{ next_stage.name }}</span> <i class="fa-solid fa-chevron-right ms-2"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="mb-3 text-center">
+            <h1 class="fw-bold text-uppercase text-primary">
+                {{ stage.name }}
+            </h1>
+            <span class="fs-4 text-body-secondary fw-bold text-uppercase">
+                <a href="{{ path('event_show', { slug: stage.event.slug }) }}" class="text-body-secondary">{{ stage.event.name }}</a> - {{ stage.date|format_date('long') }} 
+            </span>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-md-7">
+                <div class="text-center mb-3">
+                    <h2 class="text-body-secondary">Le programme</h2>
+                </div>
+
+                <div class="">
+                    {{ stage.description }}
+                </div>
+
+                <div class="text-center my-3">
+                    <h2 class="text-body-secondary">Le parcours</h2>
+                </div>
+
+                <iframe src="https://www.komoot.com/fr-fr/tour/1275661016/embed?profile=1&share_token=ao6unSigctvy8StH5jZJRNoD4T4s26R0HfkqWV3PWsY5OKpWPP" width="100%" height="700" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <div class="col-12 col-md-5">
+                <div class="text-center mb-3">
+                    <h2 class="text-body-secondary">Les alternatives</h2>
+                </div>
+
+                {% for stageAlternative in stage.stagesAlternatives %}
+                    {% set alternative = stageAlternative.alternative %}
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            {{ stageAlternative.alternative.name }}
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <twig:UploadedImage path="{{ stage.event.imagePath|default('') }}" width="300" height="300" alt="{{ alternative.name }}" class="img-fluid" />
+                            </div>
+                            <p class="card-text">
+                                <u>Addresse :</u> {{ alternative.address }}
+                            </p>
+                            <p class="card-text">
+                                {{ alternative.description|u.truncate(500, '...', false) }}
+                            </p>
+                            <p class="card-text d-grid gap-2">
+                                <a href="{{ path('alternative_show', { slug: alternative.slug }) }}" class="btn btn-link">
+                                    En savoir plus
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
