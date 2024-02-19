@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Admin\Form;
 
 use App\Entity\Event;
+use App\Entity\UploadedFileType as UploadedFileTypeEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -21,6 +22,13 @@ class EventFormType extends AbstractType
         $event = $options['data'];
 
         $builder
+            ->add('picture', UploadedFileType::class, [
+                'type' => UploadedFileTypeEnum::EVENT,
+                'prefix' => $event->getType()->value,
+                'label' => false,
+                'help' => 'Merci de choisir une image <b>carrée</b> et de dimensions respectables (600 x 600 minimum). Ce n\'est pas grave si l\'image est un peu lourde, ce sera automagiquement optimisé ! 👌',
+                'help_html' => true,
+            ])
             ->add('name', TextType::class, [
                 'label' => 'Nom de l\'évènement',
                 'attr' => [

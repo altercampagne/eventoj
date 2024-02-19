@@ -63,7 +63,7 @@
                         </div>
                         <div class="card-body">
                             <div class="text-center mb-3">
-                                <twig:UploadedImage path="{{ stage.event.imagePath|default('') }}" width="300" height="300" alt="{{ alternative.name }}" class="img-fluid" />
+                                <twig:UploadedImage file="{{ stage.event.picture }}" width="300" height="300" alt="{{ alternative.name }}" class="img-fluid" />
                             </div>
                             <p class="card-text">
                                 <u>Addresse :</u> {{ alternative.address }}

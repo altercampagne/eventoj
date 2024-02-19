@@ -9,6 +9,8 @@ use App\Entity\Companion;
 use App\Entity\Diet;
 use App\Entity\Event;
 use App\Entity\Stage;
+use App\Entity\UploadedFile;
+use App\Entity\UploadedFileType;
 use App\Entity\User;
 use Faker\Generator;
 use libphonenumber\PhoneNumber;
@@ -141,6 +143,20 @@ class FixtureBuilder
         ;
 
         return $companion;
+    }
+
+    public static function createUploadedFile(
+        UploadedFileType $type = UploadedFileType::EVENT,
+        string $path = 'event/altertour-2023.jpg',
+        ?string $originalFileName = null,
+        ?int $size = null,
+        ?string $mimeType = null,
+    ): UploadedFile {
+        $file = new UploadedFile($type, $path, $originalFileName ?? (self::getFaker()->word().'.'.self::getFaker()->fileExtension()));
+        $file->setSize($size ?? self::getFaker()->optional()->randomDigit());
+        $file->setMimeType($mimeType ?? self::getFaker()->optional()->mimeType());
+
+        return $file;
     }
 
     private static function getFaker(): Generator

@@ -23,7 +23,7 @@
 
         <div class="row justify-content-center">
             <div class="col-12 col-md-4 col-lg-5">
-                <twig:UploadedImage path="{{ event.imagePath|default('') }}" width="550" height="550" alt="Illustration {{ event.name }}" class="mb-3 img-fluid img-thumbnail" />
+                <twig:UploadedImage file="{{ event.picture }}" width="550" height="550" alt="Illustration {{ event.name }}" class="mb-3 img-fluid img-thumbnail" />
                 <h2 class="text-secondary">Détails de l'évènement</h2>
                 <p>
                     Du <b>{{ event.firstStage.date|format_date('long') }}</b> au <b>{{ event.lastStage.date|format_date('long') }}</b>
