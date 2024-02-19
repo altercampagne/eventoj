@@ -58,9 +58,6 @@ class Event
     private string $description;
 
     #[ORM\Column(nullable: true)]
-    private ?string $imagePath = null;
-
-    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $publishedAt = null;
 
     #[ORM\Column(options: [
@@ -74,6 +71,10 @@ class Event
     #[ORM\Column(nullable: true)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt;
+
+    #[ORM\OneToOne(targetEntity: UploadedFile::class)]
+    #[ORM\JoinColumn(name: 'uploaded_file_id', referencedColumnName: 'id')]
+    private ?UploadedFile $picture = null;
 
     /**
      * @var Collection<int, Stage>
@@ -266,14 +267,14 @@ class Event
         return $this;
     }
 
-    public function getImagePath(): ?string
+    public function getPicture(): ?UploadedFile
     {
-        return $this->imagePath;
+        return $this->picture;
     }
 
-    public function setImagePath(?string $imagePath): self
+    public function setPicture(?UploadedFile $picture): self
     {
-        $this->imagePath = $imagePath;
+        $this->picture = $picture;
 
         return $this;
     }

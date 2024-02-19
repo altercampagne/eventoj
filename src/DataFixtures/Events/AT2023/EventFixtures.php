@@ -28,6 +28,9 @@ class EventFixtures extends AbstractFixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
+        $picture = FixtureBuilder::createUploadedFile(path: 'event/altertour-2023.jpg');
+        $manager->persist($picture);
+
         $event = Event::AT();
         $event
             ->setName('AlterTour 2023')
@@ -37,7 +40,7 @@ class EventFixtures extends AbstractFixture implements DependentFixtureInterface
                 Cet été, l’AlterTour roulera du 10 juillet au 19 août, de Montluçon (03) à Besançon (25).
                 Ce sera la 16e édition ! 🥳
                 END)
-            ->setImagePath('event/altertour-2023.jpg')
+            ->setPicture($picture)
         ;
 
         $startDate = new \DateTime('2023-07-08');

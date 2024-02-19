@@ -1,3 +1,23 @@
+{% block uploaded_file_widget -%}
+    <div class="d-flex justify-content-center">
+        <label for="{{ form.vars.id }}-file-input" style="width: 300px; height: 300px" class="d-flex justify-content-center align-items-center s3-upload-file">
+            <img src="{{ fileUrl }}" class="rounded" id="{{ form.vars.id }}-img" />
+            <i class="fa-solid fa-circle-notch fa-spin fa-5x d-none" id="{{ form.vars.id }}-loader"></i>
+        </label>
+    </div>
+
+    <input
+        type="file"
+        id="{{ form.vars.id}}-file-input"
+        data-original-input="#{{ form.vars.id }}"
+        data-image="#{{ form.vars.id }}-img"
+        data-loader="#{{ form.vars.id }}-loader"
+        class="d-none s3-file-upload"
+    />
+
+    {{- block('form_widget_simple') -}}
+{%- endblock uploaded_file_widget %}
+
 {% block trix_row -%}
     <fieldset class="form-group border px-3 pb-3 bg-white mb-3 rounded">
         <legend class="w-auto px-2"><i class="fa-solid fa-pen me-2"></i> {{ form_label(form) }}</legend>

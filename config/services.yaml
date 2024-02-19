@@ -19,6 +19,8 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+        bind:
+            string $bucketName: '%env(resolve:S3_BUCKET_NAME)%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
@@ -29,7 +31,7 @@ services:
         $organizationSlug: '%env(HELLOASSO_ORGANISATION_SLUG)%'
         $sandbox: '%env(bool:HELLOASSO_SANDBOX)%'
 
-    App\Twig\Components\UploadedImage:
+    App\Service\UploadedFileUrlGenerator:
       arguments:
         $cloudimgToken: '%env(CLOUDIMG_TOKEN)%'
         $cloudimgAlias: '%env(CLOUDIMG_ALIAS)%'
@@ -37,3 +39,13 @@ services:
     App\Twig\Runtime\PriceExtensionRuntime:
       arguments:
         $intlExtension: '@twig.extension.intl'
+
+    Aws\S3\S3Client:
+      arguments:
+        -
+          endpoint: '%env(resolve:S3_ENDPOINT)%'
+          region: '%env(resolve:S3_REGION)%'
+          credentials:
+            key: '%env(resolve:S3_KEY)%'
+            secret: '%env(resolve:S3_SECRET)%'
+            region: 'fr-par'
