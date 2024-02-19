@@ -869,16 +869,16 @@
         },
         {
             "name": "doctrine/inflector",
-            "version": "2.0.9",
+            "version": "2.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "2930cd5ef353871c821d5c43ed030d39ac8cfe65"
+                "reference": "5817d0659c5b50c9b950feb9af7b9668e2c436bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/2930cd5ef353871c821d5c43ed030d39ac8cfe65",
-                "reference": "2930cd5ef353871c821d5c43ed030d39ac8cfe65",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/5817d0659c5b50c9b950feb9af7b9668e2c436bc",
+                "reference": "5817d0659c5b50c9b950feb9af7b9668e2c436bc",
                 "shasum": ""
             },
             "require": {
@@ -940,7 +940,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/inflector/issues",
-                "source": "https://github.com/doctrine/inflector/tree/2.0.9"
+                "source": "https://github.com/doctrine/inflector/tree/2.0.10"
             },
             "funding": [
                 {
@@ -956,7 +956,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-15T18:05:13+00:00"
+            "time": "2024-02-18T20:23:39+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -2071,16 +2071,16 @@
         },
         {
             "name": "odolbeau/phone-number-bundle",
-            "version": "v3.10.0",
+            "version": "v3.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/odolbeau/phone-number-bundle.git",
-                "reference": "d8fccfb56ff012fcc04aa580d60e0bead29df4b1"
+                "reference": "67ee847f81957bdc909f681ff9f578231eed8cfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/odolbeau/phone-number-bundle/zipball/d8fccfb56ff012fcc04aa580d60e0bead29df4b1",
-                "reference": "d8fccfb56ff012fcc04aa580d60e0bead29df4b1",
+                "url": "https://api.github.com/repos/odolbeau/phone-number-bundle/zipball/67ee847f81957bdc909f681ff9f578231eed8cfa",
+                "reference": "67ee847f81957bdc909f681ff9f578231eed8cfa",
                 "shasum": ""
             },
             "require": {
@@ -2138,9 +2138,9 @@
             ],
             "support": {
                 "issues": "https://github.com/odolbeau/phone-number-bundle/issues",
-                "source": "https://github.com/odolbeau/phone-number-bundle/tree/v3.10.0"
+                "source": "https://github.com/odolbeau/phone-number-bundle/tree/v3.10.1"
             },
-            "time": "2023-12-05T17:40:56+00:00"
+            "time": "2023-12-06T19:54:58+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
