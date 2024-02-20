@@ -71,6 +71,13 @@ class Stage
     private Collection $alternatives;
 
     /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'preparedStages')]
+    #[ORM\JoinTable(name: 'stages_preparations')]
+    private Collection $preparers;
+
+    /**
      * @var Collection<int, StageRegistration>
      */
     #[ORM\OneToMany(targetEntity: StageRegistration::class, mappedBy: 'stage')]
@@ -228,6 +235,31 @@ class Stage
     public function addAlternative(Alternative $alternative): self
     {
         $this->alternatives->add($alternative);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getPreparers(): Collection
+    {
+        return $this->preparers;
+    }
+
+    /**
+     * @param Collection<int, User> $preparers
+     */
+    public function setPreparers(Collection $preparers): self
+    {
+        $this->preparers = $preparers;
+
+        return $this;
+    }
+
+    public function addPreparer(User $preparer): self
+    {
+        $this->preparers->add($preparer);
 
         return $this;
     }

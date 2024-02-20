@@ -80,6 +80,15 @@ class StageFormType extends AbstractType
                 ],
                 'help' => 'Indique ici toutes les alternatives traversées ou visitées dans la journée. :)',
             ])
+            ->add('preparers', UserAutocompleteField::class, [
+                'label' => false,
+                'required' => false,
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'form-control-lg',
+                    'placeholder' => 'Rechercher',
+                ],
+            ])
         ;
     }
 
