@@ -24,7 +24,7 @@ class EventFormType extends AbstractType
         $builder
             ->add('picture', UploadedFileType::class, [
                 'type' => UploadedFileTypeEnum::EVENT,
-                'prefix' => $event->getType()->value,
+                'prefix' => sprintf('%s-%s', $event->getType()->value, $event->getId()),
                 'label' => false,
                 'help' => 'Merci de choisir une image <b>carrée</b> et de dimensions respectables (600 x 600 minimum). Ce n\'est pas grave si l\'image est un peu lourde, ce sera automagiquement optimisé ! 👌',
                 'help_html' => true,
