@@ -2,17 +2,6 @@
 
 {% set tab = 'stages' %}
 
-{% macro item_availability(availability, icon, legend) %}
-    {% set color = availability.percent >= 100 ? 'danger': availability.percent > 50 ? 'warning' : 'success' %}
-
-    <div data-bs-toggle="tooltip" data-bs-title="{{ legend }}">
-        <span class="badge text-bg-{{ color }} ms-2">
-            <i class="fa-solid fa-{{ icon }}"></i>
-            {{ availability.booked }} / {{ availability.max }}
-        </span>
-    </div>
-{% endmacro %}
-
 {% block tab_content %}
     <div class="d-flex justify-content-end mb-2">
         <div{% if event.isPublished %} data-bs-toggle="tooltip" title="Il n'est plus possible d'ajouter des étapes à un évènement publié"{% endif %}>
@@ -28,32 +17,48 @@
     <table class="table table-hover">
         <thead>
             <tr>
+                <th scope="col"></th>
                 <th scope="col">Date</th>
                 <th scope="col">Nom</th>
-                <th scope="col">Petit-déjeuner</th>
-                <th scope="col">Déjeuner</th>
-                <th scope="col">Diner</th>
+                <th scope="col">Alternatives</th>
+                <th scope="col">Préparateurices</th>
             </tr>
         </thead>
         <tbody>
             {% for stage in event.stages %}
                 <tr data-href="{{ path('admin_stage_update', { slug: stage.slug }) }}">
+                    <td>
+                        {% set problems = [] %}
+                        {% if stage.alternatives|length == 0 %}
+                            {% set problems = problems|merge(['Aucune alternative définie']) %}
+                        {% endif %}
+                        {% if stage.preparers|length == 0 %}
+                            {% set problems = problems|merge(['Préparateurices d\'étapes manquant·es']) %}
+                        {% endif %}
+
+                        {% if problems|length > 0 %}
+                            {% set title = 'Informations manquantes :' %}
+                            {% for problem in problems %}
+                                {% set title = title ~ '<br />- ' ~ problem %}
+                            {% endfor %}
+                            <i class="fa-solid fa-info-circle text-danger" data-bs-toggle="tooltip" title="{{ title }}" data-bs-html="true"></i>
+                        {% endif %}
+                    </td>
                     <td>{{ stage.date|format_date }}</td>
                     <td>
                         {% if stage.isBefore or stage.isAfter %}<span class="badge text-bg-secondary">{{ stage.type.value|upper }}</span>{% endif %}
                         {{ stage.name }}
                     </td>
-                    {% for availability in stage.availability.mealAvailabilities %}
-                        <td>
-                            <div class="d-flex align-items-center">
-                                {{ _self.item_availability(availability.adults, 'user', 'Nombre d\'adultes participants au '~availability.meal|trans|lower) }}
-                                {{ _self.item_availability(availability.children, 'child', 'Nombre d\'enfants participants au '~availability.meal|trans|lower) }}
-                                {% if 0 < event.bikesAvailable %}
-                                    {{ _self.item_availability(availability.bikes, 'bicycle', 'Nombre de de vélos nécessaires au moment du '~availability.meal|trans|lower) }}
-                                {% endif %}
-                            </div>
-                        </td>
-                    {% endfor %}
+                    <td>
+                        {% for alternative in stage.alternatives %}
+                            <span class="badge bg-primary">{{ alternative.name }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for preparer in stage.preparers %}
+                            <span class="badge bg-primary">{{ preparer.fullName }}</span>
+                        {% endfor %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

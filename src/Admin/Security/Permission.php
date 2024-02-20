@@ -14,6 +14,7 @@ enum Permission: string
     case EVENT_LIST = 'event.list';
     case EVENT_VIEW_REGISTRATIONS = 'event.view_registrations';
     case EVENT_VIEW_STAGES = 'event.view_stages';
+    case EVENT_VIEW_FILLING = 'event.view_filling';
     case EVENT_CREATE = 'event.create';
     case EVENT_UPDATE = 'event.update';
     case EVENT_PUBLISH = 'event.publish';

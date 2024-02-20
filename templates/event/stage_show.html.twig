@@ -47,6 +47,25 @@
                 </div>
 
                 <iframe src="https://www.komoot.com/fr-fr/tour/1275661016/embed?profile=1&share_token=ao6unSigctvy8StH5jZJRNoD4T4s26R0HfkqWV3PWsY5OKpWPP" width="100%" height="700" frameborder="0" scrolling="no"></iframe>
+
+                <div class="text-center my-3">
+                    <h2 class="text-body-secondary">Les préparateurices d'étape</h2>
+                </div>
+
+                <div class="row">
+                    {% for preparer in stage.preparers %}
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title mb-0">{{ preparer.publicName }}</h5>
+                                        <i class="fa-solid fa-trophy text-secondary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
 
             <div class="col-12 col-md-5">
@@ -54,12 +73,10 @@
                     <h2 class="text-body-secondary">Les alternatives</h2>
                 </div>
 
-                {% for stageAlternative in stage.stagesAlternatives %}
-                    {% set alternative = stageAlternative.alternative %}
-
+                {% for alternative in stage.alternatives %}
                     <div class="card mb-3">
                         <div class="card-header">
-                            {{ stageAlternative.alternative.name }}
+                            {{ alternative.name }}
                         </div>
                         <div class="card-body">
                             <div class="text-center mb-3">

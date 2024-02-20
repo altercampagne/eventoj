@@ -27,11 +27,11 @@ class EventRepository extends ServiceEntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
-            ->select('e, s, sa, a')
+            ->select('e, s, a, u')
             ->from(Event::class, 'e')
             ->leftJoin('e.stages', 's')
-            ->leftJoin('s.stagesAlternatives', 'sa')
-            ->leftJoin('sa.alternative', 'a')
+            ->leftJoin('s.alternatives', 'a')
+            ->leftJoin('s.preparers', 'u')
             ->where('e.slug = :slug')
             ->setParameter('slug', $slug)
         ;

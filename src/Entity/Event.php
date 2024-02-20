@@ -391,9 +391,7 @@ class Event
     {
         $alternatives = [];
         foreach ($this->stages as $stage) {
-            foreach ($stage->getStagesAlternatives() as $stageAlternative) {
-                $alternatives[] = $stageAlternative->getAlternative();
-            }
+            $alternatives += $stage->getAlternatives()->getValues();
         }
 
         return array_unique($alternatives, \SORT_REGULAR);

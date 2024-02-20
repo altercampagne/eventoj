@@ -20,4 +20,9 @@ trait PersonTrait
     {
         return $this->firstName.' '.$this->lastName;
     }
+
+    public function getPublicName(): string
+    {
+        return $this->firstName.' '.mb_substr($this->lastName, 0, 1);
+    }
 }

@@ -71,6 +71,24 @@ class StageFormType extends AbstractType
                     'class' => 'form-floating mb-3',
                 ],
             ])
+            ->add('alternatives', AlternativeAutocompleteField::class, [
+                'label' => false,
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'form-control-lg',
+                    'placeholder' => 'Rechercher',
+                ],
+                'help' => 'Indique ici toutes les alternatives traversées ou visitées dans la journée. :)',
+            ])
+            ->add('preparers', UserAutocompleteField::class, [
+                'label' => false,
+                'required' => false,
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'form-control-lg',
+                    'placeholder' => 'Rechercher',
+                ],
+            ])
         ;
     }
 

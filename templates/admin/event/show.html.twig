@@ -59,6 +59,11 @@
                         Inscriptions
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if tab == 'filling' %} active{% endif %}{% if event .registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_filling', { slug: event.slug }) }}">
+                        Remplissage
+                    </a>
+                </li>
             </ul>
             <div class="border border-top-0 border-secondary-outline rounded-bottom p-3">
                 {% block tab_content '' %}

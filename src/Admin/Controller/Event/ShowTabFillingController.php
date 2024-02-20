@@ -12,16 +12,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted(Permission::EVENT_VIEW_STAGES->value, 'event')]
-#[Route('/events/{slug}', name: 'admin_event_show')]
-#[Route('/events/{slug}', name: 'admin_event_show_stages')]
-class ShowTabStagesController extends AbstractController
+#[IsGranted(Permission::EVENT_VIEW_FILLING->value, 'event')]
+#[Route('/events/{slug}/filling', name: 'admin_event_show_filling')]
+class ShowTabFillingController extends AbstractController
 {
     public function __invoke(
-        #[MapEntity(expr: 'repository.findOneBySlugJoinedWithStagesAndAlternatives(slug)')]
+        #[MapEntity(expr: 'repository.findOneBySlugJoinedToAllChildEntities(slug)')]
         Event $event,
     ): Response {
-        return $this->render('admin/event/show_tab/stages.html.twig', [
+        return $this->render('admin/event/show_tab/filling.html.twig', [
             'event' => $event,
         ]);
     }

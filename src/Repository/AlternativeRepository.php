@@ -30,10 +30,9 @@ class AlternativeRepository extends ServiceEntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
-            ->select('a, sa, s, e')
+            ->select('a, s, e')
             ->from(Alternative::class, 'a')
-            ->leftJoin('a.stagesAlternatives', 'sa')
-            ->leftJoin('sa.stage', 's')
+            ->leftJoin('a.stages', 's')
             ->leftJoin('s.event', 'e')
             ->orderBy('a.name', 'ASC')
         ;

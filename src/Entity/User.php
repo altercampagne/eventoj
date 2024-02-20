@@ -133,6 +133,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OrderBy(['createdAt' => 'ASC'])]
     private Collection $companions;
 
+    /**
+     * @var Collection<int, Stage>
+     */
+    #[ORM\ManyToMany(targetEntity: Stage::class, mappedBy: 'preparers')]
+    private Collection $preparedStages;
+
     public function __construct()
     {
         $this->id = new UuidV4();
@@ -140,6 +146,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->registrations = new ArrayCollection();
         $this->payments = new ArrayCollection();
         $this->companions = new ArrayCollection();
+        $this->preparedStages = new ArrayCollection();
     }
 
     /**
@@ -400,5 +407,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getCompanions(): Collection
     {
         return $this->companions;
+    }
+
+    /**
+     * @return Collection<int, Stage>
+     */
+    public function getPreparedStages(): Collection
+    {
+        return $this->preparedStages;
     }
 }
