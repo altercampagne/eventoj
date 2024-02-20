@@ -24,6 +24,12 @@
                         {{ form_row(form.difficulty) }}
                     </fieldset>
 
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-calendar-days me-2"></i> Les alternatives traversées</legend>
+
+                        {{ form_row(form.alternatives) }}
+                    </fieldset>
+
                     <div class="d-grid gap-2 mt-4">
                         <button type="submit" class="btn btn-lg btn-primary">
                             {% if creation %}Ajouter{% else %}Modifier{% endif %}

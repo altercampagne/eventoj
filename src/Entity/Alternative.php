@@ -53,16 +53,16 @@ class Alternative
     private ?UploadedFile $picture = null;
 
     /**
-     * @var Collection<int, StageAlternative>
+     * @var Collection<int, Stage>
      */
-    #[ORM\OneToMany(targetEntity: StageAlternative::class, mappedBy: 'alternative')]
-    private Collection $stagesAlternatives;
+    #[ORM\ManyToMany(targetEntity: Stage::class, mappedBy: 'alternatives')]
+    private Collection $stages;
 
     public function __construct()
     {
         $this->id = new UuidV4();
         $this->createdAt = new \DateTimeImmutable();
-        $this->stagesAlternatives = new ArrayCollection();
+        $this->stages = new ArrayCollection();
     }
 
     /**
@@ -71,8 +71,8 @@ class Alternative
     public function getEvents(): array
     {
         $events = [];
-        foreach ($this->stagesAlternatives as $stageAlternative) {
-            $events[] = $stageAlternative->getStage()->getEvent();
+        foreach ($this->stages as $stage) {
+            $events[] = $stage->getEvent();
         }
 
         return array_unique($events, \SORT_REGULAR);
@@ -144,13 +144,5 @@ class Alternative
         $this->picture = $picture;
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, StageAlternative>
-     */
-    public function getStagesAlternatives(): Collection
-    {
-        return $this->stagesAlternatives;
     }
 }

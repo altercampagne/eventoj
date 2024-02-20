@@ -56,18 +56,19 @@ class Stage
     ])]
     private StageDifficulty $difficulty;
 
-    /**
-     * @var Collection<int, StageAlternative>
-     */
-    #[ORM\OneToMany(targetEntity: StageAlternative::class, mappedBy: 'stage', cascade: ['persist'])]
-    private Collection $stagesAlternatives;
-
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
     #[ORM\Column(nullable: true)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt;
+
+    /**
+     * @var Collection<int, Alternative>
+     */
+    #[ORM\ManyToMany(targetEntity: Alternative::class, inversedBy: 'stages')]
+    #[ORM\JoinTable(name: 'stages_alternatives')]
+    private Collection $alternatives;
 
     /**
      * @var Collection<int, StageRegistration>
@@ -82,7 +83,7 @@ class Stage
         $this->type = StageType::CLASSIC;
         $this->difficulty = StageDifficulty::MEDIUM;
         $this->createdAt = new \DateTimeImmutable();
-        $this->stagesAlternatives = new ArrayCollection();
+        $this->alternatives = new ArrayCollection();
         $this->stagesRegistrations = new ArrayCollection();
     }
 
@@ -207,20 +208,26 @@ class Stage
     }
 
     /**
-     * @return Collection<int, StageAlternative>
+     * @return Collection<int, Alternative>
      */
-    public function getStagesAlternatives(): Collection
+    public function getAlternatives(): Collection
     {
-        return $this->stagesAlternatives;
+        return $this->alternatives;
     }
 
-    public function addAlternative(Alternative $alternative, StageAlternativeRelation $relation): self
+    /**
+     * @param Collection<int, Alternative> $alternatives
+     */
+    public function setAlternatives(Collection $alternatives): self
     {
-        $this->stagesAlternatives->add((new StageAlternative())
-            ->setStage($this)
-            ->setAlternative($alternative)
-            ->setRelation($relation)
-        );
+        $this->alternatives = $alternatives;
+
+        return $this;
+    }
+
+    public function addAlternative(Alternative $alternative): self
+    {
+        $this->alternatives->add($alternative);
 
         return $this;
     }
