@@ -1,0 +1,50 @@
+{% extends 'admin/event/show.html.twig' %}
+
+{% set tab = 'filling' %}
+
+{% macro item_availability(availability, icon, legend) %}
+    {% set color = availability.percent >= 100 ? 'danger': availability.percent > 50 ? 'warning' : 'success' %}
+
+    <div data-bs-toggle="tooltip" data-bs-title="{{ legend }}">
+        <span class="badge text-bg-{{ color }} ms-2">
+            <i class="fa-solid fa-{{ icon }}"></i>
+            {{ availability.booked }} / {{ availability.max }}
+        </span>
+    </div>
+{% endmacro %}
+
+{% block tab_content %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Petit-déjeuner</th>
+                <th scope="col">Déjeuner</th>
+                <th scope="col">Diner</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stage in event.stages %}
+                <tr>
+                    <td>{{ stage.date|format_date }}</td>
+                    <td>
+                        {% if stage.isBefore or stage.isAfter %}<span class="badge text-bg-secondary">{{ stage.type.value|upper }}</span>{% endif %}
+                        {{ stage.name }}
+                    </td>
+                    {% for availability in stage.availability.mealAvailabilities %}
+                        <td>
+                            <div class="d-flex align-items-center">
+                                {{ _self.item_availability(availability.adults, 'user', 'Nombre d\'adultes participants au '~availability.meal|trans|lower) }}
+                                {{ _self.item_availability(availability.children, 'child', 'Nombre d\'enfants participants au '~availability.meal|trans|lower) }}
+                                {% if 0 < event.bikesAvailable %}
+                                    {{ _self.item_availability(availability.bikes, 'bicycle', 'Nombre de de vélos nécessaires au moment du '~availability.meal|trans|lower) }}
+                                {% endif %}
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
