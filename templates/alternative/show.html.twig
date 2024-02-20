@@ -6,10 +6,6 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-sm-10 col-md-8 m-auto">
-                <div class="alert alert-warning">
-                    <b>Page en construction :</b> Cette page est encore loin d'être terminée et certains blocs ne sont présents que pour donner un aperçu de la possible mise en page qui pourrait être faite
-                </div>
-
                 <div class="mb-3 text-center">
                     <h1 class="fw-bold text-uppercase text-primary">
                         {{ alternative.name }}
@@ -18,16 +14,8 @@
 
                 <div class="row mt-5">
                     <div class="col-12">
-                        <div class="row row-cols-2 row-cols-sm-3 g-3 justify-content-center">
-                            <div class="col">
-                                <twig:UploadedImage width="300" height="300" alt="{{ alternative.name }}" class="img-fluid" />
-                            </div>
-                            <div class="col">
-                                <twig:UploadedImage width="300" height="300" alt="{{ alternative.name }}" class="img-fluid" />
-                            </div>
-                            <div class="col">
-                                <twig:UploadedImage width="300" height="300" alt="{{ alternative.name }}" class="img-fluid" />
-                            </div>
+                        <div class="text-center">
+                            <twig:UploadedImage file="{{ alternative.picture }}" width="600" height="600" alt="{{ alternative.name }}" class="img-fluid" />
                         </div>
 
                         <div class="text-center mb-3 mt-4">

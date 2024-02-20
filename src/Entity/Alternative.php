@@ -48,6 +48,10 @@ class Alternative
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt;
 
+    #[ORM\OneToOne(targetEntity: UploadedFile::class)]
+    #[ORM\JoinColumn(name: 'uploaded_file_id', referencedColumnName: 'id')]
+    private ?UploadedFile $picture = null;
+
     /**
      * @var Collection<int, StageAlternative>
      */
@@ -128,6 +132,18 @@ class Alternative
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function getPicture(): ?UploadedFile
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?UploadedFile $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
     }
 
     /**
