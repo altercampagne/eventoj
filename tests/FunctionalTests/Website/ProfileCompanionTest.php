@@ -76,7 +76,7 @@ class ProfileCompanionTest extends WebTestCase
         $this->assertSelectorTextContains('.card-body', '+33 6 06 06 06 06');
     }
 
-    public function testCreateFromEventRegisterGoesBackToEvent(): void
+    public function testCreateAndUpdateFromEventRegisterGoesBackToEvent(): void
     {
         $client = static::createClient();
 
@@ -112,5 +112,28 @@ class ProfileCompanionTest extends WebTestCase
 
         $this->assertSelectorTextContains('.alert-success', 'Companion ForTests a bien été ajouté·e !');
         $this->assertSelectorExists('input[data-fullname="Companion ForTests"]');
+
+        $client->clickLink('Modifier');
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('profile_companion_update');
+
+        $client->submitForm('Modifier', [
+            'companion_form[firstName]' => 'UpdatedCompanion',
+            'companion_form[lastName]' => 'ForUpdateTests',
+            'companion_form[birthDate]' => (new \DateTimeImmutable('-11 years'))->format('Y-m-d'),
+            'companion_form[diet]' => 'vegetarian',
+            'companion_form[glutenIntolerant]' => false,
+            'companion_form[lactoseIntolerant]' => false,
+            'companion_form[dietDetails]' => null,
+        ]);
+
+        $this->assertSelectorNotExists('.invalid-feedback', 'Form contains errors');
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('event_register');
+
+        $this->assertSelectorTextContains('.alert-success', 'UpdatedCompanion ForUpdateTests a bien été modifié·e !');
+        $this->assertSelectorExists('input[data-fullname="UpdatedCompanion ForUpdateTests"]');
     }
 }
