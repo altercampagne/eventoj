@@ -96,12 +96,46 @@ class FixtureBuilder
             $event->setPublishedAt(new \DateTimeImmutable());
         }
 
-        $date = new \DateTimeImmutable('first day of July');
+        self::createStagesForEvent($event, 'first day of July', 31);
+
+        return $event;
+    }
+
+    public static function createEB(
+        ?string $name = null,
+        ?string $description = null,
+        int $adultsCapacity = 10,
+        int $childrenCapacity = 5,
+        int $bikesAvailable = 5,
+        bool $published = true,
+    ): Event {
+        $event = Event::EB();
+        $event
+            ->setName($name ?? self::getFaker()->word())
+            ->setOpeningDateForBookings(new \DateTimeImmutable())
+            ->setDescription($description ?? self::getFaker()->sentence())
+        ;
+        ReflectionHelper::setProperty($event, 'adultsCapacity', $adultsCapacity);
+        ReflectionHelper::setProperty($event, 'childrenCapacity', $childrenCapacity);
+        ReflectionHelper::setProperty($event, 'bikesAvailable', $bikesAvailable);
+
+        if ($published) {
+            $event->setPublishedAt(new \DateTimeImmutable());
+        }
+
+        self::createStagesForEvent($event, 'first day of August', 10);
+
+        return $event;
+    }
+
+    public static function createStagesForEvent(Event $event, string $dateTime, int $numberOfStages): void
+    {
+        $date = new \DateTimeImmutable($dateTime);
         if ($date < new \DateTimeImmutable()) {
             $date = $date->modify('+1 year');
         }
 
-        for ($i = 1; $i <= 31; ++$i) {
+        for ($i = 1; $i <= $numberOfStages; ++$i) {
             $stage = (new Stage($event))
                 ->setName("Day #$i")
                 ->setDescription("Jour #$i")
@@ -112,8 +146,6 @@ class FixtureBuilder
 
             $event->addStage($stage);
         }
-
-        return $event;
     }
 
     public static function createCompanion(
