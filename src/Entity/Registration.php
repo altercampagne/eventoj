@@ -87,12 +87,21 @@ class Registration
         $this->id = new UuidV4();
         $this->user = $user;
         $this->event = $event;
-        $this->stagesRegistrations = new ArrayCollection();
         $this->status = RegistrationStatus::WAITING_PAYMENT;
         $this->createdAt = new \DateTimeImmutable();
         $this->payments = new ArrayCollection();
         $this->companions = new ArrayCollection();
         $this->pricePerDay = $event->getBreakEvenPricePerDay();
+
+        if ($event->isAT()) {
+            $this->stagesRegistrations = new ArrayCollection();
+        } else {
+            $stagesRegistrations = [];
+            foreach ($event->getStages() as $stage) {
+                $stagesRegistrations[] = new StageRegistration($stage, $this);
+            }
+            $this->stagesRegistrations = new ArrayCollection($stagesRegistrations);
+        }
     }
 
     public function canBeConfirmed(): bool

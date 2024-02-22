@@ -1,5 +1,9 @@
 <div class="row justify-content-center mb-4">
-    <div class="col-8 col-sm-6 col-md-4 m-auto">
+    {% if event.isAT %}
+        <div class="col-8 col-sm-6 col-md-4 m-auto">
+    {% else %}
+        <div class="col-6 col-sm-4 col-md-3 m-auto">
+    {% endif %}
         <div class="d-flex justify-content-between align-items-center">
             {% if step != 'choose_people' %}
                 <a href="{{ path('event_register_choose_people', { slug: event.slug }) }}">
@@ -16,19 +20,21 @@
                 </a>
             {% endif %}
 
-            ····
+            {% if event.isAT %}
+                ····
 
-            {% if step == 'choose_price' %}
-                <a href="{{ path('event_register_choose_dates', { slug: event.slug }) }}">
-            {% endif %}
-            <div class="{% if step == 'choose_dates' %}fs-2{% else %}fs-4{% endif %}">
-                <span class="fa-stack text-{% if step == 'choose_dates' %}primary{% else %}secondary{% endif %}" style="vertical-align: top;">
-                    <i class="{% if step != 'choose_people' %}fa-solid{% else %}fa-regular{% endif %} fa-circle fa-stack-2x"></i>
-                    <i class="fa-solid fa-calendar-days fa-stack-1x{% if step != 'choose_people' %} fa-inverse{% endif %}"></i>
-                </span>
-            </div>
-            {% if step == 'choose_price' %}
-                </a>
+                {% if step == 'choose_price' %}
+                    <a href="{{ path('event_register_choose_dates', { slug: event.slug }) }}">
+                {% endif %}
+                <div class="{% if step == 'choose_dates' %}fs-2{% else %}fs-4{% endif %}">
+                    <span class="fa-stack text-{% if step == 'choose_dates' %}primary{% else %}secondary{% endif %}" style="vertical-align: top;">
+                        <i class="{% if step != 'choose_people' %}fa-solid{% else %}fa-regular{% endif %} fa-circle fa-stack-2x"></i>
+                        <i class="fa-solid fa-calendar-days fa-stack-1x{% if step != 'choose_people' %} fa-inverse{% endif %}"></i>
+                    </span>
+                </div>
+                {% if step == 'choose_price' %}
+                    </a>
+                {% endif %}
             {% endif %}
 
             ····

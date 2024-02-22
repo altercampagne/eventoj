@@ -41,18 +41,26 @@
                 </ul>
 
                 <div class="d-flex justify-content-between align-items-center mt-4">
-                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Étapes choisies</h2>
-                    <a href="{{ path('event_register_choose_dates', { slug: registration.event.slug }) }}">
-                        <small>Modifier</small>
-                    </a>
+                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Les étapes</h2>
+                    {% if registration.event.isAT %}
+                        <a href="{{ path('event_register_choose_dates', { slug: registration.event.slug }) }}">
+                            <small>Modifier</small>
+                        </a>
+                    {% endif %}
                 </div>
 
                 <ul class="list-group mt-3">
                     <li class="list-group-item p-3">
-                        <span class="fw-bold text-uppercase text-decoration-underline">Arrivée</span> prévue le <b>{{ registration.firstStageRegistration.stage.date|format_date('full') }}</b> pour le <b>{{ registration.firstStageRegistration.firstMeal|trans|lower }}</b>.
+                        <span class="fw-bold text-uppercase text-decoration-underline">Arrivée</span> prévue le <b>{{ registration.firstStageRegistration.stage.date|format_date('full') }}</b>
+                        {% if registration.event.isAT %}
+                            pour le <b>{{ registration.firstStageRegistration.firstMeal|trans|lower }}</b>
+                        {% endif %}
                     </li>
                     <li class="list-group-item p-3">
-                        <span class="fw-bold text-uppercase text-decoration-underline">Départ</span> prévu le <b>{{ registration.lastStageRegistration.stage.date|format_date('full') }}</b> pour le <b>{{ registration.lastStageRegistration.lastMeal|trans|lower }}</b>.
+                        <span class="fw-bold text-uppercase text-decoration-underline">Départ</span> prévu le <b>{{ registration.lastStageRegistration.stage.date|format_date('full') }}</b>
+                        {% if registration.event.isAT %}
+                            pour le <b>{{ registration.lastStageRegistration.lastMeal|trans|lower }}</b>
+                        {% endif %}
                     </li>
                 </ul>
 

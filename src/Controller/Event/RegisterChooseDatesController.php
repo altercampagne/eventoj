@@ -36,6 +36,10 @@ class RegisterChooseDatesController extends AbstractController
             throw $this->createNotFoundException();
         }
 
+        if (!$event->isAT()) {
+            return $this->redirectToRoute('event_register_choose_price', ['slug' => $event->getSlug()]);
+        }
+
         /** @var User $user */
         $user = $this->getUser();
 

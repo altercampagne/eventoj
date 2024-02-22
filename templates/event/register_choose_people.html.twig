@@ -24,12 +24,17 @@
                         </div>
                     </li>
                     {% for companionForm in form.companions %}
-                        <li class="list-group-item d-flex align-items-center">
-                            {{ form_widget(companionForm) }}
-                            <div class="ms-2">
-                                <label class="form-check-label stretched-link" for="{{ companionForm.vars.id }}">{{ companionForm.vars.attr['data-fullname'] }}</label><br />
-                                <span class="text-secondary">({{ companionForm.vars.attr['data-birthdate'] }})</span>
+                        <li class="list-group-item d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center">
+                                {{ form_widget(companionForm) }}
+                                <div class="ms-2">
+                                    <label class="form-check-label" for="{{ companionForm.vars.id }}">{{ companionForm.vars.attr['data-fullname'] }}</label><br />
+                                    <span class="text-secondary">({{ companionForm.vars.attr['data-birthdate'] }})</span>
+                                </div>
                             </div>
+                            <a href="{{ path('profile_companion_update', { id: companionForm.vars.value, backToEvent: event.slug }) }}" class="btn btn-link">
+                                Modifier
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -40,23 +45,25 @@
                     </a>
                 </div>
 
-                <h2 class="fw-bold text-secondary mt-4 mb-3">Besoin de vélo ?</h2>
+                {% if form.neededBike is defined %}
+                    <h2 class="fw-bold text-secondary mt-4 mb-3">Besoin de vélo ?</h2>
 
-                {% if form.neededBike.vars.errors|length > 0 %}
-                    <div class="alert alert-danger p-2">
-                        {{ form_errors(form.neededBike) }}
-                    </div>
-                {% endif %}
-                <ul class="list-group mt-3">
-                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center{% if form.neededBike.vars.errors|length > 0 %} border-danger{% endif %}">
-                        <label class="form-check-label" for="{{ form.neededBike.vars.id }}">
-                            Vélos nécessaires
-                        </label>
-                        <div class="col-auto">
-                            {{ form_widget(form.neededBike, { attr: { size: 2 }}) }}
+                    {% if form.neededBike.vars.errors|length > 0 %}
+                        <div class="alert alert-danger p-2">
+                            {{ form_errors(form.neededBike) }}
                         </div>
-                    </li>
-                </ul>
+                    {% endif %}
+                    <ul class="list-group mt-3">
+                        <li class="list-group-item p-3 d-flex justify-content-between align-items-center{% if form.neededBike.vars.errors|length > 0 %} border-danger{% endif %}">
+                            <label class="form-check-label" for="{{ form.neededBike.vars.id }}">
+                                Vélos nécessaires
+                            </label>
+                            <div class="col-auto">
+                                {{ form_widget(form.neededBike, { attr: { size: 2 }}) }}
+                            </div>
+                        </li>
+                    </ul>
+                {% endif %}
 
                 <twig:EventRegistration:Buttons step="choose_people" />
 

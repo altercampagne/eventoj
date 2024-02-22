@@ -37,7 +37,9 @@ class ChoosePeopleFormType extends AbstractType
             ])
         ;
 
-        $builder->add('neededBike', IntegerType::class);
+        if ($registration->getEvent()->isAT()) {
+            $builder->add('neededBike', IntegerType::class);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

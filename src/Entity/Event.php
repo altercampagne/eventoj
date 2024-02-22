@@ -151,6 +151,11 @@ class Event
         return $event;
     }
 
+    public function isAT(): bool
+    {
+        return EventType::AT === $this->type;
+    }
+
     public function getAdultsCapacity(): int
     {
         return $this->adultsCapacity;
