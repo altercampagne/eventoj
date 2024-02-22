@@ -9,8 +9,16 @@
         </div>
         <div class="card-body">
             <p class="card-text">
-                <b>Arrivée</b> prévue le <b>{{ registration.firstStageRegistration.stage.date|format_date('full') }}</b> pour le {{ registration.firstStageRegistration.firstMeal|trans|lower }}.<br />
-                <b>Départ</b> prévu le <b>{{ registration.lastStageRegistration.stage.date|format_date('full') }}</b> après le {{ registration.firstStageRegistration.firstMeal|trans|lower }}.
+                <b>Arrivée</b> prévue le <b>{{ registration.firstStageRegistration.stage.date|format_date('full') }}</b>
+                {% if registration.event.isAT %}
+                    pour le {{ registration.firstStageRegistration.firstMeal|trans|lower }}
+                {% endif %}
+                .<br />
+                <b>Départ</b> prévu le <b>{{ registration.lastStageRegistration.stage.date|format_date('full') }}</b>
+                {% if registration.event.isAT %}
+                    après le {{ registration.firstStageRegistration.firstMeal|trans|lower }}
+                {% endif %}
+                .
             </p>
             {% if registration.companions|length > 0 %}
                 <b>Tes compagnon·es :</b>
