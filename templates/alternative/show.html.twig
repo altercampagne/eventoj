@@ -5,27 +5,29 @@
 {% block main %}
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12 col-sm-10 col-md-8 m-auto">
+            <div class="col">
                 <div class="mb-3 text-center">
                     <h1 class="fw-bold text-uppercase text-primary">
                         {{ alternative.name }}
                     </h1>
                 </div>
+            </div>
+        </div>
 
-                <div class="row mt-5">
-                    <div class="col-12">
-                        <div class="text-center">
-                            <twig:UploadedImage file="{{ alternative.picture }}" width="600" height="600" alt="{{ alternative.name }}" class="img-fluid" />
-                        </div>
+        <div class="row justify-content-center mt-4 mt-md-5">
+            <div class="col-12 col-md-4 col-lg-5">
+                <div class="text-center">
+                    <twig:UploadedImage file="{{ alternative.picture }}" width="600" height="600" alt="{{ alternative.name }}" class="img-fluid" />
+                </div>
+            </div>
 
-                        <div class="text-center mb-3 mt-4">
-                            <h2 class="text-body-secondary">Description</h2>
-                        </div>
+            <div class="col-12 col-md-8 col-lg-7">
+                <div class="text-center mb-3 mt-4 mt-md-0">
+                    <h2 class="text-body-secondary">Description</h2>
+                </div>
 
-                        <div class="bg-white p-3 rounded border border-secondary-outline">
-                            {{ alternative.description|raw }}
-                        </div>
-                    </div>
+                <div class="bg-white p-3 rounded border border-secondary-outline">
+                    {{ alternative.description|raw }}
                 </div>
             </div>
         </div>
