@@ -57,7 +57,11 @@ class RegisterChoosePeopleController extends AbstractController
             $this->em->persist($registration);
             $this->em->flush();
 
-            return $this->redirectToRoute('event_register_choose_dates', ['slug' => $event->getSlug()]);
+            if ($event->isAT()) {
+                return $this->redirectToRoute('event_register_choose_dates', ['slug' => $event->getSlug()]);
+            }
+
+            return $this->redirectToRoute('event_register_choose_price', ['slug' => $event->getSlug()]);
         }
 
         return $this->render('event/register_choose_people.html.twig', [

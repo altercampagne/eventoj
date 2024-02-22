@@ -45,23 +45,25 @@
                     </a>
                 </div>
 
-                <h2 class="fw-bold text-secondary mt-4 mb-3">Besoin de vélo ?</h2>
+                {% if form.neededBike is defined %}
+                    <h2 class="fw-bold text-secondary mt-4 mb-3">Besoin de vélo ?</h2>
 
-                {% if form.neededBike.vars.errors|length > 0 %}
-                    <div class="alert alert-danger p-2">
-                        {{ form_errors(form.neededBike) }}
-                    </div>
-                {% endif %}
-                <ul class="list-group mt-3">
-                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center{% if form.neededBike.vars.errors|length > 0 %} border-danger{% endif %}">
-                        <label class="form-check-label" for="{{ form.neededBike.vars.id }}">
-                            Vélos nécessaires
-                        </label>
-                        <div class="col-auto">
-                            {{ form_widget(form.neededBike, { attr: { size: 2 }}) }}
+                    {% if form.neededBike.vars.errors|length > 0 %}
+                        <div class="alert alert-danger p-2">
+                            {{ form_errors(form.neededBike) }}
                         </div>
-                    </li>
-                </ul>
+                    {% endif %}
+                    <ul class="list-group mt-3">
+                        <li class="list-group-item p-3 d-flex justify-content-between align-items-center{% if form.neededBike.vars.errors|length > 0 %} border-danger{% endif %}">
+                            <label class="form-check-label" for="{{ form.neededBike.vars.id }}">
+                                Vélos nécessaires
+                            </label>
+                            <div class="col-auto">
+                                {{ form_widget(form.neededBike, { attr: { size: 2 }}) }}
+                            </div>
+                        </li>
+                    </ul>
+                {% endif %}
 
                 <twig:EventRegistration:Buttons step="choose_people" />
 
