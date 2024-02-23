@@ -23,6 +23,7 @@ class EventFormType extends AbstractType
 
         $builder
             ->add('picture', UploadedFileType::class, [
+                'required' => false,
                 'type' => UploadedFileTypeEnum::EVENT,
                 'prefix' => sprintf('%s-%s', $event->getType()->value, $event->getId()),
                 'label' => false,
