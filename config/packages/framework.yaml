@@ -21,6 +21,15 @@ framework:
     php_errors:
         log: true
 
+    http_client:
+        scoped_clients:
+            paheko.client:
+                base_uri: '%env(PAHEKO_BASE_URI)%'
+                auth_basic: '%env(PAHEKO_USERNAME)%:%env(PAHEKO_PASSWORD)%'
+                #headers:
+                    #Accept: 'application/vnd.github.v3+json'
+                    #Authorization: 'token %env(GITHUB_API_TOKEN)%'
+
 when@test:
     framework:
         test: true

@@ -20,6 +20,8 @@ vendors-install: ## Install vendors
 ##@ Docker commands
 start: ## Start the whole docker stack
 	@$(DOCKER_COMPOSE) up --detach --remove-orphans --build
+	@$(DOCKER_COMPOSE) cp .docker/paheko/association.sqlite paheko:/var/www/paheko/data/association.sqlite
+	@$(DOCKER_COMPOSE) exec paheko chown www-data: /var/www/paheko/data/association.sqlite
 
 stop: ## Stop the docker stack
 	@$(DOCKER_COMPOSE) stop

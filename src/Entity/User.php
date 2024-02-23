@@ -37,6 +37,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'uuid')]
     private UuidV4 $id;
 
+    #[ORM\Column(unique: true, nullable: true)]
+    private ?string $pahekoId;
+
     #[Assert\NotBlank]
     #[ORM\Column(length: 180, unique: true)]
     private string $email;
@@ -213,6 +216,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getId(): UuidV4
     {
         return $this->id;
+    }
+
+    public function getPahekoId(): ?string
+    {
+        return $this->pahekoId;
+    }
+
+    public function setPahekoId(string $pahekoId): self
+    {
+        $this->pahekoId = $pahekoId;
+
+        return $this;
     }
 
     public function isVerified(): bool

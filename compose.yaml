@@ -53,7 +53,18 @@ services:
       - php
       - database
 
+  # altercampagne@yopmail.com / "voyageur régaler clouer injure"
+  paheko:
+    image: libretic/paheko:latest
+    restart: always
+    volumes:
+      - paheko_data:/var/www/paheko/data
+      - ./.docker/paheko/config.local.php:/var/www/paheko/config.local.php
+    ports:
+      - '8081:80'
+
 volumes:
 ###> doctrine/doctrine-bundle ###
   database_data:
 ###< doctrine/doctrine-bundle ###
+  paheko_data:
