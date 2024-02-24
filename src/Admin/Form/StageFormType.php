@@ -68,6 +68,7 @@ class StageFormType extends AbstractType
                 'help' => 'Ne pas répéter la date ou la difficulté, ce n\'est pas nécessaire.',
             ])
             ->add('difficulty', EnumType::class, [
+                'required' => false,
                 'class' => StageDifficulty::class,
                 'label' => 'Difficulté de l\'étape',
                 'attr' => [

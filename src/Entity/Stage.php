@@ -51,10 +51,10 @@ class Stage
     #[ORM\Column(type: 'text')]
     private string $description;
 
-    #[ORM\Column(type: 'string', length: 6, enumType: StageDifficulty::class, options: [
+    #[ORM\Column(type: 'string', length: 6, nullable: true, enumType: StageDifficulty::class, options: [
       'comment' => 'Difficulty of this stage (easy, medium, hard).',
     ])]
-    private StageDifficulty $difficulty;
+    private ?StageDifficulty $difficulty = null;
 
     #[ORM\Column(nullable: true, options: [
       'comment' => 'The URL of the route (komoot or openrunner) to embed on website',
@@ -93,7 +93,6 @@ class Stage
         $this->id = new UuidV4();
         $this->event = $event;
         $this->type = StageType::CLASSIC;
-        $this->difficulty = StageDifficulty::MEDIUM;
         $this->createdAt = new \DateTimeImmutable();
         $this->alternatives = new ArrayCollection();
         $this->stagesRegistrations = new ArrayCollection();
@@ -156,12 +155,12 @@ class Stage
         return $this;
     }
 
-    public function getDifficulty(): StageDifficulty
+    public function getDifficulty(): ?StageDifficulty
     {
         return $this->difficulty;
     }
 
-    public function setDifficulty(StageDifficulty $difficulty): self
+    public function setDifficulty(?StageDifficulty $difficulty): self
     {
         $this->difficulty = $difficulty;
 
