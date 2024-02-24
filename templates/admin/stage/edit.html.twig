@@ -21,7 +21,26 @@
                         {{ form_row(form.date) }}
                         {{ form_row(form.name) }}
                         {{ form_row(form.description) }}
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-bicycle me-2"></i> Le trajet à vélo</legend>
+                        <div class="alert bg-info-subtle">
+                            S'il n'y a pas de vélo de prévu, les informations suivantes doivent rester vides. :)
+                        </div>
+
                         {{ form_row(form.difficulty) }}
+
+                        <div class="row">
+                            <div class="col">
+                                {{ form_row(form.routeUrl) }}
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-link pt-3 fw-bold" data-bs-toggle="modal" data-bs-target="#routeUrlExplanationModal">
+                                    Plus d'infos
+                                </button>
+                            </div>
+                        </div>
                     </fieldset>
 
                     <fieldset class="form-group border p-3 mt-3 bg-light">
@@ -43,6 +62,34 @@
                     </div>
 
                 {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-lg" id="routeUrlExplanationModal" tabindex="-1" aria-labelledby="routeUrlExplanationTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="routeUrlExplanationTitle">💡 Qu'est-ce que cette URL ?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h2 class="fs-5">L'information indispensable pour afficher un itinéraire</h2>
+                    <p>
+                        S'il y a du vélo de prévu pour cette étape, cette
+                        information est indispensable pour qu'on puisse
+                        afficher une carte avec l'itinéraire et le dénivelé de
+                        l'étape !
+                    </p>
+                    <h2 class="fs-5">Récupérer l'URL sur OpenRunner</h2>
+                    <p>
+                        Tu peux consulter <a href="https://documentation.altercampagne.ovh/books/tutoriels/page/openrunner">ce tutoriel sur OpenRunner dans l'AlterDocumentation</a>.
+                    </p>
+                    <h2 class="fs-5">Récupérer l'URL sur Komoot</h2>
+                    <p>
+                        Tu peux consulter <a href="https://documentation.altercampagne.ovh/books/tutoriels/page/komoot">ce tutoriel sur Komoot dans l'AlterDocumentation</a>.
+                    </p>
+                </div>
             </div>
         </div>
     </div>

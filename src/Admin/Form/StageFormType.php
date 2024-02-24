@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Form;
 
+use App\Admin\Form\DataTransformer\RouteUrlTransformer;
 use App\Entity\Stage;
 use App\Entity\StageDifficulty;
 use App\Entity\StageType;
@@ -16,6 +17,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StageFormType extends AbstractType
 {
+    public function __construct(
+        private readonly RouteUrlTransformer $routeUrlTransformer,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var Stage $stage */
@@ -62,10 +68,21 @@ class StageFormType extends AbstractType
                 'help' => 'Ne pas répéter la date ou la difficulté, ce n\'est pas nécessaire.',
             ])
             ->add('difficulty', EnumType::class, [
+                'required' => false,
                 'class' => StageDifficulty::class,
                 'label' => 'Difficulté de l\'étape',
                 'attr' => [
                     'placeholder' => 'Difficulté de l\'étape',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+            ])
+            ->add('routeUrl', TextType::class, [
+                'required' => false,
+                'label' => 'URL de l\'itinéraire',
+                'attr' => [
+                    'placeholder' => 'URL de l\'itinéraire',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
@@ -90,6 +107,8 @@ class StageFormType extends AbstractType
                 ],
             ])
         ;
+
+        $builder->get('routeUrl')->addModelTransformer($this->routeUrlTransformer);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

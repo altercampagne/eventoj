@@ -4,9 +4,6 @@
 
 {% block main %}
     <div class="container mt-n4">
-        <div class="alert alert-warning">
-            <b>Page en construction :</b> Cette page est encore loin d'être terminée et certains blocs ne sont présents que pour donner un aperçu de la possible mise en page qui pourrait être faite
-        </div>
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 {% if previous_stage is not null %}
@@ -42,11 +39,13 @@
                     {{ stage.description|raw }}
                 </div>
 
-                <div class="text-center my-3">
-                    <h2 class="text-body-secondary">Le parcours</h2>
-                </div>
+                {% if stage.routeUrl is not null %}
+                    <div class="text-center my-3">
+                        <h2 class="text-body-secondary">Le parcours</h2>
+                    </div>
 
-                <iframe src="https://www.komoot.com/fr-fr/tour/1275661016/embed?profile=1&share_token=ao6unSigctvy8StH5jZJRNoD4T4s26R0HfkqWV3PWsY5OKpWPP" width="100%" height="700" frameborder="0" scrolling="no"></iframe>
+                    <iframe width="100%" height="700" loading="lazy" src="{{ stage.routeUrl }}" style="border: none;" scrolling="no" frameborder="0"></iframe>
+                {% endif %}
 
                 {% if stage.preparers|length > 0 %}
                     <div class="text-center my-3">
