@@ -82,6 +82,18 @@ class EventFormType extends AbstractType
                 ],
                 'disabled' => $event->isBookable(),
             ])
+            ->add('pahekoProjectId', IntegerType::class, [
+                'required' => false,
+                'label' => 'ID du projet Paheko',
+                'attr' => [
+                    'placeholder' => 'ID du projet Paheko',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+                'help' => '<i class="fa-solid fa-triangle-exclamation"></i> Tu ne sais pas ce que c\'est ? Clique sur "Plus d\'infos". 😉',
+                'help_html' => true,
+            ])
             ->add('breakEvenPricePerDay', MoneyType::class, [
                 'currency' => false,
                 'label' => 'Prix d\'équilibre (en euros)',

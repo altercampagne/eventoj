@@ -36,6 +36,11 @@ class Event
     #[ORM\Column]
     private string $name;
 
+    #[ORM\Column(nullable: true, options: [
+        'comment' => 'ID of the Paheko project to which all transactions will ba attached.',
+    ])]
+    private ?string $pahekoProjectId;
+
     #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['name'])]
     private string $slug;
@@ -251,6 +256,18 @@ class Event
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPahekoProjectId(): ?string
+    {
+        return $this->pahekoProjectId;
+    }
+
+    public function setPahekoProjectId(?string $pahekoProjectId): self
+    {
+        $this->pahekoProjectId = $pahekoProjectId;
 
         return $this;
     }

@@ -46,7 +46,18 @@
                     <fieldset class="form-group border p-3 mt-3 bg-light">
                         <legend class="w-auto px-2 pb-2"><i class="fa-regular fa-credit-card me-2"></i> Finances</legend>
 
-                            {{ form_row(form.breakEvenPricePerDay) }}
+                        <div class="row">
+                            <div class="col">
+                                {{ form_row(form.pahekoProjectId) }}
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-link pt-3 fw-bold" data-bs-toggle="modal" data-bs-target="#pahekoProjectIdExplanationModal">
+                                    Plus d'infos
+                                </button>
+                            </div>
+                        </div>
+
+                        {{ form_row(form.breakEvenPricePerDay) }}
                     </fieldset>
 
                     <div class="d-grid gap-2 mt-4">
@@ -56,6 +67,44 @@
                     </div>
 
                 {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-lg" id="pahekoProjectIdExplanationModal" tabindex="-1" aria-labelledby="pahekoProjectIdExplanationTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="pahekoProjectIdExplanationTitle">💡 Qu'est-ce que l'ID de projet Paheko ?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert bg-danger-subtle">
+                        Cette information est absolument indispensable avant de pouvoir publier un évènement. Si tu ne l'as pas déjà en ta possession, tu trouveras toute les informations nécesaires ci-dessous ! 👌
+                    </div>
+                    <h2 class="fs-5">Une information capitale pour la compta !</h2>
+                    <p>
+                        Paheko, c'est notre <b>logiciel de compta</b>. À chaque
+                        fois qu'une réservation est faite sur un évènement, on
+                        ajoute une écriture comptable directement dans Paheko,
+                        pratique non ? Ça l'est d'autant plus que toutes ces
+                        écritures comptables sont <b>rattachées à un même
+                        projet</b>, ce qui permet de facilement regrouper les
+                        recettes et les dépenses par évènement.
+                    </p>
+                    <h2 class="fs-5">Comment obtenir cet ID ?</h2>
+                    <div class="alert bg-warning-subtle">
+                        Il va te falloir l'aide de quelqu'un qui a les <b>droits d'administration</b> sur Paheko. N'hésite pas à te rapprocher du cercle comptabilité !
+                    </div>
+                    <ol>
+                        <li>
+                            Si le projet dédié à l'évènement n'existe pas déjà, il faut le créer à l'adresse suivante : <a href="https://compta.altercampagne.net/admin/acc/projects/?by_year=1">https://compta.altercampagne.net/admin/acc/projects/?by_year=1</a>.
+                        </li>
+                        <li>
+                            Une fois créé, il faudra récupérer l'ID de l'évènement en le retrouvant dans la liste présente sur cette page : <a href="https://compta.altercampagne.net/admin/config/advanced/sql.php?table=acc_projects&o=id&d=1">https://compta.altercampagne.net/admin/config/advanced/sql.php?table=acc_projects&o=id&d=1</a>.
+                        </li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>

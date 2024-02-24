@@ -27,11 +27,19 @@ class PublishController extends AbstractController
         if (0 === \count($event->getStages())) {
             $this->addFlash('danger', "L'évènement {$event->getName()} n'a aucune étape de définie pour le moment !");
 
-            if (null !== $targetUrl = $request->headers->get('Referer')) {
-                return $this->redirect($targetUrl);
-            }
+            return $this->redirectToRightLocation($request, $event);
+        }
 
-            return $this->redirectToRoute('admin_event_show', ['slug' => $event->getSlug()]);
+        if (null == $event->getPicture()) {
+            $this->addFlash('danger', "L'évènement {$event->getName()} n'a pas d'image d'illustration !");
+
+            return $this->redirectToRightLocation($request, $event);
+        }
+
+        if (null == $event->getPahekoProjectId()) {
+            $this->addFlash('danger', "L'évènement {$event->getName()} n'a pas d'ID de projet Paheko renseigné !");
+
+            return $this->redirectToRightLocation($request, $event);
         }
 
         $event->setPublishedAt(new \DateTimeImmutable());
@@ -41,6 +49,11 @@ class PublishController extends AbstractController
 
         $this->addFlash('success', "L'évènement {$event->getName()} est maintenant visible en ligne !");
 
+        return $this->redirectToRightLocation($request, $event);
+    }
+
+    private function redirectToRightLocation(Request $request, Event $event): Response
+    {
         if (null !== $targetUrl = $request->headers->get('Referer')) {
             return $this->redirect($targetUrl);
         }
