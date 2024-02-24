@@ -56,6 +56,11 @@ class Stage
     ])]
     private StageDifficulty $difficulty;
 
+    #[ORM\Column(nullable: true, options: [
+      'comment' => 'The URL of the route (komoot or openrunner) to embed on website',
+    ])]
+    private ?string $routeUrl = null;
+
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
@@ -159,6 +164,18 @@ class Stage
     public function setDifficulty(StageDifficulty $difficulty): self
     {
         $this->difficulty = $difficulty;
+
+        return $this;
+    }
+
+    public function getRouteUrl(): ?string
+    {
+        return $this->routeUrl;
+    }
+
+    public function setRouteUrl(?string $routeUrl): self
+    {
+        $this->routeUrl = $routeUrl;
 
         return $this;
     }
