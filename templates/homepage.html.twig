@@ -39,7 +39,7 @@
         </div>
 
         <div class="row justify-content-center mb-4">
-            {% for event in events|filter(e => e.isPublished and not e.isFinished) %}
+            {% for event in events|filter(e => not e.isFinished) %}
                 {{ _self.render_event(event) }}
             {% else %}
                 <div class="row col-12 col-lg-8">
@@ -58,7 +58,7 @@
         </div>
 
         <div class="row justify-content-center">
-            {% for event in events|filter(e => e.isPublished and e.isFinished) %}
+            {% for event in events|filter(e => e.isFinished) %}
                 {{ _self.render_event(event) }}
             {% endfor %}
         </div>

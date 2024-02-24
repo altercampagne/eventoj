@@ -14,14 +14,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomepageController extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private readonly EntityManagerInterface $em,
     ) {
     }
 
     public function __invoke(): Response
     {
+        $qb = $this->em->createQueryBuilder();
+        $qb
+            ->select('e, s, p')
+            ->from(Event::class, 'e')
+            ->leftJoin('e.stages', 's')
+            ->leftJoin('e.picture', 'p')
+            ->where('e.publishedAt < :now')
+            ->setParameter('now', new \DateTimeImmutable())
+        ;
+
         return $this->render('homepage.html.twig', [
-            'events' => $this->entityManager->getRepository(Event::class)->findAll(),
+            'events' => $qb->getQuery()->getResult(),
         ]);
     }
 }
