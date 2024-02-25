@@ -1,0 +1,27 @@
+<div>
+    {% if person.diet is not null %}
+        <div class="badge bg-primary" data-bs-toggle="tooltip" title="Le régime alimentaire de cette personne.">
+            {{ person.diet|trans }}
+        </div>
+    {% else %}
+        <div class="badge bg-warning" data-bs-toggle="tooltip" title="Cette personne n'a pas renseigné son régime alimentaire !">
+            Non renseigné
+        </div>
+    {% endif %}
+
+    {% if person.isGlutenIntolerant %}
+        <div class="badge bg-danger" data-bs-toggle="tooltip" title="Intolérant·e au gluten !">
+            G
+        </div>
+    {% endif %}
+    {% if person.isLactoseIntolerant %}
+        <div class="badge bg-danger" data-bs-toggle="tooltip" title="Intolérant·e au lactose !">
+            L
+        </div>
+    {% endif %}
+    {% if person.dietDetails is not null %}
+        <div class="badge bg-danger" data-bs-toggle="tooltip" title="{{ person.dietDetails }}">
+            ?
+        </div>
+    {% endif %}
+</div>

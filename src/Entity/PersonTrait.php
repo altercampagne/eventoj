@@ -25,4 +25,24 @@ trait PersonTrait
     {
         return $this->firstName.' '.mb_substr($this->lastName, 0, 1);
     }
+
+    public function getDiet(): ?Diet
+    {
+        return $this->diet;
+    }
+
+    public function isLactoseIntolerant(): bool
+    {
+        return $this->lactoseIntolerant;
+    }
+
+    public function isGlutenIntolerant(): bool
+    {
+        return $this->glutenIntolerant;
+    }
+
+    public function getDietDetails(): ?string
+    {
+        return $this->dietDetails;
+    }
 }

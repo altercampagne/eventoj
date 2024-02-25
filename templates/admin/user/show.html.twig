@@ -4,12 +4,145 @@
 
 {% block main %}
     <div class="row">
-        <div class="col-8">
-            TODO
+        <div class="col-12 col-md-4">
+            <div class="card border-success-subtle">
+                <div class="card-header bg-success-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'utilisateurice {{ user.fullname }}">
+                    <i class="fa-solid fa-users me-2"></i>
+                    {{ user.fullname }}
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i
+                            class="fa-solid fa-at fa-fw me-1 text-{{ user.isVerified ? 'success' : 'danger' }}"
+                            data-bs-toggle="tooltip"
+                            data-bs-title="Email{% if not user.isVerified %} non{% endif %} vérifié"
+                        ></i>
+                        <a href="mailto:{{ user.email}}">
+                            {{ user.email }}
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa-solid fa-phone fa-fw me-1"></i>
+                        <a href="phone:{{ user.phoneNumber|phone_number_format }}">
+                            {{ user.phoneNumber|phone_number_format }}
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-flex align-items-center">
+                            <i class="fa-solid fa-utensils fa-fw me-1"></i>
+                            <twig:Admin:Diet person="{{ user }}" />
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="d-grid gap-2 p-2">
+                    {% if user.isAdmin and is_granted(constant('App\\Admin\\Security\\Permission::USER_UNPROMOTE').value, user) %}
+                        <a class="btn btn-outline-danger" href="{{ path('admin_user_unpromote_admin', { id: user.id }) }}">
+                            <i class="fa-solid fa-turn-down me-1"></i> Supprimer le rôle admin
+                        </a>
+                    {% elseif not user.isAdmin and is_granted(constant('App\\Admin\\Security\\Permission::USER_PROMOTE').value, user) %}
+                        <a class="btn btn-outline-danger" href="{{ path('admin_user_promote_admin', { id: user.id }) }}">
+                            <i class="fa-solid fa-turn-up me-1"></i> Passer admin
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="p-2 text-secondary">
+                <small>
+                    Inscrit le <b>{{ user.createdAt|format_datetime('long', 'short') }}</b><br />
+                    Dernière mise à jour le <b>{{ user.updatedAt|format_datetime('long', 'short') }}</b>
+                </small>
+            </div>
         </div>
-        <div class="col-4">
-            <div class="row row-cols-1 g-4">
-                <div class="col">
+        <div class="col-12 col-md-8">
+            <ul class="nav nav-tabs">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="registrations-tab" data-bs-toggle="tab" data-bs-target="#registrations-tab-pane" type="button" role="tab" aria-controls="registrations-tab-pane" aria-selected="true">
+                        Réservations <span class="text-secondary">({{ user.registrations|length }})</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="companions-tab" data-bs-toggle="tab" data-bs-target="#companions-tab-pane" type="button" role="tab" aria-controls="companions-tab-pane" aria-selected="true">
+                        Compagnon·es <span class="text-secondary">({{ user.companions|length }})</span>
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content border border-top-0 border-secondary-outline rounded-bottom p-3">
+                <div class="tab-pane fade show active" id="registrations-tab-pane" role="tabpanel" aria-labelledby="registrations-tab" tabindex="0">
+                    {% if user.registrations|length > 0 %}
+                        <table class="table table-hover table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Évènement</th>
+                                    <th scope="col">Jours</th>
+                                    <th scope="col">Statut</th>
+                                    <th scope="col">Prix payé</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for registration in user.registrations %}
+                                    <tr data-href="{{ path('admin_registration_show', { id: registration.id }) }}">
+                                        <td>{{ registration.event.name }}</td>
+                                        <td>{{ registration.countDaysOfPresence }} jours</td>
+                                        <td>
+                                            <twig:Admin:RegistrationStatus registration="{{ registration }}" />
+                                        </td>
+                                        <td>
+                                            {{ registration.countDaysOfPresence }} x {{ registration.pricePerDay|format_price }}
+                                        </td>
+                                        <td>{{ registration.createdAt|format_datetime }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        Aucune réservation pour le moment
+                    {% endif %}
+                </div>
+                <div class="tab-pane fade" id="companions-tab-pane" role="tabpanel" aria-labelledby="companions-tab" tabindex="0">
+                    {% if user.companions|length > 0 %}
+                        <table class="table table-hover table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Date de naissance</th>
+                                    <th scope="col">Mail</th>
+                                    <th scope="col">Téléphone</th>
+                                    <th scope="col">Régime alimentaire</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for companion in user.companions %}
+                                    <tr>
+                                        <td>{{ companion.fullName }}</td>
+                                        <td>{{ companion.birthDate|format_date('short') }}</td>
+                                        <td>
+                                            {% if companion.email is not null %}
+                                                {{ companion.email }}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if companion.phoneNumber is not null %}
+                                                {{ companion.phoneNumber|phone_number_format }}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <twig:Admin:Diet person="{{ companion }}" />
+                                        </td>
+                                        <td>{{ companion.createdAt|format_datetime }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        Aucun·e compagnon·e pour le moment
+                    {% endif %}
                 </div>
             </div>
         </div>

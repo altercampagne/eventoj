@@ -10,10 +10,9 @@
             <th scope="col">Numéro de téléphone</th>
             <th scope="col">Date de naissance</th>
             <th scope="col">Date d'inscription</th>
-            <th scope="col"></th>
         </tr>
         {% for user in users %}
-            <tr>
+            <tr data-href="{{ path('admin_user_show', { id: user.id }) }}">
                 <td>
                     {{ user.fullName }}
                     {% if user.isAdmin %}
@@ -29,30 +28,6 @@
                 <td>{{ user.phoneNumber|phone_number_format }}</td>
                 <td>{{ user.birthDate|format_date }}</td>
                 <td>{{ user.createdAt|format_datetime }}</td>
-                <td>
-                    {% if app.user != user %}
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-sm py-0" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-ellipsis"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                {% if user.isAdmin %}
-                                    <li>
-                                        <a class="dropdown-item" href="{{ path('admin_user_unpromote_admin', { id: user.id }) }}">
-                                            <i class="fa-solid fa-turn-down me-1"></i> Supprimer le rôle admin
-                                        </a>
-                                    </li>
-                                {% else %}
-                                    <li>
-                                        <a class="dropdown-item" href="{{ path('admin_user_promote_admin', { id: user.id }) }}">
-                                            <i class="fa-solid fa-turn-up me-1"></i> Passer admin
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    {% endif %}
-                </td>
             </tr>
         {% endfor %}
     </table>

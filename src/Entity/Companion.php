@@ -157,21 +157,11 @@ class Companion
         return $this;
     }
 
-    public function getDiet(): Diet
-    {
-        return $this->diet;
-    }
-
     public function setDiet(Diet $diet): self
     {
         $this->diet = $diet;
 
         return $this;
-    }
-
-    public function isGlutenIntolerant(): bool
-    {
-        return $this->glutenIntolerant;
     }
 
     public function setGlutenIntolerant(bool $glutenIntolerant): self
@@ -181,21 +171,11 @@ class Companion
         return $this;
     }
 
-    public function isLactoseIntolerant(): bool
-    {
-        return $this->lactoseIntolerant;
-    }
-
     public function setLactoseIntolerant(bool $lactoseIntolerant): self
     {
         $this->lactoseIntolerant = $lactoseIntolerant;
 
         return $this;
-    }
-
-    public function getDietDetails(): ?string
-    {
-        return $this->dietDetails;
     }
 
     public function setDietDetails(?string $dietDetails): self

@@ -26,6 +26,14 @@ class AdminVoter extends Voter
             return false;
         }
 
+        $permission = Permission::from($attribute);
+
+        if (Permission::USER_PROMOTE === $permission || Permission::USER_UNPROMOTE === $permission) {
+            if ($token->getUser() === $subject) {
+                return false;
+            }
+        }
+
         return $user->isAdmin();
     }
 }
