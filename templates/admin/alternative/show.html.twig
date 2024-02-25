@@ -4,6 +4,10 @@
 
 {% block main %}
     <div class="row">
+        <div class="col-12 col-md-4">
+            <twig:UploadedImage file="{{ alternative.picture }}" width="500" height="500" alt="{{ alternative.name }}" class="img-fluid mb-3" />
+        </div>
+
         <div class="col-12 col-md-8">
             <div class="card border-primary-subtle">
                 <div class="card-header bg-primary-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'alternative {{ alternative.name }}">
