@@ -23,8 +23,15 @@ class ListController extends AbstractController
 
     public function __invoke(): Response
     {
+        $qb = $this->em->createQueryBuilder();
+        $qb
+            ->select('e, s')
+            ->from(Event::class, 'e')
+            ->leftJoin('e.stages', 's')
+        ;
+
         return $this->render('admin/event/list.html.twig', [
-            'events' => $this->em->getRepository(Event::class)->findBy([], ['createdAt' => 'DESC']),
+            'events' => $qb->getQuery()->getResult(),
         ]);
     }
 }
