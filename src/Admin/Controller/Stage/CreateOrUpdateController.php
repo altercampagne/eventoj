@@ -35,8 +35,8 @@ final class CreateOrUpdateController extends AbstractController
     }
 
     #[IsGranted(Permission::STAGE_UPDATE->value, 'stage')]
-    #[Route('/stages/{slug}/update', name: 'admin_stage_update')]
-    public function update(Request $request, Stage $stage, bool $creation = false): Response
+    #[Route('/stages/{slug}/update/{backToStage}', name: 'admin_stage_update')]
+    public function update(Request $request, Stage $stage, bool $creation = false, bool $backToStage = false): Response
     {
         $form = $this->createForm(StageFormType::class, $stage);
         $form->handleRequest($request);
@@ -46,6 +46,10 @@ final class CreateOrUpdateController extends AbstractController
             $this->em->flush();
 
             $this->addFlash('success', sprintf('L\'étape a bien été %s ! 🥳', $creation ? 'créée' : 'modifiée'));
+
+            if ($backToStage) {
+                return $this->redirectToRoute('event_stage_show', ['event_slug' => $stage->getEvent()->getSlug(), 'stage_slug' => $stage->getSlug()]);
+            }
 
             return $this->redirectToRoute('admin_event_show', ['slug' => $stage->getEvent()->getSlug()]);
         }

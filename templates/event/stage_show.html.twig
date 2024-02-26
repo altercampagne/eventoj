@@ -75,6 +75,14 @@
                         {% endfor %}
                     </div>
                 {% endif %}
+
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_UPDATE').value, stage) %}
+                    <div class="d-grid gap-2">
+                        <a href="{{ path('admin_stage_update', { slug: stage.slug, backToStage: true }) }}" class="btn btn-warning mt-3">
+                            Modifier cette étape
+                        </a>
+                    </div>
+                {% endif %}
             </div>
 
             <div class="col-12 col-md-5">
