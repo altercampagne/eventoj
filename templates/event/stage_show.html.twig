@@ -35,6 +35,14 @@
                     <h2 class="text-body-secondary">Le programme</h2>
                 </div>
 
+                {% if stage.isBefore %}
+                    <div class="alert bg-info-subtle">
+                        Le before c'est toutes les petites mains qui s'affairent aux derniers préparatifs pour que tous les rouages du Tour soient bien huilés.<br />
+                        Elles vont remplir l'Iveco de victuailles, sciure, papier toilette. Elles vont faire les dernières réparation vélo, elles vont tout bien ranger/étiqueter pour qu'on puisse trouver ce qu'on cherche quand on le cherche. Elles vont imprimer les cartes et fiches étape pour nos guides et conducteurices. Et bien plus encore !<br />
+                        C'est l'occasion de rentrer dans les coulisses du Tour et de voir arriver petit à petit toustes les nouvelleaux !
+                    </div>
+                {% endif %}
+
                 <div class="bg-white p-3 rounded border border-secondary-outline">
                     {{ stage.description|raw }}
                 </div>
