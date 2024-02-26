@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AlternativeRepository::class)]
 #[ORM\Table(name: '`alternative`')]
@@ -28,12 +29,17 @@ class Alternative
     #[ORM\Column(type: 'uuid')]
     private UuidV4 $id;
 
+    #[Assert\NotNull]
     #[ORM\Column]
     private string $name;
 
     #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['name'])]
     private string $slug;
+
+    #[Assert\Url]
+    #[ORM\Column(nullable: true)]
+    private ?string $website = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $description = null;
@@ -98,6 +104,18 @@ class Alternative
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
+
+        return $this;
     }
 
     public function getDescription(): ?string

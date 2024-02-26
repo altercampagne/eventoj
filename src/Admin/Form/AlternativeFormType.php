@@ -29,6 +29,16 @@ class AlternativeFormType extends AbstractType
                     'class' => 'form-floating mb-3',
                 ],
             ])
+            ->add('website', TextType::class, [
+                'required' => false,
+                'label' => 'Site internet',
+                'attr' => [
+                    'placeholder' => 'Site internet',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+            ])
             ->add('description', TrixType::class, [
                 'label' => 'Description de l\'alternative',
                 'attr' => [
@@ -41,6 +51,7 @@ class AlternativeFormType extends AbstractType
             ])
             ->add('address', AddressFormType::class)
             ->add('picture', UploadedFileType::class, [
+                'required' => false,
                 'type' => UploadedFileTypeEnum::ALTERNATIVE,
                 'prefix' => (string) $alternative->getId(),
                 'label' => false,
