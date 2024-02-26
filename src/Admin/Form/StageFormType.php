@@ -57,9 +57,9 @@ class StageFormType extends AbstractType
                 ],
             ])
             ->add('description', TrixType::class, [
-                'label' => 'Description de l\'étape',
+                'label' => 'Programme de l\'étape',
                 'attr' => [
-                    'placeholder' => 'Description de l\'étape',
+                    'placeholder' => 'Programme de l\'étape',
                     'style' => 'height: 200px',
                 ],
                 'row_attr' => [
