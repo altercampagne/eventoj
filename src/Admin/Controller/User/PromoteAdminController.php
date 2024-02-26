@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller\User;
 
+use App\Admin\Controller\Util\RedirectorTrait;
 use App\Admin\Security\Permission;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,6 +19,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/users/{id}/promote', name: 'admin_user_promote_admin', requirements: ['id' => Requirement::UUID_V4])]
 class PromoteAdminController extends AbstractController
 {
+    use RedirectorTrait;
+
     public function __construct(
         private readonly EntityManagerInterface $em,
     ) {
@@ -32,10 +35,6 @@ class PromoteAdminController extends AbstractController
 
         $this->addFlash('success', "{$user->getFullName()} est maintenant admin!");
 
-        if (null !== $targetUrl = $request->headers->get('Referer')) {
-            return $this->redirect($targetUrl);
-        }
-
-        return $this->redirectToRoute('admin_user_list');
+        return $this->redirectToRefererOrToRoute('admin_user_list');
     }
 }
