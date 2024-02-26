@@ -73,12 +73,12 @@ class EventFixtures extends AbstractFixture implements DependentFixtureInterface
         yield (new Stage($event))
             ->setName('Before')
             ->setType(StageType::BEFORE)
-            ->setDescription('Fignolages avant le départ du tour !')
+            ->setDescription("<div>08h00 - 09h00 : Réveil, petit déjeuner<br>09h00 - 12h00 : On s'affaire on s'affaire<br>12h00 - 14h00 : Repas partagé avec l'association Cyclopède<br>14h00 - 17h00 : On s'attelle aux derniers préparatifs avant le démarrage du tour<br>17h00 - 18h30 : Conférence gesticulée de Mathieu Dalmais<br>18h30 - 19h00 : Accueil des nouvelleaux<br>19h00 - 19h30 : Présentation de la journée du lendemain et répartition des rôles<br>19h30 - 21h00 : Repas<br>21h00 - 23h00 : Soirée</div>")
             ->addAlternative($this->getAlternative('le-champ-des-possibles'))
         ;
         yield (new Stage($event))
             ->setName('Le champ des possibles')
-            ->setDescription('Top départ du tour !')
+            ->setDescription('<div>08h00 - 09h00 : Réveil, petit déjeuner<br>09h00 - 12h00 : Activités avec les accueillant·es<br>12h00 - 14h00 : Repas<br>14h00 - 16h00 : Activités libres, accueil des nouvelleaux<br>16h00 - 17h00 : Présentation de la journée du lendemain et répartition des rôles<br>17h00 - 18h00 : Temps de présentation du collectif du Champ des possibles et de l\'AlterTour<br>18h00 - 20h00 : Concert de Yves Vessiere<br>20h00 - 22h00 : Repas')
             ->addAlternative($this->getAlternative('le-champ-des-possibles'))
         ;
         yield (new Stage($event))
