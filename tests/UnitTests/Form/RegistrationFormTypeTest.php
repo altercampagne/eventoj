@@ -28,35 +28,53 @@ class RegistrationFormTypeTest extends KernelTestCase
         $this->assertFormValid($form);
     }
 
-    public function testSomeErrors(): void
+    public function testExistingEmailDoesNotWork(): void
     {
-        $faker = \Faker\Factory::create('fr_FR');
-
-        $formData = [
-            'email' => $this->getRandomUser()->getEmail(), // Use a random user email to be sure this email exists
-            'phoneNumber' => '0101010101',
-            'birthDate' => (new \DateTimeImmutable('-10 years'))->format('Y-m-d'),
-            'address' => [
-                'countryCode' => 'FR',
-            ],
-            'plainPassword' => 'bla',
-        ];
-
         /** @var FormFactoryInterface $formFactory */
         $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
         $form = $formFactory->create(RegistrationFormType::class, null, [
             'csrf_protection' => false,
         ]);
 
-        $form->submit($formData);
+        $form->submit(array_merge($this->getValidFormData(), [
+            'email' => $this->getRandomUser()->getEmail(), // Use a random user email to be sure this email exists
+        ]));
 
         $this->assertFormInvalid($form, [
             'email' => 'Il y a déjà un compte avec cette adresse mail',
-            'firstName' => 'Cette valeur ne doit pas être vide.',
-            'lastName' => 'Cette valeur ne doit pas être vide.',
-            'plainPassword' => 'Ton mot de passe doit faire au moins 7 caractères.',
-            'birthDate' => 'Tu dois être majeur pour pouvoir t\'inscrire.',
         ]);
+    }
+
+    /**
+     * @dataProvider invalidDataProvider
+     */
+    public function testVariousErrors(string $field, ?string $value, string $expectedError): void
+    {
+        /** @var FormFactoryInterface $formFactory */
+        $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
+        $form = $formFactory->create(RegistrationFormType::class, null, [
+            'csrf_protection' => false,
+        ]);
+
+        $form->submit(array_merge($this->getValidFormData(), [
+            $field => $value,
+        ]));
+
+        $this->assertFormInvalid($form, [
+            $field => $expectedError,
+        ]);
+    }
+
+    /**
+     * @return iterable<array{string, ?string, string}>
+     */
+    public static function invalidDataProvider(): iterable
+    {
+        yield ['firstName', null, 'Cette valeur ne doit pas être vide.'];
+        yield ['lastName', null, 'Cette valeur ne doit pas être vide.'];
+        yield ['plainPassword', 'bla', 'Ton mot de passe doit faire au moins 7 caractères.'];
+        yield ['birthDate', (new \DateTimeImmutable('-10 years'))->format('Y-m-d'), 'Tu dois être majeur pour pouvoir t\'inscrire.'];
+        yield ['birthDate', (new \DateTimeImmutable('-130 years'))->format('Y-m-d'), 'Une vraie date de naissance, ce serait mieux ! :)'];
     }
 
     /**
