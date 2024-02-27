@@ -1,0 +1,37 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Avant de continuer...{% endblock %}
+
+{# Remove header & footer to avoid distractions #}
+{% block header '' %}
+{% block footer '' %}
+
+{% block main %}
+    <div class="container mb-5 mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 col-md-6 m-auto">
+                <h1 class="fw-bold mb-3">Avant de continuer...</h1>
+
+                <p class="fs-4 text-secondary">
+                    Pour pouvoir t'inscrire à cet évènement, tu vas avoir besoin de t'authentifier.
+                </p>
+
+                <p class="mt-4">
+                    Si tu as déjà un compte sur ce site, il te suffit de te connecter, autrement c'est le moment de te créer un compte. :)
+                </p>
+
+                <div class="d-grid gap-2 mt-5">
+                    <a href="{{ path('register') }}" class="btn btn-primary btn-lg">
+                        Se connecter
+                    </a>
+                    <a href="{{ path('login') }}" class="btn btn-primary btn-lg">
+                        S'inscrire
+                    </a>
+                    <a href="{{ path('event_show', { slug: event.slug }) }}" class="btn btn-link">
+                        Retour
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

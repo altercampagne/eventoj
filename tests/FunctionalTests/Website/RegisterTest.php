@@ -23,9 +23,9 @@ class RegisterTest extends WebTestCase
         $this->assertResponseRedirects();
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertRouteSame('login');
+        $this->assertRouteSame('event_registration_need_account');
 
-        $client->clickLink('Créer un compte');
+        $client->clickLink('Se connecter');
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('register');
 
@@ -57,8 +57,8 @@ class RegisterTest extends WebTestCase
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_update_profile');
-        $this->assertSelectorTextContains('.alert-success', "📢 Ton compte a été créé : tu peux dès maintenant t'inscrire aux évènements de d'Altercampagne !");
         $this->assertSelectorExists('#connected-as');
+        $this->assertSelectorTextContains('h1', 'Création de ton profil');
 
         $client->submitForm('Mettre à jour', [
             'profile_update_form[diet]' => 'vegetarian',

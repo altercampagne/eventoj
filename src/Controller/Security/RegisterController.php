@@ -60,8 +60,6 @@ class RegisterController extends AbstractController
                 $this->saveTargetPath($request->getSession(), 'main', $targetUrl);
             }
 
-            $this->addFlash('success', "📢 Ton compte a été créé : tu peux dès maintenant t'inscrire aux évènements de d'Altercampagne !");
-
             return $this->redirectToRoute('profile_update_profile');
         }
 

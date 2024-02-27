@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\FunctionalTests\Website;
 
 use App\DataFixtures\Util\FixtureBuilder;
+use App\Entity\Diet;
 use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -80,7 +81,7 @@ class ProfileCompanionTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = FixtureBuilder::createUser();
+        $user = FixtureBuilder::createUser(diet: Diet::VEGETARIAN);
         $event = FixtureBuilder::createAT();
         $this->save($user, $event);
 

@@ -35,6 +35,7 @@ class FixtureBuilder
         ?array $roles = null,
         bool $children = false,
         bool $admin = false,
+        ?Diet $diet = null,
     ): User {
         $user = new User();
         $user
@@ -50,6 +51,9 @@ class FixtureBuilder
 
         if ($verifyEmail ?? self::getFaker()->boolean()) {
             $user->verifyEmail();
+        }
+        if (null !== $diet) {
+            $user->setDiet($diet);
         }
 
         return $user;

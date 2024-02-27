@@ -1,11 +1,15 @@
 {% extends '_base.html.twig' %}
 
-{% block title %}Mettre à jour de ton profil{% endblock %}
+{% set title = (form.diet.vars.data is null ? 'Création' : 'Mise à jour') ~' de ton profil' %}
+
+{% block title %}{{ title }}{% endblock %}
 
 {% block main %}
     <div class="container">
         <div class="row text-center mb-3">
-            <h1 class="fw-bold text-uppercase text-primary">Mise à jour de ton profil</h1>
+            <h1 class="fw-bold text-uppercase text-primary">
+                {{ title }}
+            </h1>
         </div>
 
         <div class="row justify-content-center">

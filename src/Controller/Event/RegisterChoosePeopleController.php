@@ -14,13 +14,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-#[IsGranted('ROLE_USER')]
 #[Route('/event/{slug}/register', name: 'event_register')]
 #[Route('/event/{slug}/register', name: 'event_register_choose_people')]
 class RegisterChoosePeopleController extends AbstractController
 {
+    use TargetPathTrait;
+
     public function __construct(
         private readonly EntityManagerInterface $em,
     ) {
@@ -31,9 +32,22 @@ class RegisterChoosePeopleController extends AbstractController
         if (!$event->isBookable()) {
             throw $this->createNotFoundException();
         }
+        if (!$this->isGranted('ROLE_USER')) {
+            $this->saveTargetPath($request->getSession(), 'main', $this->generateUrl('event_register', ['slug' => $event->getSlug()]));
+
+            return $this->redirectToRoute('event_registration_need_account', ['slug' => $event->getSlug()]);
+        }
 
         /** @var User $user */
         $user = $this->getUser();
+
+        if (null === $user->getDiet()) {
+            $this->saveTargetPath($request->getSession(), 'main', $this->generateUrl('event_register', ['slug' => $event->getSlug()]));
+
+            $this->addFlash('warning', 'Merci de remplir ton profil avant de pouvoir t\'inscrire !');
+
+            return $this->redirectToRoute('profile_update_profile');
+        }
 
         if (null === $registration = $this->em->getRepository(Registration::class)->findOngoingRegistrationForEventAndUser($event, $user)) {
             $registration = new Registration($user, $event);
