@@ -9,6 +9,7 @@ use App\Tests\DatabaseUtilTrait;
 use App\Tests\UnitTests\FormAssertionsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class RegistrationFormTypeTest extends KernelTestCase
 {
@@ -17,12 +18,7 @@ class RegistrationFormTypeTest extends KernelTestCase
 
     public function testSubmitValidData(): void
     {
-        /** @var FormFactoryInterface $formFactory */
-        $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
-        $form = $formFactory->create(RegistrationFormType::class, null, [
-            'csrf_protection' => false,
-        ]);
-
+        $form = $this->getForm();
         $form->submit($this->getValidFormData());
 
         $this->assertFormValid($form);
@@ -30,12 +26,7 @@ class RegistrationFormTypeTest extends KernelTestCase
 
     public function testExistingEmailDoesNotWork(): void
     {
-        /** @var FormFactoryInterface $formFactory */
-        $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
-        $form = $formFactory->create(RegistrationFormType::class, null, [
-            'csrf_protection' => false,
-        ]);
-
+        $form = $this->getForm();
         $form->submit(array_merge($this->getValidFormData(), [
             'email' => $this->getRandomUser()->getEmail(), // Use a random user email to be sure this email exists
         ]));
@@ -45,17 +36,28 @@ class RegistrationFormTypeTest extends KernelTestCase
         ]);
     }
 
+    public function testInvalidZipCode(): void
+    {
+        $data = $this->getValidFormData();
+        /* @phpstan-ignore-next-line */
+        $data['address']['countryCode'] = 'FR';
+        /* @phpstan-ignore-next-line */
+        $data['address']['zipCode'] = 123;
+
+        $form = $this->getForm();
+        $form->submit($data);
+
+        $this->assertFormInvalid($form, [
+            'zipCode' => 'Ce code postal n\'est pas valide.',
+        ]);
+    }
+
     /**
      * @dataProvider invalidDataProvider
      */
     public function testVariousErrors(string $field, ?string $value, string $expectedError): void
     {
-        /** @var FormFactoryInterface $formFactory */
-        $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
-        $form = $formFactory->create(RegistrationFormType::class, null, [
-            'csrf_protection' => false,
-        ]);
-
+        $form = $this->getForm();
         $form->submit(array_merge($this->getValidFormData(), [
             $field => $value,
         ]));
@@ -82,17 +84,11 @@ class RegistrationFormTypeTest extends KernelTestCase
      */
     public function testInvalidNames(mixed $name, string $expectedError): void
     {
-        $formData = $this->getValidFormData();
-        $formData['firstName'] = $name;
-        $formData['lastName'] = $name;
-
-        /** @var FormFactoryInterface $formFactory */
-        $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
-        $form = $formFactory->create(RegistrationFormType::class, null, [
-            'csrf_protection' => false,
-        ]);
-
-        $form->submit($formData);
+        $form = $this->getForm();
+        $form->submit(array_merge($this->getValidFormData(), [
+            'firstName' => $name,
+            'lastName' => $name,
+        ]));
 
         $this->assertFormInvalid($form, [
             'firstName' => $expectedError,
@@ -135,17 +131,11 @@ class RegistrationFormTypeTest extends KernelTestCase
      */
     public function testValidNames(string $name): void
     {
-        $formData = $this->getValidFormData();
-        $formData['firstName'] = $name;
-        $formData['lastName'] = $name;
-
-        /** @var FormFactoryInterface $formFactory */
-        $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
-        $form = $formFactory->create(RegistrationFormType::class, null, [
-            'csrf_protection' => false,
-        ]);
-
-        $form->submit($formData);
+        $form = $this->getForm();
+        $form->submit(array_merge($this->getValidFormData(), [
+            'firstName' => $name,
+            'lastName' => $name,
+        ]));
 
         $this->assertFormValid($form);
     }
@@ -184,5 +174,16 @@ class RegistrationFormTypeTest extends KernelTestCase
             ],
             'plainPassword' => 'password',
         ];
+    }
+
+    private function getForm(): FormInterface
+    {
+        /** @var FormFactoryInterface $formFactory */
+        $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
+        $form = $formFactory->create(RegistrationFormType::class, null, [
+            'csrf_protection' => false,
+        ]);
+
+        return $form;
     }
 }

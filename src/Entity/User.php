@@ -60,6 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private \DateTimeImmutable $birthDate;
 
+    #[Assert\Valid]
     #[ORM\Embedded(class: Address::class)]
     private Address $address;
 

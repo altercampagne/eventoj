@@ -11,6 +11,7 @@
         "ext-iconv": "*",
         "ext-xsl": "*",
         "aws/aws-sdk-php": "^3.299",
+        "barbieswimcrew/zip-code-validator": "^3.1",
         "doctrine/doctrine-bundle": "^2.10",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.16",

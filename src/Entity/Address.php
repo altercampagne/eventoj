@@ -7,6 +7,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use ZipCodeValidator\Constraints\ZipCode;
 
 #[ORM\Embeddable]
 class Address
@@ -23,6 +24,7 @@ class Address
     private string $city;
 
     #[Assert\NotBlank]
+    #[ZipCode(['getter' => 'getCountryCode', 'message' => 'Ce code postal n\'est pas valide.'])]
     #[ORM\Column(type: Types::STRING, length: 6)]
     private string $zipCode;
 
