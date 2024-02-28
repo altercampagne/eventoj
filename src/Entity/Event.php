@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 #[ORM\Table(name: '`event`')]
@@ -28,11 +29,13 @@ class Event
     #[ORM\Column(type: 'uuid')]
     private UuidV4 $id;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 3, enumType: EventType::class, options: [
         'comment' => 'Type of event (AT, BT, ADT, EB)',
     ])]
     private readonly EventType $type;
 
+    #[Assert\NotBlank]
     #[ORM\Column]
     private string $name;
 
@@ -45,26 +48,32 @@ class Event
     #[Gedmo\Slug(fields: ['name'])]
     private string $slug;
 
+    #[Assert\NotBlank]
     #[ORM\Column]
     private int $adultsCapacity;
 
+    #[Assert\NotBlank]
     #[ORM\Column]
     private int $childrenCapacity;
 
+    #[Assert\NotBlank]
     #[ORM\Column]
     private int $bikesAvailable;
 
+    #[Assert\NotBlank]
     #[ORM\Column(options: [
         'comment' => 'The average price per day at which we need to sell tickets in order to break even on this event',
     ])]
     private int $breakEvenPricePerDay;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
     private string $description;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $publishedAt = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(options: [
         'comment' => 'At which date members will be able to register to this event?',
     ])]
