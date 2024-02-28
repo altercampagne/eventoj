@@ -25,7 +25,7 @@ class RegisterTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('event_registration_need_account');
 
-        $client->clickLink('Se connecter');
+        $client->clickLink('S\'inscrire');
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('register');
 
