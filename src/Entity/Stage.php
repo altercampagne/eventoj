@@ -108,6 +108,11 @@ class Stage
         return StageType::AFTER === $this->type;
     }
 
+    public function isFree(): bool
+    {
+        return $this->isBefore() || $this->isAfter();
+    }
+
     public function isDifficultyEasy(): bool
     {
         return StageDifficulty::EASY === $this->difficulty;

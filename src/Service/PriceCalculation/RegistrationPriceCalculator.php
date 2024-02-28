@@ -38,12 +38,16 @@ final class RegistrationPriceCalculator
             }
         }
 
-        $registrationPrice = $registration->countDaysOfPresence() * $registration->getPricePerDay();
+        if (0 < $freeDays = $registration->freeDaysOfPresence()) {
+            $bill->addLine("{$freeDays} jours gratuits sur l'évènement", 0);
+        }
+
+        $registrationPrice = $registration->payingDaysOfPresence() * $registration->getPricePerDay();
 
         if (1 === $nbPersons) {
-            $bill->addLine("{$registration->countDaysOfPresence()} jours sur l'évènement", $registrationPrice);
+            $bill->addLine("{$registration->payingDaysOfPresence()} jours sur l'évènement", $registrationPrice);
         } else {
-            $bill->addLine("$nbPersons x {$registration->countDaysOfPresence()} jours sur l'évènement", $registrationPrice * $nbPersons);
+            $bill->addLine("$nbPersons x {$registration->payingDaysOfPresence()} jours sur l'évènement", $registrationPrice * $nbPersons);
         }
 
         return $bill;

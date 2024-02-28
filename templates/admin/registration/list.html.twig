@@ -21,7 +21,7 @@
                     </td>
                     <td>{{ registration.user.fullName }}</td>
                     <td>
-                        {{ registration.countDaysOfPresence }} x {{ registration.pricePerDay|format_price }}
+                        {{ registration.payingDaysOfPresence }} x {{ registration.pricePerDay|format_price }}
                     </td>
                     <td>
                         <Twig:Admin:RegistrationStatus registration="registration" />

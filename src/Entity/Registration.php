@@ -133,9 +133,21 @@ class Registration
         return RegistrationStatus::WAITING_PAYMENT === $this->status;
     }
 
-    public function countDaysOfPresence(): int
+    public function daysOfPresence(): int
     {
-        return $this->stagesRegistrations->count() - 1;
+        return $this->stagesRegistrations->count();
+    }
+
+    public function payingDaysOfPresence(): int
+    {
+        return $this->stagesRegistrations->count() - $this->freeDaysOfPresence();
+    }
+
+    public function freeDaysOfPresence(): int
+    {
+        return $this->stagesRegistrations->filter(static function (StageRegistration $stageRegistration): bool {
+            return $stageRegistration->getStage()->isFree();
+        })->count();
     }
 
     public function getStageRegistrationStart(): ?StageRegistration
