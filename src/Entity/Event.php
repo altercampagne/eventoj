@@ -422,7 +422,7 @@ class Event
     {
         $alternatives = [];
         foreach ($this->stages as $stage) {
-            $alternatives += $stage->getAlternatives()->getValues();
+            $alternatives = array_merge($alternatives, $stage->getAlternatives()->getValues());
         }
 
         return array_unique($alternatives, \SORT_REGULAR);
