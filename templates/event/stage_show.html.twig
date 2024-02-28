@@ -103,7 +103,7 @@
                                 <u>Addresse :</u> {{ alternative.address }}
                             </p>
                             <p class="card-text">
-                                {{ alternative.description|u.truncate(500, '...', false)|raw }}
+                                {{ alternative.description|striptags|u.truncate(500, '...', false) }}
                             </p>
                             <p class="card-text d-grid gap-2">
                                 <a href="{{ path('alternative_show', { slug: alternative.slug }) }}" class="btn btn-link">
