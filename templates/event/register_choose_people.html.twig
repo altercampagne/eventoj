@@ -46,7 +46,7 @@
                 </div>
 
                 {% if form.neededBike is defined %}
-                    <h2 class="fw-bold text-secondary mt-4 mb-3">Besoin de vélo ?</h2>
+                    <h2 class="fw-bold text-secondary mt-4 mb-3">Besoin de vélo ? <span class="text-secondary fs-6">(adultes uniquement)</span></h2>
 
                     {% if form.neededBike.vars.errors|length > 0 %}
                         <div class="alert alert-danger p-2">

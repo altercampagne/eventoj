@@ -35,9 +35,9 @@ class ProfileUpdateFormType extends AbstractType
                 'required' => false,
             ])
             ->add('dietDetails', TextType::class, [
-                'label' => 'Autre spécificités',
+                'label' => 'Autre (intolérance, allergie, ...)',
                 'attr' => [
-                    'placeholder' => 'Autre spécificités',
+                    'placeholder' => 'Autre (intolérance, allergie, ...)',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
@@ -54,7 +54,7 @@ class ProfileUpdateFormType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'help' => 'N\'hésite pas à nous en dire un peu plus te concernant. 😊',
+                'help' => 'N\'hésite pas à nous en dire un peu plus te concernant (aucune obligation bien sûr). 😊',
                 'required' => false,
             ])
         ;
