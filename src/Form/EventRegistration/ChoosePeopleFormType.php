@@ -38,7 +38,11 @@ class ChoosePeopleFormType extends AbstractType
         ;
 
         if ($registration->getEvent()->isAT()) {
-            $builder->add('neededBike', IntegerType::class);
+            $builder->add('neededBike', IntegerType::class, [
+                'attr' => [
+                    'min' => 0,
+                ],
+            ]);
         }
     }
 
