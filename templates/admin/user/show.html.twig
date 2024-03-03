@@ -71,6 +71,11 @@
                         Adhésions <span class="text-secondary">({{ user.memberships|length }})</span>
                     </button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments-tab-pane" type="button" role="tab" aria-controls="payments-tab-pane" aria-selected="true">
+                        Paiements <span class="text-secondary">({{ user.payments|length }})</span>
+                    </button>
+                </li>
             </ul>
 
             <div class="tab-content border border-top-0 border-secondary-outline rounded-bottom p-3">
@@ -168,6 +173,33 @@
                                             Du <b>{{ membership.startAt|format_date('short') }}</b> au <b> {{ membership.endAt|format_date('short') }}</b>
                                         </td>
                                         <td>{{ membership.createdAt|format_datetime }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        Aucune adhésion pour le moment
+                    {% endif %}
+                </div>
+
+                <div class="tab-pane fade" id="payments-tab-pane" role="tabpanel" aria-labelledby="payments-tab" tabindex="0">
+                    {% if user.payments|length > 0 %}
+                        <table class="table table-hover table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Prix</th>
+                                    <th scope="col">Statut</th>
+                                    <th scope="col">Date de création</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for payment in user.payments %}
+                                    <tr data-href="{{ path('admin_payment_show', { id: payment.id }) }}">
+                                        <td>{{ payment.amount|format_price }}</td>
+                                        <td>
+                                            <twig:Admin:PaymentStatus payment="{{ payment }}" />
+                                        </td>
+                                        <td>{{ payment.createdAt|format_datetime }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>

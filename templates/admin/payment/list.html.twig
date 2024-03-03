@@ -1,0 +1,30 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = 'Tous les paiements' %}
+
+{% block main %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Payeur·euse</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Status</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in payments %}
+                <tr data-href="{{ path('admin_payment_show', { id: payment.id }) }}">
+                    <td>
+                        {{ payment.payer.fullName }}
+                    </td>
+                    <td>{{ payment.amount|format_price }}</td>
+                    <td>
+                        <twig:Admin:PaymentStatus payment="{{ payment }}" />
+                    </td>
+                    <td>{{ payment.createdAt|format_datetime }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

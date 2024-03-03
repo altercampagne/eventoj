@@ -1,0 +1,9 @@
+{% if payment.isApproved %}
+    <span class="badge text-bg-success"><i class="fa-solid fa-check me-1"></i> Approuvé</span>
+{% elseif payment.isPending %}
+    <span class="badge text-bg-warning"><i class="fa-regular fa-clock me-1"></i> En attente</span>
+{% elseif payment.isRefunded %}
+    <span class="badge text-bg-secondary"><i class="fa-regular fa-clock me-1"></i> Remboursé</span>
+{% else %}
+    <span class="badge text-bg-danger"><i class="fa-regular fa-clock me-1"></i> Échoué</span>
+{% endif %}

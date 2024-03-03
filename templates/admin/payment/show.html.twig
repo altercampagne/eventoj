@@ -1,0 +1,45 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = 'Payment de ' ~ payment.amount|format_price ~ ' par ' ~ payment.payer.fullname %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-8">
+            {% if payment.isApproved %}
+                <div class="alert bg-success-subtle text-success">
+                    <i class="fa-solid fa-circle-check me-1"></i> Paiement approuvé le <b>{{ payment.approvedAt|format_datetime('long', 'short') }}</b>
+                </div>
+            {% elseif payment.isPending %}
+                <div class="alert bg-warning-subtle text-secondary">
+                    <i class="fa-solid fa-clock me-1"></i> Paiement en attente
+                </div>
+            {% elseif payment.isRefunded %}
+                <div class="alert bg-secondary-subtle text-secondary">
+                    <i class="fa-solid fa-clock me-1"></i> Paiement remboursé le  <b>{{ payment.refundedAt|format_datetime('long', 'short') }}</b>
+                </div>
+            {% else %}
+                <div class="alert bg-danger-subtle text-secondary">
+                    <i class="fa-solid fa-clock me-1"></i> Paiement échoué le  <b>{{ payment.failedAt|format_datetime('long', 'short') }}</b>
+                </div>
+            {% endif %}
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Helloasso ID : {{ payment.helloassoCheckoutIntentId }}
+                    </li>
+                    <li class="list-group-item list-group-item-light py-1 fw-light fs-6">
+                        <small>Créée le {{ payment.createdAt|format_datetime('long', 'short') }}</small><br />
+                        <small>Mise à jour le {{ payment.createdAt|format_datetime('long', 'short') }}</small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-4 border-start">
+            <div class="row row-cols-1 g-4">
+                <div class="col">
+                    {{ include('admin/_cards/user.html.twig', { user: payment.payer }, with_context = false) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
