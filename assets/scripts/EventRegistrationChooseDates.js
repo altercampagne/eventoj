@@ -171,7 +171,7 @@ class EventRegistrationChooseDates {
   updateNumberOfDays() {
     const numberOfDays = this.availableOptions.indexOf(this.selectEnd.value) - this.availableOptions.indexOf(this.selectStart.value);
 
-    this.daysOfPresenceElement.innerText = numberOfDays;
+    this.daysOfPresenceElement.innerText = numberOfDays + 1;
   }
 }
 
