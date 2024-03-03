@@ -24,7 +24,7 @@
                         {{ registration.payingDaysOfPresence }} x {{ registration.pricePerDay|format_price }}
                     </td>
                     <td>
-                        <Twig:Admin:RegistrationStatus registration="registration" />
+                        <twig:Admin:RegistrationStatus registration="{{ registration }}" />
                     </td>
                     <td>{{ registration.createdAt|format_datetime }}</td>
                 </tr>
