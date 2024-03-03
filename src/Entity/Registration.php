@@ -185,6 +185,14 @@ class Registration
         return $count;
     }
 
+    /**
+     * @return array<User|Companion>
+     */
+    public function getPersons(): array
+    {
+        return array_merge([$this->user], $this->companions->toArray());
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;

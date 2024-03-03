@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Service\MembershipCreator;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -48,8 +49,12 @@ class Membership
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt;
 
-    private function __construct(Payment $payment, ?User $user = null, ?Companion $companion = null)
-    {
+    private function __construct(
+        Payment $payment,
+        ?User $user = null,
+        ?Companion $companion = null,
+        ?\DateTimeImmutable $startAt = null,
+    ) {
         if (null === $user && null === $companion) {
             throw new \LogicException('Membership must be attached to a user or a companion.');
         }
@@ -57,21 +62,15 @@ class Membership
             throw new \LogicException('Given payment must be approved.');
         }
 
-        $startAt = new \DateTimeImmutable('first day of may');
-        if ($startAt > new \DateTimeImmutable()) {
-            $startAt = $startAt->modify('-1 year');
+        if (null === $startAt) {
+            $startAt = new \DateTimeImmutable('first day of may');
+            if ($startAt > new \DateTimeImmutable()) {
+                $startAt = $startAt->modify('-1 year');
+            }
         }
         $endAt = $startAt->modify('+1 year -1 day');
 
-        $person = $user ?: $companion;
-
-        if (18 <= $person->getAge()) {
-            $this->price = 2000;
-        } elseif (3 <= $person->getAge()) {
-            $this->price = 1000;
-        } else {
-            $this->price = 0;
-        }
+        $this->price = MembershipCreator::getPriceForPerson($user ?: $companion);
 
         $this->id = new UuidV4();
         $this->payment = $payment;
@@ -90,6 +89,11 @@ class Membership
     public static function createForCompanion(Companion $companion, Payment $payment): self
     {
         return new self($payment, companion: $companion);
+    }
+
+    public function isValidAt(\DateTimeImmutable $date): bool
+    {
+        return $this->startAt >= $date && $date <= $this->endAt;
     }
 
     public function getId(): UuidV4

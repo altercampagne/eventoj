@@ -88,6 +88,7 @@ class Companion
      * @var Collection<int, Membership>
      */
     #[ORM\OneToMany(targetEntity: Membership::class, mappedBy: 'companion', cascade: ['persist'])]
+    #[ORM\OrderBy(['createdAt' => 'DESC'])]
     private Collection $memberships;
 
     public function __construct(User $user)
@@ -216,5 +217,14 @@ class Companion
     public function getMemberships(): Collection
     {
         return $this->memberships;
+    }
+
+    public function getLatestMembership(): ?Membership
+    {
+        if (false === $membership = $this->memberships->last()) {
+            return null;
+        }
+
+        return $membership;
     }
 }

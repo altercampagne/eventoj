@@ -14,89 +14,86 @@
             <div class="col-12 col-sm-8 col-md-6 m-auto">
                 {{ form_start(form) }}
 
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Participant·es</h2>
-                    <a href="{{ path('event_register_choose_people', { slug: registration.event.slug }) }}">
-                        <small>Modifier</small>
-                    </a>
-                </div>
-
-                <ul class="list-group mt-3">
-                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="fw-bold text-uppercase">{{ app.user.fullname }}</span>
-                            <small class="text-secondary ms-1">({{ app.user.birthDate|format_date('short') }})</small>
-                        </div>
-                        <span class="badge bg-secondary">Adulte</span>
-                    </li>
-                    {% for companion in registration.companions %}
-                        <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="fw-bold text-uppercase">{{ companion.fullName }}</span>
-                                <small class="text-secondary ms-1">({{ companion.birthDate|format_date('short') }})</small>
-                            </div>
-                            <span class="badge bg-secondary">{{ companion.isChild ? '- de 13 ans' : 'Adulte' }}</span>
-                        </li>
-                    {% endfor %}
-                </ul>
-
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Les étapes</h2>
-                    {% if registration.event.isAT %}
-                        <a href="{{ path('event_register_choose_dates', { slug: registration.event.slug }) }}">
-                            <small>Modifier</small>
-                        </a>
-                    {% endif %}
-                </div>
-
-                <ul class="list-group mt-3">
-                    <li class="list-group-item p-3">
-                        <span class="fw-bold text-uppercase text-decoration-underline">Arrivée</span> prévue le <b>{{ registration.firstStageRegistration.stage.date|format_date('full') }}</b>
-                        {% if registration.event.isAT %}
-                            pour le <b>{{ registration.firstStageRegistration.firstMeal|trans|lower }}</b>
-                        {% endif %}
-                    </li>
-                    <li class="list-group-item p-3">
-                        <span class="fw-bold text-uppercase text-decoration-underline">Départ</span> prévu le <b>{{ registration.lastStageRegistration.stage.date|format_date('full') }}</b>
-                        {% if registration.event.isAT %}
-                            pour le <b>{{ registration.lastStageRegistration.lastMeal|trans|lower }}</b>
-                        {% endif %}
-                    </li>
-                </ul>
-
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <h2 class="fw-bold text-uppercase text-secondary fs-3">Tarif</h2>
-                </div>
-
                 <ul class="list-group mt-3">
                     <li class="list-group-item p-3 list-group-item-danger fw-bold text-center">
                         La mise à jour du prix n'est pas encore fonctionnelle, je suis en attente d'information avant de pouvoir l'implémenter.
                     </li>
                 </ul>
-                <ul class="list-group mt-3">
-                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center list-group-item-primary">
-                        <label class="form-check-label fs-5" for="{{ form.pricePerDay.vars.id }}">
-                            Prix à la journée <small><a data-bs-toggle="offcanvas" href="#priceExplanationOffcanvas" aria-controls="#priceExplanationOffcanvas">(plus d'infos)</a></small>
-                        </label>
-                        <div class="col-auto">
-                            {{ form_widget(form.pricePerDay, { attr: { size: 3 }}) }}
-                        </div>
-                    </li>
-                </ul>
 
-                <ul class="list-group mt-3">
-                    {% for label, amount in bill.lines %}
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <h2 class="fw-bold text-secondary">Choix du tarif</h2>
+                </div>
+
+                {% if registration.neededBike > 0 %}
+                    <h3 class="fw-bold text-secondary fs-4 pt-3">Vélo{% if registration.neededBike > 1 %}s{% endif %}</h3>
+
+                    <ul class="list-group mt-3">
                         <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                            {{ label }}
+                            {{ registration.neededBike == 1 ? '1 vélo' : registration.neededBike ~ ' vélos' }} de prêt
                             <span class="text-primary me-2">
-                                {% if 0 == amount %}GRATUIT{% else %}{{ amount|format_price }}{% endif %}
+                                GRATUIT
                             </span>
                         </li>
-                    {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% if membershipPricesToPay|length > 0 %}
+                    <h3 class="fw-bold text-secondary fs-4 pt-3">Adhésion{% if membershipPricesToPay|length > 1 %}s{% endif %}</h3>
+
+                    <ul class="list-group mt-3">
+                        {% for membership in membershipPricesToPay %}
+                            <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                                Adhésion pour {{ membership.person.fullName }}
+                                <span class="text-primary me-2">
+                                    {% if 0 == membership.price %}GRATUIT{% else %}{{ membership.price|format_price }}{% endif %}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% for person in registration.persons %}
+                    <h3 class="fw-bold text-secondary fs-4 pt-3">Inscription de {{ person.fullName }}</h3>
+
+                    <ul class="list-group mt-3">
+
+                        {% if registration.payingDaysOfPresence == 0 %}
+                            <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                                {{ registration.freeDaysOfPresence }} jour{% if registration.freeDaysOfPresence > 0 %}s{% endif %} gratuit{% if registration.freeDaysOfPresence > 0 %}s{% endif %} sur l'évènement
+                                <span class="text-primary me-2">GRATUIT</span>
+                            </li>
+                        {% else %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-primary">
+                                <label class="form-check-label" for="price-per-day-{{ person.id }}">
+                                    Prix à la journée <small><a data-bs-toggle="offcanvas" href="#priceExplanationOffcanvas" aria-controls="#priceExplanationOffcanvas">(plus d'infos)</a></small>
+                                </label>
+                                <div class="col-auto">
+                                    <input
+                                        type="number"
+                                        min="20"
+                                        id="price-per-day-{{ person.id }}"
+                                        value="{{ registration.event.breakEvenPricePerDay/100 }}"
+                                        class="form-control"
+                                        size="3"
+                                    />
+                                </div>
+                            </li>
+
+                            <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                                Prix à payer pour {{ person.fullName }}
+                                <span class="text-primary me-2">
+                                    {{ (registration.payingDaysOfPresence * registration.event.breakEvenPricePerDay)|format_price }}
+                                </span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                {% endfor %}
+
+                <ul class="list-group mt-3">
                     <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-4 fw-bold p-3">
                         Total
                         <span class="text-primary me-2">
-                            {{ bill.amount|format_price }}
+                            {{ expectedPrice|format_price }}
                         </span>
                     </li>
                 </ul>
@@ -111,8 +108,12 @@
                 </ul>
 
                 <twig:EventRegistration:Buttons step="choose_people">
-                    Régler {{ bill.amount|format_price }} via Helloasso
+                    Régler {{ expectedPrice|format_price }} via Helloasso
                 </twig:EventRegistration:Buttons>
+
+                <div class="d-none">
+                    {{ form_rest(form) }}
+                </div>
 
                 {{ form_end(form) }}
             </div>

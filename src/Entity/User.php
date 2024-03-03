@@ -148,6 +148,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Membership>
      */
     #[ORM\OneToMany(targetEntity: Membership::class, mappedBy: 'user', cascade: ['persist'])]
+    #[ORM\OrderBy(['createdAt' => 'DESC'])]
     private Collection $memberships;
 
     public function __construct()
@@ -427,5 +428,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getMemberships(): Collection
     {
         return $this->memberships;
+    }
+
+    public function getLatestMembership(): ?Membership
+    {
+        if (false === $membership = $this->memberships->last()) {
+            return null;
+        }
+
+        return $membership;
     }
 }

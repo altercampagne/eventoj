@@ -10,7 +10,7 @@ use App\Entity\Registration;
 use App\Entity\User;
 use App\Form\EventRegistration\ChoosePriceFormType;
 use App\Form\EventRegistration\EventRegistrationDTO;
-use App\Service\PriceCalculation\RegistrationPriceCalculator;
+use App\Service\MembershipCreator;
 use Doctrine\ORM\EntityManagerInterface;
 use Helloasso\HelloassoClient;
 use Helloasso\Models\Carts\CheckoutPayer;
@@ -28,7 +28,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class RegisterChoosePriceController extends AbstractController
 {
     public function __construct(
-        private readonly RegistrationPriceCalculator $registrationPriceCalculator,
+        private readonly MembershipCreator $membershipCreator,
         private readonly HelloassoClient $helloassoClient,
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger,
@@ -57,7 +57,12 @@ class RegisterChoosePriceController extends AbstractController
             return $this->redirectToRoute('homepage');
         }
 
-        $bill = $this->registrationPriceCalculator->calculate($registration);
+        $expectedPrice = $registration->payingDaysOfPresence() * $registration->countPeople() * $registration->getEvent()->getBreakEvenPricePerDay();
+
+        $membershipPricesToPay = $this->membershipCreator->getMembershipPricesToPayForRegistration($registration);
+        foreach ($membershipPricesToPay as $membership) {
+            $expectedPrice += $membership['price'];
+        }
 
         $eventRegistrationDTO = new EventRegistrationDTO($registration);
         $form = $this->createForm(ChoosePriceFormType::class, $eventRegistrationDTO);
@@ -72,13 +77,13 @@ class RegisterChoosePriceController extends AbstractController
 
             $payment = new Payment(
                 payer: $payer,
-                amount: $bill->getAmount(),
+                amount: $expectedPrice,
                 registration: $registration,
             );
 
             $initCheckoutResponse = $this->helloassoClient->checkout->create((new InitCheckoutBody())
-                ->setTotalAmount($bill->getAmount())
-                ->setInitialAmount($bill->getAmount())
+                ->setTotalAmount($expectedPrice)
+                ->setInitialAmount($expectedPrice)
                 ->setItemName('Inscription '.$registration->getEvent()->getName())
                 ->setBackUrl($this->generateUrl('payment_callback_back', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
                 ->setErrorUrl($this->generateUrl('payment_callback_error', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
@@ -105,7 +110,8 @@ class RegisterChoosePriceController extends AbstractController
 
         return $this->render('event/register_choose_price.html.twig', [
             'registration' => $registration,
-            'bill' => $bill,
+            'membershipPricesToPay' => $membershipPricesToPay,
+            'expectedPrice' => $expectedPrice,
             'form' => $form->createView(),
         ]);
     }
