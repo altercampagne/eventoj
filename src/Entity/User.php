@@ -144,6 +144,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Stage::class, mappedBy: 'preparers')]
     private Collection $preparedStages;
 
+    /**
+     * @var Collection<int, Membership>
+     */
+    #[ORM\OneToMany(targetEntity: Membership::class, mappedBy: 'user', cascade: ['persist'])]
+    private Collection $memberships;
+
     public function __construct()
     {
         $this->id = new UuidV4();
@@ -152,6 +158,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->payments = new ArrayCollection();
         $this->companions = new ArrayCollection();
         $this->preparedStages = new ArrayCollection();
+        $this->memberships = new ArrayCollection();
     }
 
     /**
@@ -412,5 +419,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPreparedStages(): Collection
     {
         return $this->preparedStages;
+    }
+
+    /**
+     * @return Collection<int, Membership>
+     */
+    public function getMemberships(): Collection
+    {
+        return $this->memberships;
     }
 }

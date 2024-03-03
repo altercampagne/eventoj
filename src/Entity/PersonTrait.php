@@ -8,12 +8,17 @@ trait PersonTrait
 {
     public function isChild(): bool
     {
-        return (new \DateTimeImmutable())->diff($this->birthDate)->y < 13;
+        return $this->getAge() < 13;
     }
 
     public function isAdult(): bool
     {
-        return (new \DateTimeImmutable())->diff($this->birthDate)->y >= 18;
+        return $this->getAge() >= 18;
+    }
+
+    public function getAge(): int
+    {
+        return (new \DateTimeImmutable())->diff($this->birthDate)->y;
     }
 
     public function getFullName(): string

@@ -84,12 +84,19 @@ class Companion
     #[ORM\ManyToMany(targetEntity: Registration::class, mappedBy: 'companions')]
     private Collection $registrations;
 
+    /**
+     * @var Collection<int, Membership>
+     */
+    #[ORM\OneToMany(targetEntity: Membership::class, mappedBy: 'companion', cascade: ['persist'])]
+    private Collection $memberships;
+
     public function __construct(User $user)
     {
         $this->id = new UuidV4();
         $this->user = $user;
         $this->createdAt = new \DateTimeImmutable();
         $this->registrations = new ArrayCollection();
+        $this->memberships = new ArrayCollection();
     }
 
     public function getId(): UuidV4
@@ -201,5 +208,13 @@ class Companion
     public function getRegistrations(): Collection
     {
         return $this->registrations;
+    }
+
+    /**
+     * @return Collection<int, Membership>
+     */
+    public function getMemberships(): Collection
+    {
+        return $this->memberships;
     }
 }

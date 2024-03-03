@@ -66,7 +66,13 @@
                         Compagnon·es <span class="text-secondary">({{ user.companions|length }})</span>
                     </button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="memberships-tab" data-bs-toggle="tab" data-bs-target="#memberships-tab-pane" type="button" role="tab" aria-controls="memberships-tab-pane" aria-selected="true">
+                        Adhésions <span class="text-secondary">({{ user.memberships|length }})</span>
+                    </button>
+                </li>
             </ul>
+
             <div class="tab-content border border-top-0 border-secondary-outline rounded-bottom p-3">
                 <div class="tab-pane fade show active" id="registrations-tab-pane" role="tabpanel" aria-labelledby="registrations-tab" tabindex="0">
                     {% if user.registrations|length > 0 %}
@@ -100,6 +106,7 @@
                         Aucune réservation pour le moment
                     {% endif %}
                 </div>
+
                 <div class="tab-pane fade" id="companions-tab-pane" role="tabpanel" aria-labelledby="companions-tab" tabindex="0">
                     {% if user.companions|length > 0 %}
                         <table class="table table-hover table-bordered table-sm">
@@ -142,6 +149,31 @@
                         </table>
                     {% else %}
                         Aucun·e compagnon·e pour le moment
+                    {% endif %}
+                </div>
+
+                <div class="tab-pane fade" id="memberships-tab-pane" role="tabpanel" aria-labelledby="memberships-tab" tabindex="0">
+                    {% if user.memberships|length > 0 %}
+                        <table class="table table-hover table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Validité</th>
+                                    <th scope="col">Date de création</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for membership in user.memberships %}
+                                    <tr>
+                                        <td>
+                                            Du <b>{{ membership.startAt|format_date('short') }}</b> au <b> {{ membership.endAt|format_date('short') }}</b>
+                                        </td>
+                                        <td>{{ membership.createdAt|format_datetime }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        Aucune adhésion pour le moment
                     {% endif %}
                 </div>
             </div>

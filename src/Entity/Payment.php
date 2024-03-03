@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -58,6 +60,12 @@ class Payment
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt;
 
+    /**
+     * @var Collection<int, Membership>
+     */
+    #[ORM\OneToMany(targetEntity: Membership::class, mappedBy: 'payment', cascade: ['persist'])]
+    private Collection $memberships;
+
     public function __construct(User $payer, int $amount, Registration $registration)
     {
         $this->id = new UuidV4();
@@ -66,6 +74,7 @@ class Payment
         $this->registration = $registration;
         $this->status = PaymentStatus::PENDING;
         $this->createdAt = new \DateTimeImmutable();
+        $this->memberships = new ArrayCollection();
     }
 
     public function approve(): void
@@ -160,5 +169,13 @@ class Payment
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return Collection<int, Membership>
+     */
+    public function getMemberships(): Collection
+    {
+        return $this->memberships;
     }
 }
