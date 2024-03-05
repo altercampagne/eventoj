@@ -26,7 +26,7 @@ final class ItemAvailability
             return 0;
         }
 
-        return (float) ($this->max - $this->availability) * 100 / $this->max;
+        return (float) $this->availability * 100 / $this->max;
     }
 
     public function getBooked(): int
