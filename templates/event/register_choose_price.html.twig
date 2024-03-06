@@ -102,7 +102,7 @@
                     <li class="list-group-item list-group-item-{{ form.acceptCharter.vars.errors|length > 0 ? 'danger' : 'light' }} d-flex justify-content-between justify-content-sm-start align-items-center text-secondary">
                         <input class="form-check-input me-3 me-sm-2" type="checkbox" value="" id="{{ form.acceptCharter.vars.id }}" name="{{ field_name(form.acceptCharter) }}" required>
                         <label class="form-check-label" for="{{ form.acceptCharter.vars.id }}">
-                            J'ai lu et j'accepte <a href="">la charte de bonne conduite</a> ainsi que <a href="">le règlement intérieur</a> de l'association.
+                            J'ai lu, j'accepte et je m'engage à respecter <a href="{{ path('charter') }}">la charte de bonne conduite</a> de l'association.
                         </label>
                     </li>
                 </ul>
