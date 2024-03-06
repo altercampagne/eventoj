@@ -89,6 +89,7 @@ class StageFormType extends AbstractType
                 ],
             ])
             ->add('alternatives', AlternativeAutocompleteField::class, [
+                'required' => false,
                 'label' => false,
                 'multiple' => true,
                 'attr' => [

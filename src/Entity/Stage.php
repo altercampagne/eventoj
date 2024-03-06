@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`stage`')]
@@ -41,6 +42,7 @@ class Stage
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private \DateTimeImmutable $date;
 
+    #[Assert\NotBlank]
     #[ORM\Column]
     private string $name;
 
@@ -48,6 +50,7 @@ class Stage
     #[Gedmo\Slug(fields: ['name'])]
     private string $slug;
 
+    #[Assert\NotBlank(message: 'La description ne doit pas être vide.')]
     #[ORM\Column(type: 'text')]
     private string $description;
 
