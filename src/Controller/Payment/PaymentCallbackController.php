@@ -7,6 +7,7 @@ namespace App\Controller\Payment;
 use App\Bridge\Helloasso\PaymentReturnType;
 use App\Entity\Payment;
 use App\Entity\User;
+use App\Service\MembershipCreator;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +25,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class PaymentCallbackController extends AbstractController
 {
     public function __construct(
+        private readonly MembershipCreator $membershipCreator,
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger,
     ) {
@@ -66,6 +68,12 @@ class PaymentCallbackController extends AbstractController
 
         $payment->approve();
         $payment->getRegistration()->confirm();
+
+        $memberships = $this->membershipCreator->createMembershipsFromRegistration($payment->getRegistration());
+
+        foreach ($memberships as $membership) {
+            $this->em->persist($membership);
+        }
 
         $this->em->persist($payment);
         $this->em->persist($payment->getRegistration());

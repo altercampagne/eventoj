@@ -40,6 +40,32 @@ final class MembershipCreator
         return $memberships;
     }
 
+    /**
+     * @return Membership[]
+     */
+    public function createMembershipsFromRegistration(Registration $registration): array
+    {
+        if (null === $payment = $registration->getApprovedPayment()) {
+            throw new \LogicException('Cannot create memberships associated to a non paid registration.');
+        }
+
+        $membershipStartAt = $this->getMembershipStartAtFromRegistration($registration);
+
+        $memberships = [];
+
+        if (!$this->isMembershipValidForRegistration($registration->getUser()->getLatestMembership(), $registration)) {
+            $memberships[] = Membership::createForUser($registration->getUser(), $payment, $membershipStartAt);
+        }
+
+        foreach ($registration->getCompanions() as $companion) {
+            if (!$this->isMembershipValidForRegistration($companion->getLatestMembership(), $registration)) {
+                $memberships[] = Membership::createForCompanion($companion, $payment, $membershipStartAt);
+            }
+        }
+
+        return $memberships;
+    }
+
     public static function getPriceForPerson(User|Companion $person): int
     {
         if (18 <= $person->getAge()) {
@@ -58,10 +84,26 @@ final class MembershipCreator
             return false;
         }
 
-        if (null === $stageRegistration = $registration->getLastStageRegistration()) {
-            throw new \LogicException('Given registration does not contains any stage!');
+        if (null === $endAt = $registration->getEndAt()) {
+            throw new \LogicException('Given registration does have an end date (does not contains stage registrations?).');
         }
 
-        return $membership->isValidAt($stageRegistration->getStage()->getDate());
+        return $membership->isValidAt($endAt);
+    }
+
+    private function getMembershipStartAtFromRegistration(Registration $registration): \DateTimeImmutable
+    {
+        if (null === $registrationDate = $registration->getEndAt()) {
+            throw new \LogicException('Given registration does have an end date (does not contains stage registrations?).');
+        }
+
+        $comparisonDate = new \DateTimeImmutable('first day of may');
+        $comparisonDate = $comparisonDate->setDate((int) $registrationDate->format('Y'), (int) $comparisonDate->format('m'), (int) $comparisonDate->format('d'));
+
+        if ($registrationDate > $comparisonDate) {
+            return $comparisonDate;
+        }
+
+        return $comparisonDate->modify('-1 year');
     }
 }

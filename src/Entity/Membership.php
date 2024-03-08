@@ -81,19 +81,19 @@ class Membership
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    public static function createForUser(User $user, Payment $payment): self
+    public static function createForUser(User $user, Payment $payment, ?\DateTimeImmutable $startAt = null): self
     {
-        return new self($payment, user: $user);
+        return new self($payment, user: $user, startAt: $startAt);
     }
 
-    public static function createForCompanion(Companion $companion, Payment $payment): self
+    public static function createForCompanion(Companion $companion, Payment $payment, ?\DateTimeImmutable $startAt = null): self
     {
-        return new self($payment, companion: $companion);
+        return new self($payment, companion: $companion, startAt: $startAt);
     }
 
     public function isValidAt(\DateTimeImmutable $date): bool
     {
-        return $this->startAt >= $date && $date <= $this->endAt;
+        return $this->startAt <= $date && $date <= $this->endAt;
     }
 
     public function getId(): UuidV4

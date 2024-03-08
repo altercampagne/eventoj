@@ -185,6 +185,15 @@ class Registration
         return $count;
     }
 
+    public function getEndAt(): ?\DateTimeImmutable
+    {
+        if (null === $stageRegistration = $this->getLastStageRegistration()) {
+            return null;
+        }
+
+        return $stageRegistration->getStage()->getDate();
+    }
+
     /**
      * @return array<User|Companion>
      */
@@ -301,6 +310,13 @@ class Registration
     public function getPayments(): Collection
     {
         return $this->payments;
+    }
+
+    public function addPayment(Payment $payment): self
+    {
+        $this->payments->add($payment);
+
+        return $this;
     }
 
     public function getApprovedPayment(): ?Payment

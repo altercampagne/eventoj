@@ -80,6 +80,8 @@ class Payment
         $this->status = PaymentStatus::PENDING;
         $this->createdAt = new \DateTimeImmutable();
         $this->memberships = new ArrayCollection();
+
+        $registration->addPayment($this);
     }
 
     public function approve(): void
