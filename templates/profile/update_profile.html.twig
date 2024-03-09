@@ -18,7 +18,12 @@
 
                 {{ form_start(form) }}
                     <fieldset class="form-group border p-3 mt-3">
-                        <legend class="w-auto px-2"><i class="fa-solid fa-carrot me-2"></i> Ton alimentation</legend>
+                        <legend class="w-auto px-2">
+                            <i class="fa-solid fa-carrot me-2"></i> Ton alimentation
+                            <small><a href="#" class=" mx-2" data-bs-toggle="modal" data-bs-target="#dietDetailsModal">
+                                (plus d'infos)
+                            </a></small>
+                        </legend>
 
                         {{ form_row(form.diet) }}
 
@@ -61,6 +66,21 @@
                     </div>
 
                 {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="dietDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">L'alimentation lors des évènements</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    De manière générale, tous les repas préparés sur les tours (AT, BT, EB, ...) sont <b>végétariens</b>.<br />
+                    Connaître les régimes particuliers de toustes les participant·es permettra aux équipes de cuisine de préparer des repas qui conviendront à tout le monde.
+                </div>
             </div>
         </div>
     </div>
