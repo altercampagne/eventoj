@@ -81,6 +81,13 @@ class RegisterChoosePriceController extends AbstractController
                 registration: $registration,
             );
 
+            $payment->setHelloassoCheckoutIntentId(md5((string) random_int(0, 9999999)));
+
+            $this->em->persist($payment);
+            $this->em->flush();
+
+            return $this->redirect($this->generateUrl('payment_callback_return', ['id' => (string) $payment->getId(), 'code' => 'succeeded'], UrlGeneratorInterface::ABSOLUTE_URL));
+
             $initCheckoutResponse = $this->helloassoClient->checkout->create((new InitCheckoutBody())
                 ->setTotalAmount($expectedPrice)
                 ->setInitialAmount($expectedPrice)
