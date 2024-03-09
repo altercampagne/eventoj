@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Service\MembershipCreator;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -15,6 +14,8 @@ use Symfony\Component\Uid\UuidV4;
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class Membership
 {
+    public const PRICE = 1000;
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     private readonly UuidV4 $id;
@@ -70,12 +71,11 @@ class Membership
         }
         $endAt = $startAt->modify('+1 year -1 day');
 
-        $this->price = MembershipCreator::getPriceForPerson($user ?: $companion);
-
         $this->id = new UuidV4();
         $this->payment = $payment;
         $this->user = $user;
         $this->companion = $companion;
+        $this->price = self::PRICE;
         $this->startAt = $startAt;
         $this->endAt = $endAt;
         $this->createdAt = new \DateTimeImmutable();

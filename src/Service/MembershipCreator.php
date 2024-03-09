@@ -15,25 +15,19 @@ final class MembershipCreator
      * Return an array containing all users which need a membership (as key)
      * and the price they need to pay (as value).
      *
-     * @return array<array{person: User|Companion, price: int}>
+     * @return array<User|Companion>
      */
     public function getMembershipPricesToPayForRegistration(Registration $registration): array
     {
         $memberships = [];
 
         if (!$this->isMembershipValidForRegistration($registration->getUser()->getLatestMembership(), $registration)) {
-            $memberships[] = [
-                'person' => $registration->getUser(),
-                'price' => $this->getPriceForPerson($registration->getUser()),
-            ];
+            $memberships[] = $registration->getUser();
         }
 
         foreach ($registration->getCompanions() as $companion) {
             if (!$this->isMembershipValidForRegistration($companion->getLatestMembership(), $registration)) {
-                $memberships[] = [
-                    'person' => $companion,
-                    'price' => $this->getPriceForPerson($companion),
-                ];
+                $memberships[] = $companion;
             }
         }
 
@@ -64,18 +58,6 @@ final class MembershipCreator
         }
 
         return $memberships;
-    }
-
-    public static function getPriceForPerson(User|Companion $person): int
-    {
-        if (18 <= $person->getAge()) {
-            return 2000;
-        }
-        if (3 <= $person->getAge()) {
-            return 1000;
-        }
-
-        return 0;
     }
 
     private function isMembershipValidForRegistration(?Membership $membership, Registration $registration): bool

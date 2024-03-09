@@ -37,15 +37,15 @@
                     </ul>
                 {% endif %}
 
-                {% if membershipPricesToPay|length > 0 %}
-                    <h3 class="fw-bold text-secondary fs-4 pt-3">Adhésion{% if membershipPricesToPay|length > 1 %}s{% endif %}</h3>
+                {% if membershipsToPay|length > 0 %}
+                    <h3 class="fw-bold text-secondary fs-4 pt-3">Adhésion{% if membershipsToPay|length > 1 %}s{% endif %}</h3>
 
                     <ul class="list-group mt-3">
-                        {% for membership in membershipPricesToPay %}
+                        {% for membership in membershipsToPay %}
                             <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                                Adhésion pour {{ membership.person.fullName }}
+                                Adhésion pour {{ membership.fullName }}
                                 <span class="text-primary me-2">
-                                    {% if 0 == membership.price %}GRATUIT{% else %}{{ membership.price|format_price }}{% endif %}
+                                    {{ constant('\\App\\Entity\\Membership::PRICE')|format_price }}
                                 </span>
                             </li>
                         {% endfor %}

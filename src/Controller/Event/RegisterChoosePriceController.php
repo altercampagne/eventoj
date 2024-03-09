@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Event;
 
 use App\Entity\Event;
+use App\Entity\Membership;
 use App\Entity\Payment;
 use App\Entity\Registration;
 use App\Entity\User;
@@ -59,10 +60,8 @@ class RegisterChoosePriceController extends AbstractController
 
         $expectedPrice = $registration->payingDaysOfPresence() * $registration->countPeople() * $registration->getEvent()->getBreakEvenPricePerDay();
 
-        $membershipPricesToPay = $this->membershipCreator->getMembershipPricesToPayForRegistration($registration);
-        foreach ($membershipPricesToPay as $membership) {
-            $expectedPrice += $membership['price'];
-        }
+        $membershipsToPay = $this->membershipCreator->getMembershipPricesToPayForRegistration($registration);
+        $expectedPrice += Membership::PRICE * \count($membershipsToPay);
 
         $eventRegistrationDTO = new EventRegistrationDTO($registration);
         $form = $this->createForm(ChoosePriceFormType::class, $eventRegistrationDTO);
@@ -117,7 +116,7 @@ class RegisterChoosePriceController extends AbstractController
 
         return $this->render('event/register_choose_price.html.twig', [
             'registration' => $registration,
-            'membershipPricesToPay' => $membershipPricesToPay,
+            'membershipsToPay' => $membershipsToPay,
             'expectedPrice' => $expectedPrice,
             'form' => $form->createView(),
         ]);
