@@ -72,6 +72,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $biography;
 
+    #[Assert\NotBlank(groups: ['profile_update'], message: 'Le régime alimentaire est obligatoire.')]
     #[ORM\Column(type: 'string', enumType: Diet::class, nullable: true, options: [
         'comment' => 'Diet of the user (omnivore, vegetarien, vegan)',
     ])]

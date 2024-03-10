@@ -22,6 +22,7 @@ class ProfileUpdateFormType extends AbstractType
 
         $builder
             ->add('diet', EnumType::class, [
+                'required' => false, // This information is required but the HTML5 validation if perfectible on mobile devices (Android only?)
                 'label' => 'Ton régime alimentaire',
                 'class' => Diet::class,
                 'placeholder' => 'Choix du régime alimentaire',
@@ -70,6 +71,7 @@ class ProfileUpdateFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'validation_groups' => 'profile_update',
         ]);
     }
 }
