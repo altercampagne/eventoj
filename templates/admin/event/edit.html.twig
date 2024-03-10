@@ -57,7 +57,23 @@
                             </div>
                         </div>
 
-                        {{ form_row(form.breakEvenPricePerDay) }}
+                        <div class="alert alert-info">
+                            Les prix suivants sont des prix par jour et en euros.<br />
+                            Un·e participant·es aura la possibilité de choisir son tarif quelque par entre le prix minimum et l'infini.
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {{ form_row(form.minimumPricePerDay) }}
+                            </div>
+                            <div class="col">
+                                {{ form_row(form.breakEvenPricePerDay) }}
+                            </div>
+                            <div class="col">
+                                {{ form_row(form.supportPricePerDay) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.daysAtSolidarityPrice) }}
                     </fieldset>
 
                     <div class="d-grid gap-2 mt-4">

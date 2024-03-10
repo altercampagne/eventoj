@@ -94,16 +94,49 @@ class EventFormType extends AbstractType
                 'help' => '<i class="fa-solid fa-triangle-exclamation"></i> Tu ne sais pas ce que c\'est ? Clique sur "Plus d\'infos". 😉',
                 'help_html' => true,
             ])
-            ->add('breakEvenPricePerDay', MoneyType::class, [
+            ->add('minimumPricePerDay', MoneyType::class, [
                 'currency' => false,
-                'label' => 'Prix d\'équilibre (en euros)',
+                'label' => 'Prix minimum',
                 'attr' => [
-                    'placeholder' => 'Prix d\'équilibre (en euros)',
+                    'placeholder' => 'Prix minimum',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'help' => 'C\'est le prix qui sera suggéré par défaut lors de l\'inscription à l\'évènement',
+                'divisor' => 100,
+                'scale' => 0,
+            ])
+            ->add('daysAtSolidarityPrice', IntegerType::class, [
+                'label' => 'Nombre de jours maximum au tarif solidaire',
+                'attr' => [
+                    'placeholder' => 'Nombre de jours maximum au tarif solidaire',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+                'help' => 'Si une personne reste plus que ce nombre de jours, le prix des jours suivants sera automatiquement fixé au prix d\'équilibre',
+            ])
+            ->add('breakEvenPricePerDay', MoneyType::class, [
+                'currency' => false,
+                'label' => 'Prix d\'équilibre',
+                'attr' => [
+                    'placeholder' => 'Prix d\'équilibre',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+                'divisor' => 100,
+                'scale' => 0,
+            ])
+            ->add('supportPricePerDay', MoneyType::class, [
+                'currency' => false,
+                'label' => 'Prix de soutien',
+                'attr' => [
+                    'placeholder' => 'Prix de soutien',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
                 'divisor' => 100,
                 'scale' => 0,
             ])

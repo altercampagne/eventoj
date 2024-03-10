@@ -62,9 +62,27 @@ class Event
 
     #[Assert\NotBlank]
     #[ORM\Column(options: [
+        'comment' => 'The minimum price per day',
+    ])]
+    private int $minimumPricePerDay = 2000;
+
+    #[Assert\NotBlank]
+    #[ORM\Column(options: [
         'comment' => 'The average price per day at which we need to sell tickets in order to break even on this event',
     ])]
-    private int $breakEvenPricePerDay;
+    private int $breakEvenPricePerDay = 3300;
+
+    #[Assert\NotBlank]
+    #[ORM\Column(options: [
+        'comment' => 'The suggested support price per day for this event',
+    ])]
+    private int $supportPricePerDay = 4700;
+
+    #[Assert\NotBlank]
+    #[ORM\Column(options: [
+        'comment' => 'The maximum number of days at the solidarity price.',
+    ])]
+    private int $daysAtSolidarityPrice = 8;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text')]
@@ -112,7 +130,6 @@ class Event
         $this->stages = new ArrayCollection();
         $this->registrations = new ArrayCollection();
         $this->openingDateForBookings = new \DateTimeImmutable('+6 months');
-        $this->breakEvenPricePerDay = 3400;
     }
 
     public static function createFromType(EventType $type): self
@@ -206,6 +223,18 @@ class Event
         return $this;
     }
 
+    public function getMinimumPricePerDay(): int
+    {
+        return $this->minimumPricePerDay;
+    }
+
+    public function setMinimumPricePerDay(int $minimumPricePerDay): self
+    {
+        $this->minimumPricePerDay = $minimumPricePerDay;
+
+        return $this;
+    }
+
     public function getBreakEvenPricePerDay(): int
     {
         return $this->breakEvenPricePerDay;
@@ -214,6 +243,30 @@ class Event
     public function setBreakEvenPricePerDay(int $breakEvenPricePerDay): self
     {
         $this->breakEvenPricePerDay = $breakEvenPricePerDay;
+
+        return $this;
+    }
+
+    public function getSupportPricePerDay(): int
+    {
+        return $this->supportPricePerDay;
+    }
+
+    public function setSupportPricePerDay(int $supportPricePerDay): self
+    {
+        $this->supportPricePerDay = $supportPricePerDay;
+
+        return $this;
+    }
+
+    public function getDaysAtSolidarityPrice(): int
+    {
+        return $this->daysAtSolidarityPrice;
+    }
+
+    public function setDaysAtSolidarityPrice(int $daysAtSolidarityPrice): self
+    {
+        $this->daysAtSolidarityPrice = $daysAtSolidarityPrice;
 
         return $this;
     }
