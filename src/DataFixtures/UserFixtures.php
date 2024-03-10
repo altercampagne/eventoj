@@ -20,8 +20,30 @@ class UserFixtures extends AbstractFixture
         );
 
         $manager->persist($admin);
-        $manager->persist(FixtureBuilder::createCompanion(user: $admin, children: false));
-        $manager->persist(FixtureBuilder::createCompanion(user: $admin, children: true));
+        $manager->persist(FixtureBuilder::createCompanion(
+            user: $admin,
+            firstName: 'Bambino',
+            lastName: 'Petit',
+            birthDate: new \DateTimeImmutable('-1 year'),
+        ));
+        $manager->persist(FixtureBuilder::createCompanion(
+            user: $admin,
+            firstName: 'Bambino',
+            lastName: 'Moyen',
+            birthDate: new \DateTimeImmutable('-8 years'),
+        ));
+        $manager->persist(FixtureBuilder::createCompanion(
+            user: $admin,
+            firstName: 'Bambino',
+            lastName: 'Grand',
+            birthDate: new \DateTimeImmutable('-15 years'),
+        ));
+        $manager->persist(FixtureBuilder::createCompanion(
+            user: $admin,
+            firstName: 'Copain',
+            lastName: 'Adulte',
+            birthDate: new \DateTimeImmutable('-35 years'),
+        ));
 
         $manager->persist(FixtureBuilder::createUser(email: 'change-my-password@test-only.user'));
 

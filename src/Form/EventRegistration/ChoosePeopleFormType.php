@@ -32,6 +32,7 @@ class ChoosePeopleFormType extends AbstractType
                     return [
                         'data-fullname' => $companion->getFullName(),
                         'data-birthdate' => $companion->getBirthDate()->format('d/m/Y'),
+                        'data-age' => $companion->getAge(),
                     ];
                 },
             ])

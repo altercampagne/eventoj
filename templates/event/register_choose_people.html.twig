@@ -19,8 +19,7 @@
                     <li class="list-group-item d-flex align-items-center">
                         <input class="form-check-input" type="checkbox" name="self" checked disabled />
                         <div class="ms-3">
-                            <span class="fs-5"><b>{{ app.user.fullName }}</b> (c'est toi !)</span></br >
-                            <span class="text-secondary">({{ app.user.birthDate|format_date('short') }})</span>
+                            <span class="fs-5"><b>{{ app.user.fullName }}</b> (c'est toi !)</span>
                         </div>
                     </li>
                     {% for companionForm in form.companions %}
@@ -29,7 +28,7 @@
                                 {{ form_widget(companionForm) }}
                                 <div class="ms-2">
                                     <label class="form-check-label" for="{{ companionForm.vars.id }}">{{ companionForm.vars.attr['data-fullname'] }}</label><br />
-                                    <span class="text-secondary">({{ companionForm.vars.attr['data-birthdate'] }})</span>
+                                    <span class="text-secondary">{{ companionForm.vars.attr['data-age'] }} an{% if companionForm.vars.attr['data-age'] > 1 %}s{% endif %}</span>
                                 </div>
                             </div>
                             <a href="{{ path('profile_companion_update', { id: companionForm.vars.value, backToEvent: event.slug }) }}" class="btn btn-link">
