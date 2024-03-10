@@ -41,6 +41,8 @@ class Companion
     private string $lastName;
 
     #[Assert\NotBlank]
+    #[Assert\LessThan('now', message: 'Une date de naissance dans le futur, ça ne va pas être possible !')]
+    #[Assert\GreaterThan('-125 years', message: 'Une vraie date de naissance, ce serait mieux ! :)')]
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private \DateTimeImmutable $birthDate;
 
