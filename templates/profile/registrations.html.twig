@@ -16,7 +16,7 @@
                 .<br />
                 <b>Départ</b> prévu le <b>{{ registration.lastStageRegistration.stage.date|format_date('full') }}</b>
                 {% if registration.event.isAT %}
-                    après le {{ registration.firstStageRegistration.firstMeal|trans|lower }}
+                    après le {{ registration.lastStageRegistration.firstMeal|trans|lower }}
                 {% endif %}
                 .
             </p>
