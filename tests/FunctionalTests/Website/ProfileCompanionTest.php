@@ -91,7 +91,7 @@ class ProfileCompanionTest extends WebTestCase
 
         $this->assertSelectorNotExists('input[data-fullname="Companion ForTests"]');
 
-        $client->clickLink('Ajouter une·e compagnon·e');
+        $client->clickLink('Ajouter un·e compagnon·e');
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_companion_create');
 
