@@ -59,6 +59,7 @@ class Stage
     ])]
     private ?StageDifficulty $difficulty = null;
 
+    #[Assert\Url]
     #[ORM\Column(nullable: true, options: [
       'comment' => 'The URL of the route (komoot or openrunner) to embed on website',
     ])]
