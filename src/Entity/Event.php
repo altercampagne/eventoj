@@ -129,7 +129,7 @@ class Event
     {
         $event = new self(EventType::AT);
         $event->adultsCapacity = 60;
-        $event->childrenCapacity = 12;
+        $event->childrenCapacity = 8;
         $event->bikesAvailable = 22;
 
         return $event;
