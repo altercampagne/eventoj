@@ -29,7 +29,16 @@
                             S'il n'y a pas de vélo de prévu, les informations suivantes doivent rester vides. :)
                         </div>
 
-                        {{ form_row(form.difficulty) }}
+                        <div class="row">
+                            <div class="col">
+                                {{ form_row(form.difficulty) }}
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-link pt-3 fw-bold" data-bs-toggle="modal" data-bs-target="#difficultyExplanationModal">
+                                    Plus d'infos
+                                </button>
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col">
@@ -62,6 +71,39 @@
                     </div>
 
                 {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-lg" id="difficultyExplanationModal" tabindex="-1" aria-labelledby="difficultyExplanationTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="difficultyExplanationTitle">💡 Comment choisir la difficulté de l'étape ?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert bg-info-subtle">
+                        Ces informations sont données à titre indicatif : la difficulté d'une étape est forcément très subjective et dépendante de la forme des participant·es.
+                        Si ton étape fait 70 kilomètres le long d'un canal, sans le moindre dénivelé, peut-être qu'une difficulté moyenne est amplement suffisante.
+                    </div>
+
+                    <h2 class="fs-5">Étape facile</h2>
+                    <p>
+                        Jusqu'à 30 kilomètres, pas de pente continue de plus de 7%, jusqu'à 300 de dénivelé positif.
+                    </p>
+                    <h2 class="fs-5">Étape moyenne</h2>
+                    <p>
+                        Jusqu'à 60 kilomètres, pas de pente continue supérieur à 11%, jusqu'à 600 de dénivelé positif.
+                    </p>
+                    <h2 class="fs-5">Étape difficile</h2>
+                    <p>
+                        Plus de 60 kilomètres, des pentes continues de plus de 11%, plus de 600 de dénivelé positif.
+                    </p>
+                    <div class="alert bg-warning-subtle">
+                        Encore une fois, ces informations sont données à titre indicatif : peut-être que si ton étape fait 70 kilomètres le long d'un canal, sans le moindre dénivelé, peut-être qu'une difficulté moyenne est amplement suffisante.
+                    </div>
+                </div>
             </div>
         </div>
     </div>
