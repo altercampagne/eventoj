@@ -46,8 +46,10 @@ class Companion
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private \DateTimeImmutable $birthDate;
 
-    #[ORM\Column(length: 180, nullable: true)]
-    private ?string $email = null;
+    #[Assert\NotBlank]
+    #[Assert\Email]
+    #[ORM\Column(length: 180)]
+    private string $email;
 
     #[AssertPhoneNumber(regionPath: 'user.address.countryCode')]
     #[ORM\Column(type: 'phone_number', nullable: true)]
@@ -143,12 +145,12 @@ class Companion
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 

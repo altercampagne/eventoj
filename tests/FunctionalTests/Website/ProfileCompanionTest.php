@@ -36,6 +36,7 @@ class ProfileCompanionTest extends WebTestCase
         $client->submitForm('Ajouter', [
             'companion_form[firstName]' => 'Companion',
             'companion_form[lastName]' => 'ForTests',
+            'companion_form[email]' => 'contact@yopmail.com',
             'companion_form[birthDate]' => (new \DateTimeImmutable('-11 years'))->format('Y-m-d'),
             'companion_form[diet]' => 'vegetarian',
             'companion_form[glutenIntolerant]' => false,
@@ -49,7 +50,6 @@ class ProfileCompanionTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_companions');
         $this->assertSelectorTextContains('.alert-success', 'Companion ForTests a bien été ajouté·e !');
-        $this->assertSelectorTextContains('.card-body', "Pas d'information de contact");
 
         $client->clickLink('Modifier Companion ForTests');
         $this->assertResponseIsSuccessful();
@@ -98,6 +98,7 @@ class ProfileCompanionTest extends WebTestCase
         $client->submitForm('Ajouter', [
             'companion_form[firstName]' => 'Companion',
             'companion_form[lastName]' => 'ForTests',
+            'companion_form[email]' => 'contact@yopmail.com',
             'companion_form[birthDate]' => (new \DateTimeImmutable('-11 years'))->format('Y-m-d'),
             'companion_form[diet]' => 'vegetarian',
             'companion_form[glutenIntolerant]' => false,
@@ -121,6 +122,7 @@ class ProfileCompanionTest extends WebTestCase
         $client->submitForm('Modifier', [
             'companion_form[firstName]' => 'UpdatedCompanion',
             'companion_form[lastName]' => 'ForUpdateTests',
+            'companion_form[email]' => 'contact@yopmail.com',
             'companion_form[birthDate]' => (new \DateTimeImmutable('-11 years'))->format('Y-m-d'),
             'companion_form[diet]' => 'vegetarian',
             'companion_form[glutenIntolerant]' => false,

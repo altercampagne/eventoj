@@ -170,7 +170,7 @@ class FixtureBuilder
             ->setFirstName($firstName ?? self::getFaker()->firstName())
             ->setLastName($lastName ?? self::getFaker()->lastName())
             ->setBirthDate($birthDate ?? \DateTimeImmutable::createFromMutable($children ? self::getFaker()->dateTimeBetween('-12 years', 'now') : self::getFaker()->dateTimeBetween('-80 years', '-14 years')))
-            ->setEmail($email ?? self::getFaker()->optional()->email())
+            ->setEmail($email ?? self::getFaker()->email())
             ->setPhoneNumber($phoneNumber ?? PhoneNumberUtil::getInstance()->parse(self::getFaker()->phoneNumber(), 'FR'))
             ->setDiet($diet)
             ->setGlutenIntolerant($glutenIntolerant)

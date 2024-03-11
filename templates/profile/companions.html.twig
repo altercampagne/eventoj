@@ -20,17 +20,12 @@
                                             <h3 class="card-title fs-5">{{ companion.fullName }}</h3>
                                             <p class="text-secondary mb-2">
                                                 {{ companion.birthDate|format_date('short') }}<br />
-                                                {% if companion.email is not null %}
-                                                    {{ companion.email }}
-                                                    {% if companion.phoneNumber is not null %}
-                                                        <span class="px-2">/</span>
-                                                    {% endif %}
+                                                {{ companion.email }}
+                                                {% if companion.phoneNumber is not null %}
+                                                    <span class="px-2">/</span>
                                                 {% endif %}
                                                 {% if companion.phoneNumber is not null %}
                                                     {{ companion.phoneNumber|phone_number_format }}
-                                                {% endif %}
-                                                {% if companion.email is null and companion.phoneNumber is null %}
-                                                    <i class="fa-solid fa-triangle-exclamation me-1"></i> Pas d'information de contact
                                                 {% endif %}
                                             </p>
                                         </div>

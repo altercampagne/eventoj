@@ -53,7 +53,6 @@ class CompanionFormType extends AbstractType
                 'input' => 'datetime_immutable',
             ])
             ->add('email', EmailType::class, [
-                'required' => false,
                 'label' => 'Son adresse mail',
                 'attr' => [
                     'placeholder' => 'Son adresse mail',
