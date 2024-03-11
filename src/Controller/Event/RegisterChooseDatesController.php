@@ -85,7 +85,6 @@ class RegisterChooseDatesController extends AbstractController
 
             $registration
                 ->setStagesRegistrations($stagesRegistrations)
-                ->setPricePerDay($eventRegistrationDTO->pricePerDay * 100)
                 ->setNeededBike($eventRegistrationDTO->neededBike)
             ;
 

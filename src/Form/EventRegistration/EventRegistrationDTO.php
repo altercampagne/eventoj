@@ -26,9 +26,6 @@ class EventRegistrationDTO
     public Meal $lastMeal = Meal::BREAKFAST;
     #[Assert\NotNull(groups: ['choose_dates'])]
     public int $neededBike = 0;
-    #[Assert\NotBlank(groups: ['choose_price'])]
-    #[Assert\Range(min: 20, minMessage: 'Le prix minimum par jour est de {{ limit }} €.', groups: ['choose_price'])]
-    public int $pricePerDay;
 
     /**
      * @var Collection<int, Companion>
@@ -67,7 +64,6 @@ class EventRegistrationDTO
 
         $this->companions = $registration->getCompanions();
         $this->neededBike = $registration->getNeededBike();
-        $this->pricePerDay = $registration->getPricePerDay() / 100;
     }
 
     /**

@@ -6,6 +6,8 @@ RUN apt update \
     && pecl install apcu \
     && docker-php-ext-enable apcu
 
+COPY custom-config.ini /usr/local/etc/php/conf.d/custom-config.ini
+
 WORKDIR /var/www
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

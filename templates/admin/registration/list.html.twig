@@ -8,7 +8,8 @@
             <tr>
                 <th scope="col">Evènement</th>
                 <th scope="col">Membre</th>
-                <th scope="col">Prix total</th>
+                <th scope="col">Durée</th>
+                <th scope="col">Prix</th>
                 <th scope="col">Status</th>
                 <th scope="col">Date</th>
             </tr>
@@ -21,7 +22,10 @@
                     </td>
                     <td>{{ registration.user.fullName }}</td>
                     <td>
-                        {{ registration.payingDaysOfPresence }} x {{ registration.pricePerDay|format_price }}
+                        {{ registration.daysOfPresence }} jours
+                    </td>
+                    <td>
+                        {{ registration.price|format_price }}
                     </td>
                     <td>
                         <twig:Admin:RegistrationStatus registration="{{ registration }}" />

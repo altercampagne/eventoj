@@ -17,7 +17,7 @@ final class MembershipCreator
      *
      * @return array<User|Companion>
      */
-    public function getMembershipPricesToPayForRegistration(Registration $registration): array
+    public function getPeopleNeedingMembershipForRegistration(Registration $registration): array
     {
         $memberships = [];
 

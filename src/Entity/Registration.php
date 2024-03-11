@@ -41,9 +41,9 @@ class Registration
     private RegistrationStatus $status;
 
     #[ORM\Column(type: Types::INTEGER, options: [
-        'comment' => 'The price per day choose by the user.',
+        'comment' => 'The total price choose by the user.',
     ])]
-    private int $pricePerDay;
+    private int $price;
 
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'How many bikes are needed by participants?',
@@ -91,7 +91,6 @@ class Registration
         $this->createdAt = new \DateTimeImmutable();
         $this->payments = new ArrayCollection();
         $this->companions = new ArrayCollection();
-        $this->pricePerDay = $event->getBreakEvenPricePerDay();
 
         if ($event->isAT()) {
             $this->stagesRegistrations = new ArrayCollection();
@@ -102,6 +101,8 @@ class Registration
             }
             $this->stagesRegistrations = new ArrayCollection($stagesRegistrations);
         }
+
+        $this->price = $event->getBreakEvenPricePerDay() * $this->payingDaysOfPresence();
     }
 
     public function canBeConfirmed(): bool
@@ -187,7 +188,7 @@ class Registration
 
     public function getEndAt(): ?\DateTimeImmutable
     {
-        if (null === $stageRegistration = $this->getLastStageRegistration()) {
+        if (null === $stageRegistration = $this->getStageRegistrationEnd()) {
             return null;
         }
 
@@ -222,14 +223,14 @@ class Registration
         return $this->status;
     }
 
-    public function getPricePerDay(): int
+    public function getPrice(): int
     {
-        return $this->pricePerDay;
+        return $this->price;
     }
 
-    public function setPricePerDay(int $pricePerDay): self
+    public function setPrice(int $price): self
     {
-        $this->pricePerDay = $pricePerDay;
+        $this->price = $price;
 
         return $this;
     }
@@ -284,24 +285,6 @@ class Registration
         $this->stagesRegistrations = new ArrayCollection($stagesRegistrations);
 
         return $this;
-    }
-
-    public function getFirstStageRegistration(): ?StageRegistration
-    {
-        if (false === $stagesRegistration = $this->stagesRegistrations->first()) {
-            return null;
-        }
-
-        return $stagesRegistration;
-    }
-
-    public function getLastStageRegistration(): ?StageRegistration
-    {
-        if (false === $stagesRegistration = $this->stagesRegistrations->last()) {
-            return null;
-        }
-
-        return $stagesRegistration;
     }
 
     /**

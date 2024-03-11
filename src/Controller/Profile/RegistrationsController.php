@@ -27,7 +27,7 @@ class RegistrationsController extends AbstractController
                 continue;
             }
 
-            if (null === $stageRegistration = $registration->getLastStageRegistration()) {
+            if (null === $stageRegistration = $registration->getStageRegistrationEnd()) {
                 throw new \LogicException('Found a confirmed registration without stages!');
             }
 

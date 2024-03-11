@@ -100,7 +100,7 @@
                                             <twig:Admin:RegistrationStatus registration="{{ registration }}" />
                                         </td>
                                         <td>
-                                            {{ registration.payingDaysOfPresence }} x {{ registration.pricePerDay|format_price }}
+                                            {{ registration.price|format_price }}
                                         </td>
                                         <td>{{ registration.createdAt|format_datetime }}</td>
                                     </tr>

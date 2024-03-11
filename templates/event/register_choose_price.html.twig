@@ -14,87 +14,123 @@
             <div class="col-12 col-sm-8 col-md-6 m-auto">
                 {{ form_start(form) }}
 
+                <div class="alert alert-secondary bg-white">
+                    <h3 class="fw-bold text-secondary fs-4">Comment le prix est-il calculé ?</h3>
+                    <p>
+                        Emplacement à compléter avec le camembert présentant la répartition des dépenses de l'association.
+                    </p>
+                    <div class="alert alert-info">
+                        Pour les mineurs, <b>prix plancher automatique</b> : le prix demandé nous permet de couvrir les frais liés aux repas uniquement.
+                    </div>
+                    <h3 class="fw-bold text-secondary fs-4">Comment choisir mon prix ?</h3>
+                    <p>
+                        AlterCampagne croit fermement au <b>prix libre et conscient</b> en tant qu'acte militant. Pour cette raison, il t'est offert la possibilité de choisir un tarif qui correspond à tes possibilités financières et à tes possibilités de soutien envers l'association.<br />
+                        Tout le texte de ce bloc a été écrit sans réelle réflexion et, surtout, sans aucune concertation quelconque. Il convient donc d'y réfléchir plus en détails (et avant l'ouverture des inscriptions bien sûr).
+                    </p>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <h2 class="fw-bold text-secondary fs-4">Détails du tarif</h2>
+                </div>
+
+                <p>
+                    Pour ton inscription du <b>{{ registration.stageRegistrationStart.stage.date|format_date('long') }}</b> au <b>{{ registration.stageRegistrationEnd.stage.date|format_date('long') }}</b>.<br />
+                    Soit <b>{{ registration.daysOfPresence }} jours de présence</b>{% if registration.freeDaysOfPresence > 0 %} (dont {{ registration.freeDaysOfPresence }} jour{% if registration.freeDaysOfPresence > 1 %}s{% endif %} gratuit{% if registration.freeDaysOfPresence > 1 %}s{% endif %}){% endif %}.
+                </p>
+
+                <ul class="list-group mt-2">
+                    {% if registration.neededBike > 0 %}
+                        <li class="list-group-item py-2 px-3">
+                            <strong>Options</strong>
+                            <ul class="ms-n3">
+                                <li class="d-flex justify-content-between align-items-center">
+                                    {{ registration.neededBike == 1 ? '1 vélo' : registration.neededBike ~ ' vélos' }} de prêt
+                                    <span class="text-primary me-2">
+                                        GRATUIT
+                                    </span>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+
+                    {% if bill.peopleNeedingMembership|length > 0 %}
+                        <li class="list-group-item py-2 px-3">
+                            <strong>Adhésions</strong>
+                            <ul class="ms-n3">
+                                {% for people in bill.peopleNeedingMembership %}
+                                    <li class="d-flex justify-content-between align-items-center">
+                                        {{ people.fullName }}
+                                        <span class="text-primary me-2">
+                                            {{ constant('\\App\\Entity\\Membership::PRICE')|format_price }}
+                                        </span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endif %}
+
+                    <li class="list-group-item py-2 px-3">
+                        <strong>Inscriptions</strong>
+                        <ul class="ms-n3">
+                            {% for name, price in bill.registrations %}
+                                <li class="d-flex justify-content-between align-items-center">
+                                    {{ name }}
+                                    <span class="text-primary me-2">
+                                        {% if price.breakEvenAmount == 0 %}GRATUIT{% else %}{{ price.breakEvenAmount|format_price }}{% endif %}
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+
                 <ul class="list-group mt-3">
-                    <li class="list-group-item p-3 list-group-item-danger fw-bold text-center">
-                        La mise à jour du prix n'est pas encore fonctionnelle, je suis en attente d'information avant de pouvoir l'implémenter.
+                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-4 fw-bold p-3">
+                        Prix d'équilibre
+                        <div class="text-primary me-2 text-end lh-1">
+                            {{ bill.breakEvenPrice|format_price }}<br />
+                        </div>
                     </li>
                 </ul>
 
                 <div class="d-flex justify-content-between align-items-center mt-4">
-                    <h2 class="fw-bold text-secondary">Choix du tarif</h2>
+                    <h2 class="fw-bold text-secondary fs-4">Choix du tarif</h2>
                 </div>
 
-                {% if registration.neededBike > 0 %}
-                    <h3 class="fw-bold text-secondary fs-4 pt-3">Vélo{% if registration.neededBike > 1 %}s{% endif %}</h3>
-
-                    <ul class="list-group mt-3">
-                        <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                            {{ registration.neededBike == 1 ? '1 vélo' : registration.neededBike ~ ' vélos' }} de prêt
-                            <span class="text-primary me-2">
-                                GRATUIT
-                            </span>
-                        </li>
-                    </ul>
-                {% endif %}
-
-                {% if membershipsToPay|length > 0 %}
-                    <h3 class="fw-bold text-secondary fs-4 pt-3">Adhésion{% if membershipsToPay|length > 1 %}s{% endif %}</h3>
-
-                    <ul class="list-group mt-3">
-                        {% for membership in membershipsToPay %}
-                            <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                                Adhésion pour {{ membership.fullName }}
-                                <span class="text-primary me-2">
-                                    {{ constant('\\App\\Entity\\Membership::PRICE')|format_price }}
-                                </span>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-
-                {% for person in registration.persons %}
-                    <h3 class="fw-bold text-secondary fs-4 pt-3">Inscription de {{ person.fullName }}</h3>
-
-                    <ul class="list-group mt-3">
-
-                        {% if registration.payingDaysOfPresence == 0 %}
-                            <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                                {{ registration.freeDaysOfPresence }} jour{% if registration.freeDaysOfPresence > 0 %}s{% endif %} gratuit{% if registration.freeDaysOfPresence > 0 %}s{% endif %} sur l'évènement
-                                <span class="text-primary me-2">GRATUIT</span>
-                            </li>
-                        {% else %}
-                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-primary">
-                                <label class="form-check-label" for="price-per-day-{{ person.id }}">
-                                    Prix à la journée <small><a data-bs-toggle="offcanvas" href="#priceExplanationOffcanvas" aria-controls="#priceExplanationOffcanvas">(plus d'infos)</a></small>
-                                </label>
-                                <div class="col-auto">
-                                    <input
-                                        type="number"
-                                        min="20"
-                                        id="price-per-day-{{ person.id }}"
-                                        value="{{ registration.event.breakEvenPricePerDay/100 }}"
-                                        class="form-control"
-                                        size="3"
-                                    />
-                                </div>
-                            </li>
-
-                            <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                                Prix à payer pour {{ person.fullName }}
-                                <span class="text-primary me-2">
-                                    {{ (registration.payingDaysOfPresence * registration.event.breakEvenPricePerDay)|format_price }}
-                                </span>
-                            </li>
-                        {% endif %}
-                    </ul>
-                {% endfor %}
-
                 <ul class="list-group mt-3">
-                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-4 fw-bold p-3">
-                        Total
-                        <span class="text-primary me-2">
-                            {{ expectedPrice|format_price }}
-                        </span>
+                    <li class="list-group-item list-group-item-info p-3 d-flex justify-content-between align-items-center fs-5 fw-bold p-3">
+                        Prix solidaire
+                        <div class="text-primary me-2 text-end lh-1">
+                            {{ bill.minimumPrice|format_price }}<br />
+                        </div>
+                    </li>
+                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-5 fw-bold p-3">
+                        Prix d'équilibre
+                        <div class="text-primary me-2 text-end lh-1">
+                            {{ bill.breakEvenPrice|format_price }}<br />
+                        </div>
+                    </li>
+                    <li class="list-group-item list-group-item-success p-3 d-flex justify-content-between align-items-center fs-5 fw-bold p-3">
+                        Prix de soutien
+                        <div class="text-primary me-2 text-end lh-1">
+                            {{ bill.supportPrice|format_price }}<br />
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="list-group mt-3 border border-primary">
+                    <li class="list-group-item d-flex justify-content-between justify-content-sm-start align-items-center p-3">
+                        <div class="me-auto fs-3 fw-bold">
+                            Ton prix
+                        </div>
+                        <div>
+                            <div class="input-group input-group-lg">
+                                <button class="btn btn-primary" type="button" id="btn-minus">-</button>
+                                {{ form_widget(form.price) }}
+                                <button class="btn btn-primary" type="button" id="btn-plus">+</button>
+                            </div>
+                        {{ form_errors(form.price) }}
+                        </div>
                     </li>
                 </ul>
 
@@ -108,12 +144,8 @@
                 </ul>
 
                 <twig:EventRegistration:Buttons step="choose_people">
-                    Régler {{ expectedPrice|format_price }} via Helloasso
+                    Régler via Helloasso
                 </twig:EventRegistration:Buttons>
-
-                <div class="d-none">
-                    {{ form_rest(form) }}
-                </div>
 
                 {{ form_end(form) }}
             </div>

@@ -4,6 +4,7 @@ framework:
     #csrf_protection: true
     http_method_override: false
     handle_all_throwables: true
+    default_locale: 'fr'
 
     # localhost, Docker, Kubernetes
     trusted_proxies: 127.0.0.1, 172.16.0.0/12, 10.0.0.0/8

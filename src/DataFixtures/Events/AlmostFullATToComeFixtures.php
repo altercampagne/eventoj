@@ -33,7 +33,6 @@ class AlmostFullATToComeFixtures extends AbstractFixture implements DependentFix
             $manager->persist($user);
 
             $registration = new Registration($user, $event);
-            $registration->setPricePerDay($stay['price'] ?? $this->getFaker()->numberBetween(20, 55) * 100);
             $registration->setNeededBike($stay['needed_bike'] ?? 0);
 
             $stagesRegistrations = [];
@@ -44,6 +43,7 @@ class AlmostFullATToComeFixtures extends AbstractFixture implements DependentFix
             }
 
             $registration->setStagesRegistrations($stagesRegistrations);
+            $registration->setPrice(($stay['price'] ?? $this->getFaker()->numberBetween(20, 55) * 100) * \count($stagesRegistrations));
             $registration->confirm();
 
             $manager->persist($registration);

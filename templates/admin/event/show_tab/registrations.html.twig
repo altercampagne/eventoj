@@ -8,6 +8,7 @@
             <tr>
                 <th scope="col">Utilisateurice</th>
                 <th scope="col">Durée</th>
+                <th scope="col">Prix</th>
                 <th scope="col">Date</th>
             </tr>
         </thead>
@@ -16,6 +17,7 @@
                 <tr data-href="{{ path('admin_registration_show', { id: registration.id }) }}">
                     <td>{{ registration.user.fullName }}</td>
                     <td>{{ registration.daysOfPresence }} jours</td>
+                    <td>{{ registration.price|format_price }}</td>
                     <td>{{ registration.createdAt|format_datetime }}</td>
                 </tr>
             {% endfor %}
