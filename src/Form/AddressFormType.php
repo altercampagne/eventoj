@@ -27,9 +27,9 @@ class AddressFormType extends AbstractType
                 'preferred_choices' => ['FR', 'BE'],
             ])
             ->add('addressLine1', TextType::class, [
-                'label' => 'Addresse',
+                'label' => 'Adresse',
                 'attr' => [
-                    'placeholder' => 'Ton address',
+                    'placeholder' => 'Ton adresse',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
