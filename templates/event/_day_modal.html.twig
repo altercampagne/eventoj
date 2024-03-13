@@ -51,7 +51,7 @@
                         >
                             <h2 class="accordion-header">
                                 <button
-                                    class="accordion-button{% if not isSelected %} collapsed{% endif %}{{ isStageFull ? ' bg-secondary-subtle p-2' }}"
+                                    class="accordion-button{% if not isSelected %} collapsed{% endif %}{{ isStageFull ? ' bg-warning-subtle p-2' }}"
                                     type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapse-{{ modal|title }}-{{ stage.id }}"
@@ -59,7 +59,7 @@
                                     aria-controls="#collapse-{{ modal|title }}-{{ stage.id }}"
                                 >
                                     {% if isStageFull %}
-                                        <span class="badge bg-secondary me-2">COMPLET</span>
+                                        <span class="badge bg-warning me-2">COMPLET</span>
                                     {% endif %}
                                     <span class="badge bg-secondary me-2 d-none badge-not-available">INDISPONIBLE</span>
                                     <span>
