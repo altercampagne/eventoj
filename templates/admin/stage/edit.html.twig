@@ -56,6 +56,10 @@
                         <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-map-location-dot me-2"></i> Les alternatives traversées</legend>
 
                         {{ form_row(form.alternatives) }}
+
+                        <div class="alert alert-warning">
+                            Tu ne trouves pas ton alternative ? Est-ce que tu as bien pensé à l'ajouter <a href="{{ path('admin_alternative_create') }}">en passant par ici</a> ?
+                        </div>
                     </fieldset>
 
                     <fieldset class="form-group border p-3 mt-3 bg-light">
