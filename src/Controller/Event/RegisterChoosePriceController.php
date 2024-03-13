@@ -10,16 +10,13 @@ use App\Entity\Registration;
 use App\Entity\User;
 use App\Form\EventRegistration\ChoosePriceFormType;
 use App\Service\Bill\BillCreator;
+use App\Service\RegistrationPaymentHandler;
 use Doctrine\ORM\EntityManagerInterface;
-use Helloasso\HelloassoClient;
-use Helloasso\Models\Carts\CheckoutPayer;
-use Helloasso\Models\Carts\InitCheckoutBody;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
@@ -27,8 +24,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class RegisterChoosePriceController extends AbstractController
 {
     public function __construct(
+        private readonly RegistrationPaymentHandler $registrationPaymentHandler,
         private readonly BillCreator $billCreator,
-        private readonly HelloassoClient $helloassoClient,
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger,
     ) {
@@ -69,6 +66,7 @@ class RegisterChoosePriceController extends AbstractController
 
             $registration->setPrice($price);
             $this->em->persist($registration);
+            $this->em->flush();
 
             /** @var User $payer */
             $payer = $this->getUser();
@@ -79,31 +77,9 @@ class RegisterChoosePriceController extends AbstractController
                 registration: $registration,
             );
 
-            $initCheckoutResponse = $this->helloassoClient->checkout->create((new InitCheckoutBody())
-                ->setTotalAmount($price)
-                ->setInitialAmount($price)
-                ->setItemName('Inscription '.$registration->getEvent()->getName())
-                ->setBackUrl($this->generateUrl('payment_callback_back', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
-                ->setErrorUrl($this->generateUrl('payment_callback_error', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
-                ->setReturnUrl($this->generateUrl('payment_callback_return', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
-                ->setPayer(
-                    (new CheckoutPayer())
-                        ->setFirstName($payer->getFirstName())
-                        ->setLastName($payer->getLastName())
-                        ->setEmail($payer->getEmail())
-                        ->setAddress($payer->getAddress()->getAddressLine1())
-                )
-                ->setMetadata([
-                    'registration' => (string) $registration->getId(),
-                ])
-            );
+            $redirectUrl = $this->registrationPaymentHandler->initiatePayment($payment);
 
-            $payment->setHelloassoCheckoutIntentId((string) $initCheckoutResponse->getId());
-
-            $this->em->persist($payment);
-            $this->em->flush();
-
-            return $this->redirect($initCheckoutResponse->getRedirectUrl());
+            return $this->redirect($redirectUrl);
         }
 
         return $this->render('event/register_choose_price.html.twig', [

@@ -7,8 +7,7 @@ namespace App\Controller\Payment;
 use App\Bridge\Helloasso\PaymentReturnType;
 use App\Entity\Payment;
 use App\Entity\User;
-use App\Service\MembershipCreator;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\RegistrationPaymentHandler;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,8 +24,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class PaymentCallbackController extends AbstractController
 {
     public function __construct(
-        private readonly MembershipCreator $membershipCreator,
-        private readonly EntityManagerInterface $em,
+        private readonly RegistrationPaymentHandler $registrationPaymentHandler,
         private readonly LoggerInterface $logger,
     ) {
     }
@@ -64,20 +62,7 @@ class PaymentCallbackController extends AbstractController
             return $this->fail($payment);
         }
 
-        // TODO: Call Helloasso API to ensure the Checkout intent linked to the payment really is approved.
-
-        $payment->approve();
-        $payment->getRegistration()->confirm();
-
-        $memberships = $this->membershipCreator->createMembershipsFromRegistration($payment->getRegistration());
-
-        foreach ($memberships as $membership) {
-            $this->em->persist($membership);
-        }
-
-        $this->em->persist($payment);
-        $this->em->persist($payment->getRegistration());
-        $this->em->flush();
+        $this->registrationPaymentHandler->approve($payment);
 
         $this->addFlash('success', 'Ta participation a bien été enregistrée ! 🥳');
 
@@ -86,10 +71,7 @@ class PaymentCallbackController extends AbstractController
 
     private function fail(Payment $payment): RedirectResponse
     {
-        $payment->fail();
-
-        $this->em->persist($payment);
-        $this->em->flush();
+        $this->registrationPaymentHandler->fail($payment);
 
         return $this->redirectToRoute('event_register', [
             'slug' => $payment->getRegistration()->getEvent()->getSlug(),
