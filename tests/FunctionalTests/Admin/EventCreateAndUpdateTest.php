@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\FunctionalTests\Website;
+namespace App\Tests\FunctionalTests\Admin;
 
 use App\DataFixtures\Util\FixtureBuilder;
 use App\Tests\DatabaseUtilTrait;
