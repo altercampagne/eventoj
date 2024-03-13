@@ -20,6 +20,6 @@
         class="progress-bar overflow-visible text-dark bg-{{ availability.percent > 50 ? 'success' : availability.percent > 25 ? 'warning' : 'danger' }}-subtle ps-2"
         style="width: {{ availability.percent }}%"
     >
-        {{ availability.availability }} {{ name }} sur {{ availability.max }}
+        Il reste {{ availability.availability }} places {{ name }} sur {{ availability.max }}
     </div>
 </div>
