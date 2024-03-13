@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a74ccefa0505f0bc5d92dc2549e1b327",
+    "content-hash": "db6779206e4ada4f4d9c10c8e651e91f",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1711,6 +1711,90 @@
                 "source": "https://github.com/Doskyft/helloasso-php/tree/v1.1.2"
             },
             "time": "2024-03-08T15:59:37+00:00"
+        },
+        {
+            "name": "dunglas/doctrine-json-odm",
+            "version": "v1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dunglas/doctrine-json-odm.git",
+                "reference": "1cd99b9a9644367a223e20f4d9bf26384e4eba09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dunglas/doctrine-json-odm/zipball/1cd99b9a9644367a223e20f4d9bf26384e4eba09",
+                "reference": "1cd99b9a9644367a223e20f4d9bf26384e4eba09",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "^2.6.3 || ^3.0.0",
+                "php": ">=8.1",
+                "symfony/property-access": "^5.4 || ^6.0 || ^7.0",
+                "symfony/property-info": "^5.4 || ^6.0 || ^7.0",
+                "symfony/serializer": "^5.4 || ^6.0 || ^7.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.0 || ^2.0.0",
+                "doctrine/dbal": "^2.7 || ^3.3 || ^4.0.0",
+                "doctrine/doctrine-bundle": "^1.12.13 || ^2.2",
+                "symfony/finder": "^5.4 || ^6.0 || ^7.0",
+                "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0",
+                "symfony/phpunit-bridge": "^6.0 || ^7.0",
+                "symfony/uid": "^5.4 || ^6.0 || ^7.0",
+                "symfony/validator": "^5.4 || ^6.0 || ^7.0"
+            },
+            "suggest": {
+                "scienta/doctrine-json-functions": "To add support for JSON functions in DQL.",
+                "symfony/framework-bundle": "To use the provided bundle."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dunglas\\DoctrineJsonOdm\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kévin Dunglas",
+                    "email": "kevin@dunglas.fr",
+                    "homepage": "https://dunglas.fr"
+                }
+            ],
+            "description": "An object document mapper for Doctrine ORM using JSON types of modern RDBMS.",
+            "homepage": "https://dunglas.fr",
+            "keywords": [
+                "database",
+                "json",
+                "mysql",
+                "odm",
+                "orm",
+                "postgresql",
+                "rdbms"
+            ],
+            "support": {
+                "issues": "https://github.com/dunglas/doctrine-json-odm/issues",
+                "source": "https://github.com/dunglas/doctrine-json-odm/tree/v1.4.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/dunglas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/dunglas/doctrine-json-odm",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-02-05T09:21:47+00:00"
         },
         {
             "name": "egulias/email-validator",

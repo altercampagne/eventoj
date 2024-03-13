@@ -12,6 +12,11 @@
     address_line1: 20 rue du Docteur Roux
     city: Montluçon
     zipcode: "03100"
+  stations:
+    -
+      type: train
+      name: Montluçon
+      distance: 0
 
 -
   name: Les Champs de l'Île
@@ -39,6 +44,15 @@
     address_line2: Le Bourg
     city: Tortezais
     zipcode: "03430"
+  stations:
+    -
+      type: train
+      name: Vallon-en-Sully
+      distance: 24
+    -
+      type: train
+      name: Montluçon
+      distance: 28
 
 -
   name: Le manoir de la Beaume

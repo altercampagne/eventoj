@@ -19,6 +19,14 @@
                 <div class="text-center">
                     <twig:UploadedImage file="{{ alternative.picture }}" width="600" height="600" alt="{{ alternative.name }}" class="img-fluid" />
                 </div>
+
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}
+                    <div class="d-grid gap-2">
+                        <a href="{{ path('admin_alternative_update', { slug: alternative.slug, backToAlternative: true }) }}" class="btn btn-warning mt-3">
+                            Modifier cette alternative
+                        </a>
+                    </div>
+                {% endif %}
             </div>
 
             <div class="col-12 col-md-8 col-lg-7">
@@ -29,6 +37,27 @@
                 <div class="bg-white p-3 rounded border border-secondary-outline">
                     {{ alternative.description|raw }}
                 </div>
+
+                <div class="text-center mb-3 mt-4">
+                    <h2 class="text-body-secondary">Rejoindre cette alternative</h2>
+                </div>
+
+                <div class="bg-white p-3 rounded border border-secondary-outline">
+                    <b>Adresse :</b> {{ alternative.address }}
+                </div>
+
+                {% if alternative.stations|length > 0 %}
+                    <div class="row mt-3 justify-content-center">
+                        {% for station in alternative.stations %}
+                            <div class="col-12 col-sm-6">
+                                <div class="bg-white p-3 rounded border border-secondary-outline mt-2">
+                                    <i class="fa-solid fa-{{ station.type }} fa-fw me-2" data-toggle="tooltip" title="Gare de {{ station.type }}"></i>
+                                    {{station.name }} <span class="text-secondary">({{ station.distance }} km{% if station.distance > 1 %}s{% endif %})</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

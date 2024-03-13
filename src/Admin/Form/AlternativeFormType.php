@@ -8,6 +8,7 @@ use App\Entity\Alternative;
 use App\Entity\UploadedFileType as UploadedFileTypeEnum;
 use App\Form\AddressFormType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -57,6 +58,12 @@ class AlternativeFormType extends AbstractType
                 'label' => false,
                 'help' => 'Merci de choisir une image <b>carrée</b> et de dimensions respectables (600 x 600 minimum). Ce n\'est pas grave si l\'image est un peu lourde, ce sera automagiquement optimisé ! 👌',
                 'help_html' => true,
+            ])
+            ->add('stations', CollectionType::class, [
+                'entry_type' => StationFormType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
             ])
         ;
     }

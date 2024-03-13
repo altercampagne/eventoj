@@ -47,6 +47,12 @@ class Alternative
     #[ORM\Embedded(class: Address::class)]
     private Address $address;
 
+    /**
+     * @var Station[]
+     */
+    #[ORM\Column(type: 'json_document', options: ['jsonb' => true])]
+    private array $stations = [];
+
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
@@ -138,6 +144,24 @@ class Alternative
     public function setAddress(Address $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return Station[]
+     */
+    public function getStations(): array
+    {
+        return $this->stations;
+    }
+
+    /**
+     * @param Station[] $stations
+     */
+    public function setStations(array $stations): self
+    {
+        $this->stations = $stations;
 
         return $this;
     }

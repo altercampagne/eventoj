@@ -29,8 +29,8 @@ final class CreateOrUpdateController extends AbstractController
     }
 
     #[IsGranted(Permission::ALTERNATIVE_UPDATE->value, 'alternative')]
-    #[Route('/alternatives/{slug}/update', name: 'admin_alternative_update')]
-    public function update(Request $request, Alternative $alternative, bool $creation = false): Response
+    #[Route('/alternatives/{slug}/update/{backToAlternative}', name: 'admin_alternative_update')]
+    public function update(Request $request, Alternative $alternative, bool $creation = false, bool $backToAlternative = false): Response
     {
         $form = $this->createForm(AlternativeFormType::class, $alternative);
         $form->handleRequest($request);
@@ -40,6 +40,10 @@ final class CreateOrUpdateController extends AbstractController
             $this->em->flush();
 
             $this->addFlash('success', sprintf('L\'alternative a bien été %s ! 🥳', $creation ? 'créée' : 'modifiée'));
+
+            if ($backToAlternative) {
+                return $this->redirectToRoute('alternative_show', ['slug' => $alternative->getSlug()]);
+            }
 
             return $this->redirectToRoute('admin_alternative_show', ['slug' => $alternative->getSlug()]);
         }

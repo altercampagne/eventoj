@@ -32,6 +32,16 @@
                     <li class="list-group-item">
                         {{ alternative.description|raw }}
                     </li>
+                    <li class="list-group-item">
+                        {% for station in alternative.stations %}
+                            <div>
+                                <i class="fa-solid fa-{{ station.type }} fa-fw" data-toggle="tooltip" title="Gare de {{ station.type }}"></i>
+                                {{station.name }} <span class="text-secondary">({{ station.distance }} kms)</span>
+                            </div>
+                        {% else %}
+                            <div class="alert bg-danger-subtle mb-0">Aucune gare définie !</div>
+                        {% endfor %}
+                    </li>
                 </ul>
 
                 <div class="d-grid gap-2 p-2">

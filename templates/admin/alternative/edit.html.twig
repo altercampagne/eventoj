@@ -2,13 +2,32 @@
 
 {% set title = creation ? 'Création d\'une alternative' : alternative.name %}
 
+{% macro station_form(form) %}
+<div class="row justify-content-center align-items-center mb-3" id="row_{{ form.vars.id }}">
+    <div class="col">
+        {{ form_row(form.type) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.name) }}
+    </div>
+    <div class="col">
+        {{ form_row(form.distance) }}
+    </div>
+    <div class="col-1">
+        <button
+            type="button"
+            class="btn btn-outline-danger"
+            {{ stimulus_action('form-collection', 'removeCollectionElement') }}
+            data-target="#row_{{ form.vars.id }}"
+        >
+            X
+        </button>
+    </div>
+</div>
+{% endmacro %}
+
 {% block main %}
     <div class="container">
-        <div class="row text-center mb-3">
-            <h1 class="fw-bold text-uppercase text-primary">
-            </h1>
-        </div>
-
         <div class="row justify-content-center">
             <div class="col-12 col-md-10">
                 {{ form_errors(form) }}
@@ -44,10 +63,37 @@
                         {{ form_row(form.address.countryCode) }}
                     </fieldset>
 
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-train me-2"></i> Arriver à l'alternative</legend>
+
+                        <div {{ stimulus_controller('form-collection') }}
+                            data-form-collection-index-value="{{ form.stations|length > 0 ? form.stations|last.vars.name + 1 : 0 }}"
+                            data-form-collection-prototype-value="{{ _self.station_form(form.stations.vars.prototype)|e('html_attr') }}"
+                        >
+                            <ul {{ stimulus_target('form-collection', 'collectionContainer') }} class="list-unstyled">
+                                {% for station in form.stations %}
+                                    <li>
+                                        {{ _self.station_form(station) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                            <div class="d-grid mx-5">
+                                <button type="button" {{ stimulus_action('form-collection', 'addCollectionElement') }} class="btn btn-outline-success btn-lg float-end">
+                                    Ajouter une gare
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+
                     <div class="d-grid gap-2 mt-4">
                         <button type="submit" class="btn btn-lg btn-primary">
                             {% if creation %}Ajouter{% else %}Modifier{% endif %}
                         </button>
+                    </div>
+
+                    <div class="d-none">
+                        {{ form_rest(form) }}
                     </div>
 
                 {{ form_end(form) }}
