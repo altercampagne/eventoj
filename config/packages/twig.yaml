@@ -5,6 +5,9 @@ twig:
     paths:
         '%kernel.project_dir%/assets/styles': styles
 
+    globals:
+        pahekoBaseUri: '%env(PAHEKO_BASE_URI)%'
+
 when@test:
     twig:
         strict_variables: true

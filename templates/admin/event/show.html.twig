@@ -22,6 +22,19 @@
                             Du <b>{{ (event.stages|first).date|format_date('long') }}</b> au <b>{{ (event.stages|last).date|format_date('long') }}</b>
                         </li>
                     {% endif %}
+                    <li class="list-group-item">
+                        <i class="fa-solid fa-ticket fa-fw me-1"></i>
+                        Inscriptions le {{ event.openingDateForBookings|format_datetime('long', 'short') }}
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa-solid fa-file-invoice-dollar fa-fw me-1"></i>
+                        Paheko Project ID :
+                        {% if event.pahekoProjectId is not null %}
+                            <a href="{{ pahekoBaseUri }}/admin/acc/reports/journal.php?project={{ event.pahekoProjectId }}">{{ event.pahekoProjectId }}</a>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </li>
                     {% if event.isPublished %}
                         <li class="list-group-item">
                             <i class="fa-solid fa-clock fa-fw me-1"></i>
