@@ -6,7 +6,7 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final readonly class Station
+final class Station
 {
     public const TYPE_TRAIN = 'train';
     public const TYPE_BUS = 'bus';

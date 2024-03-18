@@ -157,11 +157,22 @@ class Alternative
     }
 
     /**
+     * This method contains a hack to ensure nested properties are saved when
+     * updated! For this reason, we MUST use `by_reference = false` when
+     * embedding stations in a FormType.
+     *
      * @param Station[] $stations
+     *
+     * @see https://github.com/dunglas/doctrine-json-odm?tab=readme-ov-file#limitations-when-updating-nested-properties
      */
     public function setStations(array $stations): self
     {
-        $this->stations = $stations;
+        $clonedStations = [];
+        foreach ($stations as $station) {
+            $clonedStations[] = clone $station;
+        }
+
+        $this->stations = $clonedStations;
 
         return $this;
     }

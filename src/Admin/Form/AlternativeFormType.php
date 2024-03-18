@@ -63,7 +63,7 @@ class AlternativeFormType extends AbstractType
                 'entry_type' => StationFormType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => false,
+                'by_reference' => false, // Needed to force the Form component to call the `setStations`method.
             ])
         ;
     }
