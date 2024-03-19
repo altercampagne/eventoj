@@ -38,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private UuidV4 $id;
 
     #[ORM\Column(unique: true, nullable: true)]
-    private ?string $pahekoId;
+    private ?string $pahekoId = null;
 
     #[Assert\NotBlank]
     #[ORM\Column(length: 180, unique: true)]
