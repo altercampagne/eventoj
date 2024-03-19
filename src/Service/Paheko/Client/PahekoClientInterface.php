@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service\Paheko\Client;
+
+interface PahekoClientInterface
+{
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    public function createUser(array $data): array;
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    public function updateUser(string $pahekoId, array $data): array;
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getUsersFromCategory(string $category): array;
+}

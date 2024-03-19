@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace App\Service\Paheko;
 
 use App\Entity\User;
+use App\Service\Paheko\Client\PahekoClientInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * @see https://paheko.cloud/api#membres
@@ -17,10 +16,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 final class UserSynchronizer
 {
     public function __construct(
-        private readonly HttpClientInterface $pahekoClient,
+        private readonly PahekoClientInterface $pahekoClient,
         private readonly EntityManagerInterface $em,
         private readonly PhoneNumberHelper $phoneNumberHelper,
-        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -32,26 +30,16 @@ final class UserSynchronizer
             return;
         }
 
-        $response = $this->pahekoClient->request('POST', 'user/new', [
-            'body' => array_merge([
-                'id_category' => 1,
-            ], $this->getUserData($user)),
-        ]);
-
         try {
-            $id = (string) $response->toArray()['id'];
+            $pahekoUser = $this->pahekoClient->createUser(array_merge(['id_category' => 1], $this->getUserData($user)));
+            /* @phpstan-ignore-next-line */
+            $id = (string) $pahekoUser['id'];
         } catch (ClientException $e) {
-            if (409 !== $e->getResponse()->getStatusCode()) {
-                throw $e;
-            }
-
-            // We have a duplicate user! Let's retrieve the existing paheko user.
+            // Paheko can return a 409 when the current user is perfectly the
+            // same (same email & fullname) or a 400 when the email is already
+            // used.
             if (null === $id = $this->findExistingUserId($user)) {
-                $this->logger->error('Unable to find duplicate user!', [
-                    'user' => $user,
-                ]);
-
-                throw new \LogicException('We have a duplicate user which does not seems to match current user!', 0, $e);
+                throw $e;
             }
         }
 
@@ -67,18 +55,16 @@ final class UserSynchronizer
             throw new \LogicException('Given user does not have a paheko ID!');
         }
 
-        $this->pahekoClient->request('POST', "user/$pahekoId", [
-            'body' => $this->getUserData($user),
-        ])->toArray();
+        $this->pahekoClient->updateUser($pahekoId, $this->getUserData($user));
     }
 
     private function findExistingUserId(User $user): ?string
     {
-        $response = $this->pahekoClient->request('POST', 'user/category/1.json');
-        $pahekoUsers = $response->toArray();
+        $pahekoUsers = $this->pahekoClient->getUsersFromCategory('1');
 
         foreach ($pahekoUsers as $pahekoUser) {
-            if ($pahekoUser['email'] === $user->getEmail() && $pahekoUser['nom'] === $user->getFullName()) {
+            if ($pahekoUser['email'] === $user->getEmail()) {
+                /* @phpstan-ignore-next-line */
                 return (string) $pahekoUser['numero'];
             }
         }
