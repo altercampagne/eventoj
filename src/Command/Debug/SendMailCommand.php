@@ -25,6 +25,7 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
     description: 'This command is useful to send emails for debug purpose.',
 )]
 #[When(env: 'dev')]
+#[When(env: 'test')]
 class SendMailCommand extends Command
 {
     public function __construct(
