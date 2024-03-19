@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Payment;
 
 use App\Entity\Payment;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,8 +16,8 @@ final readonly class RegistrationPaymentHandler
     public function __construct(
         private HelloassoClient $helloassoClient,
         private EntityManagerInterface $em,
-        private MembershipCreator $membershipCreator,
         private UrlGeneratorInterface $urlGenerator,
+        private PaymentSuccessfulHandler $paymentSuccessfulHandler,
     ) {
     }
 
@@ -56,25 +56,12 @@ final readonly class RegistrationPaymentHandler
         return $initCheckoutResponse->getRedirectUrl();
     }
 
-    public function approve(Payment $payment): void
+    public function handlePaymentSuccess(Payment $payment): void
     {
-        // TODO: Call Helloasso API to ensure the Checkout intent linked to the payment really is approved.
-
-        $payment->approve();
-        $payment->getRegistration()->confirm();
-
-        $memberships = $this->membershipCreator->createMembershipsFromRegistration($payment->getRegistration());
-
-        foreach ($memberships as $membership) {
-            $this->em->persist($membership);
-        }
-
-        $this->em->persist($payment);
-        $this->em->persist($payment->getRegistration());
-        $this->em->flush();
+        $this->paymentSuccessfulHandler->onPaymentSuccess($payment);
     }
 
-    public function fail(Payment $payment): void
+    public function handlePaymentFailure(Payment $payment): void
     {
         $payment->fail();
 

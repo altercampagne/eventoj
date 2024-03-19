@@ -7,7 +7,7 @@ namespace App\Controller\Payment;
 use App\Bridge\Helloasso\PaymentReturnType;
 use App\Entity\Payment;
 use App\Entity\User;
-use App\Service\RegistrationPaymentHandler;
+use App\Service\Payment\RegistrationPaymentHandler;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -62,7 +62,7 @@ class PaymentCallbackController extends AbstractController
             return $this->fail($payment);
         }
 
-        $this->registrationPaymentHandler->approve($payment);
+        $this->registrationPaymentHandler->handlePaymentSuccess($payment);
 
         $this->addFlash('success', 'Ta participation a bien été enregistrée ! 🥳');
 
@@ -71,7 +71,7 @@ class PaymentCallbackController extends AbstractController
 
     private function fail(Payment $payment): RedirectResponse
     {
-        $this->registrationPaymentHandler->fail($payment);
+        $this->registrationPaymentHandler->handlePaymentFailure($payment);
 
         return $this->redirectToRoute('event_register', [
             'slug' => $payment->getRegistration()->getEvent()->getSlug(),
