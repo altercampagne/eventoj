@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Bridge\Paheko;
+namespace App\Service\Paheko;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
