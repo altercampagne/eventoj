@@ -23,16 +23,6 @@ services:
     depends_on:
       - database
 
-  messenger-worker:
-    build:
-      context: ./.docker/php
-    restart: always
-    volumes:
-      - .:/var/www
-    command: php bin/console messenger:consume async --limit 10 --time-limit=600
-    depends_on:
-      - database
-
   sass-builder:
     build:
       context: ./.docker/php
