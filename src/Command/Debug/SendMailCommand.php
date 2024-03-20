@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command;
+namespace App\Command\Debug;
 
 use App\Email\EmailConfirmationSender;
 use App\Email\EventReminderSender;
@@ -21,10 +21,11 @@ use Symfony\Component\DependencyInjection\Attribute\When;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 #[AsCommand(
-    name: 'eventoj:send-mail',
+    name: 'eventoj:debug:send-mail',
     description: 'This command is useful to send emails for debug purpose.',
 )]
 #[When(env: 'dev')]
+#[When(env: 'test')]
 class SendMailCommand extends Command
 {
     public function __construct(

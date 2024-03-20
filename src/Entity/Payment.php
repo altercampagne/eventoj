@@ -49,6 +49,9 @@ class Payment
     ])]
     private ?string $helloassoCheckoutIntentId = null;
 
+    #[ORM\Column(unique: true, nullable: true)]
+    private ?string $pahekoId = null;
+
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $approvedAt = null;
 
@@ -86,7 +89,7 @@ class Payment
 
     public function approve(): void
     {
-        $this->status = PaymentStatus::APPPROVED;
+        $this->status = PaymentStatus::APPROVED;
         $this->approvedAt = new \DateTimeImmutable();
     }
 
@@ -103,7 +106,7 @@ class Payment
 
     public function isApproved(): bool
     {
-        return PaymentStatus::APPPROVED === $this->status;
+        return PaymentStatus::APPROVED === $this->status;
     }
 
     public function isFailed(): bool
@@ -114,6 +117,26 @@ class Payment
     public function isRefunded(): bool
     {
         return PaymentStatus::REFUNDED === $this->status;
+    }
+
+    public function getMembershipsAmount(): int
+    {
+        $amount = 0;
+
+        foreach ($this->memberships as $membership) {
+            $amount += $membership->getPrice();
+        }
+
+        return $amount;
+    }
+
+    /**
+     * Return the price paid for the registration only (does not include the
+     * price paid for memberships if any).
+     */
+    public function getRegistrationOnlyAmount(): int
+    {
+        return $this->amount - $this->getMembershipsAmount();
     }
 
     public function getId(): UuidV4
@@ -149,6 +172,18 @@ class Payment
     public function setHelloassoCheckoutIntentId(string $helloassoCheckoutIntentId): self
     {
         $this->helloassoCheckoutIntentId = $helloassoCheckoutIntentId;
+
+        return $this;
+    }
+
+    public function getPahekoId(): ?string
+    {
+        return $this->pahekoId;
+    }
+
+    public function setPahekoId(string $pahekoId): self
+    {
+        $this->pahekoId = $pahekoId;
 
         return $this;
     }

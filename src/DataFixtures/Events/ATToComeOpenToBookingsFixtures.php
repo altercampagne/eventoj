@@ -31,6 +31,7 @@ class ATToComeOpenToBookingsFixtures extends AbstractFixture implements Dependen
             ->setPublishedAt(new \DateTimeImmutable())
             ->setOpeningDateForBookings(new \DateTimeImmutable())
             ->setDescription('Voilà un AT dans le futur et dont les réservations sont ouvertes ! 🥳')
+            ->setPahekoProjectId('1')
         ;
 
         $startDate = $this->getStartDate();

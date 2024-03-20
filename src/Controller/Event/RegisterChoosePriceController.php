@@ -10,7 +10,7 @@ use App\Entity\Registration;
 use App\Entity\User;
 use App\Form\EventRegistration\ChoosePriceFormType;
 use App\Service\Bill\BillCreator;
-use App\Service\RegistrationPaymentHandler;
+use App\Service\Payment\RegistrationPaymentHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

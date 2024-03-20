@@ -40,9 +40,7 @@ psql-test: ## Enter in Test DB container
 
 ##@ Backends commands
 db-reset: ## Reset DB
-	@$(DOCKER_COMPOSE) stop messenger-worker
 	@$(DOCKER_COMPOSE) run php bin/reset-db
-	@$(DOCKER_COMPOSE) up -d messenger-worker
 
 db-reset-test: ## Reset test DB
 	@$(DOCKER_COMPOSE) run -e APP_ENV=test php bin/reset-db

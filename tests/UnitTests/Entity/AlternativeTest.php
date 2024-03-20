@@ -20,6 +20,6 @@ class AlternativeTest extends TestCase
         $alternative = new Alternative();
         $alternative->setStations($stations);
 
-        $this->assertSame($stations, $alternative->getStations());
+        $this->assertEquals($stations, $alternative->getStations());
     }
 }

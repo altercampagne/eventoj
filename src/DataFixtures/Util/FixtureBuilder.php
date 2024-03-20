@@ -85,12 +85,14 @@ class FixtureBuilder
         int $childrenCapacity = 5,
         int $bikesAvailable = 5,
         bool $published = true,
+        int $pahekoProjectId = 1,
     ): Event {
         $event = Event::AT();
         $event
             ->setName($name ?? self::getFaker()->word())
             ->setOpeningDateForBookings(new \DateTimeImmutable())
             ->setDescription($description ?? self::getFaker()->sentence())
+            ->setPahekoProjectId((string) $pahekoProjectId)
         ;
         ReflectionHelper::setProperty($event, 'adultsCapacity', $adultsCapacity);
         ReflectionHelper::setProperty($event, 'childrenCapacity', $childrenCapacity);
@@ -112,12 +114,14 @@ class FixtureBuilder
         int $childrenCapacity = 5,
         int $bikesAvailable = 5,
         bool $published = true,
+        int $pahekoProjectId = 1,
     ): Event {
         $event = Event::EB();
         $event
             ->setName($name ?? self::getFaker()->word())
             ->setOpeningDateForBookings(new \DateTimeImmutable())
             ->setDescription($description ?? self::getFaker()->sentence())
+            ->setPahekoProjectId((string) $pahekoProjectId)
         ;
         ReflectionHelper::setProperty($event, 'adultsCapacity', $adultsCapacity);
         ReflectionHelper::setProperty($event, 'childrenCapacity', $childrenCapacity);

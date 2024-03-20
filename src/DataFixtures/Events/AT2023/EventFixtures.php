@@ -42,6 +42,7 @@ class EventFixtures extends AbstractFixture implements DependentFixtureInterface
                 Ce sera la 16e édition ! 🥳
                 END)
             ->setPicture($picture)
+            ->setPahekoProjectId('1')
         ;
 
         $startDate = new \DateTime('2023-07-08');
