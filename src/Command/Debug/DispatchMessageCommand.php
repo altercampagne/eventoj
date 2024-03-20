@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Command\Debug;
 
-use App\Entity\Registration;
+use App\Entity\Payment;
+use App\Entity\PaymentStatus;
 use App\Entity\RegistrationStatus;
-use App\Message\PahekoRegistrationSync;
+use App\Message\PahekoPaymentSync;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -47,7 +48,7 @@ class DispatchMessageCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         match ($message) {
-            'paheko_registration_sync' => $this->dispatchPahekoRegistrationSync(),
+            'paheko_payment_sync' => $this->dispatchPahekoPaymentSync(),
             null => $this->dispatchAllMessages(),
             default => throw new \InvalidArgumentException("Unknown message \"$message\"."),
         };
@@ -59,13 +60,28 @@ class DispatchMessageCommand extends Command
 
     private function dispatchAllMessages(): void
     {
-        $this->dispatchPahekoRegistrationSync();
+        $this->dispatchPahekoPaymentSync();
     }
 
-    private function dispatchPahekoRegistrationSync(): void
+    private function dispatchPahekoPaymentSync(): void
     {
-        $registration = $this->em->getRepository(Registration::class)->findBy(['status' => RegistrationStatus::CONFIRMED])[0];
+        $qb = $this->em->createQueryBuilder();
+        $qb
+            ->select('p')
+            ->from(Payment::class, 'p')
+            ->innerJoin('p.registration', 'r')
+            ->innerJoin('r.event', 'e')
+            ->andWhere('p.status = :payment_status')
+            ->andWhere('r.status = :registration_status')
+            ->andWhere('e.pahekoProjectId is not null')
+            ->setMaxResults(1)
+            ->setParameter('payment_status', PaymentStatus::APPROVED)
+            ->setParameter('registration_status', RegistrationStatus::CONFIRMED)
+        ;
 
-        $this->bus->dispatch(new PahekoRegistrationSync($registration->getId()));
+        /** @var Payment $payment */
+        $payment = $qb->getQuery()->getSingleResult();
+
+        $this->bus->dispatch(new PahekoPaymentSync($payment->getId()));
     }
 }

@@ -17,3 +17,7 @@ Go to https://eventoj.local to use the application.
 
 You can find more information regarding the database schema here: https://altercampagne.github.io/eventoj/
 This site is autmatically generated with SchemaSpy when needed.
+
+### Paheko
+
+All transactions are sync'ed with our accounting software (Paheko) which is available at the following address: http://127.0.0.1:8081

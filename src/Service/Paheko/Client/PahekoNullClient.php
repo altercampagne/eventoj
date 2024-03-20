@@ -35,4 +35,20 @@ final class PahekoNullClient implements PahekoClientInterface
 
         return [];
     }
+
+    public function createPayment(array $data): array
+    {
+        $this->logger->debug(__METHOD__.' have been called.');
+
+        return [
+            'id' => random_int(0, 1000000),
+        ];
+    }
+
+    public function updatePayment(string $pahekoId, array $data): array
+    {
+        $this->logger->debug(__METHOD__.' have been called.');
+
+        return [];
+    }
 }

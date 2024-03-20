@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Payment;
 
 use App\Entity\Payment;
-use App\Message\PahekoRegistrationSync;
+use App\Message\PahekoPaymentSync;
 use App\Service\MembershipCreator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -37,6 +37,6 @@ final readonly class PaymentSuccessfulHandler
         $this->em->persist($payment->getRegistration());
         $this->em->flush();
 
-        $this->bus->dispatch(new PahekoRegistrationSync($payment->getRegistration()->getId()));
+        $this->bus->dispatch(new PahekoPaymentSync($payment->getId()));
     }
 }

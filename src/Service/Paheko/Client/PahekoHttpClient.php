@@ -31,4 +31,18 @@ final class PahekoHttpClient implements PahekoClientInterface
     {
         return $this->pahekoClient->request('POST', "user/category/$categoryId.json")->toArray();
     }
+
+    public function createPayment(array $data): array
+    {
+        return $this->pahekoClient->request('POST', 'accounting/transaction', [
+            'body' => $data,
+        ])->toArray();
+    }
+
+    public function updatePayment(string $pahekoId, array $data): array
+    {
+        return $this->pahekoClient->request('POST', "accounting/transaction/$pahekoId", [
+            'body' => $data,
+        ])->toArray();
+    }
 }

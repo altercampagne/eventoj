@@ -24,4 +24,18 @@ interface PahekoClientInterface
      * @return array<int, array<string, mixed>>
      */
     public function getUsersFromCategory(string $category): array;
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    public function createPayment(array $data): array;
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    public function updatePayment(string $pahekoId, array $data): array;
 }

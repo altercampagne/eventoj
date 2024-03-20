@@ -25,6 +25,8 @@ return function (ContainerConfigurator $container): void {
             ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
 
             ->bind('string $bucketName', '%env(resolve:S3_BUCKET_NAME)%')
+            ->bind('string $pahekoHelloassoAccountCode', '%env(PAHEKO_HELLOASSO_ACCOUNT_CODE)%')
+            ->bind('int $pahekoMembershipsProjectId', '%env(PAHEKO_MEMBERSHIPS_PROJECT_ID)%')
     ;
 
     // makes classes in src/ available to be used as services

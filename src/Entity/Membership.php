@@ -116,6 +116,11 @@ class Membership
         return $this->payment;
     }
 
+    public function getPrice(): int
+    {
+        return $this->price;
+    }
+
     public function getStartAt(): \DateTimeImmutable
     {
         return $this->startAt;
