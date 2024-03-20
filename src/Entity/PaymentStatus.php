@@ -7,7 +7,7 @@ namespace App\Entity;
 enum PaymentStatus: string
 {
     case PENDING = 'pending';
-    case APPPROVED = 'approved';
+    case APPROVED = 'approved';
     case FAILED = 'failed';
     case REFUNDED = 'refunded';
 }
