@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mt-4">
-                    <h2 class="fw-bold text-secondary fs-4">Détails du tarif</h2>
+                    <h2 class="fw-bold text-secondary fs-4">Exemples de tarifs</h2>
                 </div>
 
                 <p>
@@ -47,8 +47,14 @@
 
                 {{ include('event/_price_explanations.html.twig', { registration: registration, bill: bill }, with_context=false) }}
 
+                <hr class="mt-4" />
+
                 <div class="d-flex justify-content-between align-items-center mt-4">
                     <h2 class="fw-bold text-secondary fs-4">Choix du tarif</h2>
+                </div>
+
+                <div class="alert alert-primary">
+                    Du prix minimum ({{ bill.minimumPrice|format_price }}) au prix de soutien ({{ bill.supportPrice|format_price }}) voire même au delà, c'est maintenant <b>à toi de faire ton choix</b> ! 👌
                 </div>
 
                 <ul class="list-group mt-3 border border-primary">

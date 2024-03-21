@@ -33,7 +33,7 @@
 <ul class="nav nav-pills nav-fill" role="tablist">
     <li class="nav-item" role="presentation">
         <button
-            class="nav-link fs-4 fw-bold"
+            class="nav-link fs-6 fw-bold"
             id="minimum-price-tab"
             data-bs-toggle="tab"
             data-bs-target="#minimum-price-tab-pane"
@@ -42,12 +42,12 @@
             aria-controls="minimum-price-tab-pane"
             aria-selected="false"
         >
-            Prix solidaire
+        Prix solidaire ({{ bill.minimumPrice|format_price }})
         </button>
     </li>
     <li class="nav-item" role="presentation">
         <button
-            class="nav-link active fs-4 fw-bold"
+            class="nav-link active fs-6 fw-bold"
             id="break-even-price-tab"
             data-bs-toggle="tab"
             data-bs-target="#break-even-price-tab-pane"
@@ -56,12 +56,12 @@
             aria-controls="break-even-price-tab-pane"
             aria-selected="true"
         >
-            Prix d'équilibre
+            Prix d'équilibre ({{ bill.breakEvenPrice|format_price }})
         </button>
     </li>
     <li class="nav-item" role="presentation">
         <button
-            class="nav-link fs-4 fw-bold"
+            class="nav-link fs-6 fw-bold"
             id="support-price-tab"
             data-bs-toggle="tab"
             data-bs-target="#support-price-tab-pane"
@@ -70,7 +70,7 @@
             aria-controls="support-price-tab-pane"
             aria-selected="false"
         >
-            Prix de soutien
+            Prix de soutien ({{ bill.supportPrice|format_price }})
         </button>
     </li>
 </ul>
