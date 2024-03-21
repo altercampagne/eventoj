@@ -8,6 +8,7 @@ use App\Entity\Payment;
 use App\Service\Paheko\Client\PahekoClientInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -24,7 +25,9 @@ final readonly class PaymentSynchronizer
         private EntityManagerInterface $em,
         private UrlGeneratorInterface $urlGenerator,
         private LoggerInterface $logger,
+        #[Autowire(env: 'PAHEKO_HELLOASSO_ACCOUNT_CODE')]
         private string $pahekoHelloassoAccountCode,
+        #[Autowire(env: 'PAHEKO_MEMBERSHIPS_PROJECT_ID')]
         private int $pahekoMembershipsProjectId,
     ) {
     }

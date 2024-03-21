@@ -77,3 +77,7 @@ jobs:
       - name: Check if any dependencies are compromised
         shell: bash
         run: composer audit
+
+      - name: Check that PSR is respected
+        shell: bash
+        run: composer dump-autoload --dev -o --dry-run --strict-psr
