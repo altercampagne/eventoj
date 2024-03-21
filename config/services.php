@@ -7,7 +7,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use App\Service\Paheko\Client\PahekoClientInterface;
 use App\Service\Paheko\Client\PahekoHttpClient;
 use App\Service\Paheko\Client\PahekoNullClient;
-use App\Service\UploadedFileUrlGenerator;
 use App\Twig\Runtime\PriceExtensionRuntime;
 use Aws\S3\S3Client;
 use Helloasso\HelloassoClient;
@@ -23,10 +22,6 @@ return function (ContainerConfigurator $container): void {
         ->defaults()
             ->autowire()      // Automatically injects dependencies in your services.
             ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
-
-            ->bind('string $bucketName', '%env(resolve:S3_BUCKET_NAME)%')
-            ->bind('string $pahekoHelloassoAccountCode', '%env(PAHEKO_HELLOASSO_ACCOUNT_CODE)%')
-            ->bind('int $pahekoMembershipsProjectId', '%env(PAHEKO_MEMBERSHIPS_PROJECT_ID)%')
     ;
 
     // makes classes in src/ available to be used as services
@@ -39,11 +34,6 @@ return function (ContainerConfigurator $container): void {
         ->arg('$clientSecret', env('HELLOASSO_CLIENT_SECRET'))
         ->arg('$organizationSlug', env('HELLOASSO_ORGANISATION_SLUG'))
         ->arg('$sandbox', env('HELLOASSO_SANDBOX')->bool())
-    ;
-
-    $services->set(UploadedFileUrlGenerator::class)
-        ->arg('$cloudimgToken', env('CLOUDIMG_TOKEN'))
-        ->arg('$cloudimgAlias', env('CLOUDIMG_ALIAS'))
     ;
 
     $services->set(PriceExtensionRuntime::class)

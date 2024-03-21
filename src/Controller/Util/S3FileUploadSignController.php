@@ -10,6 +10,7 @@ use App\Service\UploadedFileUrlGenerator;
 use Aws\S3\S3Client;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
@@ -28,6 +29,7 @@ final class S3FileUploadSignController extends AbstractController
         private readonly S3Client $s3Client,
         private readonly EntityManagerInterface $em,
         private readonly UploadedFileUrlGenerator $uploadedFileUrlGenerator,
+        #[Autowire(env: 'S3_BUCKET_NAME')]
         private readonly string $bucketName,
     ) {
     }
