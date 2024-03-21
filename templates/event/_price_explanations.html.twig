@@ -1,0 +1,181 @@
+{% macro bikes_and_memberships(registration, bill) %}
+    {% if registration.neededBike > 0 %}
+        <li class="list-group-item py-2 px-3">
+            <strong>Options</strong>
+            <ul class="ms-n3">
+                <li class="d-flex justify-content-between align-items-center">
+                    {{ registration.neededBike == 1 ? '1 vélo' : registration.neededBike ~ ' vélos' }} de prêt
+                    <span class="text-primary me-2">
+                        GRATUIT
+                    </span>
+                </li>
+            </ul>
+        </li>
+    {% endif %}
+
+    {% if bill.peopleNeedingMembership|length > 0 %}
+        <li class="list-group-item py-2 px-3">
+            <strong>Adhésions</strong>
+            <ul class="ms-n3">
+                {% for people in bill.peopleNeedingMembership %}
+                    <li class="d-flex justify-content-between align-items-center">
+                        {{ people.fullName }}
+                        <span class="text-primary me-2">
+                            {{ constant('\\App\\Entity\\Membership::PRICE')|format_price }}
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endif %}
+{% endmacro %}
+
+<ul class="nav nav-pills nav-fill" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link fs-4 fw-bold"
+            id="minimum-price-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#minimum-price-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="minimum-price-tab-pane"
+            aria-selected="false"
+        >
+            Prix solidaire
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link active fs-4 fw-bold"
+            id="break-even-price-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#break-even-price-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="break-even-price-tab-pane"
+            aria-selected="true"
+        >
+            Prix d'équilibre
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link fs-4 fw-bold"
+            id="support-price-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#support-price-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="support-price-tab-pane"
+            aria-selected="false"
+        >
+            Prix de soutien
+        </button>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane show" id="minimum-price-tab-pane" role="tabpanel" aria-labelledby="minimum-price-tab" tabindex="0">
+        <div class="alert alert-info mt-2">
+            <b>Le prix solidaire</b> détaillé ci-dessous est le prix minimum
+            auquel tu peux payer ton inscription. Tu peux bien sûr choisir un
+            tarif compris entre ce prix minimum et le prix d'équilibre.
+        </div>
+
+        <ul class="list-group mt-2">
+            {{ _self.bikes_and_memberships(registration, bill) }}
+
+            <li class="list-group-item py-2 px-3">
+                <strong>Inscriptions</strong>
+                <ul class="ms-n3">
+                    {% for name, price in bill.registrations %}
+                        <li class="d-flex justify-content-between align-items-center">
+                            {{ name }}
+                            <span class="text-primary me-2">
+                                {% if price.minimumAmount == 0 %}GRATUIT{% else %}{{ price.minimumAmount|format_price }}{% endif %}
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="list-group mt-3">
+            <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-4 fw-bold p-3">
+                Prix solidaire
+                <div class="text-primary me-2 text-end lh-1">
+                    {{ bill.minimumPrice|format_price }}<br />
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tab-pane show active" id="break-even-price-tab-pane" role="tabpanel" aria-labelledby="break-even-price-tab" tabindex="0">
+        <div class="alert alert-info mt-2">
+            <b>Le prix d'équilibre</b> est celui qui permet à l'association de
+            rentrer dans ses frais.
+        </div>
+
+        <ul class="list-group mt-2">
+            {{ _self.bikes_and_memberships(registration, bill) }}
+
+            <li class="list-group-item py-2 px-3">
+                <strong>Inscriptions</strong>
+                <ul class="ms-n3">
+                    {% for name, price in bill.registrations %}
+                        <li class="d-flex justify-content-between align-items-center">
+                            {{ name }}
+                            <span class="text-primary me-2">
+                                {% if price.breakEvenAmount == 0 %}GRATUIT{% else %}{{ price.breakEvenAmount|format_price }}{% endif %}
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="list-group mt-3">
+            <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-4 fw-bold p-3">
+                Prix d'équilibre
+                <div class="text-primary me-2 text-end lh-1">
+                    {{ bill.breakEvenPrice|format_price }}<br />
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tab-pane show" id="support-price-tab-pane" role="tabpanel" aria-labelledby="support-price-tab" tabindex="0">
+        <div class="alert alert-info mt-2">
+            C'est grâce au <b>prix de soutien</b> que l'association peut
+            proposer des tarifs solidaires. :) Bien entendu, tu peux choisir le
+            tarif qui te convient, celui est donné à titre indicatif.
+        </div>
+
+        <ul class="list-group mt-2">
+            {{ _self.bikes_and_memberships(registration, bill) }}
+
+            <li class="list-group-item py-2 px-3">
+                <strong>Inscriptions</strong>
+                <ul class="ms-n3">
+                    {% for name, price in bill.registrations %}
+                        <li class="d-flex justify-content-between align-items-center">
+                            {{ name }}
+                            <span class="text-primary me-2">
+                                {% if price.supportAmount == 0 %}GRATUIT{% else %}{{ price.supportAmount|format_price }}{% endif %}
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="list-group mt-3">
+            <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-4 fw-bold p-3">
+                Prix de soutien
+                <div class="text-primary me-2 text-end lh-1">
+                    {{ bill.supportPrice|format_price }}<br />
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

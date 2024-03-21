@@ -38,85 +38,11 @@
                     Soit <b>{{ registration.daysOfPresence }} jours de présence</b>{% if registration.freeDaysOfPresence > 0 %} (dont {{ registration.freeDaysOfPresence }} jour{% if registration.freeDaysOfPresence > 1 %}s{% endif %} gratuit{% if registration.freeDaysOfPresence > 1 %}s{% endif %}){% endif %}.
                 </p>
 
-                <ul class="list-group mt-2">
-                    {% if registration.neededBike > 0 %}
-                        <li class="list-group-item py-2 px-3">
-                            <strong>Options</strong>
-                            <ul class="ms-n3">
-                                <li class="d-flex justify-content-between align-items-center">
-                                    {{ registration.neededBike == 1 ? '1 vélo' : registration.neededBike ~ ' vélos' }} de prêt
-                                    <span class="text-primary me-2">
-                                        GRATUIT
-                                    </span>
-                                </li>
-                            </ul>
-                        </li>
-                    {% endif %}
-
-                    {% if bill.peopleNeedingMembership|length > 0 %}
-                        <li class="list-group-item py-2 px-3">
-                            <strong>Adhésions</strong>
-                            <ul class="ms-n3">
-                                {% for people in bill.peopleNeedingMembership %}
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        {{ people.fullName }}
-                                        <span class="text-primary me-2">
-                                            {{ constant('\\App\\Entity\\Membership::PRICE')|format_price }}
-                                        </span>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    {% endif %}
-
-                    <li class="list-group-item py-2 px-3">
-                        <strong>Inscriptions</strong>
-                        <ul class="ms-n3">
-                            {% for name, price in bill.registrations %}
-                                <li class="d-flex justify-content-between align-items-center">
-                                    {{ name }}
-                                    <span class="text-primary me-2">
-                                        {% if price.breakEvenAmount == 0 %}GRATUIT{% else %}{{ price.breakEvenAmount|format_price }}{% endif %}
-                                    </span>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                </ul>
-
-                <ul class="list-group mt-3">
-                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-4 fw-bold p-3">
-                        Prix d'équilibre
-                        <div class="text-primary me-2 text-end lh-1">
-                            {{ bill.breakEvenPrice|format_price }}<br />
-                        </div>
-                    </li>
-                </ul>
+                {{ include('event/_price_explanations.html.twig', { registration: registration, bill: bill }, with_context=false) }}
 
                 <div class="d-flex justify-content-between align-items-center mt-4">
                     <h2 class="fw-bold text-secondary fs-4">Choix du tarif</h2>
                 </div>
-
-                <ul class="list-group mt-3">
-                    <li class="list-group-item list-group-item-info p-3 d-flex justify-content-between align-items-center fs-5 fw-bold p-3">
-                        Prix solidaire
-                        <div class="text-primary me-2 text-end lh-1">
-                            {{ bill.minimumPrice|format_price }}<br />
-                        </div>
-                    </li>
-                    <li class="list-group-item p-3 d-flex justify-content-between align-items-center fs-5 fw-bold p-3">
-                        Prix d'équilibre
-                        <div class="text-primary me-2 text-end lh-1">
-                            {{ bill.breakEvenPrice|format_price }}<br />
-                        </div>
-                    </li>
-                    <li class="list-group-item list-group-item-success p-3 d-flex justify-content-between align-items-center fs-5 fw-bold p-3">
-                        Prix de soutien
-                        <div class="text-primary me-2 text-end lh-1">
-                            {{ bill.supportPrice|format_price }}<br />
-                        </div>
-                    </li>
-                </ul>
 
                 <ul class="list-group mt-3 border border-primary">
                     <li class="list-group-item d-flex justify-content-between justify-content-sm-start align-items-center p-3">
