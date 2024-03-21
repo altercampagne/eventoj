@@ -22,7 +22,14 @@
                     <div class="alert alert-info">
                         Pour les mineurs, <b>prix plancher automatique</b> : le prix demandé nous permet de couvrir les frais liés aux repas uniquement.
                     </div>
-                    <h3 class="fw-bold text-secondary fs-4">Comment choisir mon prix ?</h3>
+
+                    <div class="d-grid gap-2 px-5">
+                        <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#choosePriceExplanationModal">
+                            Voir les détails du calcul du prix
+                        </a>
+                    </div>
+
+                    <h3 class="fw-bold text-secondary fs-4 mt-3">Comment choisir mon prix ?</h3>
                     <p>
                         AlterCampagne croit fermement au <b>prix libre et conscient</b> en tant qu'acte militant. Pour cette raison, il t'est offert la possibilité de choisir un tarif qui correspond à tes possibilités financières et à tes possibilités de soutien envers l'association.<br />
                         Tout le texte de ce bloc a été écrit sans réelle réflexion et, surtout, sans aucune concertation quelconque. Il convient donc d'y réfléchir plus en détails (et avant l'ouverture des inscriptions bien sûr).
@@ -78,33 +85,64 @@
         </div>
     </div>
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="priceExplanationOffcanvas" aria-labelledby="Explications concernant le prix libre">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Le prix libre</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div>
-                <p>
-                    Il nous tient à cœur d'être le plus inclusif possible en proposant des tarifs adaptés à chacun·e. Malheureusement, ces dernières années l'association n'a pas atteint l'équilibre économique et se trouve dans une situation de vigilance financière.
-                    Le prix d'équilibre (= nécessaire au bon fonctionnement annuel de l'association) est de {{ registration.event.breakEvenPricePerDay|format_price }} par personne et par jour.
-                </p>
-
-                <h5>A quoi correspond ce tarif ?</h5>
-                (AJOUTER CAMEMBERT)
-
-                <p>
-                Le tarif inscrit automatiquement dans le formulaire d'inscription est le prix d'équilibre de {{ registration.event.breakEvenPricePerDay|format_price }}, à vous de le moduler en fonction de vos revenus.
-                </p>
-
-                <div class="alert alert-warning">
-                    <b>Attention :</b> afin de permettre au plus grand nombre de bénéficier du tarif minimum, il est limité à 7 jours maximum par personne. Au delà, le prix d'équilibre sera automatiquement appliqué.
+    <div class="modal" id="choosePriceExplanationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Comment les prix proposés sont-ils calculés ?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <h3 class="fw-bold text-center"><u>Les inscriptions</u></h3>
 
-                <p>
-                    Pour choisir consciemment le tarif qui vous correspond, merci de vous référer à la grille tarifaire ci-dessous :
-                    => Grille tarifaire / revenus / (cf avec Clément GT Compta)
-                </p>
+                    <h4><u>Pour les mineurs</u></h4>
+                    <p>
+                        Pour les mineurs, le montant de l'inscription permet de prendre en charge <b>le coût des repas uniquement</b>.
+                        Il s'agit donc d'un montant fixe par jour qui dépend de l'âge de la personne :
+                    </p>
+                    <ul>
+                        <li><b>moins de 3 ans :</b> Gratuit</li>
+                        <li><b>moins de 13 ans :</b> 10 € / jour / personne</li>
+                        <li><b>moins de 18 ans :</b> 20 € / jour / personne</li>
+                    </ul>
+
+                    <h4><u>Pour les adultes</u></h4>
+                    <h5>Prix d'équilibre</h5>
+                    <p>
+                        Le <b>prix d'équilibre</b> est fixé à <b>{{ registration.event.breakEvenPricePerDay|format_price }} / personne / jour</b>.
+                    </p>
+
+                    <h5>Prix solidaire</h5>
+                    <p>
+                    Le <b>prix solidaire</b> est compris entre <b>{{ registration.event.minimumPricePerDay|format_price }} / personne / jour</b> (le prix minimum) et <b>{{ (registration.event.breakEvenPricePerDay-1)|format_price }} / personne / jour</b> (prix d'équilibre). L'exemple donné utilise le prix minimum ({{ registration.event.minimumPricePerDay|format_price }} / personne / jour)
+                    </p>
+                    <div class="alert alert-warning">
+                        Afin de permettre au plus grand nombre de bénéficier du tarif minimum, le prix solidaire est limité à {{ registration.event.daysAtSolidarityPrice }} jours maximum par personne. Au delà, le prix d'équilibre sera automatiquement appliqué.
+                    </div>
+
+                    <h5>Prix de soutien</h5>
+                    <p>
+                        Le <b>prix de soutien</b> est à partir de <b>{{ (registration.event.breakEvenPricePerDay+100)|format_price }} / personne / jour</b>. L'exemple utilise un prix de <b>{{ registration.event.supportPricePerDay|format_price }} / personne / jour</b>.
+                    </p>
+
+                    <hr />
+
+                    <h3 class="fw-bold text-center"><u>Les vélos de prêt</u></h3>
+                    <p>
+                        Des vélos peuvent être prêtés <b>à titre gracieux</b> par l'association.
+                        Bien entendu, l'entretien de nos belles montures ainsi que leur transport sur le tour à un coût
+                        qui est couvert grâce aux personnes qui choisisse un prix de soutien lors de leur inscription à l'évènement.
+                    </p>
+
+                    <hr />
+
+                    <h3 class="fw-bold text-center"><u>Les adhésions</u></h3>
+                    <p>
+                        <b>L'adhésion à l'association est obligatoire</b> pour participer à l'un des évènements organisés.
+                        Le montant de cette dernière est fixée à <b>{{ constant('\\App\\Entity\\Membership::PRICE')|format_price }} / personne</b> et
+                        est valide du 1er mai de l'année en cours jusqu'au 31 avril de l'année suivante.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
