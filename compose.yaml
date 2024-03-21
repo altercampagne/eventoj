@@ -1,5 +1,4 @@
 name: eventoj
-version: '3'
 
 services:
 ###> doctrine/doctrine-bundle ###
