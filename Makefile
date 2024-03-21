@@ -8,7 +8,7 @@ help:
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[32m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[33m%s\033[0m\n", substr($$0, 5) } ' Makefile
 
 ##@ Base commands
-install: vendors-install start db-reset assets-install assets-build ## Start the docker stack and prepare the application
+install: vendors-install build start db-reset assets-install assets-build ## Start the docker stack and prepare the application
 	@echo "\n"
 	@echo "\033[32m🥳 EVERYTHING IS RUNNING! 🥳\033[0m"
 	@echo "\033[32mVisit http://eventoj.local to continue.\033[0m"
@@ -18,8 +18,11 @@ vendors-install: ## Install vendors
 	@$(DOCKER_COMPOSE) exec php bin/console importmap:install
 
 ##@ Docker commands
+build: ## Build docker stack
+	@$(DOCKER_COMPOSE) build
+
 start: ## Start the whole docker stack
-	@$(DOCKER_COMPOSE) up --detach --remove-orphans --build
+	@$(DOCKER_COMPOSE) up --detach --remove-orphans
 	@$(DOCKER_COMPOSE) cp .docker/paheko/association.sqlite paheko:/var/www/paheko/data/association.sqlite
 	@$(DOCKER_COMPOSE) exec paheko chown www-data: /var/www/paheko/data/association.sqlite
 
