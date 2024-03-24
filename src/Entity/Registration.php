@@ -198,7 +198,7 @@ class Registration
     /**
      * @return array<User|Companion>
      */
-    public function getPersons(): array
+    public function getPeople(): array
     {
         return array_merge([$this->user], $this->companions->toArray());
     }

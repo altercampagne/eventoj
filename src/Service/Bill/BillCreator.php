@@ -21,7 +21,7 @@ final class BillCreator
         $bill = new Bill();
         $bill->peopleNeedingMembership = $this->membershipCreator->getPeopleNeedingMembershipForRegistration($registration);
 
-        foreach ($registration->getPersons() as $person) {
+        foreach ($registration->getPeople() as $person) {
             $bill->registrations[$person->getFullname()] = $this->getPriceForPerson($person, $registration);
         }
 
