@@ -6,7 +6,6 @@ namespace App\Admin\Controller\Event;
 
 use App\Admin\Security\Permission;
 use App\Entity\Event;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

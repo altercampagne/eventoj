@@ -1,0 +1,58 @@
+{% extends 'admin/event/show.html.twig' %}
+
+{% set tab = 'arrivals' %}
+
+{% macro list_registrations(registrations, emptyMessage) %}
+    {% if registrations|length > 0 %}
+        <ul class="list-unstyled">
+            {% for registration in registrations %}
+                <li>
+                    <b>{{ registration.user.fullname }}</b> -
+                    <span class="text-secondary">
+                        <a href="mailto:{{ registration.user.email }}">{{ registration.user.email }}</a> -
+                        <a href="tel:{{ registration.user.phoneNumber|phone_number_format }}">{{ registration.user.phoneNumber|phone_number_format }}</a>
+                    </span>
+
+                    {% if registration.companions|length > 0 %}
+                        <ul>
+                            {% for companion in registration.companions %}
+                                <li>
+                                    <b>{{ companion.fullname }}</b> -
+                                    <span class="text-secondary">
+                                        <a href="mailto:{{ companion.email }}">{{ registration.user.email }}</a>
+                                        {% if companion.phoneNumber is not null %}
+                                            - <a href="tel:{{ companion.phoneNumber|phone_number_format }}">{{ companion.phoneNumber|phone_number_format }}</a>
+                                        {% endif %}
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <i>{{ emptyMessage }}</i>
+    {% endif %}
+{% endmacro %}
+
+{% block tab_content %}
+    {% for stage in event.stages %}
+        {% set arrivals = event.registrations|filter(r => r.stageRegistrationStart.stage == stage) %}
+        {% set departures = event.registrations|filter(r => r.stageRegistrationEnd.stage == stage) %}
+
+        <div class="card mb-3">
+            <div class="card-header">
+                {{ stage.name }}
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item list-group-item-success">
+                    {{ _self.list_registrations(arrivals, 'Aucune arrivée ce jour') }}
+                </li>
+                <li class="list-group-item list-group-item-danger">
+                    {{ _self.list_registrations(departures, 'Aucun départ ce jour') }}
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock %}
