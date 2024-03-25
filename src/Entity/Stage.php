@@ -142,6 +142,11 @@ class Stage
         return new StageAvailability($this);
     }
 
+    public function isToday(): bool
+    {
+        return $this->date->format('Y-m-d') === (new \DateTimeImmutable())->format('Y-m-d');
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;

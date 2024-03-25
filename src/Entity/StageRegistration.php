@@ -71,6 +71,15 @@ class StageRegistration
         return Meal::BREAKFAST;
     }
 
+    public function includesMeal(Meal $meal): bool
+    {
+        return match ($meal) {
+            Meal::BREAKFAST => $this->presentForBreakfast(),
+            Meal::LUNCH => $this->presentForLunch(),
+            Meal::DINNER => $this->presentForDinner(),
+        };
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;

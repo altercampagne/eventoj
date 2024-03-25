@@ -1,0 +1,100 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}{{ event.name }} - Repas{% endblock %}
+
+{# Remove header & footer to focus on meal overview #}
+{% block header '' %}
+{% block footer '' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% set today = overview|filter((dayDetails) => dayDetails.stage.isToday)|keys|first %}
+
+    {% if today != false %}
+        <script type="text/javascript">
+            (function() {
+                if(!window.location.hash) {
+                    window.location = "{{ path('event_meal_overview', { slug: event.slug }) }}#{{ today }}";
+                }
+
+            })();
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row mb-3 text-center">
+            <h1 class="fw-bold text-uppercase text-primary">{{ event.name }} - Repas</h1>
+        </div>
+
+        {% for day, dayDetails in overview %}
+            {% set background = dayDetails.stage.isToday ? ' bg-warning-subtle' : dayDetails.stage.isOver ? ' bg-dark-subtle' : '' %}
+
+            <div class="container px-4 py-3" id="{{ day }}">
+                <div class="row">
+                    <h2 class="fs-3 text-center">{{ day }}</h2>
+                </div>
+
+                <div class="card-group">
+                    {% for meal in dayDetails.meals %}
+                        <div class="card{{background }}">
+                            <div class="card-header">
+                                <h3 class="fs-5 fw-bold text-center mb-0">{{ meal.meal|trans }}</h3>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item list-group-item-danger">
+                                    <b>Les accueillant·es ne sont pas pris·es en compte</b> dans les chiffres ci-dessous, demandez à vos prépas d'étapes ! :)
+                                </li>
+                                <li class="list-group-item text-center{{ background }}">
+                                    <b>{{ meal.total }} personnes</b>
+                                </li>
+                                {% if meal.vegan > 0 or meal.lactoseIntolerant > 0 or meal.glutenIntolerant > 0 or meal.dietDetails|length > 0 %}
+                                    <li class="list-group-item text-center{{ background }}">
+                                        <ul class="list-unstyled">
+                                            {% if meal.vegan > 0 %}
+                                                <li>{{ meal.vegan }} vegan{% if meal.vegan > 1 %}s{% endif %}</li>
+                                            {% endif %}
+                                            {% if meal.lactoseIntolerant > 0 %}
+                                                <li>{{ meal.lactoseIntolerant }} intolérant·e{% if meal.lactoseIntolerant > 1 %}s{% endif %} au lactose</li>
+                                            {% endif %}
+                                            {% if meal.glutenIntolerant > 0 %}
+                                                <li>{{ meal.glutenIntolerant }} intolérant·e{% if meal.glutenIntolerant > 1 %}s{% endif %} au gluten</li>
+                                            {% endif %}
+                                            {% if meal.dietDetails|length > 0 %}
+                                                <li>
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#dietDetails-{{ dayDetails.stage.id }}-{{ meal.meal.value }}-modal">
+                                                        {{ meal.dietDetails|length }} {% if meal.dietDetails|length == 1 %}régime spécial{% else %}régimes spéciaux{% endif %}
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+
+                        {% if meal.dietDetails|length > 0 %}
+                            <div class="modal" id="dietDetails-{{ dayDetails.stage.id }}-{{ meal.meal.value }}-modal" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <h4>Régimes spéciaux</h4>
+                                            <ul class="m-0">
+                                                {% for person, dietDetail in meal.dietDetails %}
+                                                    <li><b>{{ person }} : </b>{{ dietDetail }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}
