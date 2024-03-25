@@ -70,6 +70,7 @@ class Companion
     ])]
     private bool $lactoseIntolerant = false;
 
+    #[Assert\Length(max: 255)]
     #[ORM\Column(type: 'string', nullable: true, options: [
         'comment' => 'Free field to provide more information about user diet.',
     ])]
