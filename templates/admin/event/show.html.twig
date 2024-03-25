@@ -68,13 +68,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link{% if tab == 'registrations' %} active{% endif %}{% if event .registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_registrations', { slug: event.slug }) }}">
+                    <a class="nav-link{% if tab == 'registrations' %} active{% endif %}{% if event.registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_registrations', { slug: event.slug }) }}">
                         Inscriptions
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link{% if tab == 'filling' %} active{% endif %}{% if event .registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_filling', { slug: event.slug }) }}">
+                    <a class="nav-link{% if tab == 'filling' %} active{% endif %}{% if event.registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_filling', { slug: event.slug }) }}">
                         Remplissage
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if tab == 'meals' %} active{% endif %}{% if event.registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_meals', { slug: event.slug }) }}">
+                        Repas
                     </a>
                 </li>
             </ul>
