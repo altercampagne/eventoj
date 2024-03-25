@@ -30,29 +30,32 @@ final class BillCreator
 
     public function getPriceForPerson(User|Companion $person, Registration $registration): Price
     {
+        $days = $registration->payingDaysOfPresence();
+
         if ($person->getAge() < 3) {
-            return Price::fixed(0);
+            return Price::fixed(0, $days);
         }
 
         if ($person->getAge() < 13) {
-            return Price::fixed(1000 * $registration->payingDaysOfPresence());
+            return Price::fixed(1000 * $days, $days);
         }
 
         if ($person->getAge() < 18) {
-            return Price::fixed(2000 * $registration->payingDaysOfPresence());
+            return Price::fixed(2000 * $days, $days);
         }
 
         $event = $registration->getEvent();
 
-        $minimumPrice = min($registration->payingDaysOfPresence(), $event->getDaysAtSolidarityPrice()) * $event->getMinimumPricePerDay();
-        if ($registration->payingDaysOfPresence() > $event->getDaysAtSolidarityPrice()) {
-            $minimumPrice += ($registration->payingDaysOfPresence() - $event->getDaysAtSolidarityPrice()) * $event->getBreakEvenPricePerDay();
+        $minimumPrice = min($days, $event->getDaysAtSolidarityPrice()) * $event->getMinimumPricePerDay();
+        if ($days > $event->getDaysAtSolidarityPrice()) {
+            $minimumPrice += ($days - $event->getDaysAtSolidarityPrice()) * $event->getBreakEvenPricePerDay();
         }
 
         return Price::adjustable(
             $minimumPrice,
-            $event->getBreakEvenPricePerDay() * $registration->payingDaysOfPresence(),
-            $event->getSupportPricePerDay() * $registration->payingDaysOfPresence(),
+            $event->getBreakEvenPricePerDay() * $days,
+            $event->getSupportPricePerDay() * $days,
+            $days,
         );
     }
 }

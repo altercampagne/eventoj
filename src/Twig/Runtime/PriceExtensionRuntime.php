@@ -16,8 +16,14 @@ class PriceExtensionRuntime implements RuntimeExtensionInterface
 
     public function formatPrice(int $amount): string
     {
-        return $this->intlExtension->formatCurrency($amount / 100, 'EUR', [
+        $formatedAmount = $this->intlExtension->formatCurrency($amount / 100, 'EUR', [
             'fraction_digit' => 0,
         ]);
+
+        if (0 === $amount % 100) {
+            return $formatedAmount;
+        }
+
+        return '~'.$formatedAmount;
     }
 }

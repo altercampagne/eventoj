@@ -92,7 +92,10 @@
                         <li class="d-flex justify-content-between align-items-center">
                             {{ name }}
                             <span class="text-primary me-2">
-                                {% if price.minimumAmount == 0 %}GRATUIT{% else %}{{ price.minimumAmount|format_price }}{% endif %}
+                                {% if price.minimumAmount == 0 %}GRATUIT{% else %}
+                                    {{ price.minimumAmount|format_price }}
+                                    <small class="text-secondary">({{ price.minimumAmountPerDay|format_price }} / jour)</small>
+                                {% endif %}
                             </span>
                         </li>
                     {% endfor %}
@@ -123,10 +126,15 @@
                 <strong>Inscriptions</strong>
                 <ul class="ms-n3">
                     {% for name, price in bill.registrations %}
-                        <li class="d-flex justify-content-between align-items-center">
+                        <li class="d-flex justify-content-between align-items-center mb-2">
                             {{ name }}
-                            <span class="text-primary me-2">
-                                {% if price.breakEvenAmount == 0 %}GRATUIT{% else %}{{ price.breakEvenAmount|format_price }}{% endif %}
+                            <span class="text-primary me-2 text-end lh-1">
+                                {% if price.breakEvenAmount == 0 %}
+                                    GRATUIT
+                                {% else %}
+                                    {{ price.breakEvenAmount|format_price }}
+                                    <small class="text-secondary">({{ price.breakEvenAmountPerDay|format_price }} / jour)</small>
+                                {% endif %}
                             </span>
                         </li>
                     {% endfor %}
@@ -162,7 +170,10 @@
                         <li class="d-flex justify-content-between align-items-center">
                             {{ name }}
                             <span class="text-primary me-2">
-                                {% if price.supportAmount == 0 %}GRATUIT{% else %}{{ price.supportAmount|format_price }}{% endif %}
+                                {% if price.supportAmount == 0 %}GRATUIT{% else %}
+                                    {{ price.supportAmount|format_price }}
+                                    <small class="text-secondary">({{ price.supportAmountPerDay|format_price }} / jour)</small>
+                                {% endif %}
                             </span>
                         </li>
                     {% endfor %}
