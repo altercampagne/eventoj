@@ -74,9 +74,13 @@ jobs:
         shell: bash
         run: composer validate
 
-      - name: Check if any dependencies are compromised
+      - name: Check whether a PHP dependency is compromised
         shell: bash
         run: composer audit
+
+      - name: Check whether a PHP dependency is compromised
+        shell: bash
+        run: bin/console importmap:audit
 
       - name: Check that PSR is respected
         shell: bash
