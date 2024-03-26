@@ -111,6 +111,12 @@ class Membership
         return $this->companion;
     }
 
+    public function getPerson(): User|Companion
+    {
+        /* @phpstan-ignore-next-line */
+        return $this->user ?? $this->companion;
+    }
+
     public function getPayment(): Payment
     {
         return $this->payment;

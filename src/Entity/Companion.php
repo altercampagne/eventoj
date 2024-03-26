@@ -22,9 +22,14 @@ class Companion
 {
     use PersonTrait;
 
+    /**
+     * This property should be marked as readonly but is not due to a bug in Doctrine.
+     *
+     * @see https://github.com/doctrine/orm/issues/9863
+     */
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private readonly UuidV4 $id;
+    private UuidV4 $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'companions')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
@@ -108,6 +113,11 @@ class Companion
     public function getId(): UuidV4
     {
         return $this->id;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
     }
 
     public function getFirstName(): string

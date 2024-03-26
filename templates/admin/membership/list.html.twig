@@ -1,0 +1,36 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = 'Tous les membres' %}
+
+{% block main %}
+    <div class="alert alert-warning">
+        Cette liste contient toutes les personnes adhérentes à l'association à l'instant T <b>ainsi que les personnes dans le tur-fu</b> 😝.<br />
+        <u>Petit explication :</u> les adhésions étant valides du 1er mai au 31 avril de l'année suivante, les personnes qui s'inscrivent <b>AVANT le 1er mai</b> à un évènement ayant lieu l'été-même auront une adhésion qui commence dans le futur.
+    </div>
+
+    <table class="table table-hover">
+        <tr>
+            <th scope="col">Nom complet</th>
+            <th scope="col">Validité de l'adhésion</th>
+            <th scope="col">Date d'adhésion</th>
+        </tr>
+        {% for membership in memberships %}
+            <tr data-href="{{ path('admin_user_show', { id: membership.user is not null ? membership.user.id : membership.companion.user.id }) }}">
+                <td>
+                    {% if membership.companion is not null %}
+                        <span class="badge bg-secondary">Companion·ne de {{ membership.companion.user.fullName }}</span>
+                    {% endif %}
+                    <b>{{ membership.person.fullName }}</b>
+                    <span class="text-secondary">({{ membership.person.email }})</span>
+                </td>
+                <td>
+                    du <b>{{ membership.startAt|format_date }}</b> au <b>{{ membership.endAt|format_date }}</b>
+                    {% if membership.startAt > date() %}
+                        <span class="badge bg-warning">Dans l'tur-fu !</span>
+                    {% endif %}
+                </td>
+                <td>{{ membership.createdAt|format_datetime }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
