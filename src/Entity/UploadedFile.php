@@ -25,7 +25,7 @@ class UploadedFile
     private UuidV4 $id;
 
     #[ORM\Column(type: 'string', enumType: UploadedFileType::class, options: [
-      'comment' => 'Type of this file which correspond to the entity its linked to (event, alternative, ...).',
+        'comment' => 'Type of this file which correspond to the entity its linked to (event, alternative, ...).',
     ])]
     private readonly UploadedFileType $type;
 

@@ -35,7 +35,7 @@ class Stage
     private readonly Event $event;
 
     #[ORM\Column(type: 'string', length: 7, enumType: StageType::class, options: [
-      'comment' => 'Type of this stage (before, after, classic).',
+        'comment' => 'Type of this stage (before, after, classic).',
     ])]
     private StageType $type;
 
@@ -55,13 +55,13 @@ class Stage
     private string $description;
 
     #[ORM\Column(type: 'string', length: 6, nullable: true, enumType: StageDifficulty::class, options: [
-      'comment' => 'Difficulty of this stage (easy, medium, hard).',
+        'comment' => 'Difficulty of this stage (easy, medium, hard).',
     ])]
     private ?StageDifficulty $difficulty = null;
 
     #[Assert\Url]
     #[ORM\Column(nullable: true, options: [
-      'comment' => 'The URL of the route (komoot or openrunner) to embed on website',
+        'comment' => 'The URL of the route (komoot or openrunner) to embed on website',
     ])]
     private ?string $routeUrl = null;
 

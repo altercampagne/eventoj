@@ -10,7 +10,6 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class AdminVoter extends Voter
 {
-    /* @phpstan-ignore-next-line */
     #[\Override]
     protected function supports(string $attribute, mixed $subject): bool
     {
