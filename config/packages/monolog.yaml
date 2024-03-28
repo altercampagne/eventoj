@@ -5,6 +5,8 @@ monolog:
 services:
     Monolog\Processor\PsrLogMessageProcessor:
         tags: { name: monolog.processor, handler: sentry }
+    App\Bridge\Monolog\Processor\EventojContextProcessor:
+        tags: { name: monolog.processor }
 
 when@dev:
     monolog:
