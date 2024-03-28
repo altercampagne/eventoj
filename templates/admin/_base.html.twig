@@ -53,6 +53,11 @@
                             Alternatives
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-light ms-5 px-5" data-bs-toggle="modal" data-bs-target="#magicSearchModal">
+                            <i class="fa-solid fa-magnifying-glass"></i> Rechercher <small>(Ctrl + k)</small>
+                        </button>
+                    </li>
                     <!-- Used for test purpose -->
                     <li class="nav-item d-none" id="connected-as">{{ app.user.fullName }}</li>
                 </ul>
@@ -81,4 +86,20 @@
             {% block main %}{% endblock %}
         </div>
     </main>
+
+    <div class="modal" id="magicSearchModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="{{ path('magic_search') }}">
+                        <input type="text" placeholder="Rechercher" class="form-control form-control-lg mb-2" id="magicSearchInput" name="query" minlength="3" />
+                        <small class="text-secondary">💡 Tape ta recherche (3 caractères minimum) et appuie sur "Entrée"</small>
+                        <div class="alert alert-warning mt-3">
+                            Attention, ce n'est pas ton moteur de recherche favori : ça dépanne mais les résultats sont loin d'être exhaustifs ! :D
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

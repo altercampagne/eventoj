@@ -1,0 +1,24 @@
+<div class="card border-warning-subtle">
+    <div class="card-header bg-warning-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'utilisateurice {{ companion.fullname }}">
+        <i class="fa-solid fa-companions me-2"></i>
+        {{ companion.fullname }} <small class="text-secondary">(compagnon·ne de {{ companion.user.fullname }})</small>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <a href="mailto:{{ companion.email}}">
+                {{ companion.email }}
+            </a>
+        </li>
+
+        {% if companion.phoneNumber is not null %}
+            <li class="list-group-item">
+                <i class="fa-solid fa-phone fa-fw me-1"></i>
+                <a href="phone:{{ companion.phoneNumber|phone_number_format }}">
+                    {{ companion.phoneNumber|phone_number_format }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+
+    <a href="{{ path('admin_user_show', { id: companion.user.id }) }}" class="btn btn-link btn-sm">Voir l'utilisateurice {{ companion.user.fullName }}</a>
+</div>

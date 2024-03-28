@@ -1,0 +1,55 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = 'Résultats de recherche' %}
+
+{% block main %}
+    {% if result.nbResults == 0 %}
+        <div class="row">
+            <div class="col-6 m-auto">
+                <div class="alert alert-danger p-5 text-center">
+                    <h2 class="fw-bold mb-3">Aucun résultat trouvé pour cette recherche !</h2>
+
+                    <a href="{{ path('admin') }}" class="btn btn-danger btn-lg">
+                        Retour au dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        {% if result.users|length > 0 %}
+            <h2 class="fw-bold mb-3">Utilisateurice(s)</h2>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
+                {% for user in result.users %}
+                    <div class="col">
+                        {{ include('admin/_cards/user.html.twig') }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if result.companions|length > 0 %}
+            <h2 class="fw-bold mb-3">Compagnon·ne(s)</h2>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
+                {% for companion in result.companions %}
+                    <div class="col">
+                        {{ include('admin/_cards/companion.html.twig') }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if result.events|length > 0 %}
+            <h2 class="fw-bold mb-3">Événements</h2>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
+                {% for event in result.events %}
+                    <div class="col">
+                        {{ include('admin/_cards/event.html.twig') }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
