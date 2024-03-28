@@ -31,6 +31,7 @@ class EventRegistrationChooseDates {
         this.firstMeal.value = event.target.dataset.meal;
         document.querySelector('#stageStartLabel').innerHTML = event.target.dataset.stageLabel;
         document.querySelector('#firstMealLabel').innerHTML = event.target.dataset.mealLabel;
+
         this.updateSelectEnd();
       });
     });
@@ -59,12 +60,17 @@ class EventRegistrationChooseDates {
     // If the selected start date is after the current end date, we put an end
     // date 4 days after the start date (of possible, otherwise we select the
     // latest available date)
-    if(this.availableOptions.indexOf(this.selectEnd.value) < startIndex) {
+    if(this.availableOptions.indexOf(this.selectEnd.value) <= startIndex) {
       let endIndex = startIndex + 4;
       if (endIndex > this.selectEnd.options.length - 1) {
         endIndex = this.selectEnd.options.length - 1;
       }
+
       this.selectEnd.value = this.availableOptions[endIndex];
+
+      // We need to retrieve the stage label from one of the button attached to
+      // this stage which is in the modal
+      document.querySelector('#stageEndLabel').innerHTML = modal.querySelector('button[data-stage="'+this.selectEnd.value+'"]').dataset.stageLabel;
     }
 
     this.updateAccordionValue(modal, this.selectEnd);
