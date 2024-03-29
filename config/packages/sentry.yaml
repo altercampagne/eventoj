@@ -1,4 +1,12 @@
 when@prod:
+    services:
+        Sentry\Integration\IgnoreErrorsIntegration:
+            arguments:
+                $options:
+                    ignore_exceptions:
+                      - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+                      - Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+
     sentry:
         dsn: '%env(SENTRY_DSN)%'
         # this hooks into critical paths of the framework (and vendors) to perform
@@ -8,8 +16,10 @@ when@prod:
             enabled: false
 
         options:
-          attach_stacktrace: true
-          environment: '%env(SENTRY_ENVIRONMENT)%'
+            attach_stacktrace: true
+            environment: '%env(SENTRY_ENVIRONMENT)%'
+            integrations:
+              - 'Sentry\Integration\IgnoreErrorsIntegration'
 
 #        If you are using Monolog, you also need this additional configuration to log the errors correctly:
 #        https://docs.sentry.io/platforms/php/guides/symfony/#monolog-integration
