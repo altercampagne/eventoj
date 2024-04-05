@@ -7,6 +7,7 @@ twig:
 
     globals:
         pahekoBaseUri: '%env(PAHEKO_BASE_URI)%'
+        associationPhoneNumber: '%env(ASSOCIATION_PHONE_NUMBER)%'
 
 when@test:
     twig:
