@@ -93,6 +93,13 @@ class EventRegistrationChooseDates {
         return;
       }
 
+      // Already registered
+      if (item.dataset.confirmed == 1) {
+        this.disableAccordionItem(item);
+
+        return;
+      }
+
       // Same day !
       if (index == startIndex) {
         if (this.firstMeal.value == 'dinner') {
@@ -156,7 +163,7 @@ class EventRegistrationChooseDates {
         button.classList.add('d-none');
       });
 
-      if (!item.dataset.full) {
+      if (!item.dataset.full && !item.dataset.confirmed) {
         item.querySelector('span.badge-not-available').classList.remove('d-none');
       }
   }

@@ -97,6 +97,7 @@ class RegisterChooseDatesController extends AbstractController
         return $this->render('event/register_choose_dates.html.twig', [
             'registration' => $registration,
             'form' => $form,
+            'confirmedStages' => $this->em->getRepository(Registration::class)->findConfirmedStagesForEventAndUser($event, $user),
         ]);
     }
 }

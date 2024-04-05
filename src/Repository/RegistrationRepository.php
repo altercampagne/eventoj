@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Event;
 use App\Entity\Registration;
 use App\Entity\RegistrationStatus;
+use App\Entity\Stage;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -42,5 +43,27 @@ class RegistrationRepository extends ServiceEntityRepository
 
         /* @phpstan-ignore-next-line */
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @return Stage[]
+     */
+    public function findConfirmedStagesForEventAndUser(Event $event, User $user): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->select('s')
+            ->from(Stage::class, 's')
+            ->innerJoin('s.stagesRegistrations', 'sr')
+            ->innerJoin('sr.registration', 'r')
+            ->andWhere('s.event = :event')
+            ->andWhere('r.user = :user')
+            ->andWhere('r.status = :status')
+            ->setParameter('event', $event)
+            ->setParameter('user', $user)
+            ->setParameter('status', RegistrationStatus::CONFIRMED)
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }

@@ -1,4 +1,4 @@
-{% macro render_meal_availability(mealAvailability, registration) %}
+{% macro render_meal_availability(mealAvailability, registration, isStageConfirmed) %}
     {% set hasAvailability = mealAvailability.isEnoughForRegistration(registration) %}
 
     <div class="col-12 col-md-4 position-relative px-3 py-2">
@@ -9,7 +9,7 @@
         <twig:EventRegistration:AvailabilityProgressBar availability="{{ mealAvailability.bikes }}" name="vélo" />
 
         <div class="d-grid gap-2 px-3">
-            {% if hasAvailability %}
+            {% if hasAvailability and not isStageConfirmed %}
                 <button
                     type="button"
                     class="btn btn-primary choose-meal-button mt-4"
@@ -39,26 +39,30 @@
                         {# Storage this data in a variable to avoid too many computations #}
                         {% set availability = stage.availability %}
                         {% set isStageFull = not availability.isEnoughForRegistration(registration) %}
+                        {% set isStageConfirmed = stage in confirmedStages %}
                         {% set isSelected = form.vars.value == choice.value %}
 
                         <div
                             class="accordion-item"
                             data-stage="{{ stage.id }}"
                             data-full="{{ isStageFull }}"
+                            data-confirmed="{{ isStageConfirmed }}"
                             data-breakfast-full="{{ not availability.breakfast.isEnoughForRegistration(registration) }}"
                             data-lunch-full="{{ not availability.lunch.isEnoughForRegistration(registration) }}"
                             data-dinner-full="{{ not availability.dinner.isEnoughForRegistration(registration) }}"
                         >
                             <h2 class="accordion-header">
                                 <button
-                                    class="accordion-button{% if not isSelected %} collapsed{% endif %}{{ isStageFull ? ' bg-warning-subtle p-2' }}"
+                                    class="accordion-button{% if not isSelected %} collapsed{% endif %}{{ isStageFull ? ' bg-warning-subtle p-2' }}{{ isStageConfirmed ? ' bg-success-subtle p-2' }}"
                                     type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapse-{{ modal|title }}-{{ stage.id }}"
                                     aria-expanded="{{ isSelected ? 'true' : 'false' }}"
                                     aria-controls="#collapse-{{ modal|title }}-{{ stage.id }}"
                                 >
-                                    {% if isStageFull %}
+                                    {% if isStageConfirmed %}
+                                        <span class="badge bg-success me-2">DÉJÀ INSCRIT·E</span>
+                                    {% elseif isStageFull %}
                                         <span class="badge bg-warning me-2">COMPLET</span>
                                     {% endif %}
                                     <span class="badge bg-secondary me-2 d-none badge-not-available">INDISPONIBLE</span>
@@ -71,9 +75,9 @@
                             <div id="collapse-{{ modal|title }}-{{ stage.id }}" class="accordion-collapse collapse{% if isSelected %} show{% endif %}" data-bs-parent="#accordion-{{ modal|title }}">
                                 <div class="accordion-body bg-primary" style="--bs-bg-opacity: .05;">
                                     <div class="row">
-                                        {{ _self.render_meal_availability(availability.breakfast, registration) }}
-                                        {{ _self.render_meal_availability(availability.lunch, registration) }}
-                                        {{ _self.render_meal_availability(availability.dinner, registration) }}
+                                        {{ _self.render_meal_availability(availability.breakfast, registration, isStageConfirmed) }}
+                                        {{ _self.render_meal_availability(availability.lunch, registration, isStageConfirmed) }}
+                                        {{ _self.render_meal_availability(availability.dinner, registration, isStageConfirmed) }}
                                     </div>
                                 </div>
                             </div>
