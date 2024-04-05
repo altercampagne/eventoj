@@ -8,13 +8,15 @@ use App\Entity\Companion;
 use App\Entity\Meal;
 use App\Entity\Registration;
 use App\Entity\Stage;
+use App\Validator\DoesNotOverlapWithAnotherRegistration;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+#[DoesNotOverlapWithAnotherRegistration(groups: ['choose_dates'])]
 class EventRegistrationDTO
 {
-    private readonly Registration $registration;
+    public readonly Registration $registration;
 
     #[Assert\NotBlank(groups: ['choose_dates'])]
     public ?Stage $stageStart = null;
