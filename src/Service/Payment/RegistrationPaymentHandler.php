@@ -42,6 +42,7 @@ final readonly class RegistrationPaymentHandler
                     ->setLastName($payer->getLastName())
                     ->setEmail($payer->getEmail())
                     ->setAddress($payer->getAddress()->getAddressLine1())
+                    ->setDateOfBirth($payer->getBirthDate())
             )
             ->setMetadata([
                 'registration' => (string) $registration->getId(),
