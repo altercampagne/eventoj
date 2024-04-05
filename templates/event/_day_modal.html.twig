@@ -53,7 +53,7 @@
                         >
                             <h2 class="accordion-header">
                                 <button
-                                    class="accordion-button{% if not isSelected %} collapsed{% endif %}{{ isStageFull ? ' bg-warning-subtle p-2' }}{{ isStageConfirmed ? ' bg-success-subtle p-2' }}"
+                                    class="accordion-button{% if not isSelected %} collapsed{% endif %}{{ isStageConfirmed ? ' bg-success-subtle p-2' : isStageFull ? ' bg-warning-subtle p-2' }}"
                                     type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapse-{{ modal|title }}-{{ stage.id }}"
