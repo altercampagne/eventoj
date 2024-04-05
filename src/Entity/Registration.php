@@ -43,7 +43,7 @@ class Registration
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'The total price choose by the user.',
     ])]
-    private int $price;
+    private int $price = 0;
 
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'How many bikes are needed by participants?',
@@ -101,8 +101,6 @@ class Registration
             }
             $this->stagesRegistrations = new ArrayCollection($stagesRegistrations);
         }
-
-        $this->price = $event->getBreakEvenPricePerDay() * $this->payingDaysOfPresence();
     }
 
     public function canBeConfirmed(): bool
@@ -139,9 +137,29 @@ class Registration
         return $this->stagesRegistrations->count();
     }
 
-    public function payingDaysOfPresence(): int
+    public function payingDaysOfPresence(): float
     {
-        return $this->stagesRegistrations->count() - $this->freeDaysOfPresence();
+        $payingDaysOfPresence = $this->stagesRegistrations->count() - $this->freeDaysOfPresence();
+
+        if (false === $firstStageRegistration = $this->stagesRegistrations->first()) {
+            throw new \LogicException('No stage registration found for given registration');
+        }
+        // If the first day is a free day, the first meal of the first paying day must be the breakfast
+        $firstMeal = $firstStageRegistration->getStage()->isFree() ? Meal::BREAKFAST : $firstStageRegistration->getFirstMeal();
+        if (Meal::BREAKFAST !== $firstMeal) {
+            $payingDaysOfPresence -= $firstStageRegistration->includesMeal(Meal::LUNCH) ? .2 : .6;
+        }
+
+        if (false === $lastStageRegistration = $this->stagesRegistrations->last()) {
+            throw new \LogicException('No stage registration found for given registration');
+        }
+        // If the last day is a free day, the last meal of the last paying day must be the dinner
+        $lastMeal = $lastStageRegistration->getStage()->isFree() ? Meal::DINNER : $lastStageRegistration->getLastMeal();
+        if (Meal::DINNER !== $lastMeal) {
+            $payingDaysOfPresence -= $lastStageRegistration->includesMeal(Meal::LUNCH) ? .4 : .8;
+        }
+
+        return (float) $payingDaysOfPresence;
     }
 
     public function freeDaysOfPresence(): int

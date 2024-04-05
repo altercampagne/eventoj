@@ -41,8 +41,8 @@
                 </div>
 
                 <p>
-                    Pour ton inscription du <b>{{ registration.stageRegistrationStart.stage.date|format_date('long') }}</b> au <b>{{ registration.stageRegistrationEnd.stage.date|format_date('long') }}</b>.<br />
-                    Soit <b>{{ registration.daysOfPresence }} jours de présence</b>{% if registration.freeDaysOfPresence > 0 %} (dont {{ registration.freeDaysOfPresence }} jour{% if registration.freeDaysOfPresence > 1 %}s{% endif %} gratuit{% if registration.freeDaysOfPresence > 1 %}s{% endif %}){% endif %}.
+                    Pour ton inscription du <b>{{ registration.stageRegistrationStart.stage.date|format_date('long') }} ({{ registration.stageRegistrationStart.firstMeal|trans|lower }})</b> au <b>{{ registration.stageRegistrationEnd.stage.date|format_date('long') }} ({{ registration.stageRegistrationEnd.lastMeal|trans|lower }})</b>.<br />
+                    <span class="text-secondary">En prenant en compte les repas auxquels tu participes: la valeur utilisée pour le calcul est de <b>{{ registration.payingDaysOfPresence }} jour{{ registration.payingDaysOfPresence > 1 ? 's' }} de présence</b>.</span>
                 </p>
 
                 {{ include('event/_price_explanations.html.twig', { registration: registration, bill: bill }, with_context=false) }}
