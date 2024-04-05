@@ -57,6 +57,13 @@ final readonly class RegistrationPaymentHandler
         return $initCheckoutResponse->getRedirectUrl();
     }
 
+    public function isPaymentSuccessful(Payment $payment): bool
+    {
+        $checkoutIntent = $this->helloassoClient->checkout->retrieve((int) $payment->getHelloassoCheckoutIntentId());
+
+        return null !== $checkoutIntent->getOrder();
+    }
+
     public function handlePaymentSuccess(Payment $payment): void
     {
         $this->paymentSuccessfulHandler->onPaymentSuccess($payment);

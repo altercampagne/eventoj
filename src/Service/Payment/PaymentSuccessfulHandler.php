@@ -21,9 +21,6 @@ final readonly class PaymentSuccessfulHandler
 
     public function onPaymentSuccess(Payment $payment): void
     {
-        // TODO: Call Helloasso API to ensure the Checkout intent linked to the payment really is approved.
-        // This must be implemented in the lib first
-
         $payment->approve();
         $payment->getRegistration()->confirm();
 

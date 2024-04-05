@@ -15,7 +15,7 @@
         "doctrine/doctrine-bundle": "^2.10",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.16",
-        "doskyft/helloasso-php": "^1.0",
+        "doskyft/helloasso-php": "dev-main",
         "dunglas/doctrine-json-odm": "^1.4",
         "martin-georgiev/postgresql-for-doctrine": "^2.1",
         "odolbeau/phone-number-bundle": "^3.9",
