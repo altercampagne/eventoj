@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Returns the importmap for this application.
  *
@@ -36,21 +34,21 @@ return [
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free' => [
-        'version' => '6.5.1',
+        'version' => '6.5.2',
     ],
     '@fortawesome/fontawesome-free/css/all.css' => [
-        'version' => '6.5.1',
+        'version' => '6.5.2',
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free/css/fontawesome.min.css' => [
-        'version' => '6.5.1',
+        'version' => '6.5.2',
         'type' => 'css',
     ],
     'trix' => [
-        'version' => '2.0.10',
+        'version' => '2.1.0',
     ],
     'trix/dist/trix.min.css' => [
-        'version' => '2.0.10',
+        'version' => '2.1.0',
         'type' => 'css',
     ],
     '@hotwired/stimulus' => [
