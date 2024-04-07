@@ -31,7 +31,6 @@ enum Permission: string
     case REGISTRATION_LIST = 'registration.list';
     case REGISTRATION_VIEW = 'registration.view';
 
-    case STAGE_LIST = 'stage.list';
     case STAGE_CREATE = 'stage.create';
     case STAGE_UPDATE = 'stage.update';
 
