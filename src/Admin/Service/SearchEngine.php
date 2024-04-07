@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace App\Admin\Service;
 
+use App\Admin\Security\Permission;
 use App\Entity\Companion;
 use App\Entity\Event;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 
 final readonly class SearchEngine
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
+        private readonly Security $security,
     ) {
     }
 
@@ -32,6 +35,10 @@ final readonly class SearchEngine
      */
     private function findUsers(string $query): array
     {
+        if (!$this->security->isGranted(Permission::USER_LIST)) {
+            return [];
+        }
+
         $qb = $this->em->createQueryBuilder();
         $qb
             ->select('u')
@@ -48,6 +55,10 @@ final readonly class SearchEngine
      */
     private function findCompanions(string $query): array
     {
+        if (!$this->security->isGranted(Permission::USER_LIST)) {
+            return [];
+        }
+
         $qb = $this->em->createQueryBuilder();
         $qb
             ->select('c, u')
@@ -65,6 +76,10 @@ final readonly class SearchEngine
      */
     private function findEvents(string $query): array
     {
+        if (!$this->security->isGranted(Permission::EVENT_LIST)) {
+            return [];
+        }
+
         $qb = $this->em->createQueryBuilder();
         $qb
             ->select('e')

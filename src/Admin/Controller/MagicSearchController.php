@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
+use App\Admin\Security\Permission;
 use App\Admin\Service\SearchEngine;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted(Permission::ADMIN_ACCESS->value)]
 #[Route('/search', name: 'magic_search')]
 class MagicSearchController extends AbstractController
 {
