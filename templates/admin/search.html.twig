@@ -51,5 +51,17 @@
                 {% endfor %}
             </div>
         {% endif %}
+
+        {% if result.alternatives|length > 0 %}
+            <h2 class="fw-bold mb-3">Alternative</h2>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
+                {% for alternative in result.alternatives %}
+                    <div class="col">
+                        {{ include('admin/_cards/alternative.html.twig') }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endif %}
 {% endblock %}

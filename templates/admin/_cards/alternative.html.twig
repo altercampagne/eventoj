@@ -1,0 +1,22 @@
+<div class="card border-danger-subtle">
+    <div class="card-header bg-danger-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'alternative {{ alternative.name }}">
+        <i class="fa-solid fa-earth-europe me-2"></i>
+        {{ alternative.name }}
+    </div>
+    <ul class="list-group list-group-flush">
+        {% if alternative.website is not null %}
+            <li class="list-group-item">
+                <i class="fa-solid fa-link fa-fw me-1"></i>
+                <a href="{{ alternative.website }}">{{ alternative.website }}</a>
+            </li>
+        {% endif %}
+        <li class="list-group-item">
+            <i class="fa-solid fa-calendar-days fa-fw me-1"></i>
+            {% for event in alternative.events %}
+                <span class="badge bg-secondary">{{ event.name }}</span>
+            {% endfor %}
+        </li>
+    </ul>
+
+    <a href="{{ path('admin_alternative_show', { slug: alternative.slug }) }}" class="btn btn-link btn-sm">Voir l'alternative</a>
+</div>

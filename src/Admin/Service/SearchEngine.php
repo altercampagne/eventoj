@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Admin\Service;
 
 use App\Admin\Security\Permission;
+use App\Entity\Alternative;
 use App\Entity\Companion;
 use App\Entity\Event;
 use App\Entity\User;
@@ -27,6 +28,7 @@ final readonly class SearchEngine
             $this->findUsers($query),
             $this->findCompanions($query),
             $this->findEvents($query),
+            $this->findAlternatives($query),
         );
     }
 
@@ -35,7 +37,7 @@ final readonly class SearchEngine
      */
     private function findUsers(string $query): array
     {
-        if (!$this->security->isGranted(Permission::USER_LIST)) {
+        if (!$this->security->isGranted(Permission::USER_LIST->value)) {
             return [];
         }
 
@@ -55,7 +57,7 @@ final readonly class SearchEngine
      */
     private function findCompanions(string $query): array
     {
-        if (!$this->security->isGranted(Permission::USER_LIST)) {
+        if (!$this->security->isGranted(Permission::USER_LIST->value)) {
             return [];
         }
 
@@ -76,7 +78,7 @@ final readonly class SearchEngine
      */
     private function findEvents(string $query): array
     {
-        if (!$this->security->isGranted(Permission::EVENT_LIST)) {
+        if (!$this->security->isGranted(Permission::EVENT_LIST->value)) {
             return [];
         }
 
@@ -85,6 +87,26 @@ final readonly class SearchEngine
             ->select('e')
             ->from(Event::class, 'e')
             ->where('LOWER(e.name) LIKE :query')
+            ->setParameter('query', $query)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Alternative[]
+     */
+    private function findAlternatives(string $query): array
+    {
+        if (!$this->security->isGranted(Permission::ALTERNATIVE_LIST->value)) {
+            return [];
+        }
+
+        $qb = $this->em->createQueryBuilder();
+        $qb
+            ->select('a')
+            ->from(Alternative::class, 'a')
+            ->where('LOWER(a.name) LIKE :query')
             ->setParameter('query', $query)
         ;
 
