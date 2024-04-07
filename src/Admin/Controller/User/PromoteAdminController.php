@@ -28,7 +28,7 @@ class PromoteAdminController extends AbstractController
 
     public function __invoke(Request $request, User $user): Response
     {
-        $user->setRoles(['ROLE_ADMIN']);
+        $user->addRole('ROLE_ADMIN');
 
         $this->em->persist($user);
         $this->em->flush();

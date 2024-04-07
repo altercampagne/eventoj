@@ -28,7 +28,7 @@ class UnpromoteAdminController extends AbstractController
 
     public function __invoke(Request $request, User $user): Response
     {
-        $user->setRoles([]);
+        $user->removeRole('ROLE_ADMIN');
 
         $this->em->persist($user);
         $this->em->flush();

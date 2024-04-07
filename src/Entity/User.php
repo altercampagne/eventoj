@@ -185,12 +185,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    /**
-     * @param string[] $roles
-     */
-    public function setRoles(array $roles): self
+    public function addRole(string $role): self
     {
-        $this->roles = array_unique($roles);
+        if (!\in_array($role, $this->roles)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
+    public function removeRole(string $role): self
+    {
+        if (\in_array($role, $this->roles)) {
+            unset($this->roles[array_search($role, $this->roles)]);
+        }
 
         return $this;
     }

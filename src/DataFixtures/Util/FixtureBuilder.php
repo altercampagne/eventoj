@@ -45,9 +45,16 @@ class FixtureBuilder
             ->setBirthDate($birthDate ?? \DateTimeImmutable::createFromMutable($children ? self::getFaker()->dateTimeBetween('-12 years', 'now') : self::getFaker()->dateTimeBetween('-80 years', '-14 years')))
             ->setAddress($address ?? self::createAddress())
             ->setPhoneNumber($phoneNumber ?? PhoneNumberUtil::getInstance()->parse(self::getFaker()->phoneNumber(), 'FR'))
-            ->setRoles($roles ?? $admin ? ['ROLE_ADMIN'] : [])
             ->setPassword($password ?? '$2y$04$MOoNnQXwXZsqcL2X073nO.qb/ChqT84weFdkGOpdyGkrc8ByNRn42') // "password"
         ;
+        if (null !== $roles) {
+            foreach ($roles as $role) {
+                $user->addRole($role);
+            }
+        }
+        if ($admin) {
+            $user->addRole('ROLE_ADMIN');
+        }
 
         if ($verifyEmail ?? self::getFaker()->boolean()) {
             $user->verifyEmail();
