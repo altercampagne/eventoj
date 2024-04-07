@@ -15,9 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted(Permission::USER_PROMOTE->value, 'user')]
-#[Route('/users/{id}/promote', name: 'admin_user_promote_admin', requirements: ['id' => Requirement::UUID_V4])]
-class PromoteAdminController extends AbstractController
+#[IsGranted(Permission::USER_UNPROMOTE->value, 'user')]
+#[Route('/users/{id}/unpromote_admin', name: 'admin_user_unpromote_admin', requirements: ['id' => Requirement::UUID_V4], defaults: ['role' => 'ROLE_ADMIN'])]
+#[Route('/users/{id}/unpromote_prepa', name: 'admin_user_unpromote_prepa', requirements: ['id' => Requirement::UUID_V4], defaults: ['role' => 'ROLE_PREPA'])]
+class UnpromoteController extends AbstractController
 {
     use RedirectorTrait;
 
@@ -26,14 +27,14 @@ class PromoteAdminController extends AbstractController
     ) {
     }
 
-    public function __invoke(Request $request, User $user): Response
+    public function __invoke(Request $request, User $user, string $role): Response
     {
-        $user->addRole('ROLE_ADMIN');
+        $user->removeRole($role);
 
         $this->em->persist($user);
         $this->em->flush();
 
-        $this->addFlash('success', "{$user->getFullName()} est maintenant admin!");
+        $this->addFlash('success', "{$user->getFullName()} n'est plus admin!");
 
         return $this->redirectToRefererOrToRoute('admin_user_list');
     }

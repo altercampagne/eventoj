@@ -5,48 +5,45 @@
 {% block main %}
     <div class="row">
         <div class="col-12 col-md-4">
-            <div class="card border-success-subtle">
-                <div class="card-header bg-success-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'utilisateurice {{ user.fullname }}">
-                    <i class="fa-solid fa-users me-2"></i>
-                    {{ user.fullname }}
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <i
-                            class="fa-solid fa-at fa-fw me-1 text-{{ user.isVerified ? 'success' : 'danger' }}"
-                            data-bs-toggle="tooltip"
-                            data-bs-title="Email{% if not user.isVerified %} non{% endif %} vérifié"
-                        ></i>
-                        <a href="mailto:{{ user.email}}">
-                            {{ user.email }}
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <i class="fa-solid fa-phone fa-fw me-1"></i>
-                        <a href="phone:{{ user.phoneNumber|phone_number_format }}">
-                            {{ user.phoneNumber|phone_number_format }}
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="d-flex align-items-center">
-                            <i class="fa-solid fa-utensils fa-fw me-1"></i>
-                            <twig:Admin:Diet person="{{ user }}" />
-                        </div>
-                    </li>
-                </ul>
+            {% embed 'admin/_cards/user.html.twig' %}
+                {% block card_content %}
+                    {{ parent() }}
 
-                <div class="d-grid gap-2 p-2">
-                    {% if user.isAdmin and is_granted(constant('App\\Admin\\Security\\Permission::USER_UNPROMOTE').value, user) %}
-                        <a class="btn btn-outline-danger" href="{{ path('admin_user_unpromote_admin', { id: user.id }) }}">
-                            <i class="fa-solid fa-turn-down me-1"></i> Supprimer le rôle admin
-                        </a>
-                    {% elseif not user.isAdmin and is_granted(constant('App\\Admin\\Security\\Permission::USER_PROMOTE').value, user) %}
-                        <a class="btn btn-outline-danger" href="{{ path('admin_user_promote_admin', { id: user.id }) }}">
-                            <i class="fa-solid fa-turn-up me-1"></i> Passer admin
-                        </a>
-                    {% endif %}
-                </div>
-            </div>
+                    <ul class="list-group list-group-flush border-top-0">
+                        <li class="list-group-item">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-utensils fa-fw me-1"></i>
+                                <twig:Admin:Diet person="{{ user }}" />
+                            </div>
+                        </li>
+                    </ul>
+                {% endblock %}
+
+                {% block card_footer %}
+                    <div class="d-grid gap-2 p-2">
+                        {% if user.isAdmin and is_granted(constant('App\\Admin\\Security\\Permission::USER_UNPROMOTE').value, user) %}
+                            <a class="btn btn-outline-danger" href="{{ path('admin_user_unpromote_admin', { id: user.id }) }}">
+                                <i class="fa-solid fa-turn-down me-1"></i> Supprimer le rôle admin
+                            </a>
+                        {% elseif not user.isAdmin and is_granted(constant('App\\Admin\\Security\\Permission::USER_PROMOTE').value, user) %}
+                            <a class="btn btn-outline-danger" href="{{ path('admin_user_promote_admin', { id: user.id }) }}">
+                                <i class="fa-solid fa-turn-up me-1"></i> Passer admin
+                            </a>
+                        {% endif %}
+
+                        {% if user.isPrepa and is_granted(constant('App\\Admin\\Security\\Permission::USER_UNPROMOTE').value, user) %}
+                            <a class="btn btn-outline-warning" href="{{ path('admin_user_unpromote_prepa', { id: user.id }) }}">
+                                <i class="fa-solid fa-turn-down me-1"></i> Supprimer le rôle prepa
+                            </a>
+                        {% elseif not user.isPrepa and is_granted(constant('App\\Admin\\Security\\Permission::USER_PROMOTE').value, user) %}
+                            <a class="btn btn-outline-warning" href="{{ path('admin_user_promote_prepa', { id: user.id }) }}">
+                                <i class="fa-solid fa-turn-up me-1"></i> Passer prepa
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+
             <div class="p-2 text-secondary">
                 <small>
                     Inscrit le <b>{{ user.createdAt|format_datetime('long', 'short') }}</b><br />

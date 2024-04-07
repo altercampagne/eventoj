@@ -208,6 +208,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return \in_array('ROLE_ADMIN', $this->roles);
     }
 
+    public function isPrepa(): bool
+    {
+        return \in_array('ROLE_PREPA', $this->roles);
+    }
+
+    public function isPrepaForStage(Stage $stage): bool
+    {
+        return $this->getPreparedStages()->contains($stage);
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */

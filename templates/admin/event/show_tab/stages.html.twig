@@ -26,7 +26,10 @@
         </thead>
         <tbody>
             {% for stage in event.stages %}
-                <tr data-href="{{ path('admin_stage_update', { slug: stage.slug }) }}">
+                <tr
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_UPDATE').value, stage) %} data-href="{{ path('admin_stage_update', { slug: stage.slug }) }}"{% endif %}
+                    {% if app.user.isPrepaForStage(stage) %} class="table-primary border"{% endif %}
+                >
                     <td>
                         {% set problems = [] %}
                         {% if stage.alternatives|length == 0 %}

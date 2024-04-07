@@ -44,8 +44,11 @@
                 </ul>
 
                 <div class="d-grid gap-2 p-2">
-                    <a href="{{ path('admin_event_update', { slug: event.slug }) }}" class="btn btn-outline-primary">Modifier l'évènement</a>
-                    {% if not event.isPublished %}
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_UPDATE').value, event) %}
+                        <a href="{{ path('admin_event_update', { slug: event.slug }) }}" class="btn btn-outline-primary">Modifier l'évènement</a>
+                    {% endif %}
+
+                    {% if not event.isPublished and is_granted(constant('App\\Admin\\Security\\Permission::EVENT_PUBLISH').value, event) %}
                         <a href="{{ path('admin_event_publish', { slug: event.slug }) }}" class="btn btn-outline-success">
                             Publier l'évènement
                         </a>
@@ -62,31 +65,45 @@
 
         <div class="col-12 col-md-9">
             <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link{% if tab == 'stages' %} active{% endif %}" href="{{ path('admin_event_show_stages', { slug: event.slug }) }}">
-                        Étapes
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link{% if tab == 'registrations' %} active{% endif %}{% if event.registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_registrations', { slug: event.slug }) }}">
-                        Inscriptions
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link{% if tab == 'filling' %} active{% endif %}{% if event.registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_filling', { slug: event.slug }) }}">
-                        Remplissage
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link{% if tab == 'meals' %} active{% endif %}{% if event.registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_meals', { slug: event.slug }) }}">
-                        Repas
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link{% if tab == 'arrivals' %} active{% endif %}{% if event.registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_arrivals', { slug: event.slug }) }}">
-                        Arrivées / départs
-                    </a>
-                </li>
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_VIEW_STAGES').value, event) %}
+                    <li class="nav-item">
+                        <a class="nav-link{% if tab == 'stages' %} active{% endif %}" href="{{ path('admin_event_show_stages', { slug: event.slug }) }}">
+                            Étapes
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_VIEW_REGISTRATIONS').value, event) %}
+                    <li class="nav-item">
+                        <a class="nav-link{% if tab == 'registrations' %} active{% endif %}{% if event.registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_registrations', { slug: event.slug }) }}">
+                            Inscriptions
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_VIEW_FILLING').value, event) %}
+                    <li class="nav-item">
+                        <a class="nav-link{% if tab == 'filling' %} active{% endif %}{% if event.registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_filling', { slug: event.slug }) }}">
+                            Remplissage
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_VIEW_MEALS').value, event) %}
+                    <li class="nav-item">
+                        <a class="nav-link{% if tab == 'meals' %} active{% endif %}{% if event.registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_meals', { slug: event.slug }) }}">
+                            Repas
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_VIEW_ARRIVALS').value, event) %}
+                    <li class="nav-item">
+                        <a class="nav-link{% if tab == 'arrivals' %} active{% endif %}{% if event.registrations|length == 0 %} disabled{% endif %}" href="{{ path('admin_event_show_arrivals', { slug: event.slug }) }}">
+                            Arrivées / départs
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
             <div class="border border-top-0 border-secondary-outline rounded-bottom p-3">
                 {% block tab_content '' %}

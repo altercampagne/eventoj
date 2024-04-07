@@ -23,36 +23,54 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a href="{{ path('admin_user_list') }}" class="nav-link{% if current_route starts with 'admin_user_' %} active{% endif %}" aria-current="page">
-                            Utilisateurices
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ path('admin_membership_list') }}" class="nav-link{% if current_route starts with 'admin_membership_' %} active{% endif %}" aria-current="page">
-                            Adhésions
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ path('admin_event_list') }}" class="nav-link{% if current_route starts with 'admin_event_' %} active{% endif %}" aria-current="page">
-                            Evènements
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ path('admin_registration_list') }}" class="nav-link{% if current_route starts with 'admin_registration_' %} active{% endif %}" aria-current="page">
-                            Réservations
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ path('admin_payment_list') }}" class="nav-link{% if current_route starts with 'admin_payment_' %} active{% endif %}" aria-current="page">
-                            Paiements
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ path('admin_alternative_list') }}" class="nav-link{% if current_route starts with 'admin_alternative_' %} active{% endif %}" aria-current="page">
-                            Alternatives
-                        </a>
-                    </li>
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_LIST').value) %}
+                        <li class="nav-item">
+                            <a href="{{ path('admin_user_list') }}" class="nav-link{% if current_route starts with 'admin_user_' %} active{% endif %}" aria-current="page">
+                                Utilisateurices
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::MEMBERSHIP_LIST').value) %}
+                        <li class="nav-item">
+                            <a href="{{ path('admin_membership_list') }}" class="nav-link{% if current_route starts with 'admin_membership_' %} active{% endif %}" aria-current="page">
+                                Adhésions
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_LIST').value) %}
+                        <li class="nav-item">
+                            <a href="{{ path('admin_event_list') }}" class="nav-link{% if current_route starts with 'admin_event_' %} active{% endif %}" aria-current="page">
+                                Evènements
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_LIST').value) %}
+                        <li class="nav-item">
+                            <a href="{{ path('admin_registration_list') }}" class="nav-link{% if current_route starts with 'admin_registration_' %} active{% endif %}" aria-current="page">
+                                Réservations
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_LIST').value) %}
+                        <li class="nav-item">
+                            <a href="{{ path('admin_payment_list') }}" class="nav-link{% if current_route starts with 'admin_payment_' %} active{% endif %}" aria-current="page">
+                                Paiements
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_LIST').value) %}
+                        <li class="nav-item">
+                            <a href="{{ path('admin_alternative_list') }}" class="nav-link{% if current_route starts with 'admin_alternative_' %} active{% endif %}" aria-current="page">
+                                Alternatives
+                            </a>
+                        </li>
+                    {% endif %}
+
                     <li class="nav-item">
                         <button class="btn btn-outline-light ms-5 px-5" data-bs-toggle="modal" data-bs-target="#magicSearchModal">
                             <i class="fa-solid fa-magnifying-glass"></i> Rechercher <small>(Ctrl + k)</small>

@@ -47,7 +47,7 @@
                                                 </a>
                                             </li>
                                         {% endif %}
-                                        {% if is_granted('ROLE_ADMIN') %}
+                                        {% if is_granted(constant('App\\Admin\\Security\\Permission::ADMIN_ACCESS').value) %}
                                             <li><hr class="dropdown-divider"></li>
                                             <li>
                                                 <a class="dropdown-item" href="{{ path('admin') }}">

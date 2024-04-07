@@ -42,6 +42,11 @@ final class CreateOrUpdateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($stage->getPreparers() as $preparer) {
+                $preparer->addRole('ROLE_PREPA');
+                $this->em->persist($preparer);
+            }
+
             $this->em->persist($stage);
             $this->em->flush();
 

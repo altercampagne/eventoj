@@ -6,20 +6,22 @@
     <div class="d-flex justify-content-between align-items-center">
         <h2>Évènements en cours ou à venir</h2>
 
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Créer un nouvel évènement
-            </button>
-            <ul class="dropdown-menu">
-                {% for type in enum('\\App\\Entity\\EventType').cases %}
-                    <li>
-                        <a class="dropdown-item" href="{{ path('admin_event_create', { type: type.value }) }}">
-                            {{ type|trans }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+        {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_CREATE').value) %}
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Créer un nouvel évènement
+                </button>
+                <ul class="dropdown-menu">
+                    {% for type in enum('\\App\\Entity\\EventType').cases %}
+                        <li>
+                            <a class="dropdown-item" href="{{ path('admin_event_create', { type: type.value }) }}">
+                                {{ type|trans }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
     </div>
 
     <table class="table table-hover">
