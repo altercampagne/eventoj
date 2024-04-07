@@ -18,6 +18,9 @@
                     {% if user.isAdmin %}
                         <span class="badge text-bg-danger">ADMIN</span>
                     {% endif %}
+                    {% if user.isPrepa %}
+                        <span class="badge text-bg-warning">PREPA</span>
+                    {% endif %}
                 </td>
                 <td>
                     {{ user.email }}
