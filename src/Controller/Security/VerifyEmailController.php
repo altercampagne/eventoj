@@ -45,7 +45,7 @@ class VerifyEmailController extends AbstractController
 
             $this->security->login($user, 'form_login');
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $this->translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
+            $this->addFlash('danger', $this->translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
             return $this->redirectToRoute('homepage');
         }
