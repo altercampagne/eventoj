@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Service\MealOverview;
 
+use App\Entity\Companion;
 use App\Entity\Diet;
 use App\Entity\Event;
 use App\Entity\Meal;
+use App\Entity\User;
 
 final class MealAggregator
 {
@@ -35,6 +37,12 @@ final class MealAggregator
                 ];
             }
 
+            foreach ($stage->getPreparers() as $preparer) {
+                foreach (Meal::cases() as $meal) {
+                    $this->addPersonForMeal($preparer, $name, $meal, $overview);
+                }
+            }
+
             foreach ($stage->getStagesRegistrations() as $stageRegistration) {
                 $people = $stageRegistration->getRegistration()->getPeople();
 
@@ -43,27 +51,34 @@ final class MealAggregator
                         continue;
                     }
 
-                    $overview[$name]['meals'][$meal->value]['total'] += \count($people);
-
                     foreach ($people as $person) {
-                        if (null === $person->getDiet()) {
-                            continue;
-                        }
-                        ++$overview[$name]['meals'][$meal->value][$person->getDiet()->value];
-                        if ($person->isLactoseIntolerant()) {
-                            ++$overview[$name]['meals'][$meal->value]['lactoseIntolerant'];
-                        }
-                        if ($person->isGlutenIntolerant()) {
-                            ++$overview[$name]['meals'][$meal->value]['glutenIntolerant'];
-                        }
-                        if (null !== $details = $person->getDietDetails()) {
-                            $overview[$name]['meals'][$meal->value]['dietDetails'][$person->getPublicName()] = $details;
-                        }
+                        $this->addPersonForMeal($person, $name, $meal, $overview);
                     }
                 }
             }
         }
 
         return $overview;
+    }
+
+    /* @phpstan-ignore-next-line */
+    private function addPersonForMeal(User|Companion $person, string $stageName, Meal $meal, array &$overview): void
+    {
+        ++$overview[$stageName]['meals'][$meal->value]['total'];
+        if (null === $person->getDiet()) {
+            return;
+        }
+
+        ++$overview[$stageName]['meals'][$meal->value][$person->getDiet()->value];
+
+        if ($person->isLactoseIntolerant()) {
+            ++$overview[$stageName]['meals'][$meal->value]['lactoseIntolerant'];
+        }
+        if ($person->isGlutenIntolerant()) {
+            ++$overview[$stageName]['meals'][$meal->value]['glutenIntolerant'];
+        }
+        if (null !== $details = $person->getDietDetails()) {
+            $overview[$stageName]['meals'][$meal->value]['dietDetails'][$person->getPublicName()] = $details;
+        }
     }
 }
