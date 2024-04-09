@@ -21,7 +21,7 @@
     <body>
         {% block body %}{% endblock %}
 
-        {% if app.request.headers.get('host') == 'events-staging.altercampagne.net' %}
+        {% if app.request.headers.get('host') == 'events-staging.altercampagne.ovh' %}
             <nav class="sticky-bottom text-bg-danger text-center p-3">
                 <b class="h5">Tu es actuellement sur la version de test du site de gestion des inscriptions d'AlterCampagne !</b><br />
                 Pour voir le vrai site, <a class="link-light" href="https://inscriptions.altercampagne.net/">clique sur ce lien</a>
