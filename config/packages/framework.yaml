@@ -24,6 +24,11 @@ framework:
 
     http_client:
         scoped_clients:
+            helloasso.client:
+                base_uri: '%env(HELLOASSO_URL)%'
+                headers:
+                    accept: 'application/json'
+                    Content-type: 'application/json'
             paheko.client:
                 base_uri: '%env(PAHEKO_BASE_URI)%/api/'
                 auth_basic: '%env(PAHEKO_USERNAME)%:%env(PAHEKO_PASSWORD)%'

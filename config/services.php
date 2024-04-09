@@ -10,6 +10,7 @@ use App\Service\Paheko\Client\PahekoNullClient;
 use App\Twig\Runtime\PriceExtensionRuntime;
 use Aws\S3\S3Client;
 use Helloasso\HelloassoClient;
+use Helloasso\HelloassoClientFactory;
 
 return function (ContainerConfigurator $container): void {
     $container->parameters()
@@ -30,10 +31,11 @@ return function (ContainerConfigurator $container): void {
         ->exclude('../src/{DependencyInjection,Entity,Kernel.php}');
 
     $services->set(HelloassoClient::class)
+        ->factory([HelloassoClientFactory::class, 'create'])
         ->arg('$clientId', env('HELLOASSO_CLIENT_ID'))
         ->arg('$clientSecret', env('HELLOASSO_CLIENT_SECRET'))
         ->arg('$organizationSlug', env('HELLOASSO_ORGANISATION_SLUG'))
-        ->arg('$sandbox', env('HELLOASSO_SANDBOX')->bool())
+        ->arg('$httpClient', service('helloasso.client'))
     ;
 
     $services->set(PriceExtensionRuntime::class)
