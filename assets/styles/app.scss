@@ -17,17 +17,13 @@ h1 {
 
     font-family: 'Impact', sans-serif;
     font-size: 4rem;
-    text-decoration-line: underline;
-    text-decoration-color: #CE4242;
 }
 
 h2 {
     @extend .text-uppercase;
     @extend .fw-semibold;
 
-    color: #444444;
-    text-decoration-line: underline;
-    text-decoration-color: #ECD4AE;
+    color: #666666;
 }
 
 .card-hover:hover {
