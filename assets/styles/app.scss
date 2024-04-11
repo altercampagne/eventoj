@@ -1,4 +1,6 @@
-$primary: #3f7625;
+// @see https://documentation.altercampagne.ovh/books/cest-ici-que-tout-commence/page/ressources-graphiques
+
+$primary: #447733;
 $enable-negative-margins: true;
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';
 
@@ -6,6 +8,26 @@ $enable-negative-margins: true;
 
 body {
     background-color: $gray-100;
+    font-family: 'Libre Franklin', sans-serif;
+}
+
+h1 {
+    @extend .text-uppercase;
+    @extend .text-primary;
+
+    font-family: 'Impact', sans-serif;
+    font-size: 4rem;
+    text-decoration-line: underline;
+    text-decoration-color: #CE4242;
+}
+
+h2 {
+    @extend .text-uppercase;
+    @extend .fw-semibold;
+
+    color: #444444;
+    text-decoration-line: underline;
+    text-decoration-color: #ECD4AE;
 }
 
 .card-hover:hover {
