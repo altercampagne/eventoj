@@ -51,7 +51,7 @@
                             data-lunch-full="{{ not availability.lunch.isEnoughForRegistration(registration) }}"
                             data-dinner-full="{{ not availability.dinner.isEnoughForRegistration(registration) }}"
                         >
-                            <h2 class="accordion-header">
+                            <div class="accordion-header">
                                 <button
                                     class="accordion-button{% if not isSelected %} collapsed{% endif %}{{ isStageConfirmed ? ' bg-success-subtle p-2' : isStageFull ? ' bg-warning-subtle p-2' }}"
                                     type="button"
@@ -70,7 +70,7 @@
                                         <b>{{ stage.date|format_date }}</b> - {{ stage.name }}
                                     </span>
                                 </button>
-                            </h2>
+                            </div>
 
                             <div id="collapse-{{ modal|title }}-{{ stage.id }}" class="accordion-collapse collapse{% if isSelected %} show{% endif %}" data-bs-parent="#accordion-{{ modal|title }}">
                                 <div class="accordion-body bg-primary" style="--bs-bg-opacity: .05;">

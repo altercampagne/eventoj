@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row mb-3">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 class="fw-bold text-uppercase text-primary">{{ event.name }}</h1>
+                <h1>{{ event.name }}</h1>
                 <div class="d-none d-md-block">
                     {% if event.isBookable %}
                         <a href="{{ path('event_register', { slug: event.slug }) }}" class="btn btn-primary btn-lg">
@@ -24,7 +24,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-4 col-lg-5">
                 <twig:UploadedImage file="{{ event.picture }}" width="550" height="550" alt="Illustration {{ event.name }}" class="mb-3 img-fluid img-thumbnail" />
-                <h2 class="text-secondary">Détails de l'évènement</h2>
+                <h2>Détails de l'évènement</h2>
                 <p>
                     Du <b>{{ event.firstStage.date|format_date('long') }}</b> au <b>{{ event.lastStage.date|format_date('long') }}</b>
                 </p>

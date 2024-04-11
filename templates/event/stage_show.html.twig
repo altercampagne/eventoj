@@ -21,9 +21,7 @@
             </div>
         </div>
         <div class="mb-3 text-center">
-            <h1 class="fw-bold text-uppercase text-primary">
-                {{ stage.name }}
-            </h1>
+            <h1>{{ stage.name }}</h1>
             <span class="fs-4 text-body-secondary fw-bold text-uppercase">
                 <a href="{{ path('event_show', { slug: stage.event.slug }) }}" class="text-body-secondary">{{ stage.event.name }}</a> - {{ stage.date|format_date('long') }} 
             </span>
@@ -32,7 +30,7 @@
         <div class="row mt-5">
             <div class="col-12 col-md-7">
                 <div class="text-center mb-3">
-                    <h2 class="text-body-secondary">Le programme</h2>
+                    <h2>Le programme</h2>
                 </div>
 
                 {% if stage.isBefore %}
@@ -53,7 +51,7 @@
 
                 {% if stage.routeUrl is not null %}
                     <div class="text-center my-3">
-                        <h2 class="text-body-secondary">Le parcours</h2>
+                        <h2>Le parcours</h2>
                     </div>
 
                     <iframe width="100%" height="700" loading="lazy" src="{{ stage.routeUrl }}" style="border: none;" scrolling="no" frameborder="0"></iframe>
@@ -61,7 +59,7 @@
 
                 {% if stage.preparers|length > 0 %}
                     <div class="text-center my-3">
-                        <h2 class="text-body-secondary">Les préparateurices d'étape</h2>
+                        <h2>Les préparateurices d'étape</h2>
                     </div>
 
                     <div class="row">
@@ -91,7 +89,7 @@
 
             <div class="col-12 col-md-5">
                 <div class="text-center mb-3">
-                    <h2 class="text-body-secondary">Les alternatives</h2>
+                    <h2>Les alternatives</h2>
                 </div>
 
                 {% for alternative in stage.alternatives %}

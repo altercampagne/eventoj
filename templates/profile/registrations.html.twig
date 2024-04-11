@@ -47,10 +47,10 @@
         <div class="row justify-content-center">
             <div class="col-12 col-sm-8 col-md-6 m-auto">
                 <div class="row text-center mb-3">
-                    <h1 class="fw-bold text-uppercase text-primary">Tes participations</h1>
+                    <h1>Tes participations</h1>
                 </div>
 
-                <h2 class="fw-bold text-uppercase text-secondary mb-3">À venir</h2>
+                <h2 class="mb-3">À venir</h2>
                 {% for registration in coming_registrations %}
                     {{ _self.render_registration(registration, true) }}
                 {% else %}
@@ -58,7 +58,7 @@
                 {% endfor %}
 
                 {% if past_registrations|length > 0 %}
-                    <h2 class="fw-bold text-uppercase text-secondary mb-3 mt-4">Passées</h2>
+                    <h2 class="mb-3 mt-4">Passées</h2>
                     {% for registration in past_registrations %}
                         {{ _self.render_registration(registration, false) }}
                     {% endfor %}

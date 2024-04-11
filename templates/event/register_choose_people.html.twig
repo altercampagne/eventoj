@@ -12,7 +12,7 @@
 
         <div class="row justify-content-center">
             <div class="col-12 col-sm-8 col-md-6 m-auto">
-                <h2 class="fw-bold text-secondary mb-3">Qui voyage ?</h2>
+                <h2 class="mb-3">Qui voyage ?</h2>
 
                 {{ form_start(form) }}
                 <ul class="list-group">
@@ -45,7 +45,7 @@
                 </div>
 
                 {% if form.neededBike is defined %}
-                    <h2 class="fw-bold text-secondary mt-4 mb-3">Besoin de vélo ? <span class="text-secondary fs-6">(adultes uniquement)</span></h2>
+                    <h2 class="mt-4 mb-3">Besoin de vélo ? <span class="text-secondary fs-6">(adultes uniquement)</span></h2>
 
                     {% if form.neededBike.vars.errors|length > 0 %}
                         <div class="alert alert-danger p-2">

@@ -1,12 +1,12 @@
 {% extends '_base.html.twig' %}
 
-{% block title %}Password Reset Email Sent{% endblock %}
+{% block title %}Mail d'oubli de mot de passe envoyé !{% endblock %}
 
 {% block main %}
     <div class="container text-center">
-        <h1 class="fw-bold text-uppercase text-primary mb-4">Demande bien reçue !</h1>
+        <h1 class="mb-4">Demande bien reçue !</h1>
         <p>
-            Si un compte avec cette adresse existe, un mail vient juste d'être envoyé avec un lien que tu peux utiliser pour choisir un nouveau mot de passe.
+            <b>Si un compte avec cette adresse existe</b>, un mail vient juste d'être envoyé avec un lien que tu peux utiliser pour choisir un nouveau mot de passe.
             Le lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
         </p>
         <p>Si tu n'as pas reçu ce mail, merci de vérifier tes spams avant de <a href="{{ path('forgot_password_request') }}">recommencer</a>.</p>
