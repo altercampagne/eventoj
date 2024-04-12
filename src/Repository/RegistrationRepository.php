@@ -29,20 +29,12 @@ class RegistrationRepository extends ServiceEntityRepository
 
     public function findOngoingRegistrationForEventAndUser(Event $event, User $user): ?Registration
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->select('r')
-            ->from(Registration::class, 'r')
-            ->andWhere('r.event = :event')
-            ->andWhere('r.user = :user')
-            ->andWhere('r.status = :status')
-            ->setParameter('event', $event)
-            ->setParameter('user', $user)
-            ->setParameter('status', RegistrationStatus::WAITING_PAYMENT)
-        ;
+        return $this->findRegistrationForEventAndUser($event, $user, RegistrationStatus::WAITING_PAYMENT);
+    }
 
-        /* @phpstan-ignore-next-line */
-        return $qb->getQuery()->getOneOrNullResult();
+    public function findConfirmedRegistrationForEventAndUser(Event $event, User $user): ?Registration
+    {
+        return $this->findRegistrationForEventAndUser($event, $user, RegistrationStatus::CONFIRMED);
     }
 
     /**
@@ -65,5 +57,23 @@ class RegistrationRepository extends ServiceEntityRepository
         ;
 
         return $qb->getQuery()->getResult();
+    }
+
+    private function findRegistrationForEventAndUser(Event $event, User $user, RegistrationStatus $status): ?Registration
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->select('r')
+            ->from(Registration::class, 'r')
+            ->andWhere('r.event = :event')
+            ->andWhere('r.user = :user')
+            ->andWhere('r.status = :status')
+            ->setParameter('event', $event)
+            ->setParameter('user', $user)
+            ->setParameter('status', $status)
+        ;
+
+        /* @phpstan-ignore-next-line */
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }

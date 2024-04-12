@@ -197,6 +197,11 @@ class Event
         return EventType::AT === $this->type;
     }
 
+    public function isEB(): bool
+    {
+        return EventType::EB === $this->type;
+    }
+
     public function getAdultsCapacity(): int
     {
         return $this->adultsCapacity;

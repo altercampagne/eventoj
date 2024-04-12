@@ -49,6 +49,15 @@ class RegisterChoosePeopleController extends AbstractController
             return $this->redirectToRoute('profile_update_profile');
         }
 
+        if ($event->isEB()) {
+            // In case of an EB, we can have at most 1 registration per user!
+            if (null !== $registration = $this->em->getRepository(Registration::class)->findConfirmedRegistrationForEventAndUser($event, $user)) {
+                $this->addFlash('warning', 'Tu as déjà inscrit pour cet évènement, ta place se trouve ici ! :)');
+
+                return $this->redirectToRoute('profile_registrations');
+            }
+        }
+
         if (null === $registration = $this->em->getRepository(Registration::class)->findOngoingRegistrationForEventAndUser($event, $user)) {
             $registration = new Registration($user, $event);
         }
