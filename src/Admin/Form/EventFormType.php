@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Admin\Form;
 
 use App\Entity\Event;
+use App\Entity\Meal;
 use App\Entity\UploadedFileType as UploadedFileTypeEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -139,6 +141,26 @@ class EventFormType extends AbstractType
                 ],
                 'divisor' => 100,
                 'scale' => 0,
+            ])
+            ->add('firstMealOfFirstDay', EnumType::class, [
+                'class' => Meal::class,
+                'label' => 'Premier repas du premier jour',
+                'attr' => [
+                    'placeholder' => 'Premier repas du premier jour',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+            ])
+            ->add('lastMealOfLastDay', EnumType::class, [
+                'class' => Meal::class,
+                'label' => 'Dernier repas du dernier jour',
+                'attr' => [
+                    'placeholder' => 'Dernier repas du dernier jour',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
             ])
         ;
     }

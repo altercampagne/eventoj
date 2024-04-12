@@ -15,11 +15,28 @@
 
                 {{ form_start(form) }}
                     <fieldset class="form-group border p-3 mt-3 bg-light">
-                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-calendar-days me-2"></i> Description de l'évènement</legend>
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-rectangle-list me-2"></i> Description de l'évènement</legend>
 
                         {{ form_row(form.name) }}
                         {{ form_row(form.description) }}
                         {{ form_row(form.openingDateForBookings) }}
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-calendar-days me-2"></i> Dates de l'évènement</legend>
+
+                        <div class="alert bg-info-subtle">
+                            Il n'est pas nécessaire de renseigner les dates de début et de fin de l'évènement ici puisque celles-ci seront automatiquement déduite des dates des différentes étapes. En revanche, pour éviter que les participant·es ne payent des repas qui ne seront pas servis, il est indispensable de connaitre le premier repas du premier jour ainsi que le dernier repas du dernier jour.
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.firstMealOfFirstDay) }}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.lastMealOfLastDay) }}
+                            </div>
+                        </div>
                     </fieldset>
 
                     <fieldset class="form-group border p-3 mt-3 bg-light">

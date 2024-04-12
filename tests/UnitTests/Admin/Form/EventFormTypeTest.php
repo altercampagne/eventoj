@@ -32,6 +32,8 @@ class EventFormTypeTest extends KernelTestCase
             'name' => 'AT 2042',
             'description' => 'Un AT qui s\'annonce incoyable',
             'openingDateForBookings' => (new \DateTimeImmutable('3 months'))->format('Y-m-d H:i:s'),
+            'firstMealOfFirstDay' => 'dinner',
+            'lastMealOfLastDay' => 'breakfast',
             'adultsCapacity' => 30,
             'childrenCapacity' => 6,
             'bikesAvailable' => 6,

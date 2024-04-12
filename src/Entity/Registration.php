@@ -96,8 +96,22 @@ class Registration
             $this->stagesRegistrations = new ArrayCollection();
         } else {
             $stagesRegistrations = [];
-            foreach ($event->getStages() as $stage) {
-                $stagesRegistrations[] = new StageRegistration($stage, $this);
+            $stages = $event->getStages();
+            $nbStages = \count($stages);
+            for ($i = 0; $i < $nbStages; ++$i) {
+                /** @var Stage $stage */
+                $stage = $stages[$i];
+
+                $stageRegistration = new StageRegistration($stage, $this);
+                if (0 === $i) {
+                    $stageRegistration->setPresentForBreakfast($event->firstDayIncludesBreakfast());
+                    $stageRegistration->setPresentForLunch($event->firstDayIncludesLunch());
+                } elseif ($i === $nbStages - 1) {
+                    $stageRegistration->setPresentForLunch($event->lastDayIncludesLunch());
+                    $stageRegistration->setPresentForDinner($event->lastDayIncludesDinner());
+                }
+
+                $stagesRegistrations[] = $stageRegistration;
             }
             $this->stagesRegistrations = new ArrayCollection($stagesRegistrations);
         }

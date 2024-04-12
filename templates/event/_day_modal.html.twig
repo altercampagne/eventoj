@@ -75,9 +75,32 @@
                             <div id="collapse-{{ modal|title }}-{{ stage.id }}" class="accordion-collapse collapse{% if isSelected %} show{% endif %}" data-bs-parent="#accordion-{{ modal|title }}">
                                 <div class="accordion-body bg-primary" style="--bs-bg-opacity: .05;">
                                     <div class="row">
-                                        {{ _self.render_meal_availability(availability.breakfast, registration, isStageConfirmed) }}
-                                        {{ _self.render_meal_availability(availability.lunch, registration, isStageConfirmed) }}
-                                        {{ _self.render_meal_availability(availability.dinner, registration, isStageConfirmed) }}
+                                        {% set includesBreakfast = true %}
+                                        {% set includesLunch = true %}
+                                        {% set includesDinner = true %}
+                                        {% if loop.first %}
+                                            {% set includesBreakfast = registration.event.firstDayIncludesBreakfast %}
+                                            {% set includesLunch = registration.event.firstDayIncludesLunch %}
+                                        {% endif %}
+                                        {% if loop.last %}
+                                            {% set includesLunch = registration.event.lastDayIncludesLunch %}
+                                            {% set includesDinner = registration.event.lastDayIncludesDinner %}
+                                        {% endif %}
+                                        {% if includesBreakfast %}
+                                            {{ _self.render_meal_availability(availability.breakfast, registration, isStageConfirmed) }}
+                                        {% else %}
+                                            <div class="col-12 col-md-4"></div>
+                                        {% endif %}
+                                        {% if includesLunch %}
+                                            {{ _self.render_meal_availability(availability.lunch, registration, isStageConfirmed) }}
+                                        {% else %}
+                                            <div class="col-12 col-md-4"></div>
+                                        {% endif %}
+                                        {% if includesDinner %}
+                                            {{ _self.render_meal_availability(availability.dinner, registration, isStageConfirmed) }}
+                                        {% else %}
+                                            <div class="col-12 col-md-4"></div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

@@ -108,6 +108,14 @@ class Event
     #[ORM\JoinColumn(name: 'uploaded_file_id', referencedColumnName: 'id')]
     private ?UploadedFile $picture = null;
 
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 10, enumType: Meal::class)]
+    private Meal $firstMealOfFirstDay;
+
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 10, enumType: Meal::class)]
+    private Meal $lastMealOfLastDay;
+
     /**
      * @var Collection<int, Stage>
      */
@@ -126,6 +134,8 @@ class Event
     {
         $this->id = new UuidV4();
         $this->type = $type;
+        $this->firstMealOfFirstDay = Meal::LUNCH;
+        $this->lastMealOfLastDay = Meal::LUNCH;
         $this->createdAt = new \DateTimeImmutable();
         $this->stages = new ArrayCollection();
         $this->registrations = new ArrayCollection();
@@ -359,6 +369,50 @@ class Event
     public function setPicture(?UploadedFile $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getFirstMealOfFirstDay(): Meal
+    {
+        return $this->firstMealOfFirstDay;
+    }
+
+    public function firstDayIncludesBreakfast(): bool
+    {
+        return Meal::BREAKFAST === $this->firstMealOfFirstDay;
+    }
+
+    public function firstDayIncludesLunch(): bool
+    {
+        return Meal::DINNER !== $this->firstMealOfFirstDay;
+    }
+
+    public function lastDayIncludesLunch(): bool
+    {
+        return Meal::BREAKFAST !== $this->lastMealOfLastDay;
+    }
+
+    public function lastDayIncludesDinner(): bool
+    {
+        return Meal::DINNER === $this->lastMealOfLastDay;
+    }
+
+    public function setFirstMealOfFirstDay(Meal $firstMealOfFirstDay): self
+    {
+        $this->firstMealOfFirstDay = $firstMealOfFirstDay;
+
+        return $this;
+    }
+
+    public function getLastMealOfLastDay(): Meal
+    {
+        return $this->lastMealOfLastDay;
+    }
+
+    public function setLastMealOfLastDay(Meal $lastMealOfLastDay): self
+    {
+        $this->lastMealOfLastDay = $lastMealOfLastDay;
 
         return $this;
     }
