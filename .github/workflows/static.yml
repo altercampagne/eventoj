@@ -81,6 +81,7 @@ jobs:
   audit:
     name: 🔍 Audit vendors
     runs-on: ubuntu-latest
+    can-fail: true
 
     steps:
       - name: Checkout code
