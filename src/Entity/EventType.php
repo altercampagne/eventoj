@@ -23,4 +23,14 @@ enum EventType: string implements TranslatableInterface
             self::EB => 'Échappée Belle',
         };
     }
+
+    public function getFAQQuestionSlug(): string
+    {
+        return match ($this) {
+            self::AT => 'quest-ce-quun-altertour',
+            self::EB => 'quest-ce-quune-echappe-belle',
+            self::ADT => 'quest-ce-quun-alter-d-tour',
+            self::BT => 'quest-ce-quun-bieretour',
+        };
+    }
 }

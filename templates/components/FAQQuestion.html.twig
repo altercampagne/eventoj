@@ -1,0 +1,22 @@
+<button{{ attributes.without('type', 'data-bs-toggle', 'data-bs-target') }}
+    type="button"
+    class="btn btn-outline-secondary"
+    data-bs-toggle="modal"
+    data-bs-target="#question-{{ this.question.id }}"
+>
+    {{ label|default('💡 ' ~ this.question.question) }}
+</button>
+
+<div class="modal fade" id="question-{{ this.question.id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger-outline">
+                <h5 class="modal-title">{{ this.question.question }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ this.question.answer|raw }}
+            </div>
+        </div>
+    </div>
+</div>
