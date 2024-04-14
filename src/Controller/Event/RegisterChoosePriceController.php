@@ -13,6 +13,7 @@ use App\Service\Bill\BillCreator;
 use App\Service\Payment\RegistrationPaymentHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,8 +32,11 @@ class RegisterChoosePriceController extends AbstractController
     ) {
     }
 
-    public function __invoke(Request $request, Event $event): Response
-    {
+    public function __invoke(
+        Request $request,
+        #[MapEntity(mapping: ['slug' => 'slug'])]
+        Event $event,
+    ): Response {
         if (!$event->isBookable()) {
             throw $this->createNotFoundException();
         }

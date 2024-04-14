@@ -9,6 +9,7 @@ use App\Admin\Security\Permission;
 use App\Entity\Event;
 use App\Entity\Stage;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,8 +25,11 @@ final class CreateOrUpdateController extends AbstractController
 
     #[IsGranted(Permission::STAGE_CREATE->value)]
     #[Route('/stages/create/{slug}', name: 'admin_stage_create')]
-    public function create(Request $request, Event $event): Response
-    {
+    public function create(
+        Request $request,
+        #[MapEntity(mapping: ['slug' => 'slug'])]
+        Event $event,
+    ): Response {
         $stage = new Stage($event);
         if (null !== $lastStage = $event->getLastStage()) {
             $stage->setDate($lastStage->getDate()->modify('+1 day'));
@@ -36,8 +40,13 @@ final class CreateOrUpdateController extends AbstractController
 
     #[IsGranted(Permission::STAGE_UPDATE->value, 'stage')]
     #[Route('/stages/{slug}/update/{backToStage}', name: 'admin_stage_update')]
-    public function update(Request $request, Stage $stage, bool $creation = false, bool $backToStage = false): Response
-    {
+    public function update(
+        Request $request,
+        #[MapEntity(mapping: ['slug' => 'slug'])]
+        Stage $stage,
+        bool $creation = false,
+        bool $backToStage = false,
+    ): Response {
         $form = $this->createForm(StageFormType::class, $stage);
         $form->handleRequest($request);
 

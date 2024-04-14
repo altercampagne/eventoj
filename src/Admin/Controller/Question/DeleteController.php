@@ -7,6 +7,7 @@ namespace App\Admin\Controller\Question;
 use App\Admin\Security\Permission;
 use App\Entity\Question;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,8 +23,11 @@ class DeleteController extends AbstractController
     ) {
     }
 
-    public function __invoke(Request $request, Question $question): Response
-    {
+    public function __invoke(
+        Request $request,
+        #[MapEntity(mapping: ['slug' => 'slug'])]
+        Question $question,
+    ): Response {
         if ($question->isLocked()) {
             $this->addFlash('error', 'La question est utilisée ailleurs sur le site et ne peut pas être supprimée !');
         }

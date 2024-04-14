@@ -28,10 +28,17 @@ class BasicGetTest extends WebTestCase
      */
     public static function adminPages(): iterable
     {
+        $eventSlug = 'at-a-venir-ouvert';
+
         yield ['/_admin/', 'Dashboard'];
         yield ['/_admin/users', 'Toustes les utilisateurices'];
         yield ['/_admin/registrations', 'Toutes les réservations'];
         yield ['/_admin/events', 'Tous les évènements'];
+        yield ["/_admin/events/$eventSlug", 'AT à venir (ouvert)'];
+        yield ["/_admin/events/$eventSlug/registrations", 'AT à venir (ouvert)'];
+        yield ["/_admin/events/$eventSlug/filling", 'AT à venir (ouvert)'];
+        yield ["/_admin/events/$eventSlug/meals", 'AT à venir (ouvert)'];
+        yield ["/_admin/events/$eventSlug/arrivals", 'AT à venir (ouvert)'];
     }
 
     /**

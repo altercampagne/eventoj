@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Form\EventRegistration\ChoosePeopleFormType;
 use App\Form\EventRegistration\EventRegistrationDTO;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,8 +28,11 @@ class RegisterChoosePeopleController extends AbstractController
     ) {
     }
 
-    public function __invoke(Request $request, Event $event): Response
-    {
+    public function __invoke(
+        Request $request,
+        #[MapEntity(mapping: ['slug' => 'slug'])]
+        Event $event,
+    ): Response {
         if (!$event->isBookable()) {
             throw $this->createNotFoundException();
         }

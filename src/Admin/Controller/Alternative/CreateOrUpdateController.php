@@ -8,6 +8,7 @@ use App\Admin\Form\AlternativeFormType;
 use App\Admin\Security\Permission;
 use App\Entity\Alternative;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,8 +31,13 @@ final class CreateOrUpdateController extends AbstractController
 
     #[IsGranted(Permission::ALTERNATIVE_UPDATE->value, 'alternative')]
     #[Route('/alternatives/{slug}/update/{backToAlternative}', name: 'admin_alternative_update')]
-    public function update(Request $request, Alternative $alternative, bool $creation = false, bool $backToAlternative = false): Response
-    {
+    public function update(
+        Request $request,
+        #[MapEntity(mapping: ['slug' => 'slug'])]
+        Alternative $alternative,
+        bool $creation = false,
+        bool $backToAlternative = false,
+    ): Response {
         $form = $this->createForm(AlternativeFormType::class, $alternative);
         $form->handleRequest($request);
 

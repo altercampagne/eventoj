@@ -8,7 +8,7 @@ use App\DataFixtures\Util\FixtureBuilder;
 use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class QuestionCreateAndUpdateTest extends WebTestCase
+class QuestionCRUDTest extends WebTestCase
 {
     use DatabaseUtilTrait;
 
@@ -52,5 +52,12 @@ class QuestionCreateAndUpdateTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('admin_question_show');
         $this->assertSelectorTextContains('.alert-success', 'La question a bien été modifiée ! 🥳');
+
+        $client->submitForm('J\'ai bien compris et je confirme la suppression définitive', []);
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('admin_question_list');
+        $this->assertSelectorTextContains('.alert-success', 'La question a été supprimée !');
     }
 }
