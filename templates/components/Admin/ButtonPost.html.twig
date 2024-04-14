@@ -21,11 +21,17 @@ USAGE example:
 
 {% if not isGranted %}
     <a href="" class="{{ btnClass }} {% if not isGranted %} disabled{% endif %}"{{ tooltipConfig|default(null)|raw }}>
-        {{ label|raw }}
-    </a>
 {% else %}
     <button type="submit" class="{{ btnClass }}"{% if not isGranted %} disabled{% endif %} form="{{ form_id }}"{{ tooltipConfig|default(null)|raw }}>
-        {{ label|raw }}
+{% endif %}
+
+{% block content %}
+    {{ label|raw }}
+{% endblock %}
+
+{% if not isGranted %}
+    </a>
+{% else %}
     </button>
     <form method="POST" action="{{ url }}" class="d-none" id="{{ form_id }}"></form>
 {% endif %}
