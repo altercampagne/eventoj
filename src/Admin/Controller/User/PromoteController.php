@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted(Permission::USER_PROMOTE->value, 'user')]
+#[IsGranted(Permission::USER_MANAGEMENT->value, 'user')]
 #[Route('/users/{id}/promote_admin', name: 'admin_user_promote_admin', requirements: ['id' => Requirement::UUID_V4], defaults: ['role' => 'ROLE_ADMIN'])]
 #[Route('/users/{id}/promote_prepa', name: 'admin_user_promote_prepa', requirements: ['id' => Requirement::UUID_V4], defaults: ['role' => 'ROLE_PREPA'])]
 class PromoteController extends AbstractController

@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted(Permission::USER_UNPROMOTE->value, 'user')]
+#[IsGranted(Permission::USER_MANAGEMENT->value, 'user')]
 #[Route('/users/{id}/unpromote_admin', name: 'admin_user_unpromote_admin', requirements: ['id' => Requirement::UUID_V4], defaults: ['role' => 'ROLE_ADMIN'])]
 #[Route('/users/{id}/unpromote_prepa', name: 'admin_user_unpromote_prepa', requirements: ['id' => Requirement::UUID_V4], defaults: ['role' => 'ROLE_PREPA'])]
 class UnpromoteController extends AbstractController

@@ -42,6 +42,5 @@ enum Permission: string
 
     case USER_LIST = 'user.list';
     case USER_VIEW = 'user.view';
-    case USER_PROMOTE = 'user.promote';
-    case USER_UNPROMOTE = 'user.unpromote';
+    case USER_MANAGEMENT = 'user.management';
 }
