@@ -1,0 +1,28 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = 'Toutes les questions de la FAQ' %}
+
+{% block main %}
+    <div class="d-flex justify-content-end">
+        <a href="{{ path('admin_question_create') }}" class="btn btn-primary">
+            Ajouter une nouvelle question
+        </a>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Question</th>
+                <th scope="col">Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+                <tr data-href="{{ path('admin_question_show', { slug: question.slug }) }}">
+                    <td>{{ question.question }}</td>
+                    <td>{{ question.answer|striptags|u.truncate(100, '...', false) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

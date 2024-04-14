@@ -28,6 +28,12 @@ enum Permission: string
     case PAYMENT_LIST = 'payment.list';
     case PAYMENT_VIEW = 'payment.view';
 
+    case QUESTION_LIST = 'question.list';
+    case QUESTION_VIEW = 'question.view';
+    case QUESTION_CREATE = 'question.create';
+    case QUESTION_UPDATE = 'question.update';
+    case QUESTION_DELETE = 'question.delete';
+
     case REGISTRATION_LIST = 'registration.list';
     case REGISTRATION_VIEW = 'registration.view';
 

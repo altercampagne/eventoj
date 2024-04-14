@@ -71,6 +71,14 @@
                         </li>
                     {% endif %}
 
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::QUESTION_LIST').value) %}
+                        <li class="nav-item">
+                            <a href="{{ path('admin_question_list') }}" class="nav-link{% if current_route starts with 'admin_question_' %} active{% endif %}" aria-current="page">
+                                FAQ
+                            </a>
+                        </li>
+                    {% endif %}
+
                 </ul>
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

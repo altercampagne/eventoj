@@ -1,0 +1,33 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = creation ? 'Création d\'une question' : question.question %}
+
+{% block main %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10">
+                {{ form_errors(form) }}
+
+                {{ form_start(form) }}
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-rectangle-list me-2"></i> THE question</legend>
+
+                        {{ form_row(form.question) }}
+                        {{ form_row(form.answer) }}
+                    </fieldset>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-lg btn-primary">
+                            {% if creation %}Ajouter{% else %}Modifier{% endif %}
+                        </button>
+                    </div>
+
+                    <div class="d-none">
+                        {{ form_rest(form) }}
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

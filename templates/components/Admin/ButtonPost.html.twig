@@ -1,0 +1,31 @@
+{#
+USAGE example:
+
+<twig:Admin:ButtonPost
+    url="{{ url }}"
+    label="Publier l'évènement"
+    tooltip="Modification définitive !"
+    btnClass="btn btn-warning"
+    isGranted="{{ is_granted('ROLE_PUBLISHER') }}"
+/>
+#}
+
+{% set isGranted = isGranted|default(true) %}
+
+{% if tooltip is defined %}
+    {% set tooltipConfig = ' data-bs-toggle="tooltip" title="'~tooltip~'"' %}
+{% endif %}
+
+{% set btnClass = btnClass|default('btn btn-danger') %}
+{% set form_id = 'form-' ~ random() %}
+
+{% if not isGranted %}
+    <a href="" class="{{ btnClass }} {% if not isGranted %} disabled{% endif %}"{{ tooltipConfig|default(null)|raw }}>
+        {{ label|raw }}
+    </a>
+{% else %}
+    <button type="submit" class="{{ btnClass }}"{% if not isGranted %} disabled{% endif %} form="{{ form_id }}"{{ tooltipConfig|default(null)|raw }}>
+        {{ label|raw }}
+    </button>
+    <form method="POST" action="{{ url }}" class="d-none" id="{{ form_id }}"></form>
+{% endif %}
