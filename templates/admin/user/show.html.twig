@@ -16,34 +16,30 @@
                                 <twig:Admin:Diet person="{{ user }}" />
                             </div>
                         </li>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_MANAGEMENT').value, user) %}
+                            <li class="list-group-item">
+                                    <b>Gestion des permissions :</b>
+
+                                    <twig:Admin:ButtonPost
+                                        url="{{ user.isAdmin ? path('admin_user_unpromote_admin', { id: user.id }) : path('admin_user_promote_admin', { id: user.id }) }}"
+                                        tooltip="{{ user.isAdmin ? 'Retirer' : 'Ajouter' }} les droits d'admin à {{ user.fullname }}"
+                                        btnClass="btn {{ user.isAdmin ? 'btn-danger' : 'btn-outline-danger' }}"
+                                    >
+                                        {{ user.isAdmin ? 'Retirer' : 'Passer' }} admin
+                                    </twig:Admin:ButtonPost>
+
+                                    <twig:Admin:ButtonPost
+                                        url="{{ path(user.isInscriptionsManager ? 'admin_user_unpromote_inscriptions_manager' : 'admin_user_promote_inscriptions_manager', { id: user.id }) }}"
+                                        tooltip="{{ user.isInscriptionsManager ? 'Retirer' : 'Ajouter' }} les droits de gestionnaire des inscriptions à {{ user.fullname }}"
+                                        btnClass="btn {{ user.isInscriptionsManager ? 'btn-warning' : 'btn-outline-warning' }}"
+                                    >
+                                        {{ user.isInscriptionsManager ? 'Retirer' : 'Passer' }} gestionnaire inscriptions
+                                    </twig:Admin:ButtonPost>
+                            </li>
+                        {% endif %}
                     </ul>
                 {% endblock %}
 
-                {% block card_footer %}
-                    <div class="d-grid gap-2 p-2">
-                        {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_MANAGEMENT').value, user) %}
-                            {% if user.isAdmin %}
-                                <a class="btn btn-outline-danger" href="{{ path('admin_user_unpromote_admin', { id: user.id }) }}">
-                                    <i class="fa-solid fa-turn-down me-1"></i> Supprimer le rôle admin
-                                </a>
-                            {% else %}
-                                <a class="btn btn-outline-danger" href="{{ path('admin_user_promote_admin', { id: user.id }) }}">
-                                    <i class="fa-solid fa-turn-up me-1"></i> Passer admin
-                                </a>
-                            {% endif %}
-
-                            {% if user.isPrepa %}
-                                <a class="btn btn-outline-warning" href="{{ path('admin_user_unpromote_prepa', { id: user.id }) }}">
-                                    <i class="fa-solid fa-turn-down me-1"></i> Supprimer le rôle prepa
-                                </a>
-                            {% else %}
-                                <a class="btn btn-outline-warning" href="{{ path('admin_user_promote_prepa', { id: user.id }) }}">
-                                    <i class="fa-solid fa-turn-up me-1"></i> Passer prepa
-                                </a>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                {% endblock %}
             {% endembed %}
 
             <div class="p-2 text-secondary">

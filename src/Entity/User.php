@@ -218,6 +218,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->getPreparedStages()->contains($stage);
     }
 
+    public function isInscriptionsManager(): bool
+    {
+        return \in_array('ROLE_INSCRIPTIONS', $this->roles);
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */
