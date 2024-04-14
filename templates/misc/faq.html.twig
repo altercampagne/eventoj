@@ -1,0 +1,43 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Foire aux questions{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="text-center">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-9">
+                    <h1>Foire aux questions</h1>
+                    <p class="lead mb-4">
+                        Notre équipe de bénévoles aux petits soins t'a préparer une foire aux questions dans laquelle, on l'espère, tu trouveras des réponses à toutes tes interrogations !
+                    </p>
+
+                    {% for question in questions %}
+                        <div class="card card-hover mb-3">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title">{{ question.question }}</h5>
+                                    <a href="#{{ question.slug }}" class="stretched-link"><i class="fa-solid fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% for question in questions %}
+                        <hr class="m-5" />
+
+                        <h2 id="{{ question.slug }}">{{ question.question }}</h2>
+                        <p>
+                            {{ question.answer|raw }}
+                        </p>
+                    {% endfor %}
+
+                    <div class="alert bg-success-subtle mt-5">
+                        <b>Tu as encore des questions ?</b><br />
+                        N'hésite pas à <a href="{{ path('contact') }}">prendre contact avec les bénévoles</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

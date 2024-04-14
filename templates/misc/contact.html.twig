@@ -11,6 +11,26 @@
                     <p class="lead">
                         Si tu souhaites avoir plus d'info sur nos évènements, si tu rencontres un problème ou pour toute autre raison, n'hésite pas à nous contacter.
                     </p>
+
+                    <hr class="mt-4" />
+                    <h2 class="mt-4">Avant de nous contacter</h2>
+                    <p>
+                        Est-ce que tu as bien jeté un oeil à <a href="{{ path('faq') }}">la Foire Aux Question (FAQ)</a> ? Elle contient plein d'informations très utiles. :)
+                    </p>
+
+                    {% for question in questions %}
+                        <div class="card card-hover mb-3">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title">{{ question.question }}</h5>
+                                    <a href="{{ path('faq') }}#{{ question.slug }}" class="stretched-link"><i class="fa-solid fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <hr class="mt-4" />
+                    <h2 class="mt-4">Prendre contact</h2>
                     <div class="alert alert-info">
                         La boite mail de l'association est <b>gérée par des bénévoles</b>. Nous faisons au mieux pour être réactif·ves mais nous avons toustes d'autres occupations. Merci d'être indulgent·e ! 🙏
                     </div>

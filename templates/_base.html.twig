@@ -16,6 +16,9 @@
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{ path('homepage') }}">Évènements</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ path('faq') }}">Foire aux questions</a>
+                            </li>
                         </ul>
 
                         <ul class="navbar-nav">
@@ -109,7 +112,7 @@
             <div class="container mt-3">
                 <div class="d-flex justify-content-between flex-wrap">
                     {% if app.request.get('_route') != 'contact' %}
-                        <p class="flex-fill">💬 Besoin d'aide ? Une question ? <a href="{{ path('contact') }}">Contacte-nous</a> !</p>
+                        <p class="flex-fill">💬 Besoin d'aide ? Une question ? <a href="{{ path('contact') }}">C'est par ici</a> !</p>
                     {% endif %}
                     <p class="flex-fill text-end">Développé avec <span class="text-danger">♥</span> et <a href="https://github.com/altercampagne/eventoj/">en open source</a>.</p>
                 </div>
