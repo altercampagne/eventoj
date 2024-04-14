@@ -34,7 +34,7 @@ class UnpromoteController extends AbstractController
         $this->em->persist($user);
         $this->em->flush();
 
-        $this->addFlash('success', "{$user->getFullName()} n'est plus admin!");
+        $this->addFlash('success', "{$user->getFullName()} n'a plus le rôle {$role} !");
 
         return $this->redirectToRefererOrToRoute('admin_user_list');
     }
