@@ -74,14 +74,30 @@ jobs:
         shell: bash
         run: composer validate
 
+      - name: Check that PSR is respected
+        shell: bash
+        run: composer dump-autoload --dev -o --dry-run --strict-psr
+
+  audit:
+    name: 🔍 Audit vendors
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+
+      - name: Download dependencies
+        uses: ramsey/composer-install@v2
+
       - name: Check whether a PHP dependency is compromised
         shell: bash
         run: composer audit
 
-      - name: Check whether a PHP dependency is compromised
+      - name: Check whether a front dependency is compromised
         shell: bash
         run: bin/console importmap:audit
-
-      - name: Check that PSR is respected
-        shell: bash
-        run: composer dump-autoload --dev -o --dry-run --strict-psr
