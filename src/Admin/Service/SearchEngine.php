@@ -45,7 +45,7 @@ final readonly class SearchEngine
         $qb
             ->select('u')
             ->from(User::class, 'u')
-            ->where('LOWER(u.email) LIKE :query OR LOWER(u.firstName) LIKE :query OR LOWER(u.lastName) LIKE :query')
+            ->where('LOWER(u.email) LIKE :query OR LOWER(UNACCENT(u.firstName)) LIKE UNACCENT(:query) OR UNACCENT(LOWER(u.lastName)) LIKE UNACCENT(:query)')
             ->setParameter('query', $query)
         ;
 
@@ -66,7 +66,7 @@ final readonly class SearchEngine
             ->select('c, u')
             ->from(Companion::class, 'c')
             ->leftJoin('c.user', 'u')
-            ->where('LOWER(c.email) LIKE :query OR LOWER(c.firstName) LIKE :query OR LOWER(c.lastName) LIKE :query')
+            ->where('LOWER(c.email) LIKE :query OR LOWER(UNACCENT(c.firstName)) LIKE UNACCENT(:query) OR LOWER(UNACCENT(c.lastName)) LIKE UNACCENT(:query)')
             ->setParameter('query', $query)
         ;
 
@@ -86,7 +86,7 @@ final readonly class SearchEngine
         $qb
             ->select('e')
             ->from(Event::class, 'e')
-            ->where('LOWER(e.name) LIKE :query')
+            ->where('LOWER(UNACCENT(e.name)) LIKE UNACCENT(:query)')
             ->setParameter('query', $query)
         ;
 
@@ -106,7 +106,7 @@ final readonly class SearchEngine
         $qb
             ->select('a')
             ->from(Alternative::class, 'a')
-            ->where('LOWER(a.name) LIKE :query')
+            ->where('LOWER(UNACCENT(a.name)) LIKE UNACCENT(:query)')
             ->setParameter('query', $query)
         ;
 
