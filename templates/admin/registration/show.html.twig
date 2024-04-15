@@ -48,14 +48,16 @@
             </div>
         </div>
         <div class="col-4 border-start">
-            <div class="row row-cols-1 g-4">
-                <div class="col">
-                    {{ include('admin/_cards/user.html.twig', { user: registration.user }, with_context = false) }}
-                </div>
-                <div class="col">
-                    {{ include('admin/_cards/event.html.twig', { event: registration.event }, with_context = false) }}
-                </div>
-            </div>
+            <h3 class="text-center fw-bold"><u>Utilisateurice</u></h3>
+            {{ include('admin/_cards/user.html.twig', { user: registration.user }, with_context = false) }}
+
+            <h3 class="text-center fw-bold mt-4"><u>Évènement</u></h3>
+            {{ include('admin/_cards/event.html.twig', { event: registration.event }, with_context = false) }}
+
+            {% if registration.approvedPayment is not null %}
+                <h3 class="text-center fw-bold mt-4"><u>Paiement</u></h3>
+                {{ include('admin/_cards/payment.html.twig', { payment: registration.approvedPayment }, with_context = false) }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

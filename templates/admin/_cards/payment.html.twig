@@ -1,0 +1,23 @@
+<div class="card border-dark-subtle">
+    {% block card_header %}
+        <div class="card-header bg-dark-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant un payment de {{ payment.payer.fullname }}">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <i class="fa-solid fa-sack-dollar me-2"></i>
+                    Paiement de {{ payment.amount|format_price }} par {{ payment.payer.fullname }}
+                </div>
+
+                <div>
+                    <twig:Admin:PaymentStatus payment="{{ payment }}" />
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block card_content %}
+    {% endblock %}
+
+    {% block card_footer %}
+        <a href="{{ path('admin_payment_show', { id: payment.id }) }}" class="btn btn-link btn-sm">Voir ce paiement</a>
+    {% endblock %}
+</div>
