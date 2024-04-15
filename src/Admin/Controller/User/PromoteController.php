@@ -34,7 +34,7 @@ class PromoteController extends AbstractController
         $this->em->persist($user);
         $this->em->flush();
 
-        $this->addFlash('success', "{$user->getFullName()} a maintenant le role {$role}!");
+        $this->addFlash('success', "{$user->getFullName()} a maintenant le role {$role} !");
 
         return $this->redirectToRefererOrToRoute('admin_user_list');
     }
