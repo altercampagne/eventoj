@@ -63,7 +63,7 @@ class PaymentCallbackController extends AbstractController
         }
 
         if (!$this->registrationPaymentHandler->isPaymentSuccessful($payment)) {
-            $this->addFlash('danger', 'Impossible de vérifier que ton paiement est bien passé.');
+            $this->addFlash('danger', 'Impossible de vérifier que ton paiement est bien passé. Si tu es certain·e que c\'est bien le cas, contacte notre équipe avec ton nom / prénom / dates de réservation et en leur copiant ce message.');
 
             return $this->fail($payment);
         }
