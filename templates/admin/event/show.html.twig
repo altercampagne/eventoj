@@ -5,56 +5,48 @@
 {% block main %}
     <div class="row">
         <div class="col-12 col-md-3">
-            <div class="card border-primary-subtle">
-                <div class="card-header bg-primary-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'évènement {{ event.name }}">
-                    <i class="fa-solid fa-calendar-days me-2"></i>
-                    {{ event.name }}
-                    <span class="float-end badge bg-primary">{{ event.type.value }}</span>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <i class="fa-solid fa-map-location-dot fa-fw me-1"></i>
-                        {{ event.stages|length }} étapes
-                    </li>
-                    {% if event.stages|length > 0 %}
+            {% embed 'admin/_cards/event.html.twig' with { event: event } only %}
+                {% block content %}
+                    {{ parent() }}
+
+                    <ul class="list-group list-group-flush border-top-0">
                         <li class="list-group-item">
-                            <i class="fa-solid fa-calendar-days fa-fw me-1"></i>
-                            Du <b>{{ (event.stages|first).date|format_date('long') }}</b> au <b>{{ (event.stages|last).date|format_date('long') }}</b>
+                            <i class="fa-solid fa-ticket fa-fw me-1"></i>
+                            Inscriptions le {{ event.openingDateForBookings|format_datetime('long', 'short') }}
                         </li>
-                    {% endif %}
-                    <li class="list-group-item">
-                        <i class="fa-solid fa-ticket fa-fw me-1"></i>
-                        Inscriptions le {{ event.openingDateForBookings|format_datetime('long', 'short') }}
-                    </li>
-                    <li class="list-group-item">
-                        <i class="fa-solid fa-file-invoice-dollar fa-fw me-1"></i>
-                        Paheko Project ID :
-                        {% if event.pahekoProjectId is not null %}
-                            <a href="{{ pahekoBaseUri }}/admin/acc/reports/journal.php?project={{ event.pahekoProjectId }}">{{ event.pahekoProjectId }}</a>
-                        {% else %}
-                            -
+                        <li class="list-group-item">
+                            <i class="fa-solid fa-file-invoice-dollar fa-fw me-1"></i>
+                            Paheko Project ID :
+                            {% if event.pahekoProjectId is not null %}
+                                <a href="{{ pahekoBaseUri }}/admin/acc/reports/journal.php?project={{ event.pahekoProjectId }}">{{ event.pahekoProjectId }}</a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </li>
+                        {% if event.isPublished %}
+                            <li class="list-group-item">
+                                <i class="fa-solid fa-clock fa-fw me-1"></i>
+                                Publié le {{ event.publishedAt|format_datetime('long', 'short') }}
+                            </li>
                         {% endif %}
-                    </li>
-                    {% if event.isPublished %}
-                        <li class="list-group-item">
-                            <i class="fa-solid fa-clock fa-fw me-1"></i>
-                            Publié le {{ event.publishedAt|format_datetime('long', 'short') }}
-                        </li>
-                    {% endif %}
-                </ul>
+                    </ul>
+                {% endblock %}
 
-                <div class="d-grid gap-2 p-2">
-                    {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_UPDATE').value, event) %}
-                        <a href="{{ path('admin_event_update', { slug: event.slug }) }}" class="btn btn-outline-primary">Modifier l'évènement</a>
-                    {% endif %}
+                {% block footer %}
+                    <div class="d-grid gap-2 p-2">
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_UPDATE').value, event) %}
+                            <a href="{{ path('admin_event_update', { slug: event.slug }) }}" class="btn btn-outline-primary">Modifier l'évènement</a>
+                        {% endif %}
 
-                    {% if not event.isPublished and is_granted(constant('App\\Admin\\Security\\Permission::EVENT_PUBLISH').value, event) %}
-                        <a href="{{ path('admin_event_publish', { slug: event.slug }) }}" class="btn btn-outline-success">
-                            Publier l'évènement
-                        </a>
-                    {% endif %}
-                </div>
-            </div>
+                        {% if not event.isPublished and is_granted(constant('App\\Admin\\Security\\Permission::EVENT_PUBLISH').value, event) %}
+                            <a href="{{ path('admin_event_publish', { slug: event.slug }) }}" class="btn btn-outline-success">
+                                Publier l'évènement
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+
             <div class="p-2 text-secondary">
                 <small>
                     Créé le <b>{{ event.createdAt|format_datetime('long', 'short') }}</b><br />

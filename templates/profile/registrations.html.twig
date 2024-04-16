@@ -38,6 +38,40 @@
                     </div>
                 {% endif %}
             </p>
+            {% if registration.canBeCanceled %}
+
+                <div class="d-grid gap-2 d-none">
+                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#cancel-{{ registration.id }}">
+                        Annuler mon inscription
+                    </button>
+                </div>
+
+                <div class="modal fade" id="cancel-{{ registration.id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-danger-outline">
+                                <h5 class="modal-title">Annulation de ton inscription</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {% block modal_body %}
+                                    Cette action est <b>IRREVERSIBLE</b>.<br /><br />
+                                    Tu seras remboursé de l'intégralité de ton paiement, excepté le montant des cotisations et l'éventuel don à Helloasso, soit un montant de <b>{{ registration.approvedPayment.registrationOnlyAmount|format_price }}</b>.
+                                {% endblock %}
+                            </div>
+                            <div class="modal-footer">
+                                <twig:ButtonPost url="{{ path('registration_cancel', { id: registration.id }) }}">
+                                    Confirmer l'annulation de mon inscription
+                                </twig:ButtonPost>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert bg-danger-subtle mb-0">
+                    L'évènement démarre bientôt, ton inscription ne peut plus être annulée.
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endmacro %}

@@ -1,5 +1,5 @@
 <div class="card border-success-subtle">
-    {% block card_header %}
+    {% block header %}
         <div class="card-header bg-success-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'utilisateurice {{ user.fullname }}">
             <div class="d-flex justify-content-between">
                 <div>
@@ -16,7 +16,7 @@
         </div>
     {% endblock %}
 
-    {% block card_content %}
+    {% block content %}
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <i
@@ -37,7 +37,7 @@
         </ul>
     {% endblock %}
 
-    {% block card_footer %}
+    {% block footer %}
         <a href="{{ path('admin_user_show', { id: user.id }) }}" class="btn btn-link btn-sm">Voir ce·tte utilisateurice</a>
     {% endblock %}
 </div>

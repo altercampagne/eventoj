@@ -22,30 +22,60 @@
                     <i class="fa-solid fa-clock me-1"></i> Paiement échoué le  <b>{{ payment.failedAt|format_datetime('long', 'short') }}</b>
                 </div>
             {% endif %}
-            <div class="card">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        Helloasso ID : {{ payment.helloassoCheckoutIntentId }}
-                    </li>
-                    <li class="list-group-item">
-                        Paheko ID : {{ payment.pahekoId|default('-') }}
-                        {% if payment.pahekoId is not null %}
-                            <a class="small" href="{{ pahekoBaseUri }}/admin/acc/transactions/details.php?id={{ payment.pahekoId }}">(voir la transaction)</a>
+
+            {% embed 'admin/_cards/payment.html.twig' with { payment: payment } only %}
+                {% block content %}
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            Helloasso ID : {{ payment.helloassoCheckoutIntentId }}
+                        </li>
+                        <li class="list-group-item">
+                            Paheko payment ID : {{ payment.pahekoPaymentId|default('-') }}
+                            {% if payment.pahekoPaymentId is not null %}
+                                <a class="small" href="{{ pahekoBaseUri }}/admin/acc/transactions/details.php?id={{ payment.pahekoPaymentId }}">(voir la transaction)</a>
+                            {% endif %}
+                        </li>
+                        {% if payment.isRefunded %}
+                            <li class="list-group-item">
+                                Paheko refund ID : {{ payment.pahekoRefundId|default('-') }}
+                                {% if payment.pahekoRefundId is not null %}
+                                    <a class="small" href="{{ pahekoBaseUri }}/admin/acc/transactions/details.php?id={{ payment.pahekoRefundId }}">(voir la transaction)</a>
+                                {% endif %}
+                            </li>
                         {% endif %}
-                    </li>
-                    <li class="list-group-item list-group-item-light py-1 fw-light fs-6">
-                        <small>Créée le {{ payment.createdAt|format_datetime('long', 'short') }}</small><br />
-                        <small>Mise à jour le {{ payment.createdAt|format_datetime('long', 'short') }}</small>
-                    </li>
-                </ul>
+                    </ul>
+                {% endblock %}
+
+                {% block footer %}
+                {% endblock %}
+            {% endembed %}
+
+            <div class="p-2 text-secondary">
+                <small>
+                    Créé le <b>{{ payment.createdAt|format_datetime('long', 'short') }}</b>.<br />
+                    {% if payment.isApproved or payment.isRefunded %}
+                        Approuvé le <b>{{ payment.approvedAt|format_datetime('long', 'short') }}</b>.<br />
+                    {% endif %}
+                    {% if payment.isFailed %}
+                        Échoué le <b>{{ payment.failedAt|format_datetime('long', 'short') }}</b>.<br />
+                    {% endif %}
+                    {% if payment.isRefunded %}
+                        Remboursé le <b>{{ payment.refundedAt|format_datetime('long', 'short') }}</b>.<br />
+                    {% endif %}
+                    Dernière mise à jour le <b>{{ payment.updatedAt|format_datetime('long', 'short') }}</b>.
+                </small>
             </div>
+
         </div>
         <div class="col-4 border-start">
-            <div class="row row-cols-1 g-4">
-                <div class="col">
-                    {{ include('admin/_cards/user.html.twig', { user: payment.payer }, with_context = false) }}
-                </div>
-            </div>
+            <h3 class="text-center fw-bold"><u>Utilisateurice</u></h3>
+            {{ include('admin/_cards/user.html.twig', { user: payment.payer }, with_context = false) }}
+
+            <h3 class="text-center fw-bold mt-4"><u>Évènement</u></h3>
+            {{ include('admin/_cards/event.html.twig', { event: payment.registration.event }, with_context = false) }}
+
+            <h3 class="text-center fw-bold mt-4"><u>Inscription</u></h3>
+            {{ include('admin/_cards/registration.html.twig', { registration: payment.registration }, with_context = false) }}
         </div>
     </div>
 {% endblock %}

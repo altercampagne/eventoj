@@ -36,7 +36,7 @@ class Registration
     private readonly Event $event;
 
     #[ORM\Column(type: 'string', length: 20, enumType: RegistrationStatus::class, options: [
-        'comment' => 'Status of this registration (waiting_payment, confirmed)',
+        'comment' => 'Status of this registration (waiting_payment, confirmed, canceled)',
     ])]
     private RegistrationStatus $status;
 
@@ -61,6 +61,11 @@ class Registration
         'comment' => 'Date on which the reservation was confirmed.',
     ])]
     private ?\DateTimeImmutable $confirmedAt = null;
+
+    #[ORM\Column(nullable: true, options: [
+        'comment' => 'Date on which the reservation was canceled.',
+    ])]
+    private ?\DateTimeImmutable $canceledAt = null;
 
     /**
      * @var Collection<int, StageRegistration>
@@ -139,6 +144,34 @@ class Registration
     public function isConfirmed(): bool
     {
         return RegistrationStatus::CONFIRMED === $this->status;
+    }
+
+    public function isCanceled(): bool
+    {
+        return RegistrationStatus::CANCELED === $this->status;
+    }
+
+    public function canBeCanceled(): bool
+    {
+        if (RegistrationStatus::CONFIRMED !== $this->status) {
+            return false;
+        }
+
+        if (null === $firstStage = $this->event->getFirstStage()) {
+            throw new \RuntimeException('Registration linked to an event without stages!');
+        }
+
+        return $firstStage->getDate() > new \DateTimeImmutable('+15 days');
+    }
+
+    public function cancel(): void
+    {
+        if (!$this->canBeCanceled()) {
+            throw new \LogicException('Cannot cancel this registration.');
+        }
+
+        $this->status = RegistrationStatus::CANCELED;
+        $this->canceledAt = new \DateTimeImmutable();
     }
 
     public function isWaitingPayment(): bool
@@ -294,11 +327,9 @@ class Registration
         return $this->confirmedAt;
     }
 
-    public function setConfirmedAt(\DateTimeImmutable $confirmedAt): self
+    public function getCanceledAt(): ?\DateTimeImmutable
     {
-        $this->confirmedAt = $confirmedAt;
-
-        return $this;
+        return $this->canceledAt;
     }
 
     /**
@@ -337,7 +368,7 @@ class Registration
     public function getApprovedPayment(): ?Payment
     {
         return $this->payments->findFirst(static function (int $key, Payment $payment): bool {
-            return $payment->isApproved();
+            return $payment->isApproved() || $payment->isRefunded();
         });
     }
 

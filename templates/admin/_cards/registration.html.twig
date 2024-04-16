@@ -1,0 +1,38 @@
+<div class="card border-primary-subtle">
+    {% block header %}
+        <div class="card-header bg-primary-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant une inscription de {{ registration.user.fullname }}">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <i class="fa-solid fa-sack-dollar me-2"></i>
+                    Inscription de {{ registration.user.fullname }} pour {{ registration.event.name }}
+                </div>
+
+                <div>
+                    <twig:Admin:RegistrationStatus registration="{{ registration }}" />
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        {% set arrivalDate = registration.stageRegistrationStart.stage.date|format_date('long') %}
+        {% set departureDate = registration.stageRegistrationEnd.stage.date|format_date('long') %}
+
+        <div class="card-body">
+            Inscription de <b>{{ registration.daysOfPresence }} jours</b> entre le <b>{{ arrivalDate }}</b> et le <b>{{ departureDate }}</b>.
+        </div>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <i class="fa-solid fa-plane-arrival fa-fw me-1"></i> Arrivée prévue le {{ arrivalDate }} ({{ registration.stageRegistrationStart.stage.name }}) pour le {{ registration.stageRegistrationStart.firstMeal|trans|lower }}
+            </li>
+            <li class="list-group-item">
+                <i class="fa-solid fa-plane-departure fa-fw me-1"></i> Départ prévu le {{ departureDate }} ({{ registration.stageRegistrationEnd.stage.name }}) pour le {{ registration.stageRegistrationStart.lastMeal|trans|lower }}
+            </li>
+        </ul>
+    {% endblock %}
+
+    {% block footer %}
+        <a href="{{ path('admin_registration_show', { id: registration.id }) }}" class="btn btn-link btn-sm">Voir cette inscription</a>
+    {% endblock %}
+</div>

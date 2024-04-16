@@ -8,4 +8,5 @@ enum RegistrationStatus: string
 {
     case WAITING_PAYMENT = 'waiting_payment';
     case CONFIRMED = 'confirmed';
+    case CANCELED = 'canceled';
 }

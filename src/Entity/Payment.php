@@ -35,14 +35,19 @@ class Payment
     private readonly Registration $registration;
 
     #[ORM\Column(type: 'string', length: 20, enumType: PaymentStatus::class, options: [
-        'comment' => 'Status of this payment (pending, approved, failed)',
+        'comment' => 'Status of this payment (pending, approved, failed, refunded)',
     ])]
     private PaymentStatus $status;
 
     #[ORM\Column(type: Types::INTEGER, options: [
-        'comment' => 'The amount of thie payment',
+        'comment' => 'The amount of this payment',
     ])]
     private readonly int $amount;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true, options: [
+        'comment' => 'The refunded amount for this payment',
+    ])]
+    private ?int $refundedAmount = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true, options: [
         'comment' => 'The checkout intent ID provided by Helloasso',
@@ -50,7 +55,10 @@ class Payment
     private ?string $helloassoCheckoutIntentId = null;
 
     #[ORM\Column(unique: true, nullable: true)]
-    private ?string $pahekoId = null;
+    private ?string $pahekoPaymentId = null;
+
+    #[ORM\Column(unique: true, nullable: true)]
+    private ?string $pahekoRefundId = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $approvedAt = null;
@@ -119,6 +127,13 @@ class Payment
         return PaymentStatus::REFUNDED === $this->status;
     }
 
+    public function refund(int $refundedAmount): void
+    {
+        $this->status = PaymentStatus::REFUNDED;
+        $this->refundedAmount = $refundedAmount;
+        $this->refundedAt = new \DateTimeImmutable();
+    }
+
     public function getMembershipsAmount(): int
     {
         $amount = 0;
@@ -164,6 +179,11 @@ class Payment
         return $this->amount;
     }
 
+    public function getRefundedAmount(): ?int
+    {
+        return $this->refundedAmount;
+    }
+
     public function getHelloassoCheckoutIntentId(): ?string
     {
         return $this->helloassoCheckoutIntentId;
@@ -176,14 +196,26 @@ class Payment
         return $this;
     }
 
-    public function getPahekoId(): ?string
+    public function getPahekoPaymentId(): ?string
     {
-        return $this->pahekoId;
+        return $this->pahekoPaymentId;
     }
 
-    public function setPahekoId(string $pahekoId): self
+    public function setPahekoPaymentId(string $pahekoPaymentId): self
     {
-        $this->pahekoId = $pahekoId;
+        $this->pahekoPaymentId = $pahekoPaymentId;
+
+        return $this;
+    }
+
+    public function getPahekoRefundId(): ?string
+    {
+        return $this->pahekoRefundId;
+    }
+
+    public function setPahekoRefundId(?string $pahekoRefundId): self
+    {
+        $this->pahekoRefundId = $pahekoRefundId;
 
         return $this;
     }

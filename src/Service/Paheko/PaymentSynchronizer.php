@@ -39,8 +39,34 @@ final readonly class PaymentSynchronizer
         }
 
         $this->userSynchronizer->sync($payment->getRegistration()->getUser());
+        $this->syncPayment($payment);
+        if ($payment->isRefunded()) {
+            $this->syncRefund($payment);
+        }
+    }
 
-        if (null !== $id = $payment->getPahekoId()) {
+    public function canBeSynced(Payment $payment): bool
+    {
+        if (!$payment->isApproved() && !$payment->isRefunded()) {
+            return false;
+        }
+
+        $registration = $payment->getRegistration();
+
+        if (!$registration->isConfirmed() && !$registration->isCanceled()) {
+            $this->logger->warning('Cannot sync a non-confirmed or canceled registration on Paheko.', [
+                'registration_id' => (string) $registration->getId(),
+            ]);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private function syncPayment(Payment $payment): void
+    {
+        if (null !== $id = $payment->getPahekoPaymentId()) {
             $this->pahekoClient->updatePayment($id, $this->getPaymentData($payment));
 
             return;
@@ -50,29 +76,28 @@ final readonly class PaymentSynchronizer
         /* @phpstan-ignore-next-line */
         $id = (string) $pahekoPayment['id'];
 
-        $payment->setPahekoId($id);
+        $payment->setPahekoPaymentId($id);
 
         $this->em->persist($payment);
         $this->em->flush();
     }
 
-    public function canBeSynced(Payment $payment): bool
+    private function syncRefund(Payment $payment): void
     {
-        if (!$payment->isApproved()) {
-            return false;
+        if (null !== $id = $payment->getPahekoRefundId()) {
+            $this->pahekoClient->updatePayment($id, $this->getRefundData($payment));
+
+            return;
         }
 
-        $registration = $payment->getRegistration();
+        $pahekoPayment = $this->pahekoClient->createPayment($this->getRefundData($payment));
+        /* @phpstan-ignore-next-line */
+        $id = (string) $pahekoPayment['id'];
 
-        if (!$registration->isConfirmed()) {
-            $this->logger->warning('Cannot sync a non-confirmed registration on Paheko.', [
-                'registration_id' => (string) $registration->getId(),
-            ]);
+        $payment->setPahekoRefundId($id);
 
-            return false;
-        }
-
-        return true;
+        $this->em->persist($payment);
+        $this->em->flush();
     }
 
     /**
@@ -132,6 +157,49 @@ final readonly class PaymentSynchronizer
             'linked_users' => [$payment->getPayer()->getPahekoId()],
             'notes' => "Paiement visible ici : $paymentAdminUrl",
             'reference' => (string) $payment->getId(),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getRefundData(Payment $payment): array
+    {
+        $event = $payment->getRegistration()->getEvent();
+
+        $label = 'Remboursement ';
+        $label .= $payment->getRegistration()->countPeople() > 1 ? 'inscriptions' : 'inscription';
+
+        $lines = [
+            [
+                'account' => 706, // Prestation de services
+                'credit' => 0,
+                'debit' => $payment->getRegistrationOnlyAmount() / 100,
+                'label' => $label,
+                'id_project' => $event->getPahekoProjectId(),
+            ],
+            [
+                'account' => 41, // Usagers et comptes rattachés
+                'credit' => $payment->getRegistrationOnlyAmount() / 100,
+                'debit' => 0,
+                'label' => $label,
+                'id_project' => $event->getPahekoProjectId(),
+            ],
+        ];
+
+        $paymentAdminUrl = $this->urlGenerator->generate('admin_payment_show', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        return [
+            'id_year' => 'current',
+            /* @phpstan-ignore-next-line */
+            'date' => $payment->getApprovedAt()->format('Y-m-d'),
+            'label' => "Remboursement {$payment->getPayer()->getFullname()} pour {$event->getName()}",
+            'type' => 'ADVANCED',
+            'lines' => $lines,
+            'linked_users' => [$payment->getPayer()->getPahekoId()],
+            'notes' => "Paiement visible ici : $paymentAdminUrl",
+            'reference' => (string) $payment->getId(),
+            'linked_transactions' => [$payment->getPahekoPaymentId()],
         ];
     }
 }

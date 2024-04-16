@@ -1,5 +1,5 @@
 <div class="card border-dark-subtle">
-    {% block card_header %}
+    {% block header %}
         <div class="card-header bg-dark-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant un payment de {{ payment.payer.fullname }}">
             <div class="d-flex justify-content-between">
                 <div>
@@ -14,10 +14,10 @@
         </div>
     {% endblock %}
 
-    {% block card_content %}
+    {% block content %}
     {% endblock %}
 
-    {% block card_footer %}
+    {% block footer %}
         <a href="{{ path('admin_payment_show', { id: payment.id }) }}" class="btn btn-link btn-sm">Voir ce paiement</a>
     {% endblock %}
 </div>

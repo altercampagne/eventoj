@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12 col-md-4">
             {% embed 'admin/_cards/user.html.twig' %}
-                {% block card_content %}
+                {% block content %}
                     {{ parent() }}
 
                     <ul class="list-group list-group-flush border-top-0">
@@ -39,6 +39,8 @@
                         {% endif %}
                     </ul>
                 {% endblock %}
+
+                {% block footer '' %}
 
             {% endembed %}
 
