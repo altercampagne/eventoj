@@ -17,11 +17,16 @@
                 <div class="alert alert-secondary bg-white">
                     <h3 class="fw-bold text-secondary fs-4">Comment le prix est-il calculé ?</h3>
                     <p>
-                        Emplacement à compléter avec le camembert présentant la répartition des dépenses de l'association.
+                        Ce que les Altercyclistes de cette année paient va permettre d’organiser et de financer la préparation de l’AlterTour de l’année prochaine.
+                    </p>
+                    <p>
+                        <b>Le prix d'équilibre</b>, c’est-à-dire nécessaire au bon fonctionnement annuel de l'association, est de {{ registration.event.breakEvenPricePerDay|format_price }} par personne et par jour.
                     </p>
                     <div class="alert alert-info">
                         Pour les mineurs, <b>prix plancher automatique</b> : le prix demandé nous permet de couvrir les frais liés aux repas uniquement.
                     </div>
+
+                    <img src="{{ asset('images/repartition-depenses-at2023.png') }}" alt="Répartition des dépenses pour l'AlterTour 2023" width="100%" class="mb-3" />
 
                     <div class="d-grid gap-2 px-5">
                         <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#choosePriceExplanationModal">
