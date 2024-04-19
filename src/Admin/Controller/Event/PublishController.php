@@ -8,6 +8,7 @@ use App\Admin\Controller\Util\RedirectorTrait;
 use App\Admin\Security\Permission;
 use App\Entity\Event;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,8 +25,10 @@ class PublishController extends AbstractController
     ) {
     }
 
-    public function __invoke(Event $event): Response
-    {
+    public function __invoke(
+        #[MapEntity(mapping: ['slug' => 'slug'])]
+        Event $event,
+    ): Response {
         if (0 === \count($event->getStages())) {
             $this->addFlash('danger', "L'évènement {$event->getName()} n'a aucune étape de définie pour le moment !");
 
