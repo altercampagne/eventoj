@@ -1,0 +1,35 @@
+{% set buttonClass = buttonClass|default('btn btn-outline-danger') %}
+{% if disabled|default(false) %}
+    {% set buttonClass = buttonClass ~ ' disabled' %}
+{% endif %}
+
+{% set id = id|default(url|slug) %}
+<button type="button" class="{{ buttonClass }}" data-bs-toggle="modal" data-bs-target="#post-{{ id }}">
+    {{ buttonLabel|default('Supprimer')|raw }}
+</button>
+
+{% if not disabled|default(false) %}
+    <div class="modal fade" id="post-{{ id }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ modalTitle|default('Confirmer cette action') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% block content %}
+                        Cette action est <b>IRRÉVERSIBLE</b>.<br />
+                        Assure-toi de savoir ce que tu fais avant de valider ! 🙈
+                    {% endblock %}
+                </div>
+                <div class="modal-footer">
+                    <twig:ButtonPost
+                        url="{{ url }}"
+                        label="{{ modalButtonLabel|default('Valider')|raw }}"
+                        btnClass="{{ modalButtonClass|default(null) }}"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

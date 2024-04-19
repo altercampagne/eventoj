@@ -39,9 +39,21 @@
                         {% endif %}
 
                         {% if not event.isPublished and is_granted(constant('App\\Admin\\Security\\Permission::EVENT_PUBLISH').value, event) %}
-                            <a href="{{ path('admin_event_publish', { slug: event.slug }) }}" class="btn btn-outline-success">
-                                Publier l'évènement
-                            </a>
+                            <twig:ButtonPostWithConfirmation
+                                url="{{ path('admin_event_publish', { slug: event.slug }) }}"
+                                buttonLabel="Publier l'évènement"
+                                buttonClass="btn btn-outline-success"
+                                modalTitle="Confirmation de la publication"
+                                modalButtonClass="btn btn-warning"
+                                modalButtonLabel="J'ai bien compris et je confirme la publication de l'évènement."
+                            >
+                                <div class="alert alert-danger">
+                                    La publication de l'évènement est <b>IRRÉVERSIBLE</b> !<br />
+                                </div>
+                                <p>
+                                    L'évènement sera immédiatement visible par tout le monde et les inscriptions seront ouvertes à partir du <b>{{ event.openingDateForBookings|format_datetime('long', 'short') }}</b>.
+                                </p>
+                            </twig:ButtonPostWithConfirmation>
                         {% endif %}
                     </div>
                 {% endblock %}

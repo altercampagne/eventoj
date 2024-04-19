@@ -52,5 +52,12 @@ class EventCreateAndUpdateTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('admin_event_show');
         $this->assertSelectorTextContains('.alert-success', 'L\'évènement a bien été modifié ! 🥳');
+
+        $client->submitForm('J\'ai bien compris et je confirme la publication de l\'évènement.');
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('admin_event_show');
+        $this->assertSelectorTextContains('.alert-danger', 'L\'évènement Nouveau nom d\'évènement n\'a aucune étape de définie pour le moment !');
     }
 }

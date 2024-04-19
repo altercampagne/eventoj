@@ -1,34 +1,9 @@
-{% set buttonClass = buttonClass|default('btn btn-outline-danger') %}
-{% if disabled|default(false) %}
-    {% set buttonClass = buttonClass ~ ' disabled' %}
-{% endif %}
-
-{% set id = id|default(url|slug) %}
-<button type="button" class="{{ buttonClass }}" data-bs-toggle="modal" data-bs-target="#delete-{{ id }}">
-    {{ buttonLabel|default('Supprimer')|raw }}
-</button>
-
-{% if not disabled|default(false) %}
-    <div class="modal fade" id="delete-{{ id }}" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-danger-outline">
-                    <h5 class="modal-title">Confirmation de la suppression</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    {% block modal_body %}
-                        Cette action est <b>IRREVERSIBLE</b>.<br />
-                        Assure-toi de savoir ce que tu fais avant de valider ! 🙈
-                    {% endblock %}
-                </div>
-                <div class="modal-footer">
-                    <twig:ButtonPost
-                        url="{{ url }}"
-                        label="{{ confirmationButtonLabel|default('J\'ai bien compris et je confirme la suppression définitive')|raw }}"
-                    />
-                </div>
-            </div>
-        </div>
-    </div>
-{% endif %}
+<twig:ButtonPostWithConfirmation
+    url="{{ url }}"
+    disabled="{{ disabled|default(false) }}"
+    buttonLabel="{{ buttonLabel|default('Supprimer') }}"
+    buttonClass="{{ buttonClass|default(null) }}"
+    modalTitle="{{ modalTitle|default('Confirmation de la suppression') }}"
+    modalButtonClass="{{ modalButtonClass|default('btn btn-danger') }}"
+    modalButtonLabel="{{ modalButtonLabel|default('J\'ai bien compris et je confirme la suppression définitive')|raw }}"
+/>
