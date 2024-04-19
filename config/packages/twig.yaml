@@ -8,6 +8,10 @@ twig:
     globals:
         pahekoBaseUri: '%env(PAHEKO_BASE_URI)%'
         associationPhoneNumber: '%env(ASSOCIATION_PHONE_NUMBER)%'
+        komootUser: '%env(KOMOOT_USER)%'
+        komootPassword: '%env(KOMOOT_PASSWORD)%'
+        openrunnerUser: '%env(OPENRUNNER_USER)%'
+        openrunnerPassword: '%env(OPENRUNNER_PASSWORD)%'
 
 when@test:
     twig:
