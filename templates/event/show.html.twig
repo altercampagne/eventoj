@@ -15,7 +15,7 @@
                     {% elseif event.isFinished %}
                         <span class="badge bg-secondary fs-4">Évènement terminé</span>
                     {% else %}
-                        <span class="badge bg-primary fs-4">Ouverture des inscriptions le {{ event.openingDateForBookings|format_date('long') }}</span>
+                        <span class="badge bg-primary fs-4">Ouverture des inscriptions le {{ event.openingDateForBookings|format_datetime('long', 'short') }}</span>
                     {% endif %}
                 </div>
             </div>

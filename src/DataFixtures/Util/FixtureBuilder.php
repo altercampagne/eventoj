@@ -93,11 +93,12 @@ class FixtureBuilder
         int $bikesAvailable = 5,
         bool $published = true,
         int $pahekoProjectId = 1,
+        ?\DateTimeImmutable $openingDateForBookings = null,
     ): Event {
         $event = Event::AT();
         $event
             ->setName($name ?? self::getFaker()->word())
-            ->setOpeningDateForBookings(new \DateTimeImmutable())
+            ->setOpeningDateForBookings($openingDateForBookings ?? new \DateTimeImmutable())
             ->setDescription($description ?? self::getFaker()->sentence())
             ->setPahekoProjectId((string) $pahekoProjectId)
         ;
@@ -122,11 +123,12 @@ class FixtureBuilder
         int $bikesAvailable = 5,
         bool $published = true,
         int $pahekoProjectId = 1,
+        ?\DateTimeImmutable $openingDateForBookings = null,
     ): Event {
         $event = Event::EB();
         $event
             ->setName($name ?? self::getFaker()->word())
-            ->setOpeningDateForBookings(new \DateTimeImmutable())
+            ->setOpeningDateForBookings($openingDateForBookings ?? new \DateTimeImmutable())
             ->setDescription($description ?? self::getFaker()->sentence())
             ->setPahekoProjectId((string) $pahekoProjectId)
         ;
