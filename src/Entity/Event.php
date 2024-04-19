@@ -157,7 +157,7 @@ class Event
         $event = new self(EventType::AT);
         $event->adultsCapacity = 60;
         $event->childrenCapacity = 8;
-        $event->bikesAvailable = 22;
+        $event->bikesAvailable = 21;
 
         return $event;
     }
