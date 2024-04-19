@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Service\Paheko\Client\PahekoClientInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
 
 /**
@@ -19,6 +20,7 @@ final class UserSynchronizer
         private readonly PahekoClientInterface $pahekoClient,
         private readonly EntityManagerInterface $em,
         private readonly PhoneNumberHelper $phoneNumberHelper,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -39,7 +41,7 @@ final class UserSynchronizer
             // same (same email & fullname) or a 400 when the email is already
             // used.
             if (null === $id = $this->findExistingUserId($user)) {
-                throw $e;
+                throw new \RuntimeException('Conflict when creating user but no siblings user found...', 0, $e);
             }
         }
 
@@ -61,11 +63,17 @@ final class UserSynchronizer
     private function findExistingUserId(User $user): ?string
     {
         $pahekoUsers = $this->pahekoClient->getUsersFromCategory('1');
+        $nbPahekoUsers = \count($pahekoUsers);
+
+        $this->logger->debug("Searching for {$user->getEmail()} in $nbPahekoUsers...");
 
         foreach ($pahekoUsers as $pahekoUser) {
             if ($pahekoUser['email'] === $user->getEmail()) {
-                /* @phpstan-ignore-next-line */
+                $this->logger->debug("Matchin user found (Paheko ID is {$pahekoUser['numero']})");
+
                 return (string) $pahekoUser['numero'];
+            } else {
+                $this->logger->debug("Paheko email \"{$pahekoUser['email']} is not matching {$user->getEmail()}");
             }
         }
 
