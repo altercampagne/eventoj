@@ -21,6 +21,11 @@ interface PahekoClientInterface
     public function updateUser(string $pahekoId, array $data): array;
 
     /**
+     * @return array<int, array{id: int, name: string}>
+     */
+    public function getUserCategories(): array;
+
+    /**
      * @return array<int, array<string, int|string|null>>
      */
     public function getUsersFromCategory(string $category): array;

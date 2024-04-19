@@ -27,6 +27,11 @@ final class PahekoHttpClient implements PahekoClientInterface
         ])->toArray();
     }
 
+    public function getUserCategories(): array
+    {
+        return $this->pahekoClient->request('GET', 'user/categories')->toArray();
+    }
+
     public function getUsersFromCategory(string $categoryId): array
     {
         return $this->pahekoClient->request('POST', "user/category/$categoryId.json")->toArray();

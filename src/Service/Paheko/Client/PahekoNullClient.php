@@ -29,6 +29,13 @@ final class PahekoNullClient implements PahekoClientInterface
         return [];
     }
 
+    public function getUserCategories(): array
+    {
+        return [
+            ['id' => 1, 'name' => 'Membres'],
+        ];
+    }
+
     public function getUsersFromCategory(string $categoryId): array
     {
         $this->logger->debug(__METHOD__.' have been called.');

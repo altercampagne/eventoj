@@ -62,18 +62,21 @@ final class UserSynchronizer
 
     private function findExistingUserId(User $user): ?string
     {
-        $pahekoUsers = $this->pahekoClient->getUsersFromCategory('1');
-        $nbPahekoUsers = \count($pahekoUsers);
+        $categories = $this->pahekoClient->getUserCategories();
+        foreach ($categories as $category) {
+            $pahekoUsers = $this->pahekoClient->getUsersFromCategory((string) $category['id']);
+            $nbPahekoUsers = \count($pahekoUsers);
 
-        $this->logger->debug("Searching for {$user->getEmail()} in $nbPahekoUsers...");
+            $this->logger->debug("Searching for {$user->getEmail()} in $nbPahekoUsers users from category {$category['name']}...");
 
-        foreach ($pahekoUsers as $pahekoUser) {
-            if ($pahekoUser['email'] === $user->getEmail()) {
-                $this->logger->debug("Matchin user found (Paheko ID is {$pahekoUser['numero']})");
+            foreach ($pahekoUsers as $pahekoUser) {
+                if ($pahekoUser['email'] === $user->getEmail()) {
+                    $this->logger->debug("Matchin user found (Paheko ID is {$pahekoUser['numero']})");
 
-                return (string) $pahekoUser['numero'];
-            } else {
-                $this->logger->debug("Paheko email \"{$pahekoUser['email']} is not matching {$user->getEmail()}");
+                    return (string) $pahekoUser['numero'];
+                } else {
+                    $this->logger->debug("Paheko email \"{$pahekoUser['email']} is not matching {$user->getEmail()}");
+                }
             }
         }
 
