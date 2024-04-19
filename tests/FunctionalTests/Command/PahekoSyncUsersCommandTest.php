@@ -23,4 +23,18 @@ class PahekoSyncUsersCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString("All users have been sync'ed on Paheko!", $output);
     }
+
+    public function testExecuteWithEmail(): void
+    {
+        $application = new Application(self::bootKernel());
+
+        $command = $application->find('eventoj:paheko:sync:users');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(['email' => 'admin@altercampagne.net']);
+
+        $commandTester->assertCommandIsSuccessful();
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString("User have been sync'ed on Paheko!", $output);
+    }
 }

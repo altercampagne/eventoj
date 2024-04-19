@@ -39,6 +39,19 @@ class PahekoSyncUsersCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        if (null !== $email = $input->getArgument('email')) {
+            if (null === $user = $this->em->getRepository(User::class)->findOneByEmail($email)) {
+                /* @phpstan-ignore-next-line */
+                throw new \InvalidArgumentException("User with email $email not found!");
+            }
+
+            $this->userSynchronizer->sync($user);
+
+            $io->success("User have been sync'ed on Paheko!");
+
+            return Command::SUCCESS;
+        }
+
         $users = $this->em->getRepository(User::class)->findAll();
 
         $io->progressStart(\count($users));
