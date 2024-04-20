@@ -17,13 +17,13 @@
                 <div class="alert alert-secondary bg-white">
                     <h3 class="fw-bold text-secondary fs-4">Comment le prix est-il calculé ?</h3>
                     <p>
-                        Ce que les Altercyclistes de cette année paient va permettre d’organiser et de financer la préparation de l’AlterTour de l’année prochaine.
+                        Ce que les Altercyclistes paient cette année va permettre d’organiser et de financer la préparation de l’AlterTour de l’année prochaine.
                     </p>
                     <p>
                         <b>Le prix d'équilibre</b>, c’est-à-dire nécessaire au bon fonctionnement annuel de l'association, est de {{ registration.event.breakEvenPricePerDay|format_price }} par personne et par jour.
                     </p>
                     <div class="alert alert-info">
-                        Pour les mineurs, <b>prix plancher automatique</b> : le prix demandé nous permet de couvrir les frais liés aux repas uniquement.
+                        Pour les personnes mineures, <b>prix plancher automatique</b> : le prix demandé nous permet de couvrir les frais liés aux repas uniquement.
                     </div>
 
                     <img src="{{ asset('images/repartition-depenses-at2023.png') }}" alt="Répartition des dépenses pour l'AlterTour 2023" width="100%" class="mb-3" />
@@ -116,9 +116,9 @@
                 <div class="modal-body">
                     <h3 class="fw-bold text-center"><u>Les inscriptions</u></h3>
 
-                    <h4><u>Pour les mineurs</u></h4>
+                    <h4><u>Pour les personnes mineures</u></h4>
                     <p>
-                        Pour les mineurs, le montant de l'inscription permet de prendre en charge <b>le coût des repas uniquement</b>.
+                        Pour les personnes mineures, le montant de l'inscription permet de prendre en charge <b>le coût des repas uniquement</b>.
                         Il s'agit donc d'un montant fixe par jour qui dépend de l'âge de la personne :
                     </p>
                     <ul>
@@ -165,7 +165,7 @@
                     <p>
                         Des vélos peuvent être prêtés <b>à titre gracieux</b> par l'association.
                         Bien entendu, l'entretien de nos belles montures ainsi que leur transport sur le tour à un coût
-                        qui est couvert grâce aux personnes qui choisisse un prix de soutien lors de leur inscription à l'évènement.
+                        qui est couvert grâce aux personnes qui choisissent un prix de soutien lors de leur inscription à l'évènement.
                     </p>
 
                     <hr />
@@ -173,7 +173,7 @@
                     <h3 class="fw-bold text-center"><u>Les adhésions</u></h3>
                     <p>
                         <b>L'adhésion à l'association est obligatoire</b> pour participer à l'un des évènements organisés.
-                        Le montant de cette dernière est fixée à <b>{{ constant('\\App\\Entity\\Membership::PRICE')|format_price }} / personne</b> et
+                        Le montant de cette dernière est fixé à <b>{{ constant('\\App\\Entity\\Membership::PRICE')|format_price }} / personne</b> et
                         est valide du 1er mai de l'année en cours jusqu'au 31 avril de l'année suivante.
                     </p>
                 </div>
