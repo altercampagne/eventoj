@@ -39,7 +39,24 @@ class Address
             $addressLine .= " {$this->addressLine2}";
         }
 
-        return sprintf('%s, %s %s', $addressLine, $this->zipCode, $this->city);
+        $address = sprintf('%s, %s %s', $addressLine, $this->zipCode, $this->city);
+
+        if ('FR' === $this->countryCode) {
+            return $address;
+        }
+
+        $country = match ($this->countryCode) {
+            'BE' => 'Belgique',
+            'CH' => 'Suisse',
+            'DE' => 'Allemagne',
+            'ES' => 'Espagne',
+            'GB' => 'Royaume-Uni',
+            'IT' => 'Italie',
+            'LU' => 'Luxembourg',
+            default => $this->countryCode,
+        };
+
+        return $addressLine." - {$country}";
     }
 
     public function getAddressLine1(): string
