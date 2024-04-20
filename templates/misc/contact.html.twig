@@ -18,15 +18,18 @@
                         Est-ce que tu as bien jeté un oeil à <a href="{{ path('faq') }}">la Foire Aux Question (FAQ)</a> ? Elle contient plein d'informations très utiles. :)
                     </p>
 
-                    {% for question in questions %}
-                        <div class="card card-hover mb-3">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="card-title">{{ question.question }}</h5>
-                                    <a href="{{ path('faq') }}#{{ question.slug }}" class="stretched-link"><i class="fa-solid fa-arrow-right"></i></a>
+                    {% for questions in questionsByCategory %}
+                        <h3>{{ (questions|first).category|trans }}</h3>
+                        {% for question in questions %}
+                            <div class="card card-hover mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">{{ question.question }}</h5>
+                                        <a href="{{ path('faq') }}#{{ question.slug }}" class="stretched-link"><i class="fa-solid fa-arrow-right"></i></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endfor %}
                     {% endfor %}
 
                     <hr class="mt-4" />

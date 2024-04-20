@@ -21,7 +21,7 @@ class ContactController extends AbstractController
     public function __invoke(): Response
     {
         return $this->render('misc/contact.html.twig', [
-            'questions' => $this->em->getRepository(Question::class)->findAll(),
+            'questionsByCategory' => $this->em->getRepository(Question::class)->findAllGroupedByCategories(),
         ]);
     }
 }

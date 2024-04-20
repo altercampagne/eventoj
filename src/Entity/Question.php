@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\QuestionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -11,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\UuidV4;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: QuestionRepository::class)]
 #[ORM\Table(name: '`question`')]
 #[UniqueEntity(fields: ['slug'], message: 'Il y a déjà une question avec ce slug.')]
 #[ORM\Index(name: 'idx_question_slug', fields: ['slug'])]

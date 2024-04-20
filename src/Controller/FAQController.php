@@ -20,21 +20,8 @@ class FAQController extends AbstractController
 
     public function __invoke(): Response
     {
-        $questions = $this->em->getRepository(Question::class)->findBy([], ['category' => 'ASC', 'createdAt' => 'ASC']);
-
-        $questionsByCategory = [];
-        foreach ($questions as $question) {
-            $category = $question->getCategory()->value;
-
-            if (!\array_key_exists($category, $questionsByCategory)) {
-                $questionsByCategory[$category] = [];
-            }
-
-            $questionsByCategory[$category][] = $question;
-        }
-
         return $this->render('misc/faq.html.twig', [
-            'questionsByCategory' => $questionsByCategory,
+            'questionsByCategory' => $this->em->getRepository(Question::class)->findAllGroupedByCategories(),
         ]);
     }
 }
