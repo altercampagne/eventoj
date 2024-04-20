@@ -56,7 +56,7 @@ class Address
             default => $this->countryCode,
         };
 
-        return $addressLine." - {$country}";
+        return $address." - {$country}";
     }
 
     public function getAddressLine1(): string
