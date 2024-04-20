@@ -8,7 +8,7 @@ help:
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[32m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[33m%s\033[0m\n", substr($$0, 5) } ' Makefile
 
 ##@ Base commands
-install: vendors-install build start db-reset assets-install assets-build ## Start the docker stack and prepare the application
+install: build start vendors-install db-reset assets-install assets-build ## Start the docker stack and prepare the application
 	@echo "\n"
 	@echo "\033[32m🥳 EVERYTHING IS RUNNING! 🥳\033[0m"
 	@echo "\033[32mVisit http://eventoj.local to continue.\033[0m"
