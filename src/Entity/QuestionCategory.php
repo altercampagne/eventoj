@@ -18,6 +18,15 @@ enum QuestionCategory: string implements TranslatableInterface
     case CAT6 = 'cat6';
     case CAT7 = 'cat7';
     case CAT8 = 'cat8';
+    case CAT9 = 'cat9';
+    case CAT10 = 'cat10';
+    case CAT11 = 'cat11';
+    case CAT12 = 'cat12';
+    case CAT13 = 'cat13';
+    case CAT14 = 'cat14';
+    case CAT15 = 'cat15';
+    case CAT16 = 'cat16';
+    case CAT17 = 'cat17';
 
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
