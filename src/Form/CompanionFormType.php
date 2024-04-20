@@ -43,9 +43,9 @@ class CompanionFormType extends AbstractType
             ->add('birthDate', BirthdayType::class, [
                 'required' => true,
                 'widget' => 'single_text',
-                'label' => 'Ta date de naissance',
+                'label' => 'Sa date de naissance',
                 'attr' => [
-                    'placeholder' => 'Ta date de naissance',
+                    'placeholder' => 'Sa date de naissance',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
