@@ -49,8 +49,11 @@
                         modalButtonLabel="Confirmer l'annulation de mon inscription"
                     >
                         Cette action est <b>IRRÉVERSIBLE</b>.<br /><br />
-                        Tu seras remboursé de l'intégralité de ton paiement, excepté le montant des cotisations et l'éventuel don à Helloasso, soit un montant de <b>{{ registration.approvedPayment.registrationOnlyAmount|format_price }}</b>.
+                        Tu seras remboursé de l'intégralité de ton paiement, excepté le montant des adhésions et l'éventuel don à Helloasso, soit un montant de <b>{{ registration.approvedPayment.registrationOnlyAmount|format_price }}</b>.
                     </twig:ButtonPostWithConfirmation>
+                    <small class="text-center text-secondary">
+                        (disponible jusqu'au {{ registration.cancelationDate|format_date('long') }})
+                    </small>
                 </div>
             {% else %}
                 <div class="alert bg-danger-subtle mb-0">

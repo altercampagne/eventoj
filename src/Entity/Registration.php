@@ -157,11 +157,16 @@ class Registration
             return false;
         }
 
+        return $this->getCancelationDate() > new \DateTimeImmutable();
+    }
+
+    public function getCancelationDate(): \DateTimeImmutable
+    {
         if (null === $firstStage = $this->event->getFirstStage()) {
             throw new \RuntimeException('Registration linked to an event without stages!');
         }
 
-        return $firstStage->getDate() > new \DateTimeImmutable('+15 days');
+        return $firstStage->getDate()->modify('-15 days');
     }
 
     public function cancel(): void
