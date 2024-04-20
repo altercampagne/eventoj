@@ -46,6 +46,12 @@
                         <b class="text-decoration-underline">Ouverture des inscriptions le {{ event.openingDateForBookings|format_datetime('long', 'short') }}</b>
                     {% endif %}
                 </div>
+
+                {% if app.user is not null and not event.isFinished and event.exchangeMarketLink is not null %}
+                    <div class="alert bg-info-subtle mt-3">
+                        <b>Si certaines étapes sont complètes</b>, peut-être que tu trouveras ton bonheur sur la <a href="{{ event.exchangeMarketLink }}" rel="nofollow">bourse aux échanges</a> ! 👌
+                    </div>
+                {% endif %}
             </div>
             <div class="col-12 col-md-8 col-lg-7">
                 <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">

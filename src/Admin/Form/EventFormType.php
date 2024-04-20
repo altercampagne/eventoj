@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -161,6 +162,17 @@ class EventFormType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
+            ])
+            ->add('exchangeMarketLink', UrlType::class, [
+                'required' => false,
+                'label' => 'URL de la bourse aux échanges',
+                'attr' => [
+                    'placeholder' => 'URL de la bourse aux échanges',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+                'help' => 'Généralement un Google doc pour permettre aux personnes qui ne viennent plus d\'échanger / de revendre leurs places. Si aucun fichier n\'est renseigné, l\'évènement pourra tout de même être publié mais la bourse aux échanges ne sera pas suggérée sur le site.',
             ])
         ;
     }

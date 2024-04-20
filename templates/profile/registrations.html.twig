@@ -55,6 +55,9 @@
             {% else %}
                 <div class="alert bg-danger-subtle mb-0">
                     L'évènement démarre bientôt, ton inscription ne peut plus être annulée.
+                    {% if event.exchangeMarketLink is not null %}
+                        <br />En revanche, peut-être que tu trouveras preneur pour tes places sur <a href="{{ event.exchangeMarketLink }}" rel="nofollow">la bourse aux échanges</a> !
+                    {% endif %}
                 </div>
             {% endif %}
         </div>

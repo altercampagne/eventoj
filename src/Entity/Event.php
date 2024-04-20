@@ -116,6 +116,10 @@ class Event
     #[ORM\Column(type: 'string', length: 10, enumType: Meal::class)]
     private Meal $lastMealOfLastDay;
 
+    #[Assert\Url]
+    #[ORM\Column(nullable: true)]
+    private ?string $exchangeMarketLink = null;
+
     /**
      * @var Collection<int, Stage>
      */
@@ -458,6 +462,18 @@ class Event
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function getExchangeMarketLink(): ?string
+    {
+        return $this->exchangeMarketLink;
+    }
+
+    public function setExchangeMarketLink(?string $exchangeMarketLink): self
+    {
+        $this->exchangeMarketLink = $exchangeMarketLink;
+
+        return $this;
     }
 
     /**
