@@ -51,6 +51,17 @@ class ContactDetailsUpdateFormType extends AbstractType
                     'class' => 'form-floating mb-3',
                 ],
             ])
+            ->add('publicName', TextType::class, [
+                'required' => false,
+                'label' => 'Ton nom d\'affichage',
+                'attr' => [
+                    'placeholder' => 'Ton nom d\'affichage',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+                'help' => 'C\'est le nom qui sera visible publiquement, n\'hésite pas à utiliser ton petit surnom !',
+            ])
             ->add('birthDate', BirthdayType::class, [
                 'required' => true,
                 'widget' => 'single_text',

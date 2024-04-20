@@ -54,6 +54,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private string $lastName;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $publicName = null;
+
     #[Assert\NotBlank]
     #[Assert\LessThan('-18 years', message: 'Tu dois être majeur pour pouvoir t\'inscrire.')]
     #[Assert\GreaterThan('-125 years', message: 'Une vraie date de naissance, ce serait mieux ! :)')]
@@ -312,6 +315,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getPublicName(): string
+    {
+        if (null !== $this->publicName) {
+            return $this->publicName;
+        }
+
+        return $this->firstName.' '.mb_substr($this->lastName, 0, 1);
+    }
+
+    public function setPublicName(?string $publicName): self
+    {
+        $this->publicName = $publicName;
 
         return $this;
     }
