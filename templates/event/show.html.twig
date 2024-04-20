@@ -43,7 +43,7 @@
                             M'inscrire à l'évènement
                         </a>
                     {% elseif not event.isFinished %}
-                        <b class="text-decoration-underline">Ouverture des inscriptions le {{ event.openingDateForBookings|format_date('long') }}</b>
+                        <b class="text-decoration-underline">Ouverture des inscriptions le {{ event.openingDateForBookings|format_datetime('long', 'short') }}</b>
                     {% endif %}
                 </div>
             </div>
