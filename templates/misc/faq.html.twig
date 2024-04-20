@@ -4,41 +4,41 @@
 
 {% block main %}
     <div class="container">
-        <div class="text-center">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-9">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9">
+                <div class="text-center">
                     <h1>Foire aux questions</h1>
                     <p class="lead mb-4">
                         Notre équipe de bénévoles aux petits soins t'a préparer une foire aux questions dans laquelle, on l'espère, tu trouveras des réponses à toutes tes interrogations !
                     </p>
+                </div>
 
-                    <div class="accordion" id="faq-questions">
-                        {% for category, questions in questionsByCategory %}
-                            <h2 class="mt-3">{{ (questions|first).category|trans }}</h2>
+                <div class="accordion" id="faq-questions">
+                    {% for category, questions in questionsByCategory %}
+                        <h2 class="mt-3 text-center">{{ (questions|first).category|trans }}</h2>
 
-                                {% for question in questions %}
-                                    {% set isVisible = loop.parent.loop.first and loop.first %}
+                            {% for question in questions %}
+                                {% set isVisible = loop.parent.loop.first and loop.first %}
 
-                                    <div class="accordion-item{{ loop.first ? ' border-top' }}">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button{{ not isVisible ? ' collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#question-{{ question.slug }}-answer" aria-expanded="{{ isVisible ? 'true' : 'false' }}" aria-controls="question-{{ question.slug }}-answer">
-                                                {{ question.question }}
-                                            </button>
-                                        </h2>
-                                        <div id="question-{{ question.slug }}-answer" class="accordion-collapse collapse{{ isVisible ? ' show' }}" data-bs-parent="#faq-questions">
-                                            <div class="accordion-body">
-                                                {{ question.answer|raw }}
-                                            </div>
+                                <div class="accordion-item{{ loop.first ? ' border-top' }}">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button{{ not isVisible ? ' collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#question-{{ question.slug }}-answer" aria-expanded="{{ isVisible ? 'true' : 'false' }}" aria-controls="question-{{ question.slug }}-answer">
+                                            {{ question.question }}
+                                        </button>
+                                    </h2>
+                                    <div id="question-{{ question.slug }}-answer" class="accordion-collapse collapse{{ isVisible ? ' show' }}" data-bs-parent="#faq-questions">
+                                        <div class="accordion-body">
+                                            {{ question.answer|raw }}
                                         </div>
                                     </div>
-                                {% endfor %}
-                        {% endfor %}
-                    </div>
+                                </div>
+                            {% endfor %}
+                    {% endfor %}
+                </div>
 
-                    <div class="alert bg-success-subtle mt-5">
-                        <b>Tu as encore des questions ?</b><br />
-                        N'hésite pas à <a href="{{ path('contact') }}">prendre contact avec les bénévoles</a>.
-                    </div>
+                <div class="alert bg-success-subtle mt-5">
+                    <b>Tu as encore des questions ?</b><br />
+                    N'hésite pas à <a href="{{ path('contact') }}">prendre contact avec les bénévoles</a>.
                 </div>
             </div>
         </div>
