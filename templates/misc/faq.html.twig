@@ -12,24 +12,29 @@
                         Notre équipe de bénévoles aux petits soins t'a préparer une foire aux questions dans laquelle, on l'espère, tu trouveras des réponses à toutes tes interrogations !
                     </p>
 
-                    {% for question in questions %}
-                        <div class="card card-hover mb-3">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="card-title">{{ question.question }}</h5>
-                                    <a href="#{{ question.slug }}" class="stretched-link"><i class="fa-solid fa-arrow-right"></i></a>
+                    {% for category, questions in questionsByCategory %}
+                        <h2>{{ (questions|first).category|trans }}</h2>
+                        {% for question in questions %}
+                            <div class="card card-hover mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">{{ question.question }}</h5>
+                                        <a href="#{{ question.slug }}" class="stretched-link"><i class="fa-solid fa-arrow-right"></i></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endfor %}
                     {% endfor %}
 
-                    {% for question in questions %}
-                        <hr class="m-5" />
+                    {% for category, questions in questionsByCategory %}
+                        {% for question in questions %}
+                            <hr class="m-5" />
 
-                        <h2 id="{{ question.slug }}">{{ question.question }}</h2>
-                        <p>
-                            {{ question.answer|raw }}
-                        </p>
+                            <h2 id="{{ question.slug }}">{{ question.question }}</h2>
+                            <p>
+                                {{ question.answer|raw }}
+                            </p>
+                        {% endfor %}
                     {% endfor %}
 
                     <div class="alert bg-success-subtle mt-5">

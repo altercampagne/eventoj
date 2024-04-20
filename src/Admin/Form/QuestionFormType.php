@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Admin\Form;
 
 use App\Entity\Question;
+use App\Entity\QuestionCategory;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +20,16 @@ class QuestionFormType extends AbstractType
         $question = $options['data'];
 
         $builder
+            ->add('category', EnumType::class, [
+                'class' => QuestionCategory::class,
+                'label' => 'Catégorie de la question',
+                'attr' => [
+                    'placeholder' => 'Catégorie de la question',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+            ])
             ->add('question', TextType::class, [
                 'label' => 'La question',
                 'attr' => [

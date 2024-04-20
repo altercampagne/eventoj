@@ -26,6 +26,11 @@ class Question
     #[Gedmo\Slug(fields: ['question'], updatable: false)]
     private string $slug;
 
+    #[ORM\Column(type: 'string', length: 20, enumType: QuestionCategory::class, options: [
+        'comment' => 'Category of this question',
+    ])]
+    private QuestionCategory $category;
+
     #[Assert\NotNull]
     #[ORM\Column]
     private string $question;
@@ -60,6 +65,18 @@ class Question
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    public function getCategory(): QuestionCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(QuestionCategory $category): self
+    {
+        $this->category = $category;
+
+        return $this;
     }
 
     public function getQuestion(): string
