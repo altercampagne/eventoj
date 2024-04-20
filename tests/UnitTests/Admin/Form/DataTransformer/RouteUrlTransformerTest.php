@@ -43,5 +43,10 @@ final class RouteUrlTransformerTest extends TestCase
             '<iframe src="https://www.komoot.com/fr-fr/tour/1271165736/embed?profile=1&share_token=aQSp6fFyamvUyEqyFxgHC9Xe64Zdn93E27r0kSWgft7F4R8pSE" width="100%" height="700" frameborder="0" scrolling="no"></iframe>',
             'https://www.komoot.com/fr-fr/tour/1271165736/embed?profile=1&share_token=aQSp6fFyamvUyEqyFxgHC9Xe64Zdn93E27r0kSWgft7F4R8pSE',
         ];
+
+        yield 'Valid OpenRunner iframe is transformed' => [
+            '<iframe width="100%" height="650" loading="lazy" src="https://www.openrunner.com/en/embed/5378616f526831747578307a7a346c31466f375537393043616b744a63712b344437326d314371317251593d3a3ac12515c0f7c4961a9d836de199539427?unit=metric" style="border: none;"></iframe>',
+            'https://www.openrunner.com/embed/5378616f526831747578307a7a346c31466f375537393043616b744a63712b344437326d314371317251593d3a3ac12515c0f7c4961a9d836de199539427?unit=metric',
+        ];
     }
 }

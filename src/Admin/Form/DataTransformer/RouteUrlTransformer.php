@@ -39,8 +39,8 @@ class RouteUrlTransformer implements DataTransformerInterface
             throw new TransformationFailedException('Expected a string.');
         }
 
-        if (str_starts_with($value, 'https://www.openrunner.com/embed')) {
-            return $value;
+        if (preg_match('#^https://www.openrunner.com/([a-z]{2}/)?embed/.*$#', $value)) {
+            return preg_replace('#^https://www.openrunner.com/(?:[a-z]{2}/)?embed/(.*)$#', 'https://www.openrunner.com/embed/$1', $value);
         }
 
         if (preg_match('#^https://www.komoot.com/.*/embed?.*share_token=.*$#', $value)) {
@@ -51,6 +51,7 @@ class RouteUrlTransformer implements DataTransformerInterface
             throw new TransformationFailedException("Unable to extract URL from $value");
         }
 
-        return $matches[1];
+        // Wall this method again in order to clean URL if needed
+        return $this->reverseTransform($matches[1]);
     }
 }
