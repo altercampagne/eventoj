@@ -20,7 +20,7 @@ class FAQController extends AbstractController
 
     public function __invoke(): Response
     {
-        $questions = $this->em->getRepository(Question::class)->findAll();
+        $questions = $this->em->getRepository(Question::class)->findBy([], ['category' => 'ASC', 'createdAt' => 'ASC']);
 
         $questionsByCategory = [];
         foreach ($questions as $question) {
