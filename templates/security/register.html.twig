@@ -36,19 +36,13 @@
 
                     <fieldset class="form-group border p-3 mt-3">
                         <legend class="w-auto px-2"><i class="fa-solid fa-map-location-dot me-2"></i> Ton adresse postale</legend>
-                        {{ form_row(registrationForm.address.addressLine1) }}
-                        {{ form_row(registrationForm.address.addressLine2) }}
 
-                        <div class="row">
-                            <div class="col-12 col-md-4">
-                                {{ form_row(registrationForm.address.zipCode) }}
-                            </div>
-                            <div class="col-12 col-md-8">
-                                {{ form_row(registrationForm.address.city) }}
-                            </div>
+                        {{ form_errors(registrationForm.address) }}
+                        {{ form_row(registrationForm.address.address) }}
+
+                        <div class="d-none">
+                            {{ form_rest(registrationForm.address) }}
                         </div>
-
-                        {{ form_row(registrationForm.address.countryCode) }}
                     </fieldset>
 
                     <fieldset class="form-group border p-3 mt-3">

@@ -6,6 +6,7 @@ import 'trix'
 import 'trix/dist/trix.min.css'
 import './styles/admin/admin.scss'
 
+import './scripts/AddressAutocomplete.js'
 import './scripts/S3FileUpload.js'
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
