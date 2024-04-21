@@ -42,6 +42,8 @@ final readonly class RegistrationPaymentHandler
                     ->setLastName($payer->getLastName())
                     ->setEmail($payer->getEmail())
                     ->setAddress($payer->getAddress()->getAddressLine1())
+                    ->setCity($payer->getAddress()->getCity())
+                    ->setZipCode($payer->getAddress()->getZipCode())
                     ->setDateOfBirth($payer->getBirthDate())
             )
             ->setMetadata([
