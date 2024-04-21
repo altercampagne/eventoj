@@ -63,7 +63,4 @@ return [
         'version' => '2.3.1',
         'type' => 'css',
     ],
-    '@tarekraafat/autocomplete.js' => [
-        'version' => '10.2.7',
-    ],
 ];

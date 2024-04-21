@@ -38,8 +38,6 @@ class RegistrationFormTypeTest extends KernelTestCase
 
     public function testInvalidZipCode(): void
     {
-        $faker = \Faker\Factory::create('fr_FR');
-
         $data = $this->getValidFormData();
         /* @phpstan-ignore-next-line */
         $data['address']['countryCode'] = 'FR';
@@ -50,7 +48,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         $form->submit($data);
 
         $this->assertFormInvalid($form, [
-            'address' => 'Ce code postal n\'est pas valide.',
+            'zipCode' => 'Ce code postal n\'est pas valide.',
         ]);
     }
 
@@ -173,8 +171,6 @@ class RegistrationFormTypeTest extends KernelTestCase
                 'addressLine1' => $faker->address(),
                 'zipCode' => $faker->postCode(),
                 'city' => $faker->city(),
-                'latitude' => $faker->latitude(),
-                'longitude' => $faker->longitude(),
             ],
             'plainPassword' => 'password',
         ];

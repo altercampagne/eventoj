@@ -51,9 +51,7 @@ class AlternativeFormType extends AbstractType
                 'help' => '<b>Ne surtout pas</b> indiquer d\'informations spécifiques à ton étape (lieu de rencontre, date, ...) dans cette description, ce n\'est pas prévu pour ! 🙏',
                 'help_html' => true,
             ])
-            ->add('address', AddressFormType::class, [
-                'is_address_line_required' => false,
-            ])
+            ->add('address', AddressFormType::class)
             ->add('picture', UploadedFileType::class, [
                 'required' => false,
                 'type' => UploadedFileTypeEnum::ALTERNATIVE,

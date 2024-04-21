@@ -49,10 +49,22 @@
                     <fieldset class="form-group border p-3 mt-3 bg-light">
                         <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-map-location-dot me-2"></i> Adresse de l'alternative</legend>
                         <div class="alert bg-warning-subtle">
-                            <u>Si tu ne connais pas l'adresse exacte de ton alternative</u> (ou qu'il n'y en a pas, ou que tu ne la trouves pas !), tu peux simplement indiquer la rue voire la ville, c'est déjà ça. ;)
+                            <u>Si tu ne connais pas l'adresse exacte de ton alternative</u>, tu peux simplement indiquer la rue ou la route, c'est déjà ça. ;)
                         </div>
 
-                        {{ form_row(form.address.address) }}
+                        {{ form_row(form.address.addressLine1) }}
+                        {{ form_row(form.address.addressLine2) }}
+
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                {{ form_row(form.address.zipCode) }}
+                            </div>
+                            <div class="col-12 col-md-8">
+                                {{ form_row(form.address.city) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.address.countryCode) }}
                     </fieldset>
 
                     <fieldset class="form-group border p-3 mt-3 bg-light">

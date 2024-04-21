@@ -39,8 +39,6 @@ class AlternativeFormTypeTest extends KernelTestCase
                 'addressLine1' => $faker->address(),
                 'zipCode' => $faker->postCode(),
                 'city' => $faker->city(),
-                'latitude' => $faker->latitude(),
-                'longitude' => $faker->longitude(),
             ],
             'stations' => [
                 [

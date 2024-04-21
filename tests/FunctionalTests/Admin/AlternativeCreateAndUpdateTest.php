@@ -34,8 +34,6 @@ class AlternativeCreateAndUpdateTest extends WebTestCase
             'alternative_form[address][addressLine1]' => $faker->address(),
             'alternative_form[address][zipCode]' => $faker->postCode(),
             'alternative_form[address][city]' => $faker->city(),
-            'alternative_form[address][latitude]' => $faker->latitude(),
-            'alternative_form[address][longitude]' => $faker->longitude(),
         ]);
 
         $this->assertSelectorNotExists('.invalid-feedback', 'Form contains errors');
