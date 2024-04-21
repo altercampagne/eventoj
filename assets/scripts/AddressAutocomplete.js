@@ -19,7 +19,10 @@ window.addEventListener('DOMContentLoaded', () => {
               let addressLine1 = '';
 
               if (result.properties.type == 'house') {
-                addressLine1 = result.properties.housenumber + " " + result.properties.street;
+                addressLine1 = result.properties.street;
+                if (result.properties.housenumber != null) {
+                  addressLine1 = result.properties.housenumber + " " + addressLine1;
+                }
                 displayText = addressLine1 + " " + displayText;
               } else if (result.properties.type == 'street') {
                 addressLine1 = result.properties.name;
@@ -37,6 +40,12 @@ window.addEventListener('DOMContentLoaded', () => {
           }
         },
         keys: ['displayText'],
+        filter: (list) => {
+          // Filter duplicates
+          return Array.from(new Set(list.map((value) => value.match))).map((id) => {
+            return list.find((value) => value.match === id);
+          });
+        },
       },
       threshold: 5,
       debounce: 300,
