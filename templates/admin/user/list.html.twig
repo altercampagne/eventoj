@@ -15,12 +15,9 @@
             <tr data-href="{{ path('admin_user_show', { id: user.id }) }}">
                 <td>
                     {{ user.fullName }}
-                    {% if user.isAdmin %}
-                        <span class="badge text-bg-danger">ADMIN</span>
-                    {% endif %}
-                    {% if user.isPrepa %}
-                        <span class="badge text-bg-warning">PREPA</span>
-                    {% endif %}
+                    {% for role in user.roles|filter(role => role != 'ROLE_USER') %}
+                        <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'warning' }}">{{ role|u.replace('ROLE_', '') }}</span>
+                    {% endfor %}
                 </td>
                 <td>
                     {{ user.email }}

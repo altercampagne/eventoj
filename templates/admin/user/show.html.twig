@@ -24,23 +24,23 @@
                         </li>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_MANAGEMENT').value, user) %}
                             <li class="list-group-item">
-                                    <b>Gestion des permissions :</b>
+                                <b>Gestion des permissions :</b>
 
-                                    <twig:ButtonPost
-                                        url="{{ user.isAdmin ? path('admin_user_unpromote_admin', { id: user.id }) : path('admin_user_promote_admin', { id: user.id }) }}"
-                                        tooltip="{{ user.isAdmin ? 'Retirer' : 'Ajouter' }} les droits d'admin à {{ user.fullname }}"
-                                        btnClass="btn {{ user.isAdmin ? 'btn-danger' : 'btn-outline-danger' }}"
-                                    >
-                                        {{ user.isAdmin ? 'Retirer' : 'Passer' }} admin
-                                    </twig:ButtonPost>
+                                <twig:ButtonPost
+                                    url="{{ user.isAdmin ? path('admin_user_unpromote_admin', { id: user.id }) : path('admin_user_promote_admin', { id: user.id }) }}"
+                                    tooltip="{{ user.isAdmin ? 'Retirer' : 'Ajouter' }} les droits d'admin à {{ user.fullname }}"
+                                    btnClass="btn {{ user.isAdmin ? 'btn-danger' : 'btn-outline-danger' }}"
+                                >
+                                    {{ user.isAdmin ? 'Retirer' : 'Passer' }} admin
+                                </twig:ButtonPost>
 
-                                    <twig:ButtonPost
-                                        url="{{ path(user.isInscriptionsManager ? 'admin_user_unpromote_inscriptions_manager' : 'admin_user_promote_inscriptions_manager', { id: user.id }) }}"
-                                        tooltip="{{ user.isInscriptionsManager ? 'Retirer' : 'Ajouter' }} les droits de gestionnaire des inscriptions à {{ user.fullname }}"
-                                        btnClass="btn {{ user.isInscriptionsManager ? 'btn-warning' : 'btn-outline-warning' }}"
-                                    >
-                                        {{ user.isInscriptionsManager ? 'Retirer' : 'Passer' }} gestionnaire inscriptions
-                                    </twig:ButtonPost>
+                                <twig:ButtonPost
+                                    url="{{ path(user.isInscriptionsManager ? 'admin_user_unpromote_inscriptions_manager' : 'admin_user_promote_inscriptions_manager', { id: user.id }) }}"
+                                    tooltip="{{ user.isInscriptionsManager ? 'Retirer' : 'Ajouter' }} les droits de gestionnaire des inscriptions à {{ user.fullname }}"
+                                    btnClass="btn {{ user.isInscriptionsManager ? 'btn-warning' : 'btn-outline-warning' }}"
+                                >
+                                    {{ user.isInscriptionsManager ? 'Retirer' : 'Passer' }} gestionnaire inscriptions
+                                </twig:ButtonPost>
                             </li>
                         {% endif %}
                     </ul>
