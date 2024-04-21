@@ -48,9 +48,12 @@ class AlternativeFormType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'help' => 'Ne surtout pas indiquer l\'adresse de l\'alternative dans la description !',
+                'help' => '<b>Ne surtout pas</b> indiquer d\'informations spécifiques à ton étape (lieu de rencontre, date, ...) dans cette description, ce n\'est pas prévu pour ! 🙏',
+                'help_html' => true,
             ])
-            ->add('address', AddressFormType::class)
+            ->add('address', AddressFormType::class, [
+                'is_address_line_required' => false,
+            ])
             ->add('picture', UploadedFileType::class, [
                 'required' => false,
                 'type' => UploadedFileTypeEnum::ALTERNATIVE,

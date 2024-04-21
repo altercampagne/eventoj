@@ -36,6 +36,8 @@ class ProfileUpdateContactDetailsTest extends WebTestCase
             'contact_details_update_form[address][addressLine1]' => $faker->address(),
             'contact_details_update_form[address][zipCode]' => $faker->postCode(),
             'contact_details_update_form[address][city]' => $faker->city(),
+            'contact_details_update_form[address][latitude]' => $faker->latitude(),
+            'contact_details_update_form[address][longitude]' => $faker->longitude(),
         ]);
 
         // Email has not been changed so no email have been queued
@@ -73,6 +75,8 @@ class ProfileUpdateContactDetailsTest extends WebTestCase
             'contact_details_update_form[address][addressLine1]' => $faker->address(),
             'contact_details_update_form[address][zipCode]' => $faker->postCode(),
             'contact_details_update_form[address][city]' => $faker->city(),
+            'contact_details_update_form[address][latitude]' => $faker->latitude(),
+            'contact_details_update_form[address][longitude]' => $faker->longitude(),
         ]);
 
         $this->assertQueuedEmailCount(1);

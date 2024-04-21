@@ -25,5 +25,6 @@
         <trix-editor input="{{ id }}"></trix-editor>
         {%- set type = type|default('hidden') -%}
         {{- block('form_widget_simple') -}}
+        {{- block('form_help') -}}
     </fieldset>
 {%- endblock trix_row %}

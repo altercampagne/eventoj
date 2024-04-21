@@ -44,6 +44,7 @@ class Alternative
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $description = null;
 
+    #[Assert\Valid]
     #[ORM\Embedded(class: Address::class)]
     private Address $address;
 

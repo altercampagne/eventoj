@@ -43,6 +43,8 @@ class RegisterTest extends WebTestCase
             'registration_form[address][addressLine1]' => $faker->address(),
             'registration_form[address][zipCode]' => $faker->postCode(),
             'registration_form[address][city]' => $faker->city(),
+            'registration_form[address][latitude]' => $faker->latitude(),
+            'registration_form[address][longitude]' => $faker->longitude(),
             'registration_form[plainPassword]' => 'password',
         ]);
 
