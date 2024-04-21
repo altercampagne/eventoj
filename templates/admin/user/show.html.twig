@@ -12,6 +12,12 @@
                     <ul class="list-group list-group-flush border-top-0">
                         <li class="list-group-item">
                             <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-location-dot fa-fw me-1"></i>
+                                {{ user.address }}
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex align-items-center">
                                 <i class="fa-solid fa-utensils fa-fw me-1"></i>
                                 <twig:Admin:Diet person="{{ user }}" />
                             </div>
