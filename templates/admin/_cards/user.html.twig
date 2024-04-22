@@ -24,15 +24,18 @@
                     </twig:Admin:ButtonCopy>
                 </li>
             {% endif %}
-            <li class="list-group-item">
-                <i
-                    class="fa-solid fa-at fa-fw me-1 text-{{ user.isVerified ? 'success' : 'danger' }}"
-                    data-bs-toggle="tooltip"
-                    data-bs-title="Email{% if not user.isVerified %} non{% endif %} vérifié"
-                ></i>
-                <a href="mailto:{{ user.email}}">
-                    {{ user.email }}
-                </a>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <i
+                        class="fa-solid fa-at fa-fw me-1 text-{{ user.isVerified ? 'success' : 'danger' }}"
+                        data-bs-toggle="tooltip"
+                        data-bs-title="Email{% if not user.isVerified %} non{% endif %} vérifié"
+                    ></i>
+                    <a href="mailto:{{ user.email}}">
+                        {{ user.email }}
+                    </a>
+                </div>
+                <twig:Admin:ButtonCopy value="{{ user.email }}" tooltip="Copier l'adresse mail de l'utilisateur" />
             </li>
             <li class="list-group-item">
                 <i class="fa-solid fa-phone fa-fw me-1"></i>
