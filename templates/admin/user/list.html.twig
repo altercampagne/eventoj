@@ -15,9 +15,7 @@
             <tr data-href="{{ path('admin_user_show', { id: user.id }) }}">
                 <td>
                     {{ user.fullName }}
-                    {% for role in user.roles|filter(role => role != 'ROLE_USER') %}
-                        <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'warning' }}">{{ role|u.replace('ROLE_', '') }}</span>
-                    {% endfor %}
+                    <twig:Admin:UserRoles user="{{ user }}" />
                 </td>
                 <td>
                     {{ user.email }}

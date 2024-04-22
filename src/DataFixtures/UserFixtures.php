@@ -15,7 +15,7 @@ class UserFixtures extends AbstractFixture
             email: 'admin@altercampagne.net',
             firstName: 'John',
             lastName: 'Doe',
-            roles: ['ROLE_ADMIN'],
+            roles: ['ROLE_ADMIN', 'ROLE_DEVELOPER'],
             verifyEmail: true,
         );
 

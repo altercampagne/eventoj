@@ -7,6 +7,7 @@ namespace App\Admin\Security;
 enum Permission: string
 {
     case ADMIN_ACCESS = 'admin_access';
+    case DEBUG = 'debug';
 
     case ALTERNATIVE_LIST = 'alternative.list';
     case ALTERNATIVE_VIEW = 'alternative.view';

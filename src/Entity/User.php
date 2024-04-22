@@ -211,6 +211,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
         return \in_array('ROLE_ADMIN', $this->roles);
     }
 
+    public function isDeveloper(): bool
+    {
+        return \in_array('ROLE_DEVELOPER', $this->roles);
+    }
+
     public function isPrepa(): bool
     {
         return \in_array('ROLE_PREPA', $this->roles);

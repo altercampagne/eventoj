@@ -18,6 +18,18 @@
         {% set arrivalDate = registration.stageRegistrationStart.stage.date|format_date('long') %}
         {% set departureDate = registration.stageRegistrationEnd.stage.date|format_date('long') %}
 
+        {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                    <div>
+                        <i class="fa-solid fa-hashtag fa-fw me-1"></i>
+                        {{ registration.id }}
+                    </div>
+                    <twig:Admin:ButtonCopy value="{{ registration.id }}" />
+                </li>
+            </ul>
+        {% endif %}
+
         <div class="card-body">
             Inscription de <b>{{ registration.daysOfPresence }} jours</b> entre le <b>{{ arrivalDate }}</b> et le <b>{{ departureDate }}</b>.
         </div>

@@ -4,6 +4,15 @@
         {{ alternative.name }}
     </div>
     <ul class="list-group list-group-flush">
+        {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+            <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                <div>
+                    <i class="fa-solid fa-hashtag fa-fw me-1"></i>
+                    {{ alternative.id }}
+                </div>
+                <twig:Admin:ButtonCopy value="{{ alternative.id }}" />
+            </li>
+        {% endif %}
         {% if alternative.website is not null %}
             <li class="list-group-item">
                 <i class="fa-solid fa-link fa-fw me-1"></i>

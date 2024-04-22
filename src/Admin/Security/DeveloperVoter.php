@@ -8,12 +8,12 @@ use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class AdminVoter extends Voter
+class DeveloperVoter extends Voter
 {
     #[\Override]
     public function supportsAttribute(string $attribute): bool
     {
-        return null !== Permission::tryFrom($attribute) && Permission::DEBUG !== Permission::from($attribute);
+        return Permission::DEBUG === Permission::tryFrom($attribute);
     }
 
     #[\Override]
@@ -31,12 +31,6 @@ class AdminVoter extends Voter
             return false;
         }
 
-        $permission = Permission::from($attribute);
-
-        if (Permission::USER_MANAGEMENT === $permission && $token->getUser() === $subject) {
-            return false;
-        }
-
-        return $user->isAdmin();
+        return $user->isDeveloper();
     }
 }

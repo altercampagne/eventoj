@@ -8,9 +8,7 @@
                 </div>
 
                 <div>
-                    {% for role in user.roles|filter(role => role != 'ROLE_USER') %}
-                        <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'warning' }}">{{ role|u.replace('ROLE_', '') }}</span>
-                    {% endfor %}
+                    <twig:Admin:UserRoles user="{{ user }}" />
                 </div>
             </div>
         </div>
@@ -18,6 +16,15 @@
 
     {% block content %}
         <ul class="list-group list-group-flush">
+            {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                    <div>
+                        <i class="fa-solid fa-hashtag fa-fw me-1"></i>
+                        {{ user.id }}
+                    </div>
+                    <twig:Admin:ButtonCopy value="{{ user.id }}" />
+                </li>
+            {% endif %}
             <li class="list-group-item">
                 <i
                     class="fa-solid fa-at fa-fw me-1 text-{{ user.isVerified ? 'success' : 'danger' }}"

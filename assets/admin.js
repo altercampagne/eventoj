@@ -33,3 +33,26 @@ window.addEventListener('keydown', (event) => {
 document.getElementById('magicSearchModal').addEventListener('shown.bs.modal', () => {
   document.getElementById('magicSearchInput').focus()
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Copy to clipboard
+  (() => {
+    const handleClick = function (elt) {
+      const text = elt.dataset.clipboardText
+      navigator.clipboard.writeText(text).then(() => {
+        elt.classList.toggle('copy-btn--copied', true)
+        setTimeout(() => {
+          elt.classList.remove('copy-btn--copied')
+        }, 750)
+      }, () => {
+        // Fail
+      })
+    }
+    document.querySelectorAll('.copy-btn').forEach(element => {
+      element.addEventListener('click', (e) => {
+        e.preventDefault()
+        handleClick(element)
+      })
+    })
+  })();
+})

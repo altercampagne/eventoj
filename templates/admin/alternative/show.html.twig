@@ -25,11 +25,11 @@
                         {% endfor %}
                     </li>
                     <li class="list-group-item">
-                        Adresse : {{ alternative.address }}
+                        <i class="fa-solid fa-location-dot fa-fw me-1"></i> {{ alternative.address }}
                     </li>
                     {% if alternative.website is not null %}
                         <li class="list-group-item">
-                            <i class="fa-solid fa-link"></i> <a href="{{ alternative.website }}">{{ alternative.website }}</a>
+                            <i class="fa-solid fa-link fa-fw me-1"></i> <a href="{{ alternative.website }}">{{ alternative.website }}</a>
                         </li>
                     {% endif %}
                     <li class="list-group-item">

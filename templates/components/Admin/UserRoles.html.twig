@@ -1,0 +1,3 @@
+{% for role in user.roles|filter(role => role != 'ROLE_USER') %}
+    <span class="badge bg-{{ role == 'ROLE_ADMIN' or role == 'ROLE_DEVELOPER' ? 'danger' : 'warning' }}">{{ role|u.replace('ROLE_', '') }}</span>
+{% endfor %}
