@@ -13,6 +13,7 @@ enum Permission: string
     case ALTERNATIVE_VIEW = 'alternative.view';
     case ALTERNATIVE_CREATE = 'alternative.create';
     case ALTERNATIVE_UPDATE = 'alternative.update';
+    case ALTERNATIVE_DELETE = 'alternative.delete';
 
     case EVENT_LIST = 'event.list';
     case EVENT_VIEW_REGISTRATIONS = 'event.view_registrations';

@@ -48,7 +48,22 @@
 
                 {% block footer %}
                     <div class="d-grid gap-2 p-2">
-                        <a href="{{ path('admin_alternative_update', { slug: alternative.slug }) }}" class="btn btn-outline-primary">Modifier l'alternative</a>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}
+                            <a href="{{ path('admin_alternative_update', { slug: alternative.slug }) }}" class="btn btn-outline-primary">Modifier l'alternative</a>
+                        {% endif %}
+
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_DELETE').value, alternative) %}
+                            {% if alternative.isUsed %}
+                                <button class="btn btn-outline-danger disabled">
+                                    Cette alternative ne peut pas être supprimée car elle est liée à une ou plusieurs étapes.
+                                </button>
+                            {% else %}
+                                <twig:Admin:ButtonDelete
+                                    url="{{ path('admin_alternative_delete', { slug: alternative.slug }) }}"
+                                    buttonLabel="Supprimer l'alternative"
+                                />
+                            {% endif %}
+                        {% endif %}
                     </div>
                 {% endblock %}
             {% endembed %}

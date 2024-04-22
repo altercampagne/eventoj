@@ -53,6 +53,7 @@ class PrepaVoter extends Voter
             Permission::ALTERNATIVE_VIEW,
             Permission::ALTERNATIVE_CREATE,
             Permission::ALTERNATIVE_UPDATE,
+            Permission::ALTERNATIVE_DELETE,
 
             Permission::EVENT_LIST,
             Permission::EVENT_VIEW_STAGES,

@@ -78,6 +78,11 @@ class Alternative implements LocatedEntityInterface
         $this->stages = new ArrayCollection();
     }
 
+    public function isUsed(): bool
+    {
+        return 0 !== \count($this->stages);
+    }
+
     /**
      * @return Event[]
      */
