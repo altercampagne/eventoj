@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['slug'], message: 'Il y a déjà une alternative avec ce slug.')]
 #[ORM\Index(name: 'idx_alternative_slug', fields: ['slug'])]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
-class Alternative
+class Alternative implements LocatedEntityInterface
 {
     /**
      * This property should be marked as readonly but is not due to a bug in Doctrine.

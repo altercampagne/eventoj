@@ -17,6 +17,7 @@
         "doctrine/orm": "^2.16",
         "doskyft/helloasso-php": "dev-main",
         "dunglas/doctrine-json-odm": "^1.4",
+        "geocoder-php/photon-provider": "^0.6.0",
         "martin-georgiev/postgresql-for-doctrine": "^2.1",
         "odolbeau/phone-number-bundle": "^3.9",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -64,7 +65,8 @@
         "twig/inky-extra": "^3.7",
         "twig/intl-extra": "^3.8",
         "twig/string-extra": "^3.8",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "willdurand/geocoder-bundle": "^5.20"
     },
     "config": {
         "allow-plugins": {

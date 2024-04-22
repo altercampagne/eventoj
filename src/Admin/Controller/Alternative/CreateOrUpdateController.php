@@ -7,11 +7,13 @@ namespace App\Admin\Controller\Alternative;
 use App\Admin\Form\AlternativeFormType;
 use App\Admin\Security\Permission;
 use App\Entity\Alternative;
+use App\Message\GeocodeAlternativeAddressMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -19,6 +21,7 @@ final class CreateOrUpdateController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
+        private readonly MessageBusInterface $bus,
     ) {
     }
 
@@ -46,6 +49,8 @@ final class CreateOrUpdateController extends AbstractController
             $this->em->flush();
 
             $this->addFlash('success', sprintf('L\'alternative a bien été %s ! 🥳', $creation ? 'créée' : 'modifiée'));
+
+            $this->bus->dispatch(new GeocodeAlternativeAddressMessage($alternative->getId()));
 
             if ($backToAlternative) {
                 return $this->redirectToRoute('alternative_show', ['slug' => $alternative->getSlug()]);

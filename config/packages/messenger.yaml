@@ -20,3 +20,5 @@ framework:
             Symfony\Component\Notifier\Message\ChatMessage: async
             Symfony\Component\Notifier\Message\SmsMessage: async
             App\Message\PahekoPaymentSync: async
+            App\Message\GeocodeUserAddressMessage: async
+            App\Message\GeocodeAlternativeAddressMessage: async

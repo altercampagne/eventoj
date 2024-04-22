@@ -73,6 +73,8 @@ class Address
     public function setAddressLine1(string $addressLine1): self
     {
         $this->addressLine1 = $addressLine1;
+        $this->latitude = null;
+        $this->longitude = null;
 
         return $this;
     }
@@ -85,6 +87,8 @@ class Address
     public function setAddressLine2(?string $addressLine2): self
     {
         $this->addressLine2 = $addressLine2;
+        $this->latitude = null;
+        $this->longitude = null;
 
         return $this;
     }
@@ -97,6 +101,8 @@ class Address
     public function setCity(string $city): self
     {
         $this->city = $city;
+        $this->latitude = null;
+        $this->longitude = null;
 
         return $this;
     }
@@ -109,6 +115,8 @@ class Address
     public function setZipCode(string $zipCode): self
     {
         $this->zipCode = $zipCode;
+        $this->latitude = null;
+        $this->longitude = null;
 
         return $this;
     }
@@ -120,6 +128,8 @@ class Address
 
     public function setCountryCode(string $countryCode): self
     {
+        $this->latitude = null;
+        $this->longitude = null;
         $this->countryCode = $countryCode;
 
         return $this;
