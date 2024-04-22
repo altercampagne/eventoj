@@ -52,7 +52,7 @@ class GeocodeUserCommand extends Command
                 throw new \InvalidArgumentException("User with email $email not found!");
             }
 
-            if (null !== $user->getAddress()->getLatitude() && !$force) {
+            if ($user->getAddress()->isGeocoded() && !$force) {
                 $io->warning('User address is already geocoded, ignoring (use --force to geocode it anyway).');
 
                 return Command::SUCCESS;
@@ -75,7 +75,7 @@ class GeocodeUserCommand extends Command
 
         $users = $this->em->getRepository(User::class)->findAll();
         foreach ($users as $user) {
-            if (null !== $user->getAddress()->getLatitude() && !$force) {
+            if ($user->getAddress()->isGeocoded() && !$force) {
                 $output->writeln("User {$user->getEmail()} address is already geocoded, ignoring", OutputInterface::VERBOSITY_VERBOSE);
 
                 continue;

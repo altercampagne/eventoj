@@ -9,48 +9,50 @@
         </div>
 
         <div class="col-12 col-md-8">
-            <div class="card border-primary-subtle">
-                <div class="card-header bg-primary-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'alternative {{ alternative.name }}">
-                    <i class="fa-solid fa-location-dot me-2"></i>
-                    {{ alternative.name }}
-                    <a href="{{ path('alternative_show', { slug: alternative.slug }) }}" class="float-end">Voir sur le site</a>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        Évènements rattachés :
-                        {% for event in alternative.events %}
-                            <a href="{{ path ('admin_event_show', { slug: event.slug }) }}" class="text-decoration-none">
-                                <span class="badge bg-secondary">{{ event.name }}</span>
-                            </a>
-                        {% endfor %}
-                    </li>
-                    <li class="list-group-item">
-                        <i class="fa-solid fa-location-dot fa-fw me-1"></i> {{ alternative.address }}
-                    </li>
-                    {% if alternative.website is not null %}
-                        <li class="list-group-item">
-                            <i class="fa-solid fa-link fa-fw me-1"></i> <a href="{{ alternative.website }}">{{ alternative.website }}</a>
-                        </li>
-                    {% endif %}
-                    <li class="list-group-item">
-                        {{ alternative.description|raw }}
-                    </li>
-                    <li class="list-group-item">
-                        {% for station in alternative.stations %}
-                            <div>
-                                <i class="fa-solid fa-{{ station.type }} fa-fw" data-toggle="tooltip" title="Gare de {{ station.type }}"></i>
-                                {{station.name }} <span class="text-secondary">({{ station.distance }} kms)</span>
-                            </div>
-                        {% else %}
-                            <div class="alert bg-danger-subtle mb-0">Aucune gare définie !</div>
-                        {% endfor %}
-                    </li>
-                </ul>
+            {% embed 'admin/_cards/alternative.html.twig' with { alternative: alternative } only %}
+                {% block content %}
+                    {{ parent() }}
 
-                <div class="d-grid gap-2 p-2">
-                    <a href="{{ path('admin_alternative_update', { slug: alternative.slug }) }}" class="btn btn-outline-primary">Modifier l'alternative</a>
-                </div>
-            </div>
+                    <ul class="list-group list-group-flush border-top-0">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                {% if not is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                                    <i class="fa-solid fa-location-dot fa-fw me-1"></i>
+                                {% elseif alternative.address.geocoded %}
+                                    <i class="fa-solid fa-location-dot fa-fw me-1 text-success" data-toggle="tooltip" title="Addresse geocodée !"></i>
+                                {% else %}
+                                    <i class="fa-solid fa-location-dot fa-fw me-1 text-danger" data-toggle="tooltip" title="Addresse non geocodée !"></i>
+                                {% endif %}
+                                {{ alternative.address }}
+                                <a href="https://www.openstreetmap.org/search?query={{ alternative.address }}" target="_blank">
+                                    (voir la carte <small><sup><i class="fa-solid fa-arrow-up-right-from-square"></i></sup></small>)
+                                </a>
+                            </div>
+                            <twig:Admin:ButtonCopy value="{{ alternative.address }}" tooltip="Copier l'adresse de l'alternative" />
+                        </li>
+                        <li class="list-group-item">
+                            {{ alternative.description|raw }}
+                        </li>
+                        <li class="list-group-item">
+                            {% for station in alternative.stations %}
+                                <div>
+                                    <i class="fa-solid fa-{{ station.type }} fa-fw" data-toggle="tooltip" title="Gare de {{ station.type }}"></i>
+                                    {{station.name }} <span class="text-secondary">({{ station.distance }} kms)</span>
+                                </div>
+                            {% else %}
+                                <div class="alert bg-danger-subtle mb-0">Aucune gare définie !</div>
+                            {% endfor %}
+                        </li>
+                    </ul>
+                {% endblock %}
+
+                {% block footer %}
+                    <div class="d-grid gap-2 p-2">
+                        <a href="{{ path('admin_alternative_update', { slug: alternative.slug }) }}" class="btn btn-outline-primary">Modifier l'alternative</a>
+                    </div>
+                {% endblock %}
+            {% endembed %}
+
             <div class="p-2 text-secondary">
                 <small>
                     Créé le <b>{{ alternative.createdAt|format_datetime('long', 'short') }}</b><br />

@@ -65,6 +65,11 @@ class Address
         return $address." - {$country}";
     }
 
+    public function isGeocoded(): bool
+    {
+        return null !== $this->latitude && null !== $this->longitude;
+    }
+
     public function getAddressLine1(): string
     {
         return $this->addressLine1;

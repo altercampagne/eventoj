@@ -15,6 +15,9 @@
                 <th scope="col">Nom</th>
                 <th scope="col">Évènements</th>
                 <th scope="col">Description</th>
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                    <th scope="col">Geocoding</th>
+                {% endif %}
                 <th scope="col">Date</th>
             </tr>
         </thead>
@@ -28,6 +31,15 @@
                         {% endfor %}
                     </td>
                     <td>{{ alternative.description|striptags|u.truncate(100, '...', false) }}</td>
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                        <td>
+                            {% if alternative.address.geocoded %}
+                                <i class="fa-solid fa-circle-check fa-fw text-sucess" date-toggle="tooltip" title="Adresse géocodée"></i>
+                            {% else %}
+                                <i class="fa-solid fa-circle-xmark fa-fw text-danger" date-toggle="tooltip" title="Adresse non géocodée"></i>
+                            {% endif %}
+                        </td>
+                    {% endif %}
                     <td>{{ alternative.createdAt|format_datetime }}</td>
                 </tr>
             {% endfor %}

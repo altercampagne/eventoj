@@ -4,29 +4,45 @@
 
 {% block main %}
     <table class="table table-hover">
-        <tr>
-            <th scope="col">Nom complet</th>
-            <th scope="col">Mail</th>
-            <th scope="col">Numéro de téléphone</th>
-            <th scope="col">Date de naissance</th>
-            <th scope="col">Date d'inscription</th>
-        </tr>
-        {% for user in users %}
-            <tr data-href="{{ path('admin_user_show', { id: user.id }) }}">
-                <td>
-                    {{ user.fullName }}
-                    <twig:Admin:UserRoles user="{{ user }}" />
-                </td>
-                <td>
-                    {{ user.email }}
-                    {% if user.isVerified %}
-                        <i class="fa-solid fa-circle-check text-secondary" data-bs-toggle="tooltip" data-bs-title="Email vérifié"></i>
-                    {% endif %}
-                </td>
-                <td>{{ user.phoneNumber|phone_number_format }}</td>
-                <td>{{ user.birthDate|format_date }}</td>
-                <td>{{ user.createdAt|format_datetime }}</td>
+        <thead>
+            <tr>
+                <th scope="col">Nom complet</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Numéro de téléphone</th>
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                    <th scope="col">Geocoding</th>
+                {% endif %}
+                <th scope="col">Date de naissance</th>
+                <th scope="col">Date d'inscription</th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr data-href="{{ path('admin_user_show', { id: user.id }) }}">
+                    <td>
+                        {{ user.fullName }}
+                        <twig:Admin:UserRoles user="{{ user }}" />
+                    </td>
+                    <td>
+                        {{ user.email }}
+                        {% if user.isVerified %}
+                            <i class="fa-solid fa-circle-check text-secondary" data-bs-toggle="tooltip" data-bs-title="Email vérifié"></i>
+                        {% endif %}
+                    </td>
+                    <td>{{ user.phoneNumber|phone_number_format }}</td>
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                        <td>
+                            {% if user.address.geocoded %}
+                                <i class="fa-solid fa-circle-check fa-fw text-sucess" date-toggle="tooltip" title="Adresse géocodée"></i>
+                            {% else %}
+                                <i class="fa-solid fa-circle-xmark fa-fw text-danger" date-toggle="tooltip" title="Adresse non géocodée"></i>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                    <td>{{ user.birthDate|format_date }}</td>
+                    <td>{{ user.createdAt|format_datetime }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}

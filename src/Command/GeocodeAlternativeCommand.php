@@ -52,7 +52,7 @@ class GeocodeAlternativeCommand extends Command
                 throw new \InvalidArgumentException("Alternative with slug $slug not found!");
             }
 
-            if (null !== $alternative->getAddress()->getLatitude() && !$force) {
+            if ($alternative->getAddress()->isGeocoded() && !$force) {
                 $io->warning('Alternative address is already geocoded, ignoring (use --force to geocode it anyway).');
 
                 return Command::SUCCESS;
@@ -75,7 +75,7 @@ class GeocodeAlternativeCommand extends Command
 
         $alternatives = $this->em->getRepository(Alternative::class)->findAll();
         foreach ($alternatives as $alternative) {
-            if (null !== $alternative->getAddress()->getLatitude() && !$force) {
+            if ($alternative->getAddress()->isGeocoded() && !$force) {
                 $output->writeln("Alternative {$alternative->getName()} address is already geocoded, ignoring", OutputInterface::VERBOSITY_VERBOSE);
 
                 continue;

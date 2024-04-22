@@ -10,11 +10,21 @@
                     {{ parent() }}
 
                     <ul class="list-group list-group-flush border-top-0">
-                        <li class="list-group-item">
-                            <div class="d-flex align-items-center">
-                                <i class="fa-solid fa-location-dot fa-fw me-1"></i>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                {% if not is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                                    <i class="fa-solid fa-location-dot fa-fw me-1"></i>
+                                {% elseif user.address.geocoded %}
+                                    <i class="fa-solid fa-location-dot fa-fw me-1 text-success" data-toggle="tooltip" title="Addresse geocodée !"></i>
+                                {% else %}
+                                    <i class="fa-solid fa-location-dot fa-fw me-1 text-danger" data-toggle="tooltip" title="Addresse non geocodée !"></i>
+                                {% endif %}
                                 {{ user.address }}
+                                <a href="https://www.openstreetmap.org/search?query={{ user.address }}" target="_blank">
+                                    (voir la carte <small><sup><i class="fa-solid fa-arrow-up-right-from-square"></i></sup></small>)
+                                </a>
                             </div>
+                            <twig:Admin:ButtonCopy value="{{ user.address }}" tooltip="Copier l'adresse de l'user" />
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex align-items-center">
