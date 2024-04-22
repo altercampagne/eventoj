@@ -1,9 +1,9 @@
 <div class="card border-warning-subtle">
-    <div class="card-header bg-warning-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'utilisateurice {{ companion.fullname }}">
+    <div class="card-header bg-warning-subtle border-warning-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'utilisateurice {{ companion.fullname }}">
         <i class="fa-solid fa-companions me-2"></i>
         {{ companion.fullname }} <small class="text-secondary">(compagnon·ne de {{ companion.user.fullname }})</small>
     </div>
-    <ul class="list-group list-group-flush">
+    <ul class="list-group">
         {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
             <li class="list-group-item bg-light">
                 <i class="fa-solid fa-hashtag fa-fw me-1"></i>

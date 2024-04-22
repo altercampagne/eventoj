@@ -1,6 +1,6 @@
 <div class="card border-info-subtle">
     {% block header %}
-        <div class="card-header bg-info-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'évènement {{ event.name }}">
+        <div class="card-header bg-info-subtle border-info-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'évènement {{ event.name }}">
             <i class="fa-solid fa-calendar-days me-2"></i>
             {{ event.name }}
             <span class="float-end badge bg-info">{{ event.type.value }}</span>
@@ -8,7 +8,7 @@
     {% endblock %}
 
     {% block content %}
-        <ul class="list-group list-group-flush">
+        <ul class="list-group">
             {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
                 <li class="list-group-item bg-light">
                     <i class="fa-solid fa-hashtag fa-fw me-1"></i>

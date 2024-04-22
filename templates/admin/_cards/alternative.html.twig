@@ -1,6 +1,6 @@
 <div class="card border-danger-subtle">
     {% block header %}
-        <div class="card-header bg-danger-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'alternative {{ alternative.name }}">
+        <div class="card-header bg-danger-subtle fw-bold border-danger-subtle" data-bs-toggle="popover" title="Informations concernant l'alternative {{ alternative.name }}">
             <i class="fa-solid fa-earth-europe me-2"></i>
             {{ alternative.name }}
             <a href="{{ path('alternative_show', { slug: alternative.slug }) }}" class="float-end">Voir sur le site</a>
@@ -8,14 +8,13 @@
     {% endblock %}
 
     {% block content %}
-        <ul class="list-group list-group-flush">
+        <ul class="list-group">
             {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
                 <li class="list-group-item bg-light">
                     <i class="fa-solid fa-hashtag fa-fw me-1"></i>
                     <twig:Admin:ButtonCopy value="{{ alternative.id }}" tooltip="Copier l'ID">
                         <q>{{ alternative.id }} {{ parent() }}</q>
                     </twig:Admin:ButtonCopy>
-                    |
                     <twig:Admin:ButtonCopy value="{{ alternative.slug }}" tooltip="Copier le slug">
                         <q>{{ alternative.slug }} {{ parent() }}</q>
                     </twig:Admin:ButtonCopy>

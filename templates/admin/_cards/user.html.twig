@@ -1,6 +1,6 @@
 <div class="card border-success-subtle">
     {% block header %}
-        <div class="card-header bg-success-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant l'utilisateurice {{ user.fullname }}">
+        <div class="card-header bg-success-subtle fw-bold border-success-subtle" data-bs-toggle="popover" title="Informations concernant l'utilisateurice {{ user.fullname }}">
             <div class="d-flex justify-content-between">
                 <div>
                     <i class="fa-solid fa-users me-2"></i>
@@ -15,7 +15,7 @@
     {% endblock %}
 
     {% block content %}
-        <ul class="list-group list-group-flush">
+        <ul class="list-group">
             {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
                 <li class="list-group-item bg-light">
                     <i class="fa-solid fa-hashtag fa-fw me-1"></i>

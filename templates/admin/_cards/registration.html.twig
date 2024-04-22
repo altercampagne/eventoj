@@ -1,6 +1,6 @@
 <div class="card border-primary-subtle">
     {% block header %}
-        <div class="card-header bg-primary-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant une inscription de {{ registration.user.fullname }}">
+        <div class="card-header bg-primary-subtle border-primary-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant une inscription de {{ registration.user.fullname }}">
             <div class="d-flex justify-content-between">
                 <div>
                     <i class="fa-solid fa-sack-dollar me-2"></i>
@@ -19,21 +19,21 @@
         {% set departureDate = registration.stageRegistrationEnd.stage.date|format_date('long') %}
 
         {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
-            <ul class="list-group list-group-flush">
-            <li class="list-group-item bg-light">
-                <i class="fa-solid fa-hashtag fa-fw me-1"></i>
-                <twig:Admin:ButtonCopy value="{{ registration.id }}" tooltip="Copier l'ID">
-                    <q>{{ registration.id }} {{ parent() }}</q>
-                </twig:Admin:ButtonCopy>
-            </li>
+            <ul class="list-group">
+                <li class="list-group-item bg-light">
+                    <i class="fa-solid fa-hashtag fa-fw me-1"></i>
+                    <twig:Admin:ButtonCopy value="{{ registration.id }}" tooltip="Copier l'ID">
+                        <q>{{ registration.id }} {{ parent() }}</q>
+                    </twig:Admin:ButtonCopy>
+                </li>
             </ul>
         {% endif %}
 
-        <div class="card-body">
+        <div class="card-body border-bottom">
             Inscription de <b>{{ registration.daysOfPresence }} jours</b> entre le <b>{{ arrivalDate }}</b> et le <b>{{ departureDate }}</b>.
         </div>
 
-        <ul class="list-group list-group-flush">
+        <ul class="list-group">
             <li class="list-group-item">
                 <i class="fa-solid fa-plane-arrival fa-fw me-1"></i> Arrivée prévue le {{ arrivalDate }} ({{ registration.stageRegistrationStart.stage.name }}) pour le {{ registration.stageRegistrationStart.firstMeal|trans|lower }}
             </li>

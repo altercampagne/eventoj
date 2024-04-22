@@ -9,7 +9,7 @@
                 {% block content %}
                     {{ parent() }}
 
-                    <ul class="list-group list-group-flush border-top-0">
+                    <ul class="list-group">
                         <li class="list-group-item">
                             <i class="fa-solid fa-ticket fa-fw me-1"></i>
                             Inscriptions le {{ event.openingDateForBookings|format_datetime('long', 'short') }}

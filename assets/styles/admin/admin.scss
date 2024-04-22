@@ -40,3 +40,19 @@ q {
     content: none;
   }
 }
+
+.card {
+  .list-group {
+    @extend .border-0;
+    @extend .rounded-0;
+
+    li:first-child {
+      @extend .border-top-0;
+    }
+
+    .list-group-item {
+      @extend .border-start-0;
+      @extend .border-end-0;
+    }
+  }
+}

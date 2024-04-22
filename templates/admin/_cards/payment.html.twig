@@ -1,6 +1,6 @@
 <div class="card border-dark-subtle">
     {% block header %}
-        <div class="card-header bg-dark-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant un payment de {{ payment.payer.fullname }}">
+        <div class="card-header bg-dark-subtle border-dark-subtle fw-bold" data-bs-toggle="popover" title="Informations concernant un payment de {{ payment.payer.fullname }}">
             <div class="d-flex justify-content-between">
                 <div>
                     <i class="fa-solid fa-sack-dollar me-2"></i>
@@ -16,7 +16,7 @@
 
     {% block content %}
         {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
-            <ul class="list-group list-group-flush">
+            <ul class="list-group">
                 <li class="list-group-item bg-light">
                     <i class="fa-solid fa-hashtag fa-fw me-1"></i>
                     <twig:Admin:ButtonCopy value="{{ payment.id }}" tooltip="Copier l'ID">
