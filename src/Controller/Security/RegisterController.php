@@ -7,11 +7,13 @@ namespace App\Controller\Security;
 use App\Email\EmailConfirmationSender;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Message\GeocodeUserAddressMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
@@ -26,6 +28,7 @@ class RegisterController extends AbstractController
         private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly EntityManagerInterface $entityManager,
         private readonly Security $security,
+        private readonly MessageBusInterface $bus,
     ) {
     }
 
@@ -46,6 +49,8 @@ class RegisterController extends AbstractController
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
+
+            $this->bus->dispatch(new GeocodeUserAddressMessage($user->getId()));
 
             $this->emailConfirmationSender->send($user);
 
