@@ -20,13 +20,12 @@
 
         {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
             <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
-                    <div>
-                        <i class="fa-solid fa-hashtag fa-fw me-1"></i>
-                        {{ registration.id }}
-                    </div>
-                    <twig:Admin:ButtonCopy value="{{ registration.id }}" />
-                </li>
+            <li class="list-group-item bg-light">
+                <i class="fa-solid fa-hashtag fa-fw me-1"></i>
+                <twig:Admin:ButtonCopy value="{{ registration.id }}" tooltip="Copier l'ID">
+                    <q>{{ registration.id }} {{ parent() }}</q>
+                </twig:Admin:ButtonCopy>
+            </li>
             </ul>
         {% endif %}
 

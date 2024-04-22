@@ -30,3 +30,13 @@ form {
       cursor: pointer;
     }
 }
+
+q {
+  @extend .bg-white;
+  @extend .border;
+  @extend .p-1;
+
+  &::before {
+    content: none;
+  }
+}
