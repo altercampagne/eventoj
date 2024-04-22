@@ -10,17 +10,23 @@ use Geocoder\Collection;
 use Geocoder\Model\Coordinates;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 final readonly class AddressGeocoder
 {
     public function __construct(
         private readonly Provider $photonGeocoder,
         private readonly EntityManagerInterface $em,
+        #[Autowire(param: 'kernel.environment')]
+        private readonly string $environment,
     ) {
     }
 
     public function geocode(LocatedEntityInterface $entity): bool
     {
+        if ('test' === $this->environment) {
+            return true;
+        }
         $address = $entity->getAddress();
 
         $query = GeocodeQuery::create((string) $address)->withLocale('fr');
