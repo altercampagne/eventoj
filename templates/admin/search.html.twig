@@ -19,7 +19,7 @@
         {% if result.users|length > 0 %}
             <h2 class="fw-bold mb-3">Utilisateurice(s)</h2>
 
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
                 {% for user in result.users %}
                     <div class="col">
                         {{ include('admin/_cards/user.html.twig') }}
@@ -31,7 +31,7 @@
         {% if result.companions|length > 0 %}
             <h2 class="fw-bold mb-3">Compagnon·ne(s)</h2>
 
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
                 {% for companion in result.companions %}
                     <div class="col">
                         {{ include('admin/_cards/companion.html.twig') }}
@@ -43,7 +43,7 @@
         {% if result.events|length > 0 %}
             <h2 class="fw-bold mb-3">Événements</h2>
 
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
                 {% for event in result.events %}
                     <div class="col">
                         {{ include('admin/_cards/event.html.twig') }}
@@ -55,7 +55,7 @@
         {% if result.alternatives|length > 0 %}
             <h2 class="fw-bold mb-3">Alternative</h2>
 
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
                 {% for alternative in result.alternatives %}
                     <div class="col">
                         {{ include('admin/_cards/alternative.html.twig') }}
