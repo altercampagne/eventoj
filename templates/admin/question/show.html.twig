@@ -11,6 +11,14 @@
                     {{ question.question }}
                 </div>
                 <ul class="list-group">
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                        <li class="list-group-item bg-light">
+                            <i class="fa-solid fa-hashtag fa-fw me-1"></i>
+                            <twig:Admin:ButtonCopy value="{{ question.id }}" tooltip="Copier l'ID">
+                                <q>{{ question.id }} {{ parent() }}</q>
+                            </twig:Admin:ButtonCopy>
+                        </li>
+                    {% endif %}
                     <li class="list-group-item">
                         <span class="badge bg-primary">{{ question.category|trans }}</span>
                     </li>
