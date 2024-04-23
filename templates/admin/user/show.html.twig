@@ -15,9 +15,9 @@
                                 {% if not is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
                                     <i class="fa-solid fa-location-dot fa-fw me-1"></i>
                                 {% elseif user.address.geocoded %}
-                                    <i class="fa-solid fa-location-dot fa-fw me-1 text-success" data-toggle="tooltip" title="Addresse geocodée !"></i>
+                                    <i class="fa-solid fa-location-dot fa-fw me-1 text-success" data-bs-toggle="tooltip" title="Addresse geocodée !"></i>
                                 {% else %}
-                                    <i class="fa-solid fa-location-dot fa-fw me-1 text-danger" data-toggle="tooltip" title="Addresse non geocodée !"></i>
+                                    <i class="fa-solid fa-location-dot fa-fw me-1 text-danger" data-bs-toggle="tooltip" title="Addresse non geocodée !"></i>
                                 {% endif %}
                                 {{ user.address }}
                                 <a href="https://www.openstreetmap.org/search?query={{ user.address }}" target="_blank">

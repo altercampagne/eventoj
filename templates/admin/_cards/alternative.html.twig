@@ -20,7 +20,7 @@
                     </twig:Admin:ButtonCopy>
                 </li>
             {% endif %}
-            <li class="list-group-item" data-toggle="tooltip" title="Évènements lors desquels nous sommes passés par cette alternative">
+            <li class="list-group-item" data-bs-toggle="tooltip" title="Évènements lors desquels nous sommes passés par cette alternative">
                 <i class="fa-solid fa-calendar-days fa-fw me-1"></i>
                 {% for event in alternative.events %}
                     <a href="{{ path ('admin_event_show', { slug: event.slug }) }}" class="text-decoration-none">
