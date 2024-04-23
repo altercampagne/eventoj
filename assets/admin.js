@@ -4,6 +4,7 @@ import '@fortawesome/fontawesome-free'
 import '@fortawesome/fontawesome-free/css/all.css'
 import 'trix'
 import 'trix/dist/trix.min.css'
+import ClipboardJS from 'clipboard'
 import './styles/admin/admin.scss'
 
 import './scripts/S3FileUpload.js'
@@ -34,25 +35,18 @@ document.getElementById('magicSearchModal').addEventListener('shown.bs.modal', (
   document.getElementById('magicSearchInput').focus()
 })
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Copy to clipboard
-  (() => {
-    const handleClick = function (elt) {
-      const text = elt.dataset.clipboardText
-      navigator.clipboard.writeText(text).then(() => {
-        elt.classList.toggle('copy-btn--copied', true)
-        setTimeout(() => {
-          elt.classList.remove('copy-btn--copied')
-        }, 750)
-      }, () => {
-        // Fail
-      })
-    }
-    document.querySelectorAll('.copy-btn').forEach(element => {
-      element.addEventListener('click', (e) => {
-        e.preventDefault()
-        handleClick(element)
-      })
+// Copy button
+const clipboard = new ClipboardJS('div[data-clipboard-text]');
+clipboard.on('success', function(e) {
+  Tooltip.getOrCreateInstance(e.trigger).setContent({
+    '.tooltip-inner': 'Copié !'
+  });
+
+  e.trigger.addEventListener('hidden.bs.tooltip', () => {
+    Tooltip.getOrCreateInstance(e.trigger).setContent({
+      '.tooltip-inner': e.trigger.dataset.bsOriginalTitle,
     })
-  })();
-})
+  }, {
+    once: !0
+  });
+});
