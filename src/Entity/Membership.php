@@ -91,9 +91,24 @@ class Membership
         return new self($payment, companion: $companion, startAt: $startAt);
     }
 
+    public function isValid(): bool
+    {
+        return $this->isValidAt(new \DateTimeImmutable());
+    }
+
     public function isValidAt(\DateTimeImmutable $date): bool
     {
         return $this->startAt <= $date && $date <= $this->endAt;
+    }
+
+    public function isInFuture(): bool
+    {
+        return $this->startAt > new \DateTimeImmutable();
+    }
+
+    public function isPast(): bool
+    {
+        return $this->endAt < new \DateTimeImmutable();
     }
 
     public function getId(): UuidV4

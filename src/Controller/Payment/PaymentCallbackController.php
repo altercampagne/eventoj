@@ -77,10 +77,14 @@ class PaymentCallbackController extends AbstractController
 
     private function fail(Payment $payment): RedirectResponse
     {
+        if (null === $registration = $payment->getRegistration()) {
+            return $this->redirectToRoute('profile_memberships');
+        }
+
         $this->registrationPaymentHandler->handlePaymentFailure($payment);
 
         return $this->redirectToRoute('event_register', [
-            'slug' => $payment->getRegistration()->getEvent()->getSlug(),
+            'slug' => $registration->getEvent()->getSlug(),
         ]);
     }
 }

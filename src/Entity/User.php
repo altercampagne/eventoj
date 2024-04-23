@@ -470,6 +470,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
         return $this->preparedStages;
     }
 
+    public function isMember(): bool
+    {
+        if (null === $membership = $this->getLatestMembership()) {
+            return false;
+        }
+
+        return $membership->isValid();
+    }
+
     /**
      * @return Collection<int, Membership>
      */

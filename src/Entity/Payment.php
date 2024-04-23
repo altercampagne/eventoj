@@ -31,8 +31,8 @@ class Payment
     private readonly User $payer;
 
     #[ORM\ManyToOne(targetEntity: Registration::class, inversedBy: 'payments')]
-    #[ORM\JoinColumn(name: 'registration_id', referencedColumnName: 'id', nullable: false)]
-    private readonly Registration $registration;
+    #[ORM\JoinColumn(name: 'registration_id', referencedColumnName: 'id', nullable: true)]
+    private readonly ?Registration $registration;
 
     #[ORM\Column(type: 'string', length: 20, enumType: PaymentStatus::class, options: [
         'comment' => 'Status of this payment (pending, approved, failed, refunded)',
@@ -82,7 +82,7 @@ class Payment
     #[ORM\OneToMany(targetEntity: Membership::class, mappedBy: 'payment', cascade: ['persist'])]
     private Collection $memberships;
 
-    public function __construct(User $payer, int $amount, Registration $registration)
+    public function __construct(User $payer, int $amount, ?Registration $registration = null)
     {
         $this->id = new UuidV4();
         $this->payer = $payer;
@@ -92,7 +92,9 @@ class Payment
         $this->createdAt = new \DateTimeImmutable();
         $this->memberships = new ArrayCollection();
 
-        $registration->addPayment($this);
+        if (null !== $registration) {
+            $registration->addPayment($this);
+        }
     }
 
     public function approve(): void
@@ -151,6 +153,10 @@ class Payment
      */
     public function getRegistrationOnlyAmount(): int
     {
+        if (null === $this->registration) {
+            return 0;
+        }
+
         return $this->amount - $this->getMembershipsAmount();
     }
 
@@ -164,7 +170,7 @@ class Payment
         return $this->payer;
     }
 
-    public function getRegistration(): Registration
+    public function getRegistration(): ?Registration
     {
         return $this->registration;
     }

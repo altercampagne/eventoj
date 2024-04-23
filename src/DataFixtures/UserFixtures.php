@@ -45,6 +45,15 @@ class UserFixtures extends AbstractFixture
             birthDate: new \DateTimeImmutable('-35 years'),
         ));
 
+        // Create a membership for previous year. In order to be sure its a
+        // past membership, we first create a active one in order to use it's
+        // start date.
+        $membership = FixtureBuilder::createMembershipForUser(user: $admin);
+        $membership = FixtureBuilder::createMembershipForUser(user: $admin, startAt: $membership->getStartAt()->modify('-1 year'));
+
+        $manager->persist($membership->getPayment());
+        $manager->persist($membership);
+
         $manager->persist(FixtureBuilder::createUser(email: 'change-my-password@test-only.user'));
 
         $manager->flush();

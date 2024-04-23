@@ -26,7 +26,10 @@ final readonly class RegistrationPaymentHandler
      */
     public function initiatePayment(Payment $payment): string
     {
-        $registration = $payment->getRegistration();
+        if (null === $registration = $payment->getRegistration()) {
+            throw new \RuntimeException('Registration must be filled!');
+        }
+
         $payer = $payment->getPayer();
 
         $initCheckoutResponse = $this->helloassoClient->checkout->create((new InitCheckoutBody())

@@ -22,16 +22,20 @@ final readonly class PaymentSuccessfulHandler
     public function onPaymentSuccess(Payment $payment): void
     {
         $payment->approve();
-        $payment->getRegistration()->confirm();
+        $this->em->persist($payment);
 
-        $memberships = $this->membershipCreator->createMembershipsFromRegistration($payment->getRegistration());
+        if (null !== $registration = $payment->getRegistration()) {
+            $payment->getRegistration()->confirm();
 
-        foreach ($memberships as $membership) {
-            $this->em->persist($membership);
+            $memberships = $this->membershipCreator->createMembershipsFromRegistration($payment->getRegistration());
+
+            foreach ($memberships as $membership) {
+                $this->em->persist($membership);
+            }
+
+            $this->em->persist($payment->getRegistration());
         }
 
-        $this->em->persist($payment);
-        $this->em->persist($payment->getRegistration());
         $this->em->flush();
 
         $this->bus->dispatch(new PahekoPaymentSync($payment->getId()));

@@ -38,7 +38,7 @@ final readonly class PaymentSynchronizer
             return;
         }
 
-        $this->userSynchronizer->sync($payment->getRegistration()->getUser());
+        $this->userSynchronizer->sync($payment->getPayer());
         $this->syncPayment($payment);
         if ($payment->isRefunded()) {
             $this->syncRefund($payment);
@@ -51,7 +51,9 @@ final readonly class PaymentSynchronizer
             return false;
         }
 
-        $registration = $payment->getRegistration();
+        if (null === $registration = $payment->getRegistration()) {
+            return true;
+        }
 
         if (!$registration->isConfirmed() && !$registration->isCanceled()) {
             $this->logger->warning('Cannot sync a non-confirmed or canceled registration on Paheko.', [
@@ -105,26 +107,29 @@ final readonly class PaymentSynchronizer
      */
     private function getPaymentData(Payment $payment): array
     {
-        $event = $payment->getRegistration()->getEvent();
+        $lines = [];
+        if (null !== $registration = $payment->getRegistration()) {
+            $event = $registration->getEvent();
+            $mainLabel = "{$payment->getPayer()->getFullname()} pour {$event->getName()}";
+            $label = $registration->countPeople() > 1 ? 'Inscriptions' : 'Inscription';
 
-        $label = $payment->getRegistration()->countPeople() > 1 ? 'Inscriptions' : 'Inscription';
-
-        $lines = [
-            [
+            $lines[] = [
                 'account' => 706, // Prestation de services
                 'credit' => $payment->getRegistrationOnlyAmount() / 100,
                 'debit' => 0,
                 'label' => $label,
                 'id_project' => $event->getPahekoProjectId(),
-            ],
-            [
+            ];
+            $lines[] = [
                 'account' => $this->pahekoHelloassoAccountCode,
                 'credit' => 0,
                 'debit' => $payment->getRegistrationOnlyAmount() / 100,
                 'label' => $label,
                 'id_project' => $event->getPahekoProjectId(),
-            ],
-        ];
+            ];
+        } else {
+            $mainLabel = "{$payment->getPayer()->getFullname()} pour une adhésion";
+        }
 
         if (0 < $payment->getMembershipsAmount()) {
             $label = 1 < \count($payment->getMemberships()) ? 'Adhésions' : 'Adhésion';
@@ -145,13 +150,17 @@ final readonly class PaymentSynchronizer
             ];
         }
 
+        if (0 === \count($lines)) {
+            throw new \RuntimeException('Given payment contains no registration nor membership...');
+        }
+
         $paymentAdminUrl = $this->urlGenerator->generate('admin_payment_show', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         return [
             'id_year' => 'current',
             /* @phpstan-ignore-next-line */
             'date' => $payment->getApprovedAt()->format('Y-m-d'),
-            'label' => "{$payment->getPayer()->getFullname()} pour {$event->getName()}",
+            'label' => $mainLabel,
             'type' => 'ADVANCED',
             'lines' => $lines,
             'linked_users' => [$payment->getPayer()->getPahekoId()],
@@ -165,27 +174,14 @@ final readonly class PaymentSynchronizer
      */
     private function getRefundData(Payment $payment): array
     {
-        $event = $payment->getRegistration()->getEvent();
+        if (null === $registration = $payment->getRegistration()) {
+            throw new \RuntimeException('A payment without registration must not be refunded!');
+        }
+
+        $event = $registration->getEvent();
 
         $label = 'Remboursement ';
-        $label .= $payment->getRegistration()->countPeople() > 1 ? 'inscriptions' : 'inscription';
-
-        $lines = [
-            [
-                'account' => 706, // Prestation de services
-                'credit' => 0,
-                'debit' => $payment->getRegistrationOnlyAmount() / 100,
-                'label' => $label,
-                'id_project' => $event->getPahekoProjectId(),
-            ],
-            [
-                'account' => 41, // Usagers et comptes rattachés
-                'credit' => $payment->getRegistrationOnlyAmount() / 100,
-                'debit' => 0,
-                'label' => $label,
-                'id_project' => $event->getPahekoProjectId(),
-            ],
-        ];
+        $label .= $registration->countPeople() > 1 ? 'inscriptions' : 'inscription';
 
         $paymentAdminUrl = $this->urlGenerator->generate('admin_payment_show', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
@@ -195,7 +191,22 @@ final readonly class PaymentSynchronizer
             'date' => $payment->getApprovedAt()->format('Y-m-d'),
             'label' => "Remboursement {$payment->getPayer()->getFullname()} pour {$event->getName()}",
             'type' => 'ADVANCED',
-            'lines' => $lines,
+            'lines' => [
+                [
+                    'account' => 706, // Prestation de services
+                    'credit' => 0,
+                    'debit' => $payment->getRegistrationOnlyAmount() / 100,
+                    'label' => $label,
+                    'id_project' => $event->getPahekoProjectId(),
+                ],
+                [
+                    'account' => 41, // Usagers et comptes rattachés
+                    'credit' => $payment->getRegistrationOnlyAmount() / 100,
+                    'debit' => 0,
+                    'label' => $label,
+                    'id_project' => $event->getPahekoProjectId(),
+                ],
+            ],
             'linked_users' => [$payment->getPayer()->getPahekoId()],
             'notes' => "Paiement visible ici : $paymentAdminUrl",
             'reference' => (string) $payment->getId(),

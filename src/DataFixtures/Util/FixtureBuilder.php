@@ -8,6 +8,9 @@ use App\Entity\Address;
 use App\Entity\Companion;
 use App\Entity\Diet;
 use App\Entity\Event;
+use App\Entity\Membership;
+use App\Entity\Payment;
+use App\Entity\Registration;
 use App\Entity\Stage;
 use App\Entity\UploadedFile;
 use App\Entity\UploadedFileType;
@@ -192,6 +195,31 @@ class FixtureBuilder
         ;
 
         return $companion;
+    }
+
+    public static function createMembershipForUser(
+        User $user,
+        ?Payment $payment = null,
+        ?\DateTimeImmutable $startAt = null,
+    ): Membership {
+        $payment ??= self::createPayment(user: $user);
+        $payment->approve();
+
+        return Membership::createForUser($user, $payment, $startAt);
+    }
+
+    public static function createPayment(
+        ?User $user = null,
+        ?int $amount = null,
+        ?Registration $registration = null,
+    ): Payment {
+        $payment = new Payment(
+            $user ?? self::createUser(),
+            $amount ?? self::getFaker()->numberBetween(10, 70) * 100,
+            $registration,
+        );
+
+        return $payment;
     }
 
     public static function createUploadedFile(

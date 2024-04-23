@@ -10,7 +10,6 @@ use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Alternative;
 use App\Entity\Event;
 use App\Entity\Membership;
-use App\Entity\Payment;
 use App\Entity\Registration;
 use App\Entity\RegistrationStatus;
 use App\Entity\Stage;
@@ -64,11 +63,7 @@ class EventFixtures extends AbstractFixture implements DependentFixtureInterface
             $registration = $this->generateRegistration($event, $user);
             $manager->persist($registration);
 
-            $payment = new Payment(
-                payer: $user,
-                amount: $this->getFaker()->numberBetween(10, 70) * 100,
-                registration: $registration,
-            );
+            $payment = FixtureBuilder::createPayment(user: $user, registration: $registration);
             $payment->approve();
             $manager->persist($payment);
 

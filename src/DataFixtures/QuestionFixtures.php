@@ -64,5 +64,15 @@ class QuestionFixtures extends AbstractFixture
         ReflectionHelper::setProperty($question, 'locked', true);
 
         yield $question;
+
+        $question = new Question();
+        $question
+            ->setCategory(QuestionCategory::PRICE)
+            ->setQuestion('Pourquoi adhérer à l\'association ?')
+            ->setAnswer('<div>Adhérer c\{est top !</div>')
+        ;
+        ReflectionHelper::setProperty($question, 'locked', true);
+
+        yield $question;
     }
 }

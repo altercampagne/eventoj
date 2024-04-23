@@ -30,23 +30,28 @@
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
                                             <a class="dropdown-item" href="{{ path('profile_update_profile') }}">
-                                                <i class="fa-solid fa-user me-2"></i> Mon profil
+                                                <i class="fa-solid fa-user fa-fw me-1"></i> Mon profil
                                             </a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="{{ path('profile_update_contact_details') }}">
-                                                <i class="fa-solid fa-at me-2"></i> Mes coordonnées
+                                                <i class="fa-solid fa-at fa-fw me-1"></i> Mes coordonnées
                                             </a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="{{ path('profile_companions') }}">
-                                                <i class="fa-solid fa-users me-2"></i> Mes compagnon·es
+                                                <i class="fa-solid fa-users fa-fw me-1"></i> Mes compagnon·es
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('profile_memberships') }}">
+                                                <i class="fa-regular fa-face-smile fa-fw me-1"></i> Mes adhésions
                                             </a>
                                         </li>
                                         {% if app.user.registrations|filter(r => not r.isWaitingPayment)|length > 0 %}
                                             <li>
                                                 <a class="dropdown-item" href="{{ path('profile_registrations') }}">
-                                                    <i class="fa-solid fa-ticket me-2"></i> Mes participations
+                                                    <i class="fa-solid fa-ticket fa-fw me-1"></i> Mes participations
                                                 </a>
                                             </li>
                                         {% endif %}
@@ -54,16 +59,16 @@
                                             <li><hr class="dropdown-divider"></li>
                                             <li>
                                                 <a class="dropdown-item" href="{{ path('admin') }}">
-                                                    <i class="fa-solid fa-screwdriver-wrench me-2"></i>
+                                                    <i class="fa-solid fa-screwdriver-wrench fa-fw me-1"></i>
                                                     Administration
-                                                    <i class="fa-solid fa-screwdriver-wrench ms-2"></i>
+                                                    <i class="fa-solid fa-screwdriver-wrench fa-fw ms-1"></i>
                                                 </a>
                                             </li>
                                         {% endif %}
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
                                             <a class="dropdown-item" href="{{ path('logout') }}">
-                                                <i class="fa-solid fa-right-from-bracket me-2"></i> Se déconnecter
+                                                <i class="fa-solid fa-right-from-bracket fa-fw me-1"></i> Se déconnecter
                                             </a>
                                         </li>
                                     </ul>
