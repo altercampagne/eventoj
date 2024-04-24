@@ -10,7 +10,7 @@ use App\Entity\Registration;
 use App\Entity\User;
 use App\Form\EventRegistration\ChoosePriceFormType;
 use App\Service\Bill\BillCreator;
-use App\Service\Payment\RegistrationPaymentHandler;
+use App\Service\Payment\PaymentHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -25,7 +25,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class RegisterChoosePriceController extends AbstractController
 {
     public function __construct(
-        private readonly RegistrationPaymentHandler $registrationPaymentHandler,
+        private readonly PaymentHandler $paymentHandler,
         private readonly BillCreator $billCreator,
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger,
@@ -81,7 +81,7 @@ class RegisterChoosePriceController extends AbstractController
                 registration: $registration,
             );
 
-            $redirectUrl = $this->registrationPaymentHandler->initiatePayment($payment);
+            $redirectUrl = $this->paymentHandler->initiatePayment($payment);
 
             return $this->redirect($redirectUrl);
         }

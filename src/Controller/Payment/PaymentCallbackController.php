@@ -7,7 +7,7 @@ namespace App\Controller\Payment;
 use App\Bridge\Helloasso\PaymentReturnType;
 use App\Entity\Payment;
 use App\Entity\User;
-use App\Service\Payment\RegistrationPaymentHandler;
+use App\Service\Payment\PaymentHandler;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,7 +24,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class PaymentCallbackController extends AbstractController
 {
     public function __construct(
-        private readonly RegistrationPaymentHandler $registrationPaymentHandler,
+        private readonly PaymentHandler $paymentHandler,
         private readonly LoggerInterface $logger,
     ) {
     }
@@ -62,17 +62,23 @@ class PaymentCallbackController extends AbstractController
             return $this->fail($payment);
         }
 
-        if (!$this->registrationPaymentHandler->isPaymentSuccessful($payment)) {
+        if (!$this->paymentHandler->isPaymentSuccessful($payment)) {
             $this->addFlash('danger', 'Impossible de vérifier que ton paiement est bien passé. Si tu es certain·e que c\'est bien le cas, contacte notre équipe avec ton nom / prénom / dates de réservation et en leur copiant ce message.');
 
             return $this->fail($payment);
         }
 
-        $this->registrationPaymentHandler->handlePaymentSuccess($payment);
+        $this->paymentHandler->handlePaymentSuccess($payment);
 
-        $this->addFlash('success', 'Ta participation a bien été enregistrée ! 🥳');
+        if (null !== $payment->getRegistration()) {
+            $this->addFlash('success', 'Ta participation a bien été enregistrée ! 🥳');
 
-        return $this->redirectToRoute('profile_registrations');
+            return $this->redirectToRoute('profile_registrations');
+        }
+
+        $this->addFlash('success', 'Ton adhésion a bien été réglée ! 🥳');
+
+        return $this->redirectToRoute('profile_memberships');
     }
 
     private function fail(Payment $payment): RedirectResponse
@@ -81,7 +87,7 @@ class PaymentCallbackController extends AbstractController
             return $this->redirectToRoute('profile_memberships');
         }
 
-        $this->registrationPaymentHandler->handlePaymentFailure($payment);
+        $this->paymentHandler->handlePaymentFailure($payment);
 
         return $this->redirectToRoute('event_register', [
             'slug' => $registration->getEvent()->getSlug(),

@@ -17,9 +17,9 @@ use PHPUnit\Framework\TestCase;
 class MembershipCreatorTest extends TestCase
 {
     /**
-     * @dataProvider createMembershipsFromRegistrationProvider
+     * @dataProvider createMembershipsFromPaymentProvider
      */
-    public function testCreateMembershipsFromRegistration(string $registrationDate, string $expectedMembershipStartAt): void
+    public function testCreateMembershipsFromPayment(string $registrationDate, string $expectedMembershipStartAt): void
     {
         $user = new User();
         $user->setBirthDate(new \DateTimeImmutable('-20 years'));
@@ -35,7 +35,7 @@ class MembershipCreatorTest extends TestCase
         $payment = new Payment($user, 20000, $registration);
         $payment->approve();
 
-        $memberships = (new MembershipCreator())->createMembershipsFromRegistration($registration);
+        $memberships = (new MembershipCreator())->createMembershipsFromPayment($payment);
 
         $this->assertCount(1, $memberships);
 
@@ -48,7 +48,7 @@ class MembershipCreatorTest extends TestCase
     /**
      * @return iterable<array{string, string}>
      */
-    public static function createMembershipsFromRegistrationProvider(): iterable
+    public static function createMembershipsFromPaymentProvider(): iterable
     {
         yield ['2024-07-12', '2024-05-01'];
         yield ['2024-02-12', '2023-05-01'];

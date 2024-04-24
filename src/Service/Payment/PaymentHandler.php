@@ -11,7 +11,7 @@ use Helloasso\Models\Carts\CheckoutPayer;
 use Helloasso\Models\Carts\InitCheckoutBody;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-final readonly class RegistrationPaymentHandler
+final readonly class PaymentHandler
 {
     public function __construct(
         private HelloassoClient $helloassoClient,
@@ -26,16 +26,12 @@ final readonly class RegistrationPaymentHandler
      */
     public function initiatePayment(Payment $payment): string
     {
-        if (null === $registration = $payment->getRegistration()) {
-            throw new \RuntimeException('Registration must be filled!');
-        }
-
         $payer = $payment->getPayer();
 
         $initCheckoutResponse = $this->helloassoClient->checkout->create((new InitCheckoutBody())
             ->setTotalAmount($payment->getAmount())
             ->setInitialAmount($payment->getAmount())
-            ->setItemName('Inscription '.$registration->getEvent()->getName())
+            ->setItemName($this->getHelloassoItemName($payment))
             ->setBackUrl($this->urlGenerator->generate('payment_callback_back', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
             ->setErrorUrl($this->urlGenerator->generate('payment_callback_error', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
             ->setReturnUrl($this->urlGenerator->generate('payment_callback_return', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
@@ -50,7 +46,7 @@ final readonly class RegistrationPaymentHandler
                     ->setDateOfBirth($payer->getBirthDate())
             )
             ->setMetadata([
-                'registration' => (string) $registration->getId(),
+                'payment' => (string) $payment->getId(),
             ])
         );
 
@@ -80,5 +76,14 @@ final readonly class RegistrationPaymentHandler
 
         $this->em->persist($payment);
         $this->em->flush();
+    }
+
+    private function getHelloassoItemName(Payment $payment): string
+    {
+        if (null === $registration = $payment->getRegistration()) {
+            return 'Adhésion de '.$payment->getPayer()->getFullName();
+        }
+
+        return 'Inscription '.$registration->getEvent()->getName();
     }
 }

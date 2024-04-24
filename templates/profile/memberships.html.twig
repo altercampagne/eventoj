@@ -15,6 +15,12 @@
                         <b>Tu n'es actuellement pas membre de l'association.</b><br />
                         Si tu veux participer à l'un de nos évènements ou à l'orga, une adhésion est obligatoire.<br />
                         Pour en savoir plus : <twig:FAQQuestion slug="pourquoi-adherer-a-lassociation" class="btn btn-link p-0" />
+
+                        <div class="d-grid gap-2 mt-3">
+                            <twig:ButtonPost class="btn btn-outline-danger" url="{{ path('payment_initiate_membership_payment') }}">
+                                Adhérer à l'association
+                            </twig:ButtonPost>
+                        </div>
                     </div>
                 {% endif %}
 
@@ -33,13 +39,10 @@
                             </div>
                         </div>
                     {% endfor %}
-
-                    {% if app.user.isMember %}
-                        <div class="d-grid gap-2 mt-5">
-                            <twig:FAQQuestion slug="pourquoi-adherer-a-lassociation" />
-                        </div>
-                    {% endif %}
                 {% endif %}
+                <div class="text-center">
+                    <small class="text-secondary">Les adhésions antérieures au 1er mai 2024 ne sont pas affichées ici.</small>
+                </div>
             </div>
         </div>
     </div>

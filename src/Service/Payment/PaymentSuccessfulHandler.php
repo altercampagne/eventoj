@@ -24,16 +24,16 @@ final readonly class PaymentSuccessfulHandler
         $payment->approve();
         $this->em->persist($payment);
 
+        $memberships = $this->membershipCreator->createMembershipsFromPayment($payment);
+
+        foreach ($memberships as $membership) {
+            $this->em->persist($membership);
+        }
+
         if (null !== $registration = $payment->getRegistration()) {
-            $payment->getRegistration()->confirm();
+            $registration->confirm();
 
-            $memberships = $this->membershipCreator->createMembershipsFromRegistration($payment->getRegistration());
-
-            foreach ($memberships as $membership) {
-                $this->em->persist($membership);
-            }
-
-            $this->em->persist($payment->getRegistration());
+            $this->em->persist($registration);
         }
 
         $this->em->flush();

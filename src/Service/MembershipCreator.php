@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\Companion;
 use App\Entity\Membership;
+use App\Entity\Payment;
 use App\Entity\Registration;
 use App\Entity\User;
 
@@ -37,10 +38,15 @@ final class MembershipCreator
     /**
      * @return Membership[]
      */
-    public function createMembershipsFromRegistration(Registration $registration): array
+    public function createMembershipsFromPayment(Payment $payment): array
     {
-        if (null === $payment = $registration->getApprovedPayment()) {
-            throw new \LogicException('Cannot create memberships associated to a non paid registration.');
+        if (!$payment->isApproved()) {
+            throw new \LogicException('Cannot create memberships associated to a non-approved payment.');
+        }
+
+        // No registration ? We only have to create a membership for the payer.
+        if (null === $registration = $payment->getRegistration()) {
+            return [Membership::createForUser($payment->getPayer(), $payment)];
         }
 
         $membershipStartAt = $this->getMembershipStartAtFromRegistration($registration);

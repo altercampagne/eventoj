@@ -472,11 +472,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
 
     public function isMember(): bool
     {
-        if (null === $membership = $this->getLatestMembership()) {
-            return false;
+        foreach ($this->memberships as $membership) {
+            if ($membership->isValid()) {
+                return true;
+            }
         }
 
-        return $membership->isValid();
+        return false;
     }
 
     /**
