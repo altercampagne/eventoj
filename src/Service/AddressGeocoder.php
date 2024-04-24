@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\Address;
 use App\Entity\LocatedEntityInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Geocoder\Collection;
@@ -37,7 +38,7 @@ final readonly class AddressGeocoder
             return false;
         }
 
-        if (null === $coordinates = $this->extractCoordinates($results)) {
+        if (null === $coordinates = $this->extractCoordinatesForAddress($address, $results)) {
             return false;
         }
 
@@ -50,9 +51,13 @@ final readonly class AddressGeocoder
         return true;
     }
 
-    private function extractCoordinates(Collection $results): ?Coordinates
+    private function extractCoordinatesForAddress(Address $address, Collection $results): ?Coordinates
     {
         foreach ($results->all() as $location) {
+            if ($location->getPostalCode() !== $address->getZipCode()) {
+                continue;
+            }
+
             if (null !== $coordinates = $location->getCoordinates()) {
                 return $coordinates;
             }
