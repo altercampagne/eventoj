@@ -54,6 +54,17 @@
                         <h2>Le parcours</h2>
                     </div>
 
+                    {% if stage.difficulty is not null %}
+                        {% set color = stage.isDifficultyEasy ? 'success' : stage.isDifficultyMedium ? 'warning' : 'danger' %}
+
+                        <div class="bg-{{ color }}-subtle p-3 rounded border border-secondary-outline mb-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <u>Diffculté estimée :</u> <b>{{ stage.difficulty|trans }}</b>
+                            </div>
+                            <twig:FAQQuestion slug="comment-est-determinee-la-difficulte-dune-etape" label="Explications" class="btn btn-link alert-link" />
+                        </div>
+                    {% endif %}
+
                     <iframe width="100%" height="700" loading="lazy" src="{{ stage.routeUrl }}" style="border: none;" scrolling="no" frameborder="0"></iframe>
                 {% endif %}
 

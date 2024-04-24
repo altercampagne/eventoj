@@ -74,5 +74,15 @@ class QuestionFixtures extends AbstractFixture
         ReflectionHelper::setProperty($question, 'locked', true);
 
         yield $question;
+
+        $question = new Question();
+        $question
+            ->setCategory(QuestionCategory::STAGES)
+            ->setQuestion('Comment est déterminée la difficulté d\'une étape ?')
+            ->setAnswer('<div>Explications détaillées ici</div>')
+        ;
+        ReflectionHelper::setProperty($question, 'locked', true);
+
+        yield $question;
     }
 }
