@@ -118,6 +118,16 @@ class EventRegistrationDTO
                 ->addViolation();
         }
 
+        if ($this->stageStart === $this->stageEnd) {
+            if (Meal::LUNCH === $this->firstMeal && Meal::BREAKFAST === $this->lastMeal) {
+                $context->buildViolation('Tu ne peux pas repartir avant même d\'être arrivé.')
+                    ->addViolation();
+            } elseif (Meal::DINNER === $this->firstMeal && Meal::DINNER !== $this->lastMeal) {
+                $context->buildViolation('Tu ne peux pas repartir avant même d\'être arrivé.')
+                    ->addViolation();
+            }
+        }
+
         foreach ($this->getBookedStages() as $stage) {
             $availability = $stage->getAvailability();
             if (!$availability->isEnoughForRegistration($this->registration)) {

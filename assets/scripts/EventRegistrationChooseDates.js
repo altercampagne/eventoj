@@ -102,20 +102,22 @@ class EventRegistrationChooseDates {
 
       // Same day !
       if (index == startIndex) {
-        if (this.firstMeal.value == 'dinner') {
-          this.disableAccordionItem(item);
-
+        if (this.firstMeal.value == 'breakfast') {
           return;
         }
+
         let breakfastButton = item.querySelector('button.choose-meal-button[data-meal="breakfast"]');
         if (breakfastButton != null) {
           breakfastButton.classList.add('d-none');
         }
+
         if (this.firstMeal.value == 'lunch') {
-          let lunchButton = item.querySelector('button.choose-meal-button[data-meal="lunch"]');
-          if (lunchButton != null) {
-            lunchButton.classList.add('d-none');
-          }
+          return;
+        }
+
+        let lunchButton = item.querySelector('button.choose-meal-button[data-meal="lunch"]');
+        if (lunchButton != null) {
+          lunchButton.classList.add('d-none');
         }
 
         return;
