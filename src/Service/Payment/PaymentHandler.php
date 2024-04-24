@@ -26,6 +26,16 @@ final readonly class PaymentHandler
      */
     public function initiatePayment(Payment $payment): string
     {
+        $this->em->persist($payment);
+
+        $returnUrl = $this->urlGenerator->generate('payment_callback_return', ['id' => (string) $payment->getId(), 'code' => 'succeeded'], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        if (0 === $payment->getAmount()) {
+            $this->em->flush();
+
+            return $returnUrl;
+        }
+
         $payer = $payment->getPayer();
 
         $initCheckoutResponse = $this->helloassoClient->checkout->create((new InitCheckoutBody())
@@ -34,7 +44,7 @@ final readonly class PaymentHandler
             ->setItemName($this->getHelloassoItemName($payment))
             ->setBackUrl($this->urlGenerator->generate('payment_callback_back', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
             ->setErrorUrl($this->urlGenerator->generate('payment_callback_error', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
-            ->setReturnUrl($this->urlGenerator->generate('payment_callback_return', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
+            ->setReturnUrl($returnUrl)
             ->setPayer(
                 (new CheckoutPayer())
                     ->setFirstName($payer->getFirstName())
@@ -52,7 +62,6 @@ final readonly class PaymentHandler
 
         $payment->setHelloassoCheckoutIntentId((string) $initCheckoutResponse->getId());
 
-        $this->em->persist($payment);
         $this->em->flush();
 
         return $initCheckoutResponse->getRedirectUrl();
@@ -60,6 +69,10 @@ final readonly class PaymentHandler
 
     public function isPaymentSuccessful(Payment $payment): bool
     {
+        if (0 === $payment->getAmount()) {
+            return true;
+        }
+
         $checkoutIntent = $this->helloassoClient->checkout->retrieve((int) $payment->getHelloassoCheckoutIntentId());
 
         return null !== $checkoutIntent->getOrder();

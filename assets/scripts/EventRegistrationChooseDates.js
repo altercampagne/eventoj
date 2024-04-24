@@ -17,9 +17,6 @@ class EventRegistrationChooseDates {
 
     this.daysOfPresenceElement = document.querySelector('#event-registration-days-of-presence');
 
-    this.updateSelectEnd = this.updateSelectEnd.bind(this)
-    this.updateNumberOfDays = this.updateNumberOfDays.bind(this)
-
     this.selectStart.addEventListener('change', this.updateSelectEnd);
 
     document.querySelectorAll('div#stageStartModal button[data-stage]').forEach((element) => {
@@ -60,7 +57,7 @@ class EventRegistrationChooseDates {
     // If the selected start date is after the current end date, we put an end
     // date 4 days after the start date (of possible, otherwise we select the
     // latest available date)
-    if(this.availableOptions.indexOf(this.selectEnd.value) <= startIndex) {
+    if(this.availableOptions.indexOf(this.selectEnd.value) < startIndex) {
       let endIndex = startIndex + 4;
       if (endIndex > this.selectEnd.options.length - 1) {
         endIndex = this.selectEnd.options.length - 1;
@@ -84,8 +81,10 @@ class EventRegistrationChooseDates {
     // - days after a complete stage
     Array.prototype.forEach.call(this.availableOptions, (option) => {
       let item = modal.querySelector('div.accordion-item[data-stage="'+option+'"]');
-
       let index = this.availableOptions.indexOf(option);
+
+      this.enableAccordionItem(item);
+
       // The option is BEFORE the stageStart
       if (index < startIndex) {
         this.disableAccordionItem(item);
@@ -95,6 +94,7 @@ class EventRegistrationChooseDates {
 
       // Already registered
       if (item.dataset.confirmed == 1) {
+        disableNextStages = true;
         this.disableAccordionItem(item);
 
         return;
@@ -107,9 +107,15 @@ class EventRegistrationChooseDates {
 
           return;
         }
-        item.querySelector('button.choose-meal-button[data-meal="breakfast"]').classList.add('d-none');
+        let breakfastButton = item.querySelector('button.choose-meal-button[data-meal="breakfast"]');
+        if (breakfastButton != null) {
+          breakfastButton.classList.add('d-none');
+        }
         if (this.firstMeal.value == 'lunch') {
-          item.querySelector('button.choose-meal-button[data-meal="lunch"]').classList.add('d-none');
+          let lunchButton = item.querySelector('button.choose-meal-button[data-meal="lunch"]');
+          if (lunchButton != null) {
+            lunchButton.classList.add('d-none');
+          }
         }
 
         return;
@@ -129,8 +135,6 @@ class EventRegistrationChooseDates {
 
         return;
       }
-
-      this.enableAccordionItem(item);
     })
 
     this.updateNumberOfDays();

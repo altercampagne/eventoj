@@ -50,6 +50,9 @@ final readonly class PaymentSynchronizer
         if (!$payment->isApproved() && !$payment->isRefunded()) {
             return false;
         }
+        if (0 === $payment->getAmount()) {
+            return false;
+        }
 
         if (null === $registration = $payment->getRegistration()) {
             return true;

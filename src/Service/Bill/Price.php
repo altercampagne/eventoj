@@ -24,9 +24,15 @@ final readonly class Price
         $this->breakEvenAmount = (int) round($breakEvenAmount / 100) * 100;
         $this->supportAmount = (int) round($supportAmount / 100) * 100;
 
-        $this->minimumAmountPerDay = (int) round($minimumAmount / $days);
-        $this->breakEvenAmountPerDay = (int) round($breakEvenAmount / $days);
-        $this->supportAmountPerDay = (int) round($supportAmount / $days);
+        if (0 < $days) {
+            $this->minimumAmountPerDay = (int) round($minimumAmount / $days);
+            $this->breakEvenAmountPerDay = (int) round($breakEvenAmount / $days);
+            $this->supportAmountPerDay = (int) round($supportAmount / $days);
+        } else {
+            $this->minimumAmountPerDay = 0;
+            $this->breakEvenAmountPerDay = 0;
+            $this->supportAmountPerDay = 0;
+        }
     }
 
     public static function fixed(float $amount, float $days): self
