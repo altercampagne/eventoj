@@ -3,4 +3,20 @@
 {% set title = 'Dashboard' %}
 
 {% block main %}
+    <div class="row">
+        {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_LIST').value) %}
+            <div class="col-12 col-md-4">
+                <h2 class="text-center">Évènements à venir</h2>
+                {% for event in events %}
+                    <div class="mb-3">
+                        {{ include('admin/_cards/event.html.twig', { event: event }, with_context=false) }}
+                    </div>
+                {% else %}
+                    <div class="text-center">
+                        Aucun évènement prévu pour le moment...
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
