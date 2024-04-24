@@ -3,6 +3,7 @@ import '@fortawesome/fontawesome-free'
 import '@fortawesome/fontawesome-free/css/all.css'
 import './styles/app.scss'
 
+import './scripts/Map.js'
 import './scripts/EventRegistrationBikeSelector.js'
 import './scripts/EventRegistrationChooseDates.js'
 import './scripts/EventRegistrationChoosePrice.js'

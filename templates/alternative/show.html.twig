@@ -42,6 +42,18 @@
 
                 <div class="bg-white p-3 rounded border border-secondary-outline">
                     <b>Adresse :</b> {{ alternative.address }}
+                    {% if alternative.address.isGeocoded %}
+                        <div
+                            class="map mt-3"
+                            data-latitude="{{ alternative.address.latitude }}"
+                            data-longitude="{{ alternative.address.longitude }}"
+                            style="height: 350px"
+                            data-tooltip="<b>{{ alternative.name }}</b>"
+                        ></div>
+                        <div class="alert alert-warning mt-1 p-2">
+                            <small>⚠️  La localisation est indicative et peut ne pas être très précise.</small>
+                        </div>
+                    {% endif %}
                 </div>
 
                 {% if alternative.stations|length > 0 %}
