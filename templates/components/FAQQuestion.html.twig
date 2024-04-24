@@ -8,7 +8,7 @@
 </button>
 
 <div class="modal fade" id="question-{{ this.question.id }}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-danger-outline">
                 <h5 class="modal-title">{{ this.question.question }}</h5>
@@ -17,6 +17,13 @@
             <div class="modal-body">
                 {{ this.question.answer|raw }}
             </div>
+            {% if is_granted(constant('App\\Admin\\Security\\Permission::QUESTION_UPDATE').value, this.question) %}
+                <div class="modal-footer d-block">
+                    <div class="d-grid gap-2">
+                        <a href="{{ path('admin_question_update', { slug: this.question.slug }) }}" class="btn btn-warning">Modifier cette réponse</a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
