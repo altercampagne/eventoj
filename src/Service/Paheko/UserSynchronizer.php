@@ -57,7 +57,24 @@ final class UserSynchronizer
             throw new \LogicException('Given user does not have a paheko ID!');
         }
 
-        $this->pahekoClient->updateUser($pahekoId, $this->getUserData($user));
+        try {
+            $this->pahekoClient->updateUser($pahekoId, $this->getUserData($user));
+        } catch (ClientException $e) {
+            if (403 === $e->getCode()) {
+                $this->logger->info("Failed to update user {$user->getId()}", [
+                    'user' => $user,
+                ]);
+
+                // It looks like event with a token with admin privileges it's
+                // not possible to modify a member which have access to the
+                // configuration.
+                // As it's not possible to do anyhting against this, we
+                // silently ignore this "error".
+                return;
+            }
+
+            throw $e;
+        }
     }
 
     private function findExistingUserId(User $user): ?string
