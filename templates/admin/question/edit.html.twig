@@ -6,6 +6,24 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10">
+                <div class="alert alert-danger">
+                    Les questions / réponses de la FAQ se veulent <b>réutilisables</b> et <b>communes à tous les évènements</b>.<br /><br />
+                    <u>Voici quelques consignes à respecter :</u>
+                    <ul>
+                        <li>On utilise <b>le tutoiement</b>, comme sur le reste du site</li>
+                        <li>On utilise <b>l'écriture inclusive</b>, comme sur le reste du site (idéalement avec des points médians
+                            <twig:Admin:ButtonCopy value="·" tooltip="Copier le point médian">
+                                <q>· {{ parent() }}</q>
+                            </twig:Admin:ButtonCopy>
+                            )
+                        </li>
+                        <li>
+                            On <b>évite les dates</b> qui ne seront valides que pour une seule année / un seul évènement (typiquement "<i>les inscriptions ouvrent le xxx</i>", "<i>les remboursements se font jusqu'au xxx</i>"), on leur préfère des équivalents plus vagues (typiquement "<i>les inscriptions ouvrent généralement début mai</i>", "<i>les remboursements peuvent se faire jusqu'à 15 jours avant le début de l'évènement</i>").
+                        </li>
+                        <li>Dans la mesure du possible, on réponds à la question pour <b>tous les types d'évènements</b> (pas de discrimination).</li>
+                    </ul>
+                </div>
+
                 {{ form_errors(form) }}
 
                 {{ form_start(form) }}
