@@ -21,4 +21,22 @@ enum Meal: string implements TranslatableInterface
             self::DINNER => 'Diner',
         };
     }
+
+    public function isBefore(Meal $meal): bool
+    {
+        return match ($this) {
+            self::BREAKFAST => Meal::BREAKFAST !== $meal,
+            self::LUNCH => Meal::DINNER === $meal,
+            self::DINNER => false,
+        };
+    }
+
+    public function isAfter(Meal $meal): bool
+    {
+        return match ($this) {
+            self::BREAKFAST => false,
+            self::LUNCH => Meal::BREAKFAST === $meal,
+            self::DINNER => Meal::DINNER !== $meal,
+        };
+    }
 }
