@@ -1,0 +1,36 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}La carte des alternatives{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="mb-3 text-center">
+                    <h1>La carte des alternatives</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-4 mt-md-5">
+            <div class="bg-white p-3 rounded border border-secondary-outline">
+                <div
+                    id="alternatives-map"
+                    style="height: 650px"
+                >
+                    <ul class="d-none">
+                        {% for alternative in alternatives|filter(a => a.address.isGeocoded) %}
+                            <li
+                                data-latitude="{{ alternative.address.latitude }}"
+                                data-longitude="{{ alternative.address.longitude }}"
+                                data-events="{{ alternative.events|map(e => e.slug)|join(',') }}"
+                            >
+                                {{ alternative.name }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
