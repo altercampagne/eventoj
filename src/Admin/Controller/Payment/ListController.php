@@ -7,6 +7,9 @@ namespace App\Admin\Controller\Payment;
 use App\Admin\Security\Permission;
 use App\Entity\Payment;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,8 +27,27 @@ class ListController extends AbstractController
 
     public function __invoke(Request $request): Response
     {
+        $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            new QueryAdapter($this->getQueryBuilder()),
+            (int) $request->query->getInt('page', 1),
+            25
+        );
+
         return $this->render('admin/payment/list.html.twig', [
-            'payments' => $this->em->getRepository(Payment::class)->findBy([], ['createdAt' => 'DESC']),
+            'pager' => $pager,
         ]);
+    }
+
+    private function getQueryBuilder(): QueryBuilder
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb
+            ->select('p, m')
+            ->from(Payment::class, 'p')
+            ->leftJoin('p.payer', 'm')
+            ->orderBy('p.createdAt', 'DESC')
+        ;
+
+        return $qb;
     }
 }

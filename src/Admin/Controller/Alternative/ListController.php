@@ -7,7 +7,11 @@ namespace App\Admin\Controller\Alternative;
 use App\Admin\Security\Permission;
 use App\Entity\Alternative;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -21,10 +25,30 @@ class ListController extends AbstractController
     ) {
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
+        $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            new QueryAdapter($this->getQueryBuilder()),
+            (int) $request->query->getInt('page', 1),
+            25
+        );
+
         return $this->render('admin/alternative/list.html.twig', [
-            'alternatives' => $this->em->getRepository(Alternative::class)->findAllJoinedToEvents(),
+            'pager' => $pager,
         ]);
+    }
+
+    private function getQueryBuilder(): QueryBuilder
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb
+            ->select('a, s, e')
+            ->from(Alternative::class, 'a')
+            ->leftJoin('a.stages', 's')
+            ->leftJoin('s.event', 'e')
+            ->orderBy('a.name', 'ASC')
+        ;
+
+        return $qb;
     }
 }

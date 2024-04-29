@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for payment in payments %}
+            {% for payment in pager %}
                 <tr data-href="{{ path('admin_payment_show', { id: payment.id }) }}">
                     <td>
                         {{ payment.payer.fullName }}
@@ -27,4 +27,6 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <twig:Admin:Pagination pager="{{ pager }}" />
 {% endblock %}

@@ -7,7 +7,11 @@ namespace App\Admin\Controller\Membership;
 use App\Admin\Security\Permission;
 use App\Entity\Membership;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -21,7 +25,20 @@ class ListController extends AbstractController
     ) {
     }
 
-    public function __invoke(?string $slug = null): Response
+    public function __invoke(Request $request): Response
+    {
+        $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            new QueryAdapter($this->getQueryBuilder()),
+            (int) $request->query->getInt('page', 1),
+            25
+        );
+
+        return $this->render('admin/membership/list.html.twig', [
+            'pager' => $pager,
+        ]);
+    }
+
+    private function getQueryBuilder(): QueryBuilder
     {
         $qb = $this->em->createQueryBuilder();
         $qb
@@ -34,8 +51,6 @@ class ListController extends AbstractController
             ->setParameter('now', new \DateTimeImmutable())
         ;
 
-        return $this->render('admin/membership/list.html.twig', [
-            'memberships' => $qb->getQuery()->getResult(),
-        ]);
+        return $qb;
     }
 }

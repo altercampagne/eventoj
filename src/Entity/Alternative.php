@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\AlternativeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\UuidV4;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: AlternativeRepository::class)]
+#[ORM\Entity]
 #[ORM\Table(name: '`alternative`')]
 #[UniqueEntity(fields: ['slug'], message: 'Il y a déjà une alternative avec ce slug.')]
 #[ORM\Index(name: 'idx_alternative_slug', fields: ['slug'])]
