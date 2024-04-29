@@ -34,5 +34,6 @@
     </listeners>
 
     <extensions>
+        <extension class="App\Bridge\PhpUnit\RouteCollectionCoverage\Extension" />
     </extensions>
 </phpunit>
