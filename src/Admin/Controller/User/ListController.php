@@ -44,6 +44,7 @@ class ListController extends AbstractController
         $qb
             ->select('u')
             ->from(User::class, 'u')
+            ->orderBy('u.createdAt', 'DESC')
         ;
 
         return $qb;
