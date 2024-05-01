@@ -5,6 +5,9 @@ twig:
     paths:
         '%kernel.project_dir%/assets/styles': styles
 
+    date:
+      timezone: 'Europe/Paris'
+
     globals:
         pahekoBaseUri: '%env(PAHEKO_BASE_URI)%'
         associationPhoneNumber: '%env(ASSOCIATION_PHONE_NUMBER)%'
