@@ -126,20 +126,24 @@ final readonly class PaymentSynchronizer
             $mainLabel = "{$payment->getPayer()->getFullname()} pour {$event->getName()}";
             $label = $registration->countPeople() > 1 ? 'Inscriptions' : 'Inscription';
 
-            $lines[] = [
-                'account' => 706, // Prestation de services
-                'credit' => $payment->getRegistrationOnlyAmount() / 100,
-                'debit' => 0,
-                'label' => $label,
-                'id_project' => $event->getPahekoProjectId(),
-            ];
-            $lines[] = [
-                'account' => $this->pahekoHelloassoAccountCode,
-                'credit' => 0,
-                'debit' => $payment->getRegistrationOnlyAmount() / 100,
-                'label' => $label,
-                'id_project' => $event->getPahekoProjectId(),
-            ];
+            // This can happen if someone register for before or after and pay its membership.
+            // We have a payment linked to a registration with a null registration only amount
+            if (0 < $payment->getRegistrationOnlyAmount()) {
+                $lines[] = [
+                    'account' => 706, // Prestation de services
+                    'credit' => $payment->getRegistrationOnlyAmount() / 100,
+                    'debit' => 0,
+                    'label' => $label,
+                    'id_project' => $event->getPahekoProjectId(),
+                ];
+                $lines[] = [
+                    'account' => $this->pahekoHelloassoAccountCode,
+                    'credit' => 0,
+                    'debit' => $payment->getRegistrationOnlyAmount() / 100,
+                    'label' => $label,
+                    'id_project' => $event->getPahekoProjectId(),
+                ];
+            }
         } else {
             $mainLabel = "{$payment->getPayer()->getFullname()} pour une adhésion";
         }
