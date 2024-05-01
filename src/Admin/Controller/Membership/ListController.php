@@ -49,6 +49,7 @@ class ListController extends AbstractController
             ->leftJoin('c.user', 'cu')
             ->andWhere('m.endAt >= :now')
             ->setParameter('now', new \DateTimeImmutable())
+            ->orderBy('m.createdAt', 'DESC')
         ;
 
         return $qb;
