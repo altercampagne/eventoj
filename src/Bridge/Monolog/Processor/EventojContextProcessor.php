@@ -18,7 +18,7 @@ final readonly class EventojContextProcessor implements ProcessorInterface
     public function __invoke(LogRecord $record): LogRecord
     {
         if (null !== $user = $this->security->getUser()) {
-            $record->extra['user'] = $user->getUserIdentifier();
+            $record->extra['current_user_identifier'] = $user->getUserIdentifier();
         }
 
         return $record;

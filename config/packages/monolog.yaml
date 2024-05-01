@@ -7,6 +7,8 @@ services:
         tags: { name: monolog.processor, handler: sentry }
     App\Bridge\Monolog\Processor\EventojContextProcessor:
         tags: { name: monolog.processor }
+    App\Bridge\Monolog\Processor\EntitiesProcessor:
+        tags: { name: monolog.processor }
 
 when@dev:
     monolog:
