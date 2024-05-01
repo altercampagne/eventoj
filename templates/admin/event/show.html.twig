@@ -23,6 +23,9 @@
                                 -
                             {% endif %}
                         </li>
+                        <li class="list-group-item">
+                            {{ event.description|striptags|u.replace('&nbsp;', ' ').truncate(500, '...', false) }}
+                        </li>
                         {% if event.isPublished %}
                             <li class="list-group-item">
                                 <i class="fa-solid fa-clock fa-fw me-1"></i>
