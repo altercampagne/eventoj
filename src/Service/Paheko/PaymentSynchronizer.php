@@ -9,6 +9,7 @@ use App\Service\Paheko\Client\PahekoClientInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -77,7 +78,16 @@ final readonly class PaymentSynchronizer
             return;
         }
 
-        $pahekoPayment = $this->pahekoClient->createPayment($this->getPaymentData($payment));
+        try {
+            $pahekoPayment = $this->pahekoClient->createPayment($this->getPaymentData($payment));
+        } catch (ClientException $e) {
+            $this->logger->error('Fail to create payment on Paheko', [
+                'payment' => $payment,
+                'response' => $e->getResponse()->toArray(false),
+            ]);
+
+            throw $e;
+        }
         /* @phpstan-ignore-next-line */
         $id = (string) $pahekoPayment['id'];
 
