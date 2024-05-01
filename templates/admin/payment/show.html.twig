@@ -31,20 +31,6 @@
                         <li class="list-group-item">
                             Helloasso ID : {{ payment.helloassoCheckoutIntentId }}
                         </li>
-                        <li class="list-group-item">
-                            Paheko payment ID : {{ payment.pahekoPaymentId|default('-') }}
-                            {% if payment.pahekoPaymentId is not null %}
-                                <a class="small" href="{{ pahekoBaseUri }}/admin/acc/transactions/details.php?id={{ payment.pahekoPaymentId }}">(voir la transaction)</a>
-                            {% endif %}
-                        </li>
-                        {% if payment.isRefunded %}
-                            <li class="list-group-item">
-                                Paheko refund ID : {{ payment.pahekoRefundId|default('-') }}
-                                {% if payment.pahekoRefundId is not null %}
-                                    <a class="small" href="{{ pahekoBaseUri }}/admin/acc/transactions/details.php?id={{ payment.pahekoRefundId }}">(voir la transaction)</a>
-                                {% endif %}
-                            </li>
-                        {% endif %}
                     </ul>
                 {% endblock %}
 

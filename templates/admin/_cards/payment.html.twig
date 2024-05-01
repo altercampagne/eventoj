@@ -15,16 +15,48 @@
     {% endblock %}
 
     {% block content %}
-        {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
-            <ul class="list-group">
+        <ul class="list-group">
+            {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
                 <li class="list-group-item bg-light">
                     <i class="fa-solid fa-hashtag fa-fw me-1"></i>
                     <twig:Admin:ButtonCopy value="{{ payment.id }}" tooltip="Copier l'ID">
                         <q>{{ payment.id }} {{ parent() }}</q>
                     </twig:Admin:ButtonCopy>
                 </li>
-            </ul>
-        {% endif %}
+            {% endif %}
+            {% if is_granted(constant('App\\Admin\\Security\\Permission::SHOW_PAHEKO_DETAILS').value, payment) %}
+                <li class="list-group-item">
+                    <i class="fa-solid fa-piggy-bank fa-fw me-1" data-bs-toggle="tooltip" title="Informations Paheko"></i>
+                    Paiement :
+                    {% if payment.pahekoPaymentId is null %}
+                        -
+                    {% else %}
+                        <twig:Admin:ButtonCopy value="{{ payment.pahekoPaymentId }}" tooltip="Copier l'identifiant Paheko">
+                            <q>{{ payment.pahekoPaymentId }} {{ parent() }}</q>
+                        </twig:Admin:ButtonCopy>
+
+                        <a class="small" href="{{ pahekoBaseUri }}/admin/acc/transactions/details.php?id={{ payment.pahekoPaymentId }}" data-bs-toggle="tooltip" title="Voir le paiement dans Paheko" target="_blank">
+                            <i class="fa-solid fa-up-right-from-square fa-fw"></i>
+                        </a>
+                    {% endif %}
+
+                    {% if payment.isRefunded %}
+                        / Remboursement :
+                        {% if payment.pahekoRefundId is null %}
+                            -
+                        {% else %}
+                            <twig:Admin:ButtonCopy value="{{ payment.pahekoRefundId }}" tooltip="Copier l'identifiant Paheko">
+                                <q>{{ payment.pahekoRefundId }} {{ parent() }}</q>
+                            </twig:Admin:ButtonCopy>
+
+                            <a class="small" href="{{ pahekoBaseUri }}/admin/acc/transactions/details.php?id={{ payment.pahekoRefundId }}" data-bs-toggle="tooltip" title="Voir le remboursement dans Paheko" target="_blank">
+                                <i class="fa-solid fa-up-right-from-square fa-fw"></i>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </li>
+            {% endif %}
+        </ul>
     {% endblock %}
 
     {% block footer %}

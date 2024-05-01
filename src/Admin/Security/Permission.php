@@ -8,6 +8,7 @@ enum Permission: string
 {
     case ADMIN_ACCESS = 'admin_access';
     case DEBUG = 'debug';
+    case SHOW_PAHEKO_DETAILS = 'show_paheko_details';
 
     case ALTERNATIVE_LIST = 'alternative.list';
     case ALTERNATIVE_VIEW = 'alternative.view';
