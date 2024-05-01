@@ -52,7 +52,7 @@ class PaymentCallbackController extends AbstractController
         }
 
         if ('succeeded' !== $code = $request->query->getString('code')) {
-            $this->logger->error('Payment have been refused.', [
+            $this->logger->info('Payment have been refused.', [
                 'payment' => $payment,
                 'code' => $code,
             ]);
