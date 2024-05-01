@@ -79,6 +79,14 @@
                         </li>
                     {% endif %}
 
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                        <li class="nav-item">
+                            <a href="{{ path('admin_debug') }}" class="nav-link{% if current_route == 'admin_debug' %} active{% endif %}" aria-current="page">
+                                Debug
+                            </a>
+                        </li>
+                    {% endif %}
+
                 </ul>
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

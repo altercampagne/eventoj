@@ -1,0 +1,13 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = 'Dashboard' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col">
+            <b>Now: </b>{{ now|format_datetime('full', 'full') }}<br />
+            <b>Timezone: </b>{{ timezone }}<br />
+            <b>Locale:</b> {{ app.locale }}<br />
+        </div>
+    </div>
+{% endblock %}
