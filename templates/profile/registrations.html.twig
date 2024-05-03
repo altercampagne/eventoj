@@ -16,6 +16,11 @@
                 après le {{ registration.stageRegistrationEnd.firstMeal|trans|lower }}
                 .
             </p>
+            {% if registration.neededBike > 0 %}
+                <p class="card-text">
+                    Avec <b>{{ registration.neededBike }} vélo{{ registration.neededBike > 1 ? 's' }} de prêt.
+                </p>
+            {% endif %}
             {% if registration.companions|length > 0 %}
                 <b>Tes compagnon·es :</b>
                 <ul>
