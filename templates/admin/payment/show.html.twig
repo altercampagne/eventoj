@@ -38,7 +38,7 @@
                         </li>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) and checkoutIntent is not null %}
                             <li class="list-group-item bg-light">
-                                {% if checkoutIntent.order is not defined %}
+                                {% if checkoutIntent.order is null %}
                                     Pas d'order dans le checkoutIntent, le paiement n'est donc pas validé.
                                 {% else %}
                                     Order <twig:Admin:QuoteWithButtonCopy value="{{ checkoutIntent.order.id }}" tooltip="Copier l'ID de l'Order Helloasso" /> contient {{ checkoutIntent.order.payments|length }} paiement{{ checkoutIntent.order.payments|length > 1 ? 's' }} :
