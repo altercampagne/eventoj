@@ -30,7 +30,10 @@
         {% endif %}
 
         <div class="card-body border-bottom">
-            Inscription de <b>{{ registration.daysOfPresence }} jours</b> entre le <b>{{ arrivalDate }}</b> et le <b>{{ departureDate }}</b>.
+            Inscription de <b>{{ registration.daysOfPresence }} jours</b> entre le <b>{{ arrivalDate }}</b> et le <b>{{ departureDate }}</b>
+            <span class="text-secondary" data-bs-toggle="tooltip" title="{{ registration.neededBike }} vélo{{ registration.neededBike > 1 ? 's' }} de prêt pour cette réservation">
+                ({{ registration.neededBike }} <i class="fa-solid fa-bicycle"></i>)
+            </span>.
         </div>
 
         <ul class="list-group">
