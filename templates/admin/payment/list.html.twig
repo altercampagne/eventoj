@@ -1,6 +1,6 @@
 {% extends 'admin/_base.html.twig' %}
 
-{% set title = 'Tous les paiements' %}
+{% set title = 'Tous les paiements (' ~ pager.nbResults ~ ')' %}
 
 {% block main %}
     <table class="table table-hover">

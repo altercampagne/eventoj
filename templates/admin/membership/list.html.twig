@@ -1,6 +1,6 @@
 {% extends 'admin/_base.html.twig' %}
 
-{% set title = 'Tous les membres' %}
+{% set title = 'Tous les membres (' ~ pager.nbResults ~ ')' %}
 
 {% block main %}
     <div class="alert alert-warning">
