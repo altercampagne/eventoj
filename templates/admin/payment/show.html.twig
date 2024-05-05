@@ -23,14 +23,35 @@
                 </div>
             {% endif %}
 
-            {% embed 'admin/_cards/payment.html.twig' with { payment: payment } only %}
+            {% embed 'admin/_cards/payment.html.twig' with { payment: payment, checkoutIntent: checkoutIntent } only %}
                 {% block content %}
                     {{ parent() }}
 
                     <ul class="list-group">
                         <li class="list-group-item">
-                            Helloasso ID : {{ payment.helloassoCheckoutIntentId }}
+                            <i class="fa-solid fa-handshake-angle me-1"></i> Helloasso ID :
+                            {% if payment.helloassoCheckoutIntentId is null %}
+                                -
+                            {% else %}
+                                <twig:Admin:QuoteWithButtonCopy value="{{ payment.helloassoCheckoutIntentId }}" tooltip="Copier l'ID" />
+                            {% endif %}
                         </li>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) and checkoutIntent is not null %}
+                            <li class="list-group-item bg-light">
+                                {% if checkoutIntent.order is not defined %}
+                                    Pas d'order dans le checkoutIntent, le paiement n'est donc pas validé.
+                                {% else %}
+                                    Order <twig:Admin:QuoteWithButtonCopy value="{{ checkoutIntent.order.id }}" tooltip="Copier l'ID de l'Order Helloasso" /> contient {{ checkoutIntent.order.payments|length }} paiement{{ checkoutIntent.order.payments|length > 1 ? 's' }} :
+                                    <ul>
+                                        {% for helloassoPayment in checkoutIntent.order.payments %}
+                                            <li>
+                                                Paiement <twig:Admin:QuoteWithButtonCopy value="{{ helloassoPayment.id }}" tooltip="Copier l'ID du Payment Helloasso" /> de {{ helloassoPayment.amount|format_price }}: <b>{{ helloassoPayment.state.value }}</b>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endif %}
                     </ul>
                 {% endblock %}
 

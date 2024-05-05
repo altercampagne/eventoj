@@ -6,11 +6,11 @@ USAGE example:
     label="Publier l'évènement"
     tooltip="Modification définitive !"
     btnClass="btn btn-warning"
-    isGranted="{{ is_granted('ROLE_PUBLISHER') }}"
+    enabled="{{ is_granted('ROLE_PUBLISHER') }}"
 />
 #}
 
-{% set isGranted = isGranted|default(true) %}
+{% set enabled = enabled is defined ? enabled : true %}
 
 {% if tooltip is defined %}
     {% set tooltipConfig = ' data-bs-toggle="tooltip" title="'~tooltip~'"' %}
@@ -19,17 +19,17 @@ USAGE example:
 {% set btnClass = btnClass|default('btn btn-danger') %}
 {% set form_id = 'form-' ~ random() %}
 
-{% if not isGranted %}
-    <a href="" class="{{ btnClass }} {% if not isGranted %} disabled{% endif %}"{{ tooltipConfig|default(null)|raw }}>
+{% if not enabled %}
+    <a href="" class="{{ btnClass }} {% if not enabled %} disabled{% endif %}"{{ tooltipConfig|default(null)|raw }}>
 {% else %}
-    <button type="submit" class="{{ btnClass }}"{% if not isGranted %} disabled{% endif %} form="{{ form_id }}"{{ tooltipConfig|default(null)|raw }}>
+    <button type="submit" class="{{ btnClass }}"{% if not enabled %} disabled{% endif %} form="{{ form_id }}"{{ tooltipConfig|default(null)|raw }}>
 {% endif %}
 
 {% block content %}
     {{ label|raw }}
 {% endblock %}
 
-{% if not isGranted %}
+{% if not enabled %}
     </a>
 {% else %}
     </button>

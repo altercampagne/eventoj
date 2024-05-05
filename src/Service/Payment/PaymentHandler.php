@@ -7,6 +7,7 @@ namespace App\Service\Payment;
 use App\Entity\Payment;
 use Doctrine\ORM\EntityManagerInterface;
 use Helloasso\HelloassoClient;
+use Helloasso\Models\Carts\CheckoutIntentResponse;
 use Helloasso\Models\Carts\CheckoutPayer;
 use Helloasso\Models\Carts\InitCheckoutBody;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -67,15 +68,22 @@ final readonly class PaymentHandler
         return $initCheckoutResponse->getRedirectUrl();
     }
 
+    public function getCheckoutIntent(Payment $payment): CheckoutIntentResponse
+    {
+        if (null === $id = $payment->getHelloassoCheckoutIntentId()) {
+            throw new \RuntimeException('Given payment does not contains an Helloasso checkout intent ID.');
+        }
+
+        return $this->helloassoClient->checkout->retrieve((int) $id);
+    }
+
     public function isPaymentSuccessful(Payment $payment): bool
     {
         if (0 === $payment->getAmount()) {
             return true;
         }
 
-        $checkoutIntent = $this->helloassoClient->checkout->retrieve((int) $payment->getHelloassoCheckoutIntentId());
-
-        return null !== $checkoutIntent->getOrder();
+        return null !== $this->getCheckoutIntent($payment)->getOrder();
     }
 
     public function handlePaymentSuccess(Payment $payment): void
