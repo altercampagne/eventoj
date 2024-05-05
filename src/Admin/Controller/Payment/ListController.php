@@ -6,6 +6,7 @@ namespace App\Admin\Controller\Payment;
 
 use App\Admin\Security\Permission;
 use App\Entity\Payment;
+use App\Entity\PaymentStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
@@ -14,10 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\EnumRequirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::PAYMENT_LIST->value)]
-#[Route('/payments', name: 'admin_payment_list')]
+#[Route('/payments/{status}', name: 'admin_payment_list', requirements: ['status' => new EnumRequirement(PaymentStatus::class)])]
 class ListController extends AbstractController
 {
     public function __construct(
@@ -25,20 +27,21 @@ class ListController extends AbstractController
     ) {
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, ?PaymentStatus $status = null): Response
     {
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
-            new QueryAdapter($this->getQueryBuilder()),
+            new QueryAdapter($this->getQueryBuilder($status)),
             (int) $request->query->getInt('page', 1),
             25
         );
 
         return $this->render('admin/payment/list.html.twig', [
             'pager' => $pager,
+            'selectedStatus' => $status,
         ]);
     }
 
-    private function getQueryBuilder(): QueryBuilder
+    private function getQueryBuilder(?PaymentStatus $status = null): QueryBuilder
     {
         $qb = $this->em->createQueryBuilder();
         $qb
@@ -47,6 +50,13 @@ class ListController extends AbstractController
             ->leftJoin('p.payer', 'm')
             ->orderBy('p.createdAt', 'DESC')
         ;
+
+        if (null !== $status) {
+            $qb
+                ->andWhere('p.status = :status')
+                ->setParameter('status', $status)
+            ;
+        }
 
         return $qb;
     }

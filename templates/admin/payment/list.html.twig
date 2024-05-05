@@ -1,8 +1,27 @@
 {% extends 'admin/_base.html.twig' %}
 
-{% set title = 'Tous les paiements (' ~ pager.nbResults ~ ')' %}
+{% if selectedStatus is null %}
+    {% set title = 'Tous les paiements (' ~ pager.nbResults ~ ')' %}
+{% else %}
+    {% set title = 'Paiements ' ~ selectedStatus|trans|lower ~ ' (' ~ pager.nbResults ~ ')' %}
+{% endif %}
 
 {% block main %}
+    <div class="row mb-3">
+        <div class="col d-flex justify-content-end align-items-center">
+            Filtrer les paiements :
+            <div class="btn-group ms-2" role="group" aria-label="Filtrer les paiements par status">
+                <a href="{{ path('admin_payment_list') }}" class="btn btn-outline-primary{{ selectedStatus is null ? ' active' }}">
+                    Tous
+                </a>
+                {% for status in enum('\\App\\Entity\\PaymentStatus').cases() %}
+                    <a href="{{ path('admin_payment_list', { status: status.value }) }}" class="btn btn-outline-primary{{ status == selectedStatus ? ' active' }}">
+                        {{ status|trans }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
     <table class="table table-hover">
         <thead>
             <tr>
