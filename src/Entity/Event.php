@@ -563,4 +563,14 @@ class Event
     {
         return $this->registrations;
     }
+
+    /**
+     * @return Collection<int, Registration>
+     */
+    public function getConfirmedRegistrations(): Collection
+    {
+        return $this->registrations->filter(static function (Registration $registration): bool {
+            return $registration->isConfirmed();
+        });
+    }
 }

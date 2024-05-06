@@ -38,8 +38,8 @@
 
 {% block tab_content %}
     {% for stage in event.stages %}
-        {% set arrivals = event.registrations|filter(r => r.stageRegistrationStart.stage == stage) %}
-        {% set departures = event.registrations|filter(r => r.stageRegistrationEnd.stage == stage) %}
+        {% set arrivals = event.confirmedRegistrations|filter(r => r.stageRegistrationStart.stage == stage) %}
+        {% set departures = event.confirmedRegistrations|filter(r => r.stageRegistrationEnd.stage == stage) %}
 
         <div class="card mb-3">
             <div class="card-header">

@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for registration in event.registrations|filter(r => r.isConfirmed) %}
+            {% for registration in event.confirmedRegistrations %}
                 <tr data-href="{{ path('admin_registration_show', { id: registration.id }) }}">
                     <td>{{ registration.user.fullName }}</td>
                     <td>{{ registration.daysOfPresence }} jours</td>
