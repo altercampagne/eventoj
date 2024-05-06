@@ -19,9 +19,7 @@
             {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
                 <li class="list-group-item bg-light">
                     <i class="fa-solid fa-hashtag fa-fw me-1"></i>
-                    <twig:Admin:ButtonCopy value="{{ user.id }}" tooltip="Copier l'ID">
-                        <q>{{ user.id }} {{ parent() }}</q>
-                    </twig:Admin:ButtonCopy>
+                    <twig:Admin:ButtonCopyWithQuotedContent value="{{ user.id }}" tooltip="Copier l'ID" />
                 </li>
             {% endif %}
             {% if is_granted(constant('App\\Admin\\Security\\Permission::SHOW_PAHEKO_DETAILS').value, user) %}
@@ -31,9 +29,7 @@
                         {% if user.pahekoId is null %}
                             -
                         {% else %}
-                            <twig:Admin:ButtonCopy value="{{ user.pahekoId }}" tooltip="Copier l'identifiant Paheko">
-                                <q>{{ user.pahekoId }} {{ parent() }}</q>
-                            </twig:Admin:ButtonCopy>
+                            <twig:Admin:ButtonCopyWithQuotedContent value="{{ user.pahekoId }}" tooltip="Copier l'identifiant Paheko" />
                         {% endif %}
                     </div>
                     {% if user.pahekoId is not null %}

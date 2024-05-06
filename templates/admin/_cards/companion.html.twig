@@ -7,9 +7,7 @@
         {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
             <li class="list-group-item bg-light">
                 <i class="fa-solid fa-hashtag fa-fw me-1"></i>
-                <twig:Admin:ButtonCopy value="{{ companion.id }}" tooltip="Copier l'ID">
-                    <q>{{ companion.id }} {{ parent() }}</q>
-                </twig:Admin:ButtonCopy>
+                <twig:Admin:ButtonCopyWithQuotedContent value="{{ companion.id }}" tooltip="Copier l'ID" />
             </li>
         {% endif %}
 

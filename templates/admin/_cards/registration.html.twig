@@ -22,9 +22,7 @@
             <ul class="list-group">
                 <li class="list-group-item bg-light">
                     <i class="fa-solid fa-hashtag fa-fw me-1"></i>
-                    <twig:Admin:ButtonCopy value="{{ registration.id }}" tooltip="Copier l'ID">
-                        <q>{{ registration.id }} {{ parent() }}</q>
-                    </twig:Admin:ButtonCopy>
+                    <twig:Admin:ButtonCopyWithQuotedContent value="{{ registration.id }}" tooltip="Copier l'ID" />
                 </li>
             </ul>
         {% endif %}

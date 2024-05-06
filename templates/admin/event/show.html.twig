@@ -30,9 +30,7 @@
                                     {% if event.pahekoProjectId is null %}
                                         -
                                     {% else %}
-                                        <twig:Admin:ButtonCopy value="{{ event.pahekoProjectId }}" tooltip="Copier l'identifiant Paheko">
-                                            <q>{{ event.pahekoProjectId }} {{ parent() }}</q>
-                                        </twig:Admin:ButtonCopy>
+                                        <twig:Admin:ButtonCopyWithQuotedContent value="{{ event.pahekoProjectId }}" tooltip="Copier l'identifiant Paheko" />
                                     {% endif %}
                                 </div>
                                 {% if event.pahekoProjectId is not null %}

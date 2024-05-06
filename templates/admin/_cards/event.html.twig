@@ -12,12 +12,8 @@
             {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
                 <li class="list-group-item bg-light">
                     <i class="fa-solid fa-hashtag fa-fw me-1"></i>
-                    <twig:Admin:ButtonCopy value="{{ event.id }}" tooltip="Copier l'ID">
-                        <q>{{ event.id }} {{ parent() }}</q>
-                    </twig:Admin:ButtonCopy>
-                    <twig:Admin:ButtonCopy value="{{ event.slug }}" tooltip="Copier le slug">
-                        <q>{{ event.slug }} {{ parent() }}</q>
-                    </twig:Admin:ButtonCopy>
+                    <twig:Admin:ButtonCopyWithQuotedContent value="{{ event.id }}" tooltip="Copier l'ID" />
+                    <twig:Admin:ButtonCopyWithQuotedContent value="{{ event.slug }}" tooltip="Copier le slug" />
                 </li>
             {% endif %}
             <li class="list-group-item">
