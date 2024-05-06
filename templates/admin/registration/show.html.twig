@@ -45,6 +45,42 @@
                     Dernière mise à jour le <b>{{ registration.updatedAt|format_datetime('long', 'short') }}</b>.
                 </small>
             </div>
+
+            {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                <h3>Détails des étapes</h3>
+                <table class="table table-hover table-bordered">
+                    <tr class="table-secondary">
+                        <th scope="col">StageRegistration ID</th>
+                        <th scope="col">Stage ID</th>
+                        <th scope="col">Détail</th>
+                        <th scope="col">Breakfast</th>
+                        <th scope="col">Lunch</th>
+                        <th scope="col">Dinner</th>
+                    </tr>
+                    {% for stageRegistration in registration.stagesRegistrations %}
+                        <tr>
+                            <td>
+                                <twig:Admin:ButtonCopyWithQuotedContent value="{{ stageRegistration.id }}" tooltip="Copier l'ID" />
+                            </td>
+                            <td>
+                                <twig:Admin:ButtonCopyWithQuotedContent value="{{ stageRegistration.stage.id }}" tooltip="Copier l'ID" />
+                            </td>
+                            <td class="fw-bold">
+                                {{ stageRegistration.stage.date|format_date }}: {{ stageRegistration.stage.name }}
+                            </td>
+                            <td>
+                                <twig:Admin:IconBoolean value="{{ stageRegistration.presentForBreakfast }}" tooltip="Présence pour le petit-déjeuner" />
+                            </td>
+                            <td>
+                                <twig:Admin:IconBoolean value="{{ stageRegistration.presentForLunch }}" tooltip="Présence pour le déjeuner" />
+                            </td>
+                            <td>
+                                <twig:Admin:IconBoolean value="{{ stageRegistration.presentForDinner }}" tooltip="Présence pour le diner" />
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
         </div>
 
         <div class="col-4 border-start">
