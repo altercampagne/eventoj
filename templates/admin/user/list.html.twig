@@ -32,11 +32,7 @@
                     <td>{{ user.phoneNumber|phone_number_format }}</td>
                     {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
                         <td>
-                            {% if user.address.geocoded %}
-                                <i class="fa-solid fa-circle-check fa-fw text-sucess" date-toggle="tooltip" title="Adresse géocodée"></i>
-                            {% else %}
-                                <i class="fa-solid fa-circle-xmark fa-fw text-danger" date-toggle="tooltip" title="Adresse non géocodée"></i>
-                            {% endif %}
+                            <twig:Admin:IconBoolean value="{{ user.address.geocoded }}" tooltipTrue="Adresse géocodée" tooltipFalse="Adresse non géocodée" />
                         </td>
                     {% endif %}
                     <td>{{ user.birthDate|format_date }}</td>

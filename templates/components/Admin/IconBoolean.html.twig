@@ -1,17 +1,17 @@
 {% if value %}
     <i
         class="fa-solid fa-circle-check fa-fw text-success"
-        {% if tooltip is defined or tooltip_true is defined %}
+        {% if tooltip is defined or tooltipTrue is defined %}
             date-bs-toggle="tooltip"
-            title="{{ tooltip_true|default(tooltip) }}"
+            title="{{ tooltipTrue|default(tooltip|default('')) }}"
         {% endif %}
     ></i>
 {% else %}
     <i
         class="fa-solid fa-circle-xmark fa-fw text-danger"
-        {% if tooltip is defined or tooltip_false is defined %}
+        {% if tooltip is defined or tooltipFalse is defined %}
             date-bs-toggle="tooltip"
-            title="{{ tooltip_false|default(tooltip) }}"
+            title="{{ tooltipFalse|default(tooltip|default('')) }}"
         {% endif %}
     ></i>
 {% endif %}
