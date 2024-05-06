@@ -33,7 +33,7 @@
                             {% if payment.helloassoCheckoutIntentId is null %}
                                 -
                             {% else %}
-                                <twig:Admin:QuoteWithButtonCopy value="{{ payment.helloassoCheckoutIntentId }}" tooltip="Copier l'ID" />
+                                <twig:Admin:ButtonCopyWithQuotedContent value="{{ payment.helloassoCheckoutIntentId }}" tooltip="Copier l'ID" />
                             {% endif %}
                         </li>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) and checkoutIntent is not null %}
@@ -42,11 +42,11 @@
                                     {% if checkoutIntent.order is null %}
                                         Pas d'order dans le checkoutIntent, le paiement n'est donc pas validé.
                                     {% else %}
-                                        Order <twig:Admin:QuoteWithButtonCopy value="{{ checkoutIntent.order.id }}" tooltip="Copier l'ID de l'Order Helloasso" /> contient {{ checkoutIntent.order.payments|length }} paiement{{ checkoutIntent.order.payments|length > 1 ? 's' }} :
+                                        Order <twig:Admin:ButtonCopyWithQuotedContent value="{{ checkoutIntent.order.id }}" tooltip="Copier l'ID de l'Order Helloasso" /> contient {{ checkoutIntent.order.payments|length }} paiement{{ checkoutIntent.order.payments|length > 1 ? 's' }} :
                                         <ul>
                                             {% for helloassoPayment in checkoutIntent.order.payments %}
                                                 <li>
-                                                    Paiement <twig:Admin:QuoteWithButtonCopy value="{{ helloassoPayment.id }}" tooltip="Copier l'ID du Payment Helloasso" /> de {{ helloassoPayment.amount|format_price }}: <b>{{ helloassoPayment.state.value }}</b>
+                                                    Paiement <twig:Admin:ButtonCopyWithQuotedContent value="{{ helloassoPayment.id }}" tooltip="Copier l'ID du Payment Helloasso" /> de {{ helloassoPayment.amount|format_price }}: <b>{{ helloassoPayment.state.value }}</b>
                                                 </li>
                                             {% endfor %}
                                         </ul>
