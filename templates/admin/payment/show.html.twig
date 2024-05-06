@@ -54,7 +54,7 @@
                                 </div>
                                 {% if checkoutIntent.order is not null %}
                                     <a
-                                        href="{{ helloassoUrl|replace({'api': 'admin'}) }}/associations/altercampagne/checkout/payment-attestation/{{ checkoutIntent.order.id }}"
+                                        href="{{ helloassoUrl|replace({'api': 'www'}) }}/associations/altercampagne/checkout/paiement-attestation/{{ checkoutIntent.order.id }}"
                                         data-bs-toggle="tooltip"
                                         title="Voir le reçu Helloasso"
                                     >
