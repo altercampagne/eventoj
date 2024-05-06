@@ -67,6 +67,16 @@
                 {% endblock %}
 
                 {% block footer %}
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_SYNC_WITH_HELLOASSO').value, payment) and payment.helloassoCheckoutIntentId is not null %}
+                        <div class="d-grid gap-2 p-2">
+                            <twig:ButtonPost
+                                url="{{ path('admin_payment_sync_with_helloasso', { id: payment.id }) }}"
+                                label="Synchroniser la paiement avec Helloasso"
+                                tooltip="Permet de s'assurer que le paiement a bien le même status chez nous que chez Helloasso"
+                                btnClass="btn btn-warning"
+                            />
+                        </div>
+                    {% endif %}
                 {% endblock %}
             {% endembed %}
 
