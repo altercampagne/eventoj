@@ -8,7 +8,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\ChainRequestMatcher;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestMatcher\HostRequestMatcher;
 use Symfony\Component\HttpFoundation\RequestMatcher\IsJsonRequestMatcher;
 use Symfony\Component\HttpFoundation\RequestMatcher\MethodRequestMatcher;
 use Symfony\Component\HttpFoundation\RequestMatcher\SchemeRequestMatcher;
@@ -28,7 +27,6 @@ final class HelloassoRequestParser extends AbstractRequestParser
     protected function getRequestMatcher(): RequestMatcherInterface
     {
         return new ChainRequestMatcher([
-            new HostRequestMatcher('regex'),
             new MethodRequestMatcher('POST'),
             new IsJsonRequestMatcher(),
             new SchemeRequestMatcher('https'),
