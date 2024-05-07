@@ -1,0 +1,6 @@
+framework:
+  webhook:
+    routing:
+      helloasso:
+        service: App\Webhook\HelloassoRequestParser
+        secret: your_secret_here

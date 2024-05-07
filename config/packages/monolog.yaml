@@ -1,6 +1,7 @@
 monolog:
     channels:
         - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+        - debug
 
 services:
     Monolog\Processor\PsrLogMessageProcessor:
@@ -75,5 +76,5 @@ when@prod:
                 channels: ["!event", "!doctrine"]
             deprecation:
                 type: stream
-                channels: [deprecation]
+                channels: [deprecation, debug]
                 path: php://stderr
