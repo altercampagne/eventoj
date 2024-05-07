@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Exception\JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcher\IsJsonRequestMatcher;
 use Symfony\Component\HttpFoundation\RequestMatcher\MethodRequestMatcher;
-use Symfony\Component\HttpFoundation\RequestMatcher\SchemeRequestMatcher;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\RemoteEvent\RemoteEvent;
@@ -29,7 +28,6 @@ final class HelloassoRequestParser extends AbstractRequestParser
         return new ChainRequestMatcher([
             new MethodRequestMatcher('POST'),
             new IsJsonRequestMatcher(),
-            new SchemeRequestMatcher('https'),
         ]);
     }
 
@@ -48,11 +46,9 @@ final class HelloassoRequestParser extends AbstractRequestParser
             throw new RejectWebhookException(Response::HTTP_BAD_REQUEST, 'Request payload does not contain required fields.');
         }
 
-        $id = $payload->getString('eventType');
-
         return new RemoteEvent(
-            $payload->getString('eventType'),
-            $id,
+            mb_strtolower($payload->getString('eventType')),
+            mb_strtolower($payload->getString('eventType')).'.'.md5($request->getContent()),
             $payload->all(),
         );
     }

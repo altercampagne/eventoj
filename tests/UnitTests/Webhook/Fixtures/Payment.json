@@ -1,0 +1,68 @@
+{
+  "data": {
+    "order": {
+      "id": 18230,
+      "date": "2024-04-25T11:22:05.9546848+02:00",
+      "formSlug": "default",
+      "formType": "Checkout",
+      "organizationName": "altercampagne",
+      "organizationSlug": "altercampagne",
+      "organizationType": "Association1901",
+      "organizationIsUnderColucheLaw": false,
+      "formName": "Checkout",
+      "meta": {
+        "createdAt": "2024-04-25T11:21:53.8261638+02:00",
+        "updatedAt": "2024-05-07T17:25:13.4787105+02:00"
+      },
+      "isAnonymous": false,
+      "isAmountHidden": false
+    },
+    "payer": {
+      "email": "admin@altercampagne.net",
+      "address": "75, boulevard de Guilbert",
+      "city": "Greniernec",
+      "zipCode": "91890",
+      "country": "FRA",
+      "dateOfBirth": "1958-04-26T00:00:00+02:00",
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "items": [
+      {
+        "shareAmount": 71400,
+        "shareItemAmount": 71400,
+        "id": 18230,
+        "amount": 71400,
+        "type": "Payment",
+        "state": "Canceled",
+        "name": "Inscription EB à venir (ouvert)"
+      }
+    ],
+    "id": 12495,
+    "amount": 71400,
+    "date": "2024-04-25T11:22:05.9546848+02:00",
+    "paymentMeans": "Card",
+    "installmentNumber": 1,
+    "state": "Refunded",
+    "meta": {
+      "createdAt": "2024-04-25T11:21:53.8261638+02:00",
+      "updatedAt": "2024-05-07T17:25:12.4534584+02:00"
+    },
+    "refundOperations": [
+      {
+        "id": 368,
+        "amount": 71400,
+        "amountTip": 2215,
+        "status": "PROCESSED",
+        "meta": {
+          "createdAt": "2024-05-07T17:12:31.3219088+02:00",
+          "updatedAt": "2024-05-07T17:25:13.7353874+02:00"
+        }
+      }
+    ]
+  },
+  "eventType": "Payment",
+  "metadata": {
+    "payment": "45eac6d9-80ba-425e-aa05-0f1eeb5be444"
+  }
+}
