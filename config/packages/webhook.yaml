@@ -2,5 +2,5 @@ framework:
   webhook:
     routing:
       helloasso:
-        service: App\Webhook\HelloassoRequestParser
+        service: App\Bridge\Helloasso\Webhook\HelloassoRequestParser
         secret: your_secret_here

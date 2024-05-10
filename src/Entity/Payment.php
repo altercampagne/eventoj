@@ -129,10 +129,10 @@ class Payment
         return PaymentStatus::REFUNDED === $this->status;
     }
 
-    public function refund(int $refundedAmount): void
+    public function refund(?int $refundedAmount = null): void
     {
         $this->status = PaymentStatus::REFUNDED;
-        $this->refundedAmount = $refundedAmount;
+        $this->refundedAmount = $refundedAmount ?? $this->getAmount();
         $this->refundedAt = new \DateTimeImmutable();
     }
 

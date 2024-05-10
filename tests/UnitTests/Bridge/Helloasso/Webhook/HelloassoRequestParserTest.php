@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\UnitTests\Webhook;
+namespace App\Tests\UnitTests\Bridge\Helloasso\Webhook;
 
-use App\Webhook\HelloassoRequestParser;
+use App\Bridge\Helloasso\Webhook\HelloassoRequestParser;
 use Psr\Log\NullLogger;
 use Symfony\Component\Webhook\Client\RequestParserInterface;
 use Symfony\Component\Webhook\Test\AbstractRequestParserTestCase;

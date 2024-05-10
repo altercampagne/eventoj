@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Webhook;
+namespace App\Bridge\Helloasso\Webhook;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\ChainRequestMatcher;
