@@ -175,6 +175,9 @@
                         <table class="table table-hover table-bordered table-sm">
                             <thead>
                                 <tr>
+                                    {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                                        <th scope="col">Id</th>
+                                    {% endif %}
                                     <th scope="col">Validité</th>
                                     <th scope="col">Date de création</th>
                                 </tr>
@@ -182,8 +185,18 @@
                             <tbody>
                                 {% for membership in user.memberships %}
                                     <tr>
+                                        {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                                            <td>
+                                                <twig:Admin:ButtonCopyWithQuotedContent value="{{ membership.id }}" tooltip="Copier l'identifiant de l'adhésion" />
+                                            </td>
+                                        {% endif %}
                                         <td>
+                                            {% if membership.isCanceled %}<strike>{% endif %}
                                             Du <b>{{ membership.startAt|format_date('short') }}</b> au <b> {{ membership.endAt|format_date('short') }}</b>
+                                            {% if membership.isCanceled %}
+                                                </strike>
+                                                <span class="badge bg-danger ms-2">Annulée le {{ membership.canceledAt|format_date }}
+                                            {% endif %}
                                         </td>
                                         <td>{{ membership.createdAt|format_datetime }}</td>
                                     </tr>

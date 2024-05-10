@@ -48,6 +48,7 @@ class ListController extends AbstractController
             ->leftJoin('m.companion', 'c')
             ->leftJoin('c.user', 'cu')
             ->andWhere('m.endAt >= :now')
+            ->andWhere('m.canceledAt is null')
             ->setParameter('now', new \DateTimeImmutable())
             ->orderBy('m.createdAt', 'DESC')
         ;

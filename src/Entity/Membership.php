@@ -50,6 +50,9 @@ class Membership
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $canceledAt = null;
+
     private function __construct(
         Payment $payment,
         ?User $user = null,
@@ -96,8 +99,17 @@ class Membership
         return $this->isValidAt(new \DateTimeImmutable());
     }
 
+    public function isCanceled(): bool
+    {
+        return null !== $this->canceledAt;
+    }
+
     public function isValidAt(\DateTimeImmutable $date): bool
     {
+        if ($this->isCanceled()) {
+            return false;
+        }
+
         return $this->startAt <= $date && $date <= $this->endAt;
     }
 
@@ -109,6 +121,13 @@ class Membership
     public function isPast(): bool
     {
         return $this->endAt < new \DateTimeImmutable();
+    }
+
+    public function cancel(): self
+    {
+        $this->canceledAt = new \DateTimeImmutable();
+
+        return $this;
     }
 
     public function getId(): UuidV4
@@ -160,5 +179,10 @@ class Membership
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function getCanceledAt(): ?\DateTimeImmutable
+    {
+        return $this->canceledAt;
     }
 }
