@@ -51,11 +51,6 @@
                                             {% endfor %}
                                         </ul>
                                     {% endif %}
-                                    {% if app.environment == 'dev' %}
-                                        <div class="mt-3">
-                                            {{ dump(checkoutIntent) }}
-                                        </div>
-                                    {% endif %}
                                 </div>
                                 {% if checkoutIntent.order is not null %}
                                     <a
