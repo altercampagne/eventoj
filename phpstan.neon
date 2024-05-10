@@ -4,11 +4,14 @@ parameters:
     paths:
       - src
       - tests
+
     excludePaths:
       - src/Migrations
 
     doctrine:
       objectManagerLoader: tests/doctrine-object-manager.php
+
+    tmpDir: .phpstan-cache
 
     ignoreErrors:
       - '#Call to an undefined method Faker\\Generator::[a-zA-Z0-9]+\(\)#'
