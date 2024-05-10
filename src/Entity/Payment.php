@@ -129,6 +129,11 @@ class Payment
         return PaymentStatus::REFUNDED === $this->status;
     }
 
+    public function isFullyRefunded(): bool
+    {
+        return $this->isRefunded() && $this->refundedAmount === $this->amount;
+    }
+
     public function refund(?int $refundedAmount = null): void
     {
         $this->status = PaymentStatus::REFUNDED;

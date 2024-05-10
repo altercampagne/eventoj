@@ -191,14 +191,54 @@ final readonly class PaymentSynchronizer
      */
     private function getRefundData(Payment $payment): array
     {
-        if (null === $registration = $payment->getRegistration()) {
-            throw new \RuntimeException('A payment without registration must not be refunded!');
+        $lines = [];
+        $mainLabel = "Remboursement {$payment->getPayer()->getFullname()}";
+
+        if (null !== $registration = $payment->getRegistration()) {
+            $event = $registration->getEvent();
+
+            $mainLabel .= "pour {$event->getName()}";
+            $label = 'Remboursement ';
+            $label .= $registration->countPeople() > 1 ? 'inscriptions' : 'inscription';
+
+            // This can happen if someone register for before or after and pay its membership.
+            // We have a payment linked to a registration with a null registration only amount
+            if (0 < $payment->getRegistrationOnlyAmount()) {
+                $lines[] = [
+                    'account' => 706, // Prestation de services
+                    'credit' => 0,
+                    'debit' => $payment->getRegistrationOnlyAmount() / 100,
+                    'label' => $label,
+                    'id_project' => $event->getPahekoProjectId(),
+                ];
+                $lines[] = [
+                    'account' => 41, // Usagers et comptes rattachés
+                    'credit' => $payment->getRegistrationOnlyAmount() / 100,
+                    'debit' => 0,
+                    'label' => $label,
+                    'id_project' => $event->getPahekoProjectId(),
+                ];
+            }
         }
 
-        $event = $registration->getEvent();
+        if (0 < $payment->getMembershipsAmount() && $payment->isFullyRefunded()) {
+            $label = 1 < \count($payment->getMemberships()) ? 'Adhésions' : 'Adhésion';
 
-        $label = 'Remboursement ';
-        $label .= $registration->countPeople() > 1 ? 'inscriptions' : 'inscription';
+            $lines[] = [
+                'account' => 756, // Cotisations
+                'credit' => 0,
+                'debit' => $payment->getMembershipsAmount() / 100,
+                'label' => $label,
+                'id_project' => $this->pahekoMembershipsProjectId,
+            ];
+            $lines[] = [
+                'account' => 41, // Usagers et comptes rattachés
+                'credit' => $payment->getMembershipsAmount() / 100,
+                'debit' => 0,
+                'label' => $label,
+                'id_project' => $this->pahekoMembershipsProjectId,
+            ];
+        }
 
         $paymentAdminUrl = $this->urlGenerator->generate('admin_payment_show', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
@@ -206,24 +246,9 @@ final readonly class PaymentSynchronizer
             'id_year' => 'current',
             /* @phpstan-ignore-next-line */
             'date' => $payment->getApprovedAt()->format('Y-m-d'),
-            'label' => "Remboursement {$payment->getPayer()->getFullname()} pour {$event->getName()}",
+            'label' => $mainLabel,
             'type' => 'ADVANCED',
-            'lines' => [
-                [
-                    'account' => 706, // Prestation de services
-                    'credit' => 0,
-                    'debit' => $payment->getRegistrationOnlyAmount() / 100,
-                    'label' => $label,
-                    'id_project' => $event->getPahekoProjectId(),
-                ],
-                [
-                    'account' => 41, // Usagers et comptes rattachés
-                    'credit' => $payment->getRegistrationOnlyAmount() / 100,
-                    'debit' => 0,
-                    'label' => $label,
-                    'id_project' => $event->getPahekoProjectId(),
-                ],
-            ],
+            'lines' => $lines,
             'linked_users' => [$payment->getPayer()->getPahekoId()],
             'notes' => "Paiement visible ici : $paymentAdminUrl",
             'reference' => (string) $payment->getId(),
