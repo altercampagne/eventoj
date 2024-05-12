@@ -197,7 +197,7 @@ final readonly class PaymentSynchronizer
         if (null !== $registration = $payment->getRegistration()) {
             $event = $registration->getEvent();
 
-            $mainLabel .= "pour {$event->getName()}";
+            $mainLabel .= " pour {$event->getName()}";
             $label = 'Remboursement ';
             $label .= $registration->countPeople() > 1 ? 'inscriptions' : 'inscription';
 
