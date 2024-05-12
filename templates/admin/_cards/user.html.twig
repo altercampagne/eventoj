@@ -1,10 +1,10 @@
 <div class="card border-success-subtle">
     {% block header %}
-        <div class="card-header bg-success-subtle fw-bold border-success-subtle" data-bs-toggle="popover" title="Informations concernant l'utilisateurice {{ user.fullname }}">
+        <div class="card-header bg-success-subtle fw-bold border-success-subtle">
             <div class="d-flex justify-content-between">
                 <div>
                     <i class="fa-solid fa-users me-2"></i>
-                    {{ user.fullname }}
+                    {{ user.fullname }} <span class="text-secondary ms-1" data-bs-toggle="tooltip" title="Né·e le {{ user.birthDate|format_date('long') }}">({{ user.age }} ans)</span>
                 </div>
 
                 <div>
