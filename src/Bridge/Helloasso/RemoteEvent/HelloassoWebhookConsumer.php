@@ -8,17 +8,18 @@ use App\Entity\Payment;
 use App\Service\Payment\PaymentRefundHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Helloasso\Enums\PaymentState;
-use Helloasso\Models\Statistics\Payment as HelloassoPayment;
+use Helloasso\HelloassoClient;
+use Helloasso\Models\Event;
+use Helloasso\Models\Statistics\PaymentDetail;
 use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
 use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
 use Symfony\Component\RemoteEvent\RemoteEvent;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 #[AsRemoteEventConsumer('helloasso')]
 final class HelloassoWebhookConsumer implements ConsumerInterface
 {
     public function __construct(
-        private readonly DenormalizerInterface $serializer,
+        private readonly HelloassoClient $helloassoClient,
         private readonly EntityManagerInterface $em,
         private readonly PaymentRefundHandler $paymentRefundHandler,
     ) {
@@ -26,13 +27,17 @@ final class HelloassoWebhookConsumer implements ConsumerInterface
 
     public function consume(RemoteEvent $event): void
     {
-        if ('payment' !== $event->getName()) {
+        $eventAsString = json_encode($event->getPayload(), \JSON_THROW_ON_ERROR);
+        $event = $this->helloassoClient->decodeEvent($eventAsString);
+
+        if (Event::EVENT_TYPE_PAYMENT !== $event->getEventType()) {
             return;
         }
 
-        $helloassoPayment = $this->serializer->denormalize($event->getPayload(), HelloassoPayment::class);
-        $state = $helloassoPayment->getState();
+        /** @var PaymentDetail $helloassoPayment */
+        $helloassoPayment = $event->getData();
 
+        $state = $helloassoPayment->getState();
         if (PaymentState::Refunding !== $state && PaymentState::Refunded === $state) {
             return;
         }
