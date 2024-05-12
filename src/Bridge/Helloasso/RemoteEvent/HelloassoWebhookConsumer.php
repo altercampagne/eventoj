@@ -12,6 +12,7 @@ use Helloasso\HelloassoClient;
 use Helloasso\Models\Event;
 use Helloasso\Models\Statistics\PaymentDetail;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
 use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
 use Symfony\Component\RemoteEvent\RemoteEvent;
@@ -24,6 +25,8 @@ final class HelloassoWebhookConsumer implements ConsumerInterface
         private readonly EntityManagerInterface $em,
         private readonly PaymentRefundHandler $paymentRefundHandler,
         private readonly LoggerInterface $debugLogger,
+        #[Autowire(env: 'bool:STAGING')]
+        private bool $staging,
     ) {
     }
 
@@ -50,6 +53,11 @@ final class HelloassoWebhookConsumer implements ConsumerInterface
         }
 
         if (null === $payment = $this->em->getRepository(Payment::class)->findOneByHelloassoCheckoutIntentId($helloassoPayment->getId())) {
+            // In stagign, we receive webhooks when a payment is made on a local environment.
+            if ($this->staging) {
+                return;
+            }
+
             throw new \RuntimeException("Unable to find a payment with helloasso ID \"{$helloassoPayment->getId()}\"");
         }
 
