@@ -45,7 +45,7 @@ final class HelloassoWebhookConsumer implements ConsumerInterface
         $helloassoPayment = $helloassoEvent->getData();
 
         $state = $helloassoPayment->getState();
-        if (PaymentState::Refunding !== $state && PaymentState::Refunded === $state) {
+        if (PaymentState::Refunding !== $state && PaymentState::Refunded !== $state) {
             $stateAsString = $helloassoPayment->getState()->value;
             $this->debugLogger->info("Payment {$helloassoPayment->getId()} has state \"{$stateAsString}\".");
 
@@ -53,12 +53,17 @@ final class HelloassoWebhookConsumer implements ConsumerInterface
         }
 
         if (null === $payment = $this->em->getRepository(Payment::class)->findOneByHelloassoCheckoutIntentId($helloassoPayment->getId())) {
-            // In stagign, we receive webhooks when a payment is made on a local environment.
+            // In staging, we receive webhooks when a payment is made on a local environment.
             if ($this->staging) {
                 return;
             }
 
             throw new \RuntimeException("Unable to find a payment with helloasso ID \"{$helloassoPayment->getId()}\"");
+        }
+
+        // This can happen if the payment have been manually sync'ed from the admin.
+        if ($payment->isRefunded()) {
+            return;
         }
 
         $this->paymentRefundHandler->fullRefund($payment);
