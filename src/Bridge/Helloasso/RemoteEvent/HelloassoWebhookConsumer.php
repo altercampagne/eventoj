@@ -11,6 +11,7 @@ use Helloasso\Enums\PaymentState;
 use Helloasso\HelloassoClient;
 use Helloasso\Models\Event;
 use Helloasso\Models\Statistics\PaymentDetail;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
 use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
 use Symfony\Component\RemoteEvent\RemoteEvent;
@@ -22,23 +23,29 @@ final class HelloassoWebhookConsumer implements ConsumerInterface
         private readonly HelloassoClient $helloassoClient,
         private readonly EntityManagerInterface $em,
         private readonly PaymentRefundHandler $paymentRefundHandler,
+        private readonly LoggerInterface $debugLogger,
     ) {
     }
 
     public function consume(RemoteEvent $event): void
     {
         $eventAsString = json_encode($event->getPayload(), \JSON_THROW_ON_ERROR);
-        $event = $this->helloassoClient->decodeEvent($eventAsString);
+        $helloassoEvent = $this->helloassoClient->decodeEvent($eventAsString);
 
-        if (Event::EVENT_TYPE_PAYMENT !== $event->getEventType()) {
+        if (Event::EVENT_TYPE_PAYMENT !== $helloassoEvent->getEventType()) {
+            $this->debugLogger->info("Given event type is \"{$helloassoEvent->getEventType()}\".");
+
             return;
         }
 
         /** @var PaymentDetail $helloassoPayment */
-        $helloassoPayment = $event->getData();
+        $helloassoPayment = $helloassoEvent->getData();
 
         $state = $helloassoPayment->getState();
         if (PaymentState::Refunding !== $state && PaymentState::Refunded === $state) {
+            $stateAsString = $helloassoPayment->getState()->value;
+            $this->debugLogger->info("Payment {$helloassoPayment->getId()} has state \"{$stateAsString}\".");
+
             return;
         }
 
