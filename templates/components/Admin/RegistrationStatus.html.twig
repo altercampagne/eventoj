@@ -1,5 +1,13 @@
 {% if registration.isConfirmed %}
-    <span class="badge text-bg-success"><i class="fa-solid fa-check me-1"></i> Confirmée</span>
+    <span class="badge text-bg-success" data-bs-toggle="tooltip" title="Inscription confirmée le {{ registration.confirmedAt|format_datetime('long', 'short') }}">
+        <i class="fa-solid fa-check me-1"></i> Confirmée
+    </span>
+{% elseif registration.isCanceled %}
+    <span class="badge text-bg-danger" data-bs-toggle="tooltip" title="Inscription annulée le {{ registration.canceledAt|format_datetime('long', 'short') }}">
+        <i class="fa-solid fa-xmark me-1"></i> Annulée
+    </span>
 {% else %}
-    <span class="badge text-bg-warning"><i class="fa-regular fa-clock me-1"></i> En attente</span>
+    <span class="badge text-bg-warning" data-bs-toggle="tooltip" title="Inscription en attente de paiement">
+        <i class="fa-regular fa-clock me-1"></i> En attente
+    </span>
 {% endif %}

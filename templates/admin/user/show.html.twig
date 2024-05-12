@@ -195,7 +195,9 @@
                                             Du <b>{{ membership.startAt|format_date('short') }}</b> au <b> {{ membership.endAt|format_date('short') }}</b>
                                             {% if membership.isCanceled %}
                                                 </strike>
-                                                <span class="badge bg-danger ms-2">Annulée le {{ membership.canceledAt|format_date }}
+                                                <span class="badge bg-danger ms-2" data-bs-toggle="tooltip" title="Adhésion annulée le {{ membership.canceledAt|format_datetime('long', 'short') }}">
+                                                    <i class="fa-solid fa-xmark me-1"></i> Annulée
+                                                </span>
                                             {% endif %}
                                         </td>
                                         <td>{{ membership.createdAt|format_datetime }}</td>
