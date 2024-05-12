@@ -27,12 +27,16 @@
                 {% if app.user.memberships|length > 0 %}
                     {% for membership in app.user.memberships %}
                         <div class="card mb-2 {{ membership.isInFuture ? 'bg-warning-subtle' : membership.isValid ? 'bg-success-subtle' : 'bg-light-subtle' }}">
-                            <div class="card-body d-flex justify-content-between align-items-center{{ membership.isPast ? ' text-secondary' }}">
+                            <div class="card-body d-flex justify-content-between align-items-center{{ membership.isPast or membership.isCanceled ? ' text-secondary' }}">
                                 Adhésion du {{ membership.startAt|format_date('long') }} au {{ membership.endAt|format_date('long') }}
                                 {% if membership.isInFuture %}
                                     <div class="badge bg-warning">Démarre bientôt</div>
                                 {% elseif membership.isValid %}
                                     <div class="badge bg-success">En cours</div>
+                                {% elseif membership.isCanceled %}
+                                    <div class="badge bg-danger-subtle" data-bs-toggle="tooltip" title="Adhésion annulée le {{ membership.canceledAt|format_datetime('long', 'short') }}">
+                                        Annulée
+                                    </div>
                                 {% else %}
                                     <div class="badge bg-dark-subtle">Terminée</div>
                                 {% endif %}

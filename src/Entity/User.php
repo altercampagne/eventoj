@@ -152,7 +152,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
      * @var Collection<int, Membership>
      */
     #[ORM\OneToMany(targetEntity: Membership::class, mappedBy: 'user', cascade: ['persist'])]
-    #[ORM\OrderBy(['endAt' => 'DESC'])]
+    #[ORM\OrderBy(['endAt' => 'DESC', 'createdAt' => 'DESC'])]
     private Collection $memberships;
 
     public function __construct()
