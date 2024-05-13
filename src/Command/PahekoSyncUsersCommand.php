@@ -30,7 +30,7 @@ class PahekoSyncUsersCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('email', InputArgument::OPTIONAL, 'The email to send. If null, all mails will be sent.')
+            ->addArgument('email', InputArgument::OPTIONAL, 'The email of the user to sync. If null, all users will be sync\'ed.')
         ;
     }
 
