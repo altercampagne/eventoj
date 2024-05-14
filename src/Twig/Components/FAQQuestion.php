@@ -13,6 +13,7 @@ final class FAQQuestion
 {
     public string $slug;
     public string $label;
+    private ?Question $question = null;
 
     public function __construct(
         private readonly EntityManagerInterface $em,
@@ -21,12 +22,15 @@ final class FAQQuestion
 
     public function getQuestion(): Question
     {
-        $question = $this->em->getRepository(Question::class)->findOneBySlug($this->slug);
+        if (null !== $this->question) {
+            return $this->question;
+        }
+        $this->question = $this->em->getRepository(Question::class)->findOneBySlug($this->slug);
 
-        if (null === $question) {
+        if (null === $this->question) {
             throw new \RuntimeException("Question {$this->slug} is not found.");
         }
 
-        return $question;
+        return $this->question;
     }
 }
