@@ -45,7 +45,7 @@ class FixtureBuilder
             ->setEmail($email ?? self::getFaker()->email())
             ->setFirstName($firstName ?? self::getFaker()->firstName())
             ->setLastName($lastName ?? self::getFaker()->lastName())
-            ->setBirthDate($birthDate ?? \DateTimeImmutable::createFromMutable($children ? self::getFaker()->dateTimeBetween('-12 years', 'now') : self::getFaker()->dateTimeBetween('-80 years', '-14 years')))
+            ->setBirthDate($birthDate ?? \DateTimeImmutable::createFromMutable($children ? self::getFaker()->dateTimeBetween('-12 years', 'now') : self::getFaker()->dateTimeBetween('-80 years', '-18 years')))
             ->setAddress($address ?? self::createAddress())
             ->setPhoneNumber($phoneNumber ?? PhoneNumberUtil::getInstance()->parse(self::getFaker()->phoneNumber(), 'FR'))
             ->setPassword($password ?? '$2y$04$MOoNnQXwXZsqcL2X073nO.qb/ChqT84weFdkGOpdyGkrc8ByNRn42') // "password"
