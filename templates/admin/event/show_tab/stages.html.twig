@@ -31,6 +31,11 @@
                     {% if app.user.isPrepaForStage(stage) %} class="table-primary border"{% endif %}
                 >
                     <td>
+                        {% if stage.isFull %}
+                            <span class="badge bg-warning" data-bs-toggle="tooltip" title="{{ stage.bookedAdultsSeats }} places réservées">
+                                COMPLET
+                            </span>
+                        {% endif %}
                         {% set problems = [] %}
                         {% if stage.alternatives|length == 0 %}
                             {% set problems = problems|merge(['Aucune alternative définie']) %}

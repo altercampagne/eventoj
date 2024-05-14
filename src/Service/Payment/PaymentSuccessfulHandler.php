@@ -33,6 +33,13 @@ final readonly class PaymentSuccessfulHandler
         if (null !== $registration = $payment->getRegistration()) {
             $registration->confirm();
 
+            foreach ($registration->getStagesRegistrations() as $stageRegistration) {
+                $stage = $stageRegistration->getStage();
+                $stage->updateBookedSeats();
+
+                $this->em->persist($stage);
+            }
+
             $this->em->persist($registration);
         }
 

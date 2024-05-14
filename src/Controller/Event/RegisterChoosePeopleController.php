@@ -36,6 +36,11 @@ class RegisterChoosePeopleController extends AbstractController
         if (!$event->isBookable()) {
             throw $this->createNotFoundException();
         }
+        if ($event->isFull()) {
+            $this->addFlash('warning', 'Cet évènement est complet, les inscriptions sont fermées !');
+
+            return $this->redirectToRoute('event_show', ['slug' => $event->getSlug()]);
+        }
         if (!$this->isGranted('ROLE_USER')) {
             $this->saveTargetPath($request->getSession(), 'main', $this->generateUrl('event_register', ['slug' => $event->getSlug()]));
 

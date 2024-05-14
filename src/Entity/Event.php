@@ -206,6 +206,32 @@ class Event
         return EventType::EB === $this->type;
     }
 
+    public function isFull(): bool
+    {
+        if (!$this->isAT()) {
+            if (null === $stage = $this->getFirstStage()) {
+                return false;
+            }
+
+            return $stage->isFull();
+        }
+
+        foreach ($this->stages as $stage) {
+            if (!$stage->isFull()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function updateBookedSeats(): void
+    {
+        foreach ($this->stages as $stage) {
+            $stage->updateBookedSeats();
+        }
+    }
+
     public function getAdultsCapacity(): int
     {
         return $this->adultsCapacity;

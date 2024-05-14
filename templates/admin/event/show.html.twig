@@ -75,6 +75,15 @@
                                 </p>
                             </twig:ButtonPostWithConfirmation>
                         {% endif %}
+
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_UPDATE_BOOKED_SEATS').value, event) %}
+                            <twig:ButtonPost
+                                url="{{ path('admin_event_update_booked_seats', { slug: event.slug }) }}"
+                                label="Mettre à jour les disponibilités"
+                                tooltip="Met à jour les disponibilités de chacune des étapes"
+                                btnClass="btn btn-warning"
+                            />
+                        {% endif %}
                     </div>
                 {% endblock %}
             {% endembed %}

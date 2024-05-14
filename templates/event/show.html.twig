@@ -9,9 +9,13 @@
                 <h1>{{ event.name }}</h1>
                 <div class="d-none d-md-block">
                     {% if event.isBookable %}
-                        <a href="{{ path('event_register', { slug: event.slug }) }}" class="btn btn-primary btn-lg">
-                            M'inscrire à l'évènement
-                        </a>
+                        {% if event.isFull %}
+                            <span class="badge bg-warning fs-4">Évènement complet !</span>
+                        {% else %}
+                            <a href="{{ path('event_register', { slug: event.slug }) }}" class="btn btn-primary btn-lg">
+                                M'inscrire à l'évènement
+                            </a>
+                        {% endif %}
                     {% elseif event.isFinished %}
                         <span class="badge bg-secondary fs-4">Évènement terminé</span>
                     {% else %}
@@ -39,9 +43,13 @@
 
                 <div class="d-md-none text-center pb-4">
                     {% if event.isBookable %}
-                        <a href="{{ path('event_register', { slug: event.slug }) }}" class="btn btn-primary btn-lg">
-                            M'inscrire à l'évènement
-                        </a>
+                        {% if event.isFull %}
+                            <span class="badge bg-warning fs-4 mt-4">Évènement complet !</span>
+                        {% else %}
+                            <a href="{{ path('event_register', { slug: event.slug }) }}" class="btn btn-primary btn-lg mt-4">
+                                M'inscrire à l'évènement
+                            </a>
+                        {% endif %}
                     {% elseif not event.isFinished %}
                         <b class="text-decoration-underline">Ouverture des inscriptions le {{ event.openingDateForBookings|format_datetime('long', 'short') }}</b>
                     {% endif %}
@@ -72,7 +80,12 @@
                             {% for stage in event.stages %}
                                 <a href="{{ path('event_stage_show', { event_slug: event.slug, stage_slug: stage.slug }) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     <span><b>{{ stage.date|format_date(pattern='EEEE d MMMM')|capitalize }} :</b> {{ stage.name }}</span>
-                                    <i class="fa-solid fa-chevron-right ms-2"></i>
+                                    <div>
+                                        {% if stage.isFull %}
+                                            <span class="badge bg-warning">COMPLET</span>
+                                        {% endif %}
+                                        <i class="fa-solid fa-chevron-right ms-2"></i>
+                                    </div>
                                 </a>
                             {% endfor %}
                         </div>

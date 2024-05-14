@@ -244,6 +244,11 @@ class Registration
         return $this->companions->count() + 1;
     }
 
+    public function countAdults(): int
+    {
+        return $this->countPeople() - $this->countChildren();
+    }
+
     public function countChildren(): int
     {
         $count = 0;

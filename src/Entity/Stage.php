@@ -65,6 +65,11 @@ class Stage
     ])]
     private ?string $routeUrl = null;
 
+    #[ORM\Column(options: [
+        'comment' => 'Number of booked seats, adults only (computed)',
+    ])]
+    private int $bookedAdultsSeats = 0;
+
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
@@ -100,6 +105,22 @@ class Stage
         $this->createdAt = new \DateTimeImmutable();
         $this->alternatives = new ArrayCollection();
         $this->stagesRegistrations = new ArrayCollection();
+    }
+
+    public function isFull(): bool
+    {
+        return $this->event->getAdultsCapacity() <= $this->bookedAdultsSeats;
+    }
+
+    public function updateBookedSeats(): void
+    {
+        $this->bookedAdultsSeats = 0;
+
+        foreach ($this->getConfirmedStagesRegistrations() as $stageRegistration) {
+            $registration = $stageRegistration->getRegistration();
+
+            $this->bookedAdultsSeats += $registration->countAdults();
+        }
     }
 
     public function isBefore(): bool
@@ -232,6 +253,11 @@ class Stage
         $this->description = $description;
 
         return $this;
+    }
+
+    public function getBookedAdultsSeats(): int
+    {
+        return $this->bookedAdultsSeats;
     }
 
     public function getCreatedAt(): \DateTimeImmutable
