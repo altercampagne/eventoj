@@ -20,7 +20,8 @@ final class Version20240514184802 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE stage ADD booked_adults_seats INT NOT NULL');
+        $this->addSql('ALTER TABLE stage ADD booked_adults_seats INT NOT NULL DEFAULT 0');
+        $this->addSql('ALTER TABLE stage ALTER COLUMN booked_adults_seats DROP DEFAULT');
         $this->addSql('COMMENT ON COLUMN stage.booked_adults_seats IS \'Number of booked seats, adults only (computed)\'');
     }
 
