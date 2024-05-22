@@ -5,8 +5,11 @@
 {% block tab_content %}
     {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_EXPORT_EMAILS').value, event) %}
         <div class="d-flex justify-content-end mb-3">
-            {% set emails = event.confirmedRegistrations|map(r => r.people|map(p => p.email)|first)|join(' ') %}
-            <twig:Admin:ButtonCopy value="{{ emails }}" tooltip="Copier les adresses mails dans le presse-papier">
+            {% set emails = [] %}
+            {% for registration in event.confirmedRegistrations %}
+                {% set emails = emails|merge(registration.people|map(p => p.email)) %}
+            {% endfor %}
+            <twig:Admin:ButtonCopy value="{{ emails|join(' ') }}" tooltip="Copier les adresses mails dans le presse-papier">
                 <div class="btn btn-primary">Copier les emails des participant·es</div>
             </twig:Admin:ButtonCopy>
         </div>
