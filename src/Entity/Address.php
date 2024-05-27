@@ -24,6 +24,7 @@ class Address
     private string $city;
 
     #[Assert\NotBlank]
+    #[Assert\Length(max: 6)]
     #[ZipCode(['getter' => 'getCountryCode', 'message' => 'Ce code postal n\'est pas valide.'])]
     #[ORM\Column(type: Types::STRING, length: 6)]
     private string $zipCode;
