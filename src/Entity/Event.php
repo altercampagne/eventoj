@@ -599,4 +599,14 @@ class Event
             return $registration->isConfirmed();
         });
     }
+
+    public function countPeople(): int
+    {
+        $people = 0;
+        $this->getConfirmedRegistrations()->map(static function (Registration $registration) use (&$people): void {
+            $people += $registration->countPeople();
+        });
+
+        return $people;
+    }
 }
