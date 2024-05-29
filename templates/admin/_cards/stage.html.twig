@@ -1,9 +1,14 @@
 <div class="card border-info-subtle">
     {% block header %}
-        <div class="card-header bg-info-subtle border-info-subtle fw-bold">
-            <i class="fa-solid fa-calendar-days me-2" data-bs-toggle="tooltip" title="Informations concernant l'étape {{ stage.name }}"></i>
-            {{ stage.event.name }} : {{ stage.name }}
-            {% if stage.isBefore or stage.isAfter %}<span class="badge text-bg-secondary">{{ stage.type.value|upper }}</span>{% endif %}
+        <div class="card-header bg-info-subtle border-info-subtle fw-bold d-flex justify-content-between align-items-center">
+            <div>
+                <i class="fa-solid fa-calendar-days me-2" data-bs-toggle="tooltip" title="Informations concernant l'étape {{ stage.name }}"></i>
+                {{ stage.event.name }} : {{ stage.name }}
+            </div>
+            <div>
+                {% if stage.isBefore or stage.isAfter %}<span class="badge text-bg-secondary">{{ stage.type.value|upper }}</span>{% endif %}
+                {% if stage.isFull %}<span class="badge text-bg-warning">COMPLET</span>{% endif %}
+            </div>
         </div>
     {% endblock %}
 
