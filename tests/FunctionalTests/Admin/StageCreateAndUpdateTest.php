@@ -38,7 +38,7 @@ class StageCreateAndUpdateTest extends WebTestCase
         $this->assertResponseRedirects();
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertRouteSame('admin_event_show');
+        $this->assertRouteSame('admin_stage_show');
         $this->assertSelectorTextContains('.alert-success', 'L\'étape a bien été créée ! 🥳');
 
         $client->request('GET', '/_admin/stages/etape-de-test/update');
@@ -52,7 +52,7 @@ class StageCreateAndUpdateTest extends WebTestCase
         $this->assertResponseRedirects();
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertRouteSame('admin_event_show');
+        $this->assertRouteSame('admin_stage_show');
         $this->assertSelectorTextContains('.alert-success', 'L\'étape a bien été modifiée ! 🥳');
     }
 }

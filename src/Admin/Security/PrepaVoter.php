@@ -38,7 +38,7 @@ class PrepaVoter extends Voter
 
         $permission = Permission::from($attribute);
 
-        if (Permission::STAGE_UPDATE == $permission) {
+        if (Permission::STAGE_UPDATE === $permission) {
             if (!$subject instanceof Stage) {
                 return false;
             }
@@ -59,6 +59,8 @@ class PrepaVoter extends Voter
             Permission::EVENT_VIEW_STAGES,
             Permission::EVENT_VIEW_FILLING,
             Permission::EVENT_VIEW_MEALS,
+
+            Permission::STAGE_VIEW,
         ]);
     }
 }

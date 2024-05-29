@@ -65,7 +65,7 @@ final class CreateOrUpdateController extends AbstractController
                 return $this->redirectToRoute('event_stage_show', ['event_slug' => $stage->getEvent()->getSlug(), 'stage_slug' => $stage->getSlug()]);
             }
 
-            return $this->redirectToRoute('admin_event_show', ['slug' => $stage->getEvent()->getSlug()]);
+            return $this->redirectToRoute('admin_stage_show', ['slug' => $stage->getSlug()]);
         }
 
         return $this->render('admin/stage/edit.html.twig', [

@@ -1,0 +1,76 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = stage.event.name ~ ' : ' ~ stage.name %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-4">
+            {% embed 'admin/_cards/stage.html.twig' with { stage: stage } only %}
+                {% block footer %}
+                    <div class="d-grid gap-2 p-2">
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_UPDATE').value, stage) %}
+                            <a href="{{ path('admin_stage_update', { slug: stage.slug }) }}" class="btn btn-outline-primary">Modifier l'étape</a>
+                        {% endif %}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+
+            <div class="p-2 text-secondary">
+                <small>
+                    Créée le <b>{{ stage.createdAt|format_datetime('long', 'short') }}</b>.<br />
+                    Dernière mise à jour le <b>{{ stage.updatedAt|format_datetime('long', 'short') }}</b>.
+                </small>
+            </div>
+        </div>
+
+        <div class="col-8 border-start">
+            <ul class="nav nav-tabs">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="registrations-tab" data-bs-toggle="tab" data-bs-target="#registrations-tab-pane" type="button" role="tab" aria-controls="registrations-tab-pane" aria-selected="true">
+                        Réservations <span class="text-secondary">({{ stage.confirmedStagesRegistrations|length }})</span>
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content border border-top-0 border-secondary-outline rounded-bottom p-3">
+                <div class="tab-pane fade show active" id="registrations-tab-pane" role="tabpanel" aria-labelledby="registrations-tab" tabindex="0">
+                    {% if stage.confirmedStagesRegistrations|length > 0 %}
+                        <table class="table table-hover table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Utilisateurice</th>
+                                    <th scope="col">Durée</th>
+                                    <th scope="col">Prix payé</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stageRegistration in stage.confirmedStagesRegistrations %}
+                                    {% set registration = stageRegistration.registration %}
+
+                                    <tr data-href="{{ path('admin_registration_show', { id: registration.id }) }}">
+                                        <td>
+                                            {{ registration.user.fullName }}
+                                            {% set companions = registration.companions|length %}
+                                            {% if companions > 0 %}
+                                                <span class="text-secondary">(+{{ companions }} personne{{ companions > 1 ? 's' }})</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ registration.daysOfPresence }} jours</td>
+                                        <td>{{ registration.price|format_price }}</td>
+                                        <td>{{ registration.createdAt|format_datetime }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        Aucune réservation pour le moment
+                    {% endif %}
+                </div>
+
+                <div class="tab-pane fade" id="payments-tab-pane" role="tabpanel" aria-labelledby="payments-tab" tabindex="0">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

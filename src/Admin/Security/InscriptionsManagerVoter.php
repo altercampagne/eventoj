@@ -61,6 +61,8 @@ class InscriptionsManagerVoter extends Voter
             Permission::REGISTRATION_LIST,
             Permission::REGISTRATION_VIEW,
 
+            Permission::STAGE_VIEW,
+
             Permission::USER_LIST,
             Permission::USER_VIEW,
         ]);
