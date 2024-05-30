@@ -65,20 +65,24 @@
                         {% for mealAvailability in availability.mealAvailabilities %}
                             <div class="col">
                                 <h4>{{ mealAvailability.meal|trans }}</h4>
-                                <span class="badge bg-primary fs-3" data-bs-toggle="tooltip" title="Nombre d'adultes pour le {{ mealAvailability.meal|trans|lower }}">
-                                    <i class="fa-solid fa-users fa-fw me-2"></i>
-                                    {{ mealAvailability.adults.booked }} / {{ mealAvailability.adults.max }}
-                                </span>
-                                <br />
-                                <span class="badge bg-primary fs-3 mt-2" data-bs-toggle="tooltip" title="Nombre d'enfants pour le {{ mealAvailability.meal|trans|lower }}">
-                                    <i class="fa-solid fa-child fa-fw me-2"></i>
-                                    {{ mealAvailability.children.booked }} / {{ mealAvailability.children.max }}
-                                </span>
-                                <br />
-                                <span class="badge bg-primary fs-3 mt-2" data-bs-toggle="tooltip" title="Nombre de vélos réservés pour le {{ mealAvailability.meal|trans|lower }}">
-                                    <i class="fa-solid fa-bicycle fa-fw me-2"></i>
-                                    {{ mealAvailability.bikes.booked }} / {{ mealAvailability.bikes.max }}
-                                </span>
+                                {% if stage.includesMeal(mealAvailability.meal) %}
+                                    <span class="badge bg-primary fs-3" data-bs-toggle="tooltip" title="Nombre d'adultes pour le {{ mealAvailability.meal|trans|lower }}">
+                                        <i class="fa-solid fa-users fa-fw me-2"></i>
+                                        {{ mealAvailability.adults.booked }} / {{ mealAvailability.adults.max }}
+                                    </span>
+                                    <br />
+                                    <span class="badge bg-primary fs-3 mt-2" data-bs-toggle="tooltip" title="Nombre d'enfants pour le {{ mealAvailability.meal|trans|lower }}">
+                                        <i class="fa-solid fa-child fa-fw me-2"></i>
+                                        {{ mealAvailability.children.booked }} / {{ mealAvailability.children.max }}
+                                    </span>
+                                    <br />
+                                    <span class="badge bg-primary fs-3 mt-2" data-bs-toggle="tooltip" title="Nombre de vélos réservés pour le {{ mealAvailability.meal|trans|lower }}">
+                                        <i class="fa-solid fa-bicycle fa-fw me-2"></i>
+                                        {{ mealAvailability.bikes.booked }} / {{ mealAvailability.bikes.max }}
+                                    </span>
+                                {% else %}
+                                    -
+                                {% endif %}
                             </div>
                         {% endfor %}
                     </div>

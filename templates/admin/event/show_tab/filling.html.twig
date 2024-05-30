@@ -26,7 +26,10 @@
         </thead>
         <tbody>
             {% for stage in event.stages %}
-                <tr{% if app.user.isPrepaForStage(stage) %} class="table-primary border"{% endif %}>
+                <tr
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %} data-href="{{ path('admin_stage_show', { slug: stage.slug }) }}"{% endif %}
+                    {% if app.user.isPrepaForStage(stage) %} class="table-primary border"{% endif %}
+                >
                     <td>{{ stage.date|format_date }}</td>
                     <td>
                         {% if stage.isBefore or stage.isAfter %}<span class="badge text-bg-secondary">{{ stage.type.value|upper }}</span>{% endif %}
@@ -34,13 +37,15 @@
                     </td>
                     {% for availability in stage.availability.mealAvailabilities %}
                         <td>
-                            <div class="d-flex align-items-center">
-                                {{ _self.item_availability(availability.adults, 'user', 'Nombre d\'adultes participants au '~availability.meal|trans|lower) }}
-                                {{ _self.item_availability(availability.children, 'child', 'Nombre d\'enfants participants au '~availability.meal|trans|lower) }}
-                                {% if 0 < event.bikesAvailable %}
-                                    {{ _self.item_availability(availability.bikes, 'bicycle', 'Nombre de de vélos nécessaires au moment du '~availability.meal|trans|lower) }}
-                                {% endif %}
-                            </div>
+                            {% if stage.includesMeal(availability.meal) %}
+                                <div class="d-flex align-items-center">
+                                    {{ _self.item_availability(availability.adults, 'user', 'Nombre d\'adultes participants au '~availability.meal|trans|lower) }}
+                                    {{ _self.item_availability(availability.children, 'child', 'Nombre d\'enfants participants au '~availability.meal|trans|lower) }}
+                                    {% if 0 < event.bikesAvailable %}
+                                        {{ _self.item_availability(availability.bikes, 'bicycle', 'Nombre de de vélos nécessaires au moment du '~availability.meal|trans|lower) }}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
                         </td>
                     {% endfor %}
                 </tr>

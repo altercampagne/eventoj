@@ -14,8 +14,9 @@ final class StageAvailability
     public readonly MealAvailability $lunch;
     public readonly MealAvailability $dinner;
 
-    public function __construct(Stage $stage)
-    {
+    public function __construct(
+        private readonly Stage $stage,
+    ) {
         $this->breakfast = new MealAvailability($stage, Meal::BREAKFAST);
         $this->lunch = new MealAvailability($stage, Meal::LUNCH);
         $this->dinner = new MealAvailability($stage, Meal::DINNER);
@@ -65,6 +66,10 @@ final class StageAvailability
     public function hasAvailability(): bool
     {
         foreach ($this->getMealAvailabilities() as $mealAvailability) {
+            if (!$this->stage->includesMeal($mealAvailability->meal)) {
+                continue;
+            }
+
             if ($mealAvailability->adults->availability >= 0) {
                 return true;
             }

@@ -120,6 +120,29 @@ class Stage
         $this->isFull = !$availability->hasAvailability();
     }
 
+    public function isFirstStageOfEvent(): bool
+    {
+        return $this->event->getFirstStage() === $this;
+    }
+
+    public function isLastStageOfEvent(): bool
+    {
+        return $this->event->getLastStage() === $this;
+    }
+
+    public function includesMeal(Meal $meal): bool
+    {
+        if ($this->isFirstStageOfEvent()) {
+            return !$this->event->getFirstMealOfFirstDay()->isAfter($meal);
+        }
+
+        if ($this->isLastStageOfEvent()) {
+            return !$this->event->getLastMealOfLastDay()->isBefore($meal);
+        }
+
+        return true;
+    }
+
     public function countArrivals(): int
     {
         $people = 0;
