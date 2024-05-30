@@ -51,6 +51,14 @@
                                 >
                                     {{ user.isInscriptionsManager ? 'Retirer' : 'Passer' }} gestionnaire inscriptions
                                 </twig:ButtonPost>
+
+                                <twig:ButtonPost
+                                    url="{{ path(user.isStatsViewer ? 'admin_user_unpromote_stats_viewer' : 'admin_user_promote_stats_viewer', { id: user.id }) }}"
+                                    tooltip="{{ user.isStatsViewer ? 'Retirer' : 'Ajouter' }} les droits de gestionnaire des inscriptions à {{ user.fullname }}"
+                                    btnClass="btn {{ user.isStatsViewer ? 'btn-warning' : 'btn-outline-warning' }}"
+                                >
+                                    {{ user.isStatsViewer ? 'Retirer' : 'Donner' }} les droits de voir les stats
+                                </twig:ButtonPost>
                             </li>
                         {% endif %}
                     </ul>

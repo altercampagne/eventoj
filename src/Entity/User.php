@@ -231,6 +231,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
         return \in_array('ROLE_INSCRIPTIONS', $this->roles);
     }
 
+    public function isStatsViewer(): bool
+    {
+        return \in_array('ROLE_STATS', $this->roles);
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */
