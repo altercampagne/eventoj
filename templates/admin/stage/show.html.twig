@@ -26,14 +26,56 @@
         <div class="col-8 border-start">
             <ul class="nav nav-tabs">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="registrations-tab" data-bs-toggle="tab" data-bs-target="#registrations-tab-pane" type="button" role="tab" aria-controls="registrations-tab-pane" aria-selected="true">
+                    <button class="nav-link active" id="filling-tab" data-bs-toggle="tab" data-bs-target="#filling-tab-pane" type="button" role="tab" aria-controls="filling-tab-pane" aria-selected="true">
+                        Remplissage
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="registrations-tab" data-bs-toggle="tab" data-bs-target="#registrations-tab-pane" type="button" role="tab" aria-controls="registrations-tab-pane" aria-selected="false">
                         Réservations <span class="text-secondary">({{ stage.confirmedStagesRegistrations|length }})</span>
                     </button>
                 </li>
             </ul>
 
             <div class="tab-content border border-top-0 border-secondary-outline rounded-bottom p-3">
-                <div class="tab-pane fade show active" id="registrations-tab-pane" role="tabpanel" aria-labelledby="registrations-tab" tabindex="0">
+                <div class="tab-pane show active" id="filling-tab-pane" role="tabpanel" aria-labelledby="filling-tab" tabindex="0">
+                    <div class="row text-center">
+                        <div class="col">
+                            <h4>Arrivées</h4>
+                            <span class="badge bg-success fs-1">
+                                {{ stage.countArrivals }}
+                            </span>
+                        </div>
+                        <div class="col">
+                            <h4>Départs</h4>
+                            <span class="badge bg-danger fs-1">
+                                {{ stage.countDepartures }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row text-center mt-3">
+                        {% for mealAvailability in availability.mealAvailabilities %}
+                            <div class="col">
+                                <h4>{{ mealAvailability.meal|trans }}</h4>
+                                <span class="badge bg-primary fs-3" data-bs-toggle="tooltip" title="Nombre d'adultes pour le {{ mealAvailability.meal|trans|lower }}">
+                                    <i class="fa-solid fa-users fa-fw me-2"></i>
+                                    {{ mealAvailability.adults.booked }} / {{ mealAvailability.adults.max }}
+                                </span>
+                                <br />
+                                <span class="badge bg-primary fs-3 mt-2" data-bs-toggle="tooltip" title="Nombre d'enfants pour le {{ mealAvailability.meal|trans|lower }}">
+                                    <i class="fa-solid fa-child fa-fw me-2"></i>
+                                    {{ mealAvailability.children.booked }} / {{ mealAvailability.children.max }}
+                                </span>
+                                <br />
+                                <span class="badge bg-primary fs-3 mt-2" data-bs-toggle="tooltip" title="Nombre de vélos réservés pour le {{ mealAvailability.meal|trans|lower }}">
+                                    <i class="fa-solid fa-bicycle fa-fw me-2"></i>
+                                    {{ mealAvailability.bikes.booked }} / {{ mealAvailability.bikes.max }}
+                                </span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane" id="registrations-tab-pane" role="tabpanel" aria-labelledby="registrations-tab" tabindex="1">
                     {% if stage.confirmedStagesRegistrations|length > 0 %}
                         <table class="table table-hover table-bordered table-sm">
                             <thead>

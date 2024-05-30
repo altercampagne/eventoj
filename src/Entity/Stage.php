@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\StageRepository;
 use App\Service\Availability\StageAvailability;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\UuidV4;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: StageRepository::class)]
 #[ORM\Table(name: '`stage`')]
 #[UniqueEntity(fields: ['event', 'slug'], message: 'Il y a déjà une étape avec ce slug pour cet évènement.')]
 #[ORM\Index(name: 'idx_stage_slug', fields: ['slug'])]
@@ -121,6 +122,60 @@ class Stage
 
             $this->bookedAdultsSeats += $registration->countAdults();
         }
+    }
+
+    public function countPeopleForBreakfast(): int
+    {
+        return $this->countPeopleFor(Meal::BREAKFAST);
+    }
+
+    public function countPeopleForLunch(): int
+    {
+        return $this->countPeopleFor(Meal::LUNCH);
+    }
+
+    public function countPeopleForDinner(): int
+    {
+        return $this->countPeopleFor(Meal::DINNER);
+    }
+
+    public function countPeopleFor(Meal $meal): int
+    {
+        $people = 0;
+
+        foreach ($this->getConfirmedStagesRegistrations() as $stageRegistration) {
+            if ($stageRegistration->includesMeal($meal)) {
+                $people += $stageRegistration->getRegistration()->countPeople();
+            }
+        }
+
+        return $people;
+    }
+
+    public function countArrivals(): int
+    {
+        $people = 0;
+
+        foreach ($this->getConfirmedStagesRegistrations() as $stageRegistration) {
+            if ($stageRegistration->getRegistration()->getStageRegistrationStart() == $stageRegistration) {
+                $people += $stageRegistration->getRegistration()->countPeople();
+            }
+        }
+
+        return $people;
+    }
+
+    public function countDepartures(): int
+    {
+        $people = 0;
+
+        foreach ($this->getConfirmedStagesRegistrations() as $stageRegistration) {
+            if ($stageRegistration->getRegistration()->getStageRegistrationEnd() == $stageRegistration) {
+                $people += $stageRegistration->getRegistration()->countPeople();
+            }
+        }
+
+        return $people;
     }
 
     public function isBefore(): bool
