@@ -61,4 +61,15 @@ final class StageAvailability
     {
         return [$this->breakfast, $this->lunch, $this->dinner];
     }
+
+    public function hasAvailability(): bool
+    {
+        foreach ($this->getMealAvailabilities() as $mealAvailability) {
+            if ($mealAvailability->adults->availability >= 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

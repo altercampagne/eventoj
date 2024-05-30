@@ -35,7 +35,7 @@ final readonly class PaymentSuccessfulHandler
 
             foreach ($registration->getStagesRegistrations() as $stageRegistration) {
                 $stage = $stageRegistration->getStage();
-                $stage->updateBookedSeats();
+                $stage->updateIsFullProperty();
 
                 $this->em->persist($stage);
             }

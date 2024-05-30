@@ -67,9 +67,9 @@ class Stage
     private ?string $routeUrl = null;
 
     #[ORM\Column(options: [
-        'comment' => 'Number of booked seats, adults only (computed)',
+        'comment' => 'Is the event full or not (computed)',
     ])]
-    private int $bookedAdultsSeats = 0;
+    private bool $isFull = false;
 
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
@@ -110,46 +110,14 @@ class Stage
 
     public function isFull(): bool
     {
-        return $this->event->getAdultsCapacity() <= $this->bookedAdultsSeats;
+        return $this->isFull;
     }
 
-    public function updateBookedSeats(): void
+    public function updateIsFullProperty(): void
     {
-        $this->bookedAdultsSeats = 0;
+        $availability = new StageAvailability($this);
 
-        foreach ($this->getConfirmedStagesRegistrations() as $stageRegistration) {
-            $registration = $stageRegistration->getRegistration();
-
-            $this->bookedAdultsSeats += $registration->countAdults();
-        }
-    }
-
-    public function countPeopleForBreakfast(): int
-    {
-        return $this->countPeopleFor(Meal::BREAKFAST);
-    }
-
-    public function countPeopleForLunch(): int
-    {
-        return $this->countPeopleFor(Meal::LUNCH);
-    }
-
-    public function countPeopleForDinner(): int
-    {
-        return $this->countPeopleFor(Meal::DINNER);
-    }
-
-    public function countPeopleFor(Meal $meal): int
-    {
-        $people = 0;
-
-        foreach ($this->getConfirmedStagesRegistrations() as $stageRegistration) {
-            if ($stageRegistration->includesMeal($meal)) {
-                $people += $stageRegistration->getRegistration()->countPeople();
-            }
-        }
-
-        return $people;
+        $this->isFull = !$availability->hasAvailability();
     }
 
     public function countArrivals(): int
@@ -308,11 +276,6 @@ class Stage
         $this->description = $description;
 
         return $this;
-    }
-
-    public function getBookedAdultsSeats(): int
-    {
-        return $this->bookedAdultsSeats;
     }
 
     public function getCreatedAt(): \DateTimeImmutable

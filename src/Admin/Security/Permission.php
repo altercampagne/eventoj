@@ -25,7 +25,7 @@ enum Permission: string
     case EVENT_CREATE = 'event.create';
     case EVENT_UPDATE = 'event.update';
     case EVENT_PUBLISH = 'event.publish';
-    case EVENT_UPDATE_BOOKED_SEATS = 'event.update_booked_seats';
+    case EVENT_UPDATE_AVAILABILITY = 'event.event_update_availability';
     case EVENT_EXPORT_EMAILS = 'event.export_emails';
 
     case MEMBERSHIP_LIST = 'membership.list';
@@ -46,6 +46,7 @@ enum Permission: string
     case STAGE_CREATE = 'stage.create';
     case STAGE_UPDATE = 'stage.update';
     case STAGE_VIEW = 'stage.view';
+    case STAGE_UPDATE_AVAILABILITY = 'stage.stage_update_availability';
 
     case USER_LIST = 'user.list';
     case USER_VIEW = 'user.view';

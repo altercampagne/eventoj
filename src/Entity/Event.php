@@ -225,13 +225,6 @@ class Event
         return true;
     }
 
-    public function updateBookedSeats(): void
-    {
-        foreach ($this->stages as $stage) {
-            $stage->updateBookedSeats();
-        }
-    }
-
     public function getAdultsCapacity(): int
     {
         return $this->adultsCapacity;

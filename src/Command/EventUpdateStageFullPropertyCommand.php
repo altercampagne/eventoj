@@ -13,10 +13,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'eventoj:event:update-booked-seats',
-    description: 'Update seats availability for all stages',
+    name: 'eventoj:event:update-stage-full-property',
+    description: 'Update the "is_full" property for all stages',
 )]
-class EventUpdateBookedSeatsCommand extends Command
+class EventUpdateStageFullPropertyCommand extends Command
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
@@ -31,7 +31,9 @@ class EventUpdateBookedSeatsCommand extends Command
 
         $events = $this->em->getRepository(Event::class)->findAll();
         foreach ($events as $event) {
-            $event->updateBookedSeats();
+            foreach ($event->getStages() as $stage) {
+                $stage->updateIsFullProperty();
+            }
 
             $this->em->persist($event);
         }
