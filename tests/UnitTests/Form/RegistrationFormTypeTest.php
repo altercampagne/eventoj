@@ -124,6 +124,9 @@ class RegistrationFormTypeTest extends KernelTestCase
         yield ['test', 'Cette chaîne n\'est pas autorisée.'];
         yield ['firsTNAme', 'Cette chaîne n\'est pas autorisée.'];
         yield ['Lastname', 'Cette chaîne n\'est pas autorisée.'];
+
+        // Valid name but not accepted by helloasso (yet!)
+        yield ['last--name', 'Cette chaîne contient des caractères spéciaux non autorisés.'];
     }
 
     /**

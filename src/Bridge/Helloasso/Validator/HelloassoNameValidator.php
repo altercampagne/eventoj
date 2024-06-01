@@ -80,5 +80,13 @@ class HelloassoNameValidator extends ConstraintValidator
 
             return;
         }
+
+        if ($string->match('/--/')) {
+            $this->context->buildViolation($constraint->forbiddenSpecialCharactersMessage)
+                ->setParameter('{{ value }}', $value)
+                ->addViolation();
+
+            return;
+        }
     }
 }
