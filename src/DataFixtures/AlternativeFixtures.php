@@ -25,6 +25,7 @@ class AlternativeFixtures extends AbstractFixture
         $manager->flush();
 
         foreach ($alternatives as $alternative) {
+            /* @phpstan-ignore-next-line */
             $this->setReference($alternative->getSlug(), $alternative);
         }
     }

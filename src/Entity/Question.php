@@ -25,7 +25,7 @@ class Question
 
     #[ORM\Column(unique: true)]
     #[Gedmo\Slug(fields: ['question'], updatable: false)]
-    private string $slug;
+    private ?string $slug = null;
 
     #[ORM\Column(type: 'string', length: 20, enumType: QuestionCategory::class, options: [
         'comment' => 'Category of this question',
@@ -63,7 +63,7 @@ class Question
         return $this->id;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }

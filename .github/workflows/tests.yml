@@ -49,3 +49,6 @@ jobs:
 
       - name: Run PHPUnit
         run: bin/phpunit
+
+      - name: Run Tiime-Software/TestedRoutesCheckerBundle
+        run: bin/console tiime:tested-routes-checker:check

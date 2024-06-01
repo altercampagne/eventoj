@@ -15,3 +15,4 @@ parameters:
 
     ignoreErrors:
       - '#Call to an undefined method Faker\\Generator::[a-zA-Z0-9]+\(\)#'
+      - '#Property App\\Entity\\[A-Za-z]+::\$slug type mapping mismatch: property can contain string\|null but database expects string.#'

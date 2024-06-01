@@ -34,9 +34,9 @@ class Alternative implements LocatedEntityInterface
 
     #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['name'])]
-    private string $slug;
+    private ?string $slug = null;
 
-    #[Assert\Url]
+    #[Assert\Url(requireTld: true)]
     #[ORM\Column(nullable: true)]
     private ?string $website = null;
 
@@ -112,7 +112,7 @@ class Alternative implements LocatedEntityInterface
         return $this;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }

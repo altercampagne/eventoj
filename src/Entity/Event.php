@@ -46,7 +46,7 @@ class Event
 
     #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['name'])]
-    private string $slug;
+    private ?string $slug = null;
 
     #[Assert\NotBlank]
     #[ORM\Column]
@@ -116,7 +116,7 @@ class Event
     #[ORM\Column(type: 'string', length: 10, enumType: Meal::class)]
     private Meal $lastMealOfLastDay;
 
-    #[Assert\Url]
+    #[Assert\Url(requireTld: true)]
     #[ORM\Column(nullable: true)]
     private ?string $exchangeMarketLink = null;
 
@@ -372,7 +372,7 @@ class Event
         return $this;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
