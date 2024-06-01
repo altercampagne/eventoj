@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+s3cmd -c ~/.s3cfg-altercampagne ls s3://altercampagne-backups/eventoj/ | sort | tail -n 1 | awk '{print $NF}' | xargs -I {} -n 1 s3cmd -c ~/.s3cfg-altercampagne --quiet get {} /tmp/eventoj-backup.sql --force
+docker compose exec -T php bin/console doctrine:database:drop --if-exists --force
+docker compose exec -T php bin/console doctrine:database:create --if-not-exists
+docker compose exec -T database psql -U app app < /tmp/eventoj-backup.sql
