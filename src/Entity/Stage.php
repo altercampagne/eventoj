@@ -49,7 +49,7 @@ class Stage
 
     #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['name'])]
-    private string $slug;
+    private ?string $slug = null;
 
     #[Assert\NotBlank(message: 'La description ne doit pas être vide.')]
     #[ORM\Column(type: 'text')]
@@ -60,7 +60,7 @@ class Stage
     ])]
     private ?StageDifficulty $difficulty = null;
 
-    #[Assert\Url]
+    #[Assert\Url(requireTld: true)]
     #[ORM\Column(nullable: true, options: [
         'comment' => 'The URL of the route (komoot or openrunner) to embed on website',
     ])]
@@ -284,7 +284,7 @@ class Stage
         return $this;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }

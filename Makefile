@@ -17,6 +17,12 @@ vendors-install: ## Install vendors
 	@$(DOCKER_COMPOSE) exec php composer ins
 	@$(DOCKER_COMPOSE) exec php bin/console importmap:install
 
+vendors-update: ## Update all vendors
+	@$(DOCKER_COMPOSE) run php composer up
+	@$(DOCKER_COMPOSE) run php composer --working-dir tools/php-cs-fixer up
+	@$(DOCKER_COMPOSE) run php composer --working-dir tools/phpstan up
+	@$(DOCKER_COMPOSE) run php bin/console importmap:update
+
 ##@ Docker commands
 build: ## Build docker stack
 	@$(DOCKER_COMPOSE) build
@@ -61,7 +67,9 @@ assets-build: ## Build assets (SASS)
 
 ##@ Quality commands
 test: ## Run all tests
+	@$(DOCKER_COMPOSE) run php rm -f var/cache/tiime_tested_routes_checker_bundle_route_storage
 	@$(DOCKER_COMPOSE) run php bin/phpunit
+	@$(DOCKER_COMPOSE) run php bin/console tiime:tested-routes-checker:check
 
 phpstan: ## Run PHPStan
 	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/phpstan
