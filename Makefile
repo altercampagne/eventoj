@@ -50,7 +50,7 @@ psql-test: ## Enter in Test DB container
 ##@ Backends commands
 db-reset: ## Reset DB
 	@$(DOCKER_COMPOSE) run php bin/reset-db
-	@$(DOCKER_COMPOSE) run php bin/console eventoj:event:update-booked-seats
+	@$(DOCKER_COMPOSE) run php bin/console eventoj:event:update-stage-full-property
 
 db-reset-test: ## Reset test DB
 	@$(DOCKER_COMPOSE) run -e APP_ENV=test php bin/reset-db
