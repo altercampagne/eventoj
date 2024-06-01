@@ -5,10 +5,11 @@ services:
       - "5432:5432"
 ###< doctrine/doctrine-bundle ###
 
-  maildev:
-    image: maildev/maildev
-    environment:
-      - MAILDEV_WEB_PORT=80
-      - MAILDEV_SMTP_PORT=25
+  mailer:
+    image: axllent/mailpit
     ports:
-      - 1080:80
+      - 1025
+      - 8025:8025
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
