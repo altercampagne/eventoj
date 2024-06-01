@@ -11,6 +11,8 @@ when@prod:
             attach_stacktrace: true
             environment: '%env(SENTRY_ENVIRONMENT)%'
             ignore_exceptions:
+              - Symfony\Component\ErrorHandler\Error\FatalError
+              - Symfony\Component\Debug\Exception\FatalErrorException
               - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
               - Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
 
