@@ -70,7 +70,7 @@ final class StageAvailability
                 continue;
             }
 
-            if ($mealAvailability->adults->availability >= 0) {
+            if ($mealAvailability->adults->availability > 0) {
                 return true;
             }
         }
