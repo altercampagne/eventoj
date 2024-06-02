@@ -116,9 +116,11 @@
                 {% endfor %}
             {% endfor %}
 
-            <div class="text-center mb-4">
-                <h1 class="fw-bold text-uppercase text-primary">{{ title|default('No title defined') }}</h1>
-            </div>
+            {% block header %}
+                <div class="text-center mb-4">
+                    <h1 class="fw-bold text-uppercase text-primary">{{ title|default('No title defined') }}</h1>
+                </div>
+            {% endblock %}
 
             {% block main %}{% endblock %}
         </div>
