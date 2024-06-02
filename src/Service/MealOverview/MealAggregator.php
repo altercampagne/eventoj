@@ -43,7 +43,7 @@ final class MealAggregator
                 }
             }
 
-            foreach ($stage->getStagesRegistrations() as $stageRegistration) {
+            foreach ($stage->getConfirmedStagesRegistrations() as $stageRegistration) {
                 $people = $stageRegistration->getRegistration()->getPeople();
 
                 foreach (Meal::cases() as $meal) {
