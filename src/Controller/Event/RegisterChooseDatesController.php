@@ -11,6 +11,7 @@ use App\Entity\StageRegistration;
 use App\Entity\User;
 use App\Form\EventRegistration\ChooseDatesFormType;
 use App\Form\EventRegistration\EventRegistrationDTO;
+use App\Service\UserEventRegistration\UserEventComputedRegistrations;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,9 +55,6 @@ class RegisterChooseDatesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var User $user */
-            $user = $this->getUser();
-
             $bookedStages = $eventRegistrationDTO->getBookedStages();
             $stagesRegistrations = [];
             for ($i = 0; $i < \count($bookedStages); ++$i) {
@@ -98,7 +96,7 @@ class RegisterChooseDatesController extends AbstractController
         return $this->render('event/register_choose_dates.html.twig', [
             'registration' => $registration,
             'form' => $form,
-            'confirmedStages' => $this->em->getRepository(Registration::class)->findConfirmedStagesForEventAndUser($event, $user),
+            'userEventComputedRegistrations' => new UserEventComputedRegistrations($user, $event),
         ]);
     }
 }

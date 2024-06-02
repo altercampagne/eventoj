@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Validator;
 
-use App\Entity\Registration;
+use App\Entity\Meal;
 use App\Form\EventRegistration\EventRegistrationDTO;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\UserEventRegistration\UserEventComputedRegistrations;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -14,11 +14,6 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class DoesNotOverlapWithAnotherRegistrationValidator extends ConstraintValidator
 {
-    public function __construct(
-        private readonly EntityManagerInterface $em,
-    ) {
-    }
-
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof DoesNotOverlapWithAnotherRegistration) {
@@ -33,23 +28,25 @@ class DoesNotOverlapWithAnotherRegistrationValidator extends ConstraintValidator
             throw new UnexpectedValueException($value, EventRegistrationDTO::class);
         }
 
-        $event = $value->registration->getEvent();
-        $user = $value->registration->getUser();
-
-        $confirmedStages = $this->em->getRepository(Registration::class)->findConfirmedStagesForEventAndUser($event, $user);
-        if (0 === \count($confirmedStages)) {
-            return;
-        }
+        $userEventComputedRegistrations = new UserEventComputedRegistrations($value->registration->getUser(), $value->registration->getEvent());
 
         foreach ($value->getBookedStages() as $bookedStage) {
-            if (!\in_array($bookedStage, $confirmedStages)) {
-                continue;
+            if ($value->stageStart === $bookedStage) {
+                $meals = $value->getFirstDayMeals();
+            } elseif ($value->stageEnd === $bookedStage) {
+                $meals = $value->getLastDayMeals();
+            } else {
+                $meals = Meal::cases();
             }
 
-            $this->context->buildViolation($constraint->message)
-                ->addViolation();
+            foreach ($meals as $meal) {
+                if ($userEventComputedRegistrations->hasRegistrationForStageAndMeal($bookedStage, $meal)) {
+                    $this->context->buildViolation($constraint->message)
+                        ->addViolation();
 
-            return;
+                    return;
+                }
+            }
         }
     }
 }

@@ -24,19 +24,56 @@ enum Meal: string implements TranslatableInterface
 
     public function isBefore(Meal $meal): bool
     {
-        return match ($this) {
-            self::BREAKFAST => Meal::BREAKFAST !== $meal,
-            self::LUNCH => Meal::DINNER === $meal,
-            self::DINNER => false,
-        };
+        return $this->compare($meal) < 0;
     }
 
     public function isAfter(Meal $meal): bool
     {
+        return $this->compare($meal) > 0;
+    }
+
+    public function compare(Meal $meal): int
+    {
+        if ($this === $meal) {
+            return 0;
+        }
+
         return match ($this) {
-            self::BREAKFAST => false,
-            self::LUNCH => Meal::BREAKFAST === $meal,
-            self::DINNER => Meal::DINNER !== $meal,
+            self::BREAKFAST => -1,
+            self::LUNCH => Meal::BREAKFAST === $meal ? 1 : -1,
+            self::DINNER => 1,
+        };
+    }
+
+    /**
+     * @return Meal[]
+     */
+    public function getPreviousMeals(bool $includeSelf = false): array
+    {
+        $meals = match ($this) {
+            self::BREAKFAST => [],
+            self::LUNCH => [Meal::BREAKFAST],
+            self::DINNER => [Meal::BREAKFAST, Meal::LUNCH],
+        };
+
+        if ($includeSelf) {
+            $meals[] = $this;
+        }
+
+        return $meals;
+    }
+
+    /**
+     * @return Meal[]
+     */
+    public function getFollowingMeals(bool $includeSelf = false): array
+    {
+        $meals = $includeSelf ? [$this] : [];
+
+        return match ($this) {
+            self::BREAKFAST => array_merge($meals, [Meal::LUNCH, Meal::DINNER]),
+            self::LUNCH => array_merge($meals, [Meal::DINNER]),
+            self::DINNER => $meals,
         };
     }
 }

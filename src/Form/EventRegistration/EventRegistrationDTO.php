@@ -84,6 +84,44 @@ class EventRegistrationDTO
         );
     }
 
+    /**
+     * @return Meal[]
+     */
+    public function getFirstDayMeals(): array
+    {
+        if (1 < \count($this->getBookedStages())) {
+            return $this->firstMeal->getFollowingMeals(includeSelf: true);
+        }
+
+        return array_uintersect(
+            $this->firstMeal->getFollowingMeals(includeSelf: true),
+            $this->lastMeal->getPreviousMeals(includeSelf: true),
+            static function ($meal1, $meal2): int {
+                /* @phpstan-ignore-next-line */
+                return $meal1->compare($meal2);
+            }
+        );
+    }
+
+    /**
+     * @return Meal[]
+     */
+    public function getLastDayMeals(): array
+    {
+        if (1 < \count($this->getBookedStages())) {
+            return $this->lastMeal->getPreviousMeals(includeSelf: true);
+        }
+
+        return array_uintersect(
+            $this->firstMeal->getFollowingMeals(includeSelf: true),
+            $this->lastMeal->getPreviousMeals(includeSelf: true),
+            static function ($meal1, $meal2): int {
+                /* @phpstan-ignore-next-line */
+                return $meal1->compare($meal2);
+            }
+        );
+    }
+
     #[Assert\Callback(groups: ['choose_people'])]
     public function validateNeededBike(ExecutionContextInterface $context, mixed $payload): void
     {

@@ -62,7 +62,7 @@
                         registration: registration,
                         form: form.stageStart,
                         modal: 'start',
-                        confirmedStages: confirmedStages,
+                        userEventComputedRegistrations: userEventComputedRegistrations,
                     } only %}
 
                     {% include 'event/_day_modal.html.twig' with {
@@ -70,7 +70,7 @@
                         registration: registration,
                         form: form.stageEnd,
                         modal: 'end',
-                        confirmedStages: confirmedStages,
+                        userEventComputedRegistrations: userEventComputedRegistrations,
                     } only %}
 
                     <div class="d-none">

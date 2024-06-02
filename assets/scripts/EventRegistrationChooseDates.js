@@ -85,22 +85,33 @@ class EventRegistrationChooseDates {
 
       this.enableAccordionItem(item);
 
-      // The option is BEFORE the stageStart
+      // If we already decided next stages must be deactivated, we don't need
+      // to go further!
+      if (disableNextStages) {
+        this.disableAccordionItem(item);
+
+        return;
+      }
+
+      // The option is BEFORE the stageStart: it's not possible to select it.
       if (index < startIndex) {
         this.disableAccordionItem(item);
 
         return;
       }
 
-      // Already registered
-      if (item.dataset.confirmed == 1) {
+      // If the list item is already full or almost, we don't have anyhting
+      // special to do, except saving this info to disable all following
+      // options
+      if (item.dataset.full == 1) {
         disableNextStages = true;
-        this.disableAccordionItem(item);
 
         return;
       }
 
       // Same day !
+      // Depending on the previously selected first meal, we may have to
+      // disable some buttons.
       if (index == startIndex) {
         if (this.firstMeal.value == 'breakfast') {
           return;
@@ -123,20 +134,16 @@ class EventRegistrationChooseDates {
         return;
       }
 
-      // If the list item is already full or almost, we don't have anyhting
-      // special to do, except saving this info to disable all following
-      // options
-      if (item.dataset.full == 1) {
+      // Already registered
+      if (item.dataset.booked == 1) {
         disableNextStages = true;
+        if (item.dataset.fullyBooked) {
+          this.disableAccordionItem(item);
+        }
 
         return;
       }
 
-      if (disableNextStages) {
-        this.disableAccordionItem(item);
-
-        return;
-      }
     })
 
     this.updateNumberOfDays();
@@ -169,7 +176,7 @@ class EventRegistrationChooseDates {
         button.classList.add('d-none');
       });
 
-      if (!item.dataset.full && !item.dataset.confirmed) {
+      if (!item.dataset.full && !item.dataset.booked) {
         item.querySelector('span.badge-not-available').classList.remove('d-none');
       }
   }
