@@ -104,6 +104,7 @@ class FixtureBuilder
             ->setOpeningDateForBookings($openingDateForBookings ?? new \DateTimeImmutable())
             ->setDescription($description ?? self::getFaker()->sentence())
             ->setPahekoProjectId((string) $pahekoProjectId)
+            ->setExchangeMarketLink('https://localhost')
         ;
         ReflectionHelper::setProperty($event, 'adultsCapacity', $adultsCapacity);
         ReflectionHelper::setProperty($event, 'childrenCapacity', $childrenCapacity);
