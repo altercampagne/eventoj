@@ -17,8 +17,29 @@ final readonly class UploadedFileUrlGenerator
     ) {
     }
 
-    public function getImageUrl(UploadedFile $file, int $width, int $height): string
+    public function getImageUrl(?UploadedFile $file, ?int $width = null, ?int $height = null): string
     {
-        return "https://{$this->cloudimgToken}.cloudimg.io/{$this->cloudimgAlias}/{$file->getPath()}?width={$width}&height={$height}";
+        if (null === $file) {
+            $width = $width ?: 500;
+            $height = $height ?: 500;
+
+            return "https://placehold.co/{$width}x{$height}?text=Image\\nnon trouvée";
+        }
+
+        $path = "https://{$this->cloudimgToken}.cloudimg.io/{$this->cloudimgAlias}/{$file->getPath()}";
+
+        $parameters = [];
+        if (null !== $width) {
+            $parameters['width'] = $width;
+        }
+        if (null !== $height) {
+            $parameters['height'] = $height;
+        }
+
+        if (0 === \count($parameters)) {
+            return $path;
+        }
+
+        return $path.'?'.http_build_query($parameters);
     }
 }

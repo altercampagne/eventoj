@@ -22,10 +22,6 @@ final class UploadedImage
 
     public function getUrl(): string
     {
-        if (null === $this->file) {
-            return "https://placehold.co/{$this->width}x{$this->height}?text=Image\\nnon trouvée";
-        }
-
         return $this->uploadedFileUrlGenerator->getImageUrl($this->file, $this->width, $this->height);
     }
 }
