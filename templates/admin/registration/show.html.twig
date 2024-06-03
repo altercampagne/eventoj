@@ -26,7 +26,7 @@
                                 <ul>
                                     {% for companion in registration.companions %}
                                         <li>
-                                            {{ companion.fullname }} <span class="text-secondary">({{ companion.age }} ans)</span>
+                                            {{ companion.fullname }} <span class="text-secondary">({{ companion.age(registration.stageRegistrationStart.stage.date) }} ans)</span>
                                         </li>
                                     {% endfor %}
                                 </ul>

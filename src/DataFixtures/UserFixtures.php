@@ -32,6 +32,16 @@ class UserFixtures extends AbstractFixture
             lastName: 'Moyen',
             birthDate: new \DateTimeImmutable('-8 years'),
         ));
+        // Following child whild become "adult" (13+ years old) just before the beginning of the event.
+        // Useful to check which date is used during registration!
+        $birthDate = new \DateTimeImmutable('-13 years');
+        $birthDate = $birthDate->setDate((int) $birthDate->format('Y'), 6, 25);
+        $manager->persist(FixtureBuilder::createCompanion(
+            user: $admin,
+            firstName: 'Bambino',
+            lastName: 'QuiVaÊtreAdulte',
+            birthDate: $birthDate,
+        ));
         $manager->persist(FixtureBuilder::createCompanion(
             user: $admin,
             firstName: 'Bambino',

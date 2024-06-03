@@ -30,17 +30,24 @@ final class BillCreator
 
     public function getPriceForPerson(User|Companion $person, Registration $registration): Price
     {
+        if (null === $firstStageRegistration = $registration->getStageRegistrationStart()) {
+            throw new \RuntimeException('Given registration does not contains any stage!');
+        }
+
+        // We check the age of the person at the beginning of the registration
+        $age = $person->getAge($firstStageRegistration->getStage()->getDate());
+
         $days = $registration->payingDaysOfPresence();
 
-        if ($person->getAge() < 3) {
+        if ($age < 3) {
             return Price::fixed(0, $days);
         }
 
-        if ($person->getAge() < 13) {
+        if ($age < 13) {
             return Price::fixed(1000 * $days, $days);
         }
 
-        if ($person->getAge() < 18) {
+        if ($age < 18) {
             return Price::fixed(2000 * $days, $days);
         }
 

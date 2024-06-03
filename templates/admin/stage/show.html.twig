@@ -105,6 +105,28 @@
                                         <i class="fa-solid fa-bicycle fa-fw me-2"></i>
                                         {{ mealAvailability.bikes.booked }} / {{ mealAvailability.bikes.max }}
                                     </span>
+
+                                    {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                                        <div class="mt-3 border bg-light py-3 position-relative">
+                                            <span class="position-absolute top-0 start-0 bg-dark-subtle px-1"><small>DEBUG</small></span>
+                                            <h5>Personnes > 13 ans :</h5>
+                                            <ul class="list-unstyled">
+                                                {% for stageRegistration in stage.confirmedStagesRegistrations|filter(sr => sr.includesMeal(mealAvailability.meal)) %}
+                                                    {% for person in stageRegistration.registration.nonChildren %}
+                                                        <li>{{ person.fullName }} <span class="text-secondary">({{ person.age(stageRegistration.registration.stageRegistrationStart.stage.date) }} ans)</span>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            </ul>
+                                            <h5>Enfants :</h5>
+                                            <ul class="list-unstyled">
+                                                {% for stageRegistration in stage.confirmedStagesRegistrations|filter(sr => sr.includesMeal(mealAvailability.meal)) %}
+                                                    {% for person in stageRegistration.registration.children %}
+                                                        <li>{{ person.fullName }} <span class="text-secondary">({{ person.age(stageRegistration.registration.stageRegistrationStart.stage.date) }} ans)</span>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
                                 {% else %}
                                     -
                                 {% endif %}

@@ -241,24 +241,12 @@ class Registration
 
     public function countPeople(): int
     {
-        return $this->companions->count() + 1;
-    }
-
-    public function countAdults(): int
-    {
-        return $this->countPeople() - $this->countChildren();
+        return \count($this->getPeople());
     }
 
     public function countChildren(): int
     {
-        $count = 0;
-        foreach ($this->companions as $companion) {
-            if ($companion->isChild()) {
-                ++$count;
-            }
-        }
-
-        return $count;
+        return \count($this->getChildren());
     }
 
     public function getEndAt(): ?\DateTimeImmutable
@@ -276,6 +264,31 @@ class Registration
     public function getPeople(): array
     {
         return array_merge([$this->user], $this->companions->toArray());
+    }
+
+    /**
+     * @return array<User|Companion>
+     */
+    public function getNonChildren(): array
+    {
+        return array_udiff($this->getPeople(), $this->getChildren(), static fn ($person1, $person2): int => $person1 === $person2 ? 0 : -1);
+    }
+
+    /**
+     * @return array<User|Companion>
+     */
+    public function getChildren(): array
+    {
+        return array_filter($this->getPeople(), function (User|Companion $person): bool {
+            // If available, we use the date of the first select stage to count
+            // children / adults at this date.
+            $atDate = new \DateTimeImmutable();
+            if (null !== $stageRegistration = $this->getStageRegistrationEnd()) {
+                $atDate = $stageRegistration->getStage()->getDate();
+            }
+
+            return $person->isChild($atDate);
+        });
     }
 
     public function getId(): UuidV4

@@ -6,19 +6,23 @@ namespace App\Entity;
 
 trait PersonTrait
 {
-    public function isChild(): bool
+    public function isChild(?\DateTimeInterface $atDate = null): bool
     {
-        return $this->getAge() < 13;
+        return $this->getAge($atDate) < 13;
     }
 
-    public function isAdult(): bool
+    public function isAdult(?\DateTimeInterface $atDate = null): bool
     {
-        return $this->getAge() >= 18;
+        return $this->getAge($atDate) >= 18;
     }
 
-    public function getAge(): int
+    public function getAge(?\DateTimeInterface $atDate = null): int
     {
-        return (new \DateTimeImmutable())->diff($this->birthDate)->y;
+        if (null === $atDate) {
+            $atDate = new \DateTimeImmutable();
+        }
+
+        return $atDate->diff($this->birthDate)->y;
     }
 
     public function getFullName(): string
