@@ -13,7 +13,7 @@ class BasicGetTest extends WebTestCase
     use DatabaseUtilTrait;
 
     /**
-     * @return iterable<array{string, string, ?string}>
+     * @return iterable<array{0: string, 1?: string, 2?: string}>
      */
     public static function publicPages(): iterable
     {
@@ -23,6 +23,7 @@ class BasicGetTest extends WebTestCase
         yield ['/alternative/les-champs-de-lile', 'Les Champs de l\'Île', 'Les Champs de l\'Île'];
         yield ['/contact', 'Contacter l\'association', 'Nous contacter'];
         yield ['/faq', 'Foire aux questions', 'Foire aux questions'];
+        yield ['/robots.txt'];
     }
 
     /**
@@ -46,7 +47,7 @@ class BasicGetTest extends WebTestCase
     /**
      * @dataProvider publicPages
      */
-    public function testPublicPages(string $url, string $expectedTitle, ?string $expectedH1 = null): void
+    public function testPublicPages(string $url, ?string $expectedTitle = null, ?string $expectedH1 = null): void
     {
         $this->checkPage(static::createClient(), $url, $expectedTitle, $expectedH1);
     }
@@ -65,12 +66,14 @@ class BasicGetTest extends WebTestCase
         $this->assertSelectorExists('#connected-as');
     }
 
-    private function checkPage(KernelBrowser $client, string $url, string $expectedTitle, ?string $expectedH1 = null): void
+    private function checkPage(KernelBrowser $client, string $url, ?string $expectedTitle, ?string $expectedH1 = null): void
     {
         $client->request('GET', $url);
 
         $this->assertResponseIsSuccessful();
-        $this->assertPageTitleContains($expectedTitle);
+        if (null !== $expectedTitle) {
+            $this->assertPageTitleContains($expectedTitle);
+        }
         if (null !== $expectedH1) {
             $this->assertSelectorTextContains('h1', $expectedH1);
         }
