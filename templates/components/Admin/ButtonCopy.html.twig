@@ -1,4 +1,15 @@
-<div class="btn btn-sm copy-btn p-0 text-muted" data-clipboard-text="{{ value }}" data-bs-toggle="tooltip" title="{{ tooltip|default('Copier la valeur') }}">
+<div{{
+    attributes.defaults({
+        class: 'btn btn-sm copy-btn p-0 text-muted',
+    })
+    .without('data-clipboard-text')
+    .without('data-bs-toggle')
+    .without('title')
+}}
+    data-bs-toggle="tooltip"
+    data-clipboard-text="{{ value }}"
+    title="{{ tooltip|default('Copier la valeur') }}"
+>
     {% block content %}
         <i class="fas fa-clipboard fa-fw"></i>
     {% endblock %}
