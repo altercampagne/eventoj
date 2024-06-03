@@ -1,4 +1,8 @@
 User-agent: *
+{{ app.environment }}
+{{ app.environment == 'prod' ? 1 : 0 }}
+{{ app.request.headers.get('host') }}
+{{ app.request.headers.get('host') != 'events-staging.altercampagne.ovh' ? 1 : 0 }}
 {% if app.environment == 'prod' and app.request.headers.get('host') != 'events-staging.altercampagne.ovh' %}
 Allow: /
 {% else %}
