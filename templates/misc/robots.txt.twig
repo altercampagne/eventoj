@@ -1,6 +1,6 @@
 User-agent: *
-{% if app.environment != 'prod' or app.request.headers.get('host') == 'events-staging.altercampagne.ovh' %}
-Disallow: /
-{% else %}
+{% if app.environment == 'prod' and app.request.headers.get('host') != 'events-staging.altercampagne.ovh' %}
 Allow: /
+{% else %}
+Disallow: /
 {% endif %}
