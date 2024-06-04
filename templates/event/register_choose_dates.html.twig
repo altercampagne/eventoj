@@ -43,18 +43,6 @@
                         </div>
                     </div>
 
-                    <ul class="list-group mt-3">
-                        <li class="list-group-item p-3 d-flex justify-content-between align-items-center">
-                            <div>
-                                Nombre de jours de présence<br />
-                                <small class="text-secondary">Calculé en fonction de tes dates d'arrivée et de départ</small>
-                            </div>
-                            <div class="col-auto fw-bold">
-                                <span id="event-registration-days-of-presence">-</span> jours
-                            </div>
-                        </li>
-                    </ul>
-
                     <twig:EventRegistration:Buttons step="choose_dates" />
 
                     {% include 'event/_day_modal.html.twig' with {

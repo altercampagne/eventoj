@@ -15,8 +15,6 @@ class EventRegistrationChooseDates {
       .filter((value, index, array) => array.indexOf(value) === index)
     ;
 
-    this.daysOfPresenceElement = document.querySelector('#event-registration-days-of-presence');
-
     this.selectStart.addEventListener('change', this.updateSelectEnd);
 
     document.querySelectorAll('div#stageStartModal button[data-stage]').forEach((element) => {
@@ -42,7 +40,6 @@ class EventRegistrationChooseDates {
         this.lastMeal.value = event.target.dataset.meal;
         document.querySelector('#stageEndLabel').innerHTML = event.target.dataset.stageLabel;
         document.querySelector('#lastMealLabel').innerHTML = event.target.dataset.mealLabel;
-        this.updateNumberOfDays();
       });
     });
 
@@ -145,8 +142,6 @@ class EventRegistrationChooseDates {
       }
 
     })
-
-    this.updateNumberOfDays();
   }
 
   updateAccordionValue(modal, select) {
@@ -192,12 +187,6 @@ class EventRegistrationChooseDates {
       });
 
       item.querySelector('span.badge-not-available').classList.add('d-none');
-  }
-
-  updateNumberOfDays() {
-    const numberOfDays = this.availableOptions.indexOf(this.selectEnd.value) - this.availableOptions.indexOf(this.selectStart.value);
-
-    this.daysOfPresenceElement.innerText = numberOfDays + 1;
   }
 }
 
