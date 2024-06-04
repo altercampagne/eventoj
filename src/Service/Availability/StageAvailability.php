@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Availability;
 
 use App\Entity\Meal;
-use App\Entity\Registration;
 use App\Entity\Stage;
 
 final class StageAvailability
@@ -53,5 +52,20 @@ final class StageAvailability
     public function getMealAvailabilities(): array
     {
         return [$this->breakfast, $this->lunch, $this->dinner];
+    }
+
+    public function hasAvailability(): bool
+    {
+        foreach ($this->getMealAvailabilities() as $mealAvailability) {
+            if (!$this->stage->includesMeal($mealAvailability->meal)) {
+                continue;
+            }
+
+            if ($mealAvailability->adults->availability > 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

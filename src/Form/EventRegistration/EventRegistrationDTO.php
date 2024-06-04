@@ -180,7 +180,7 @@ class EventRegistrationDTO
             }
 
             foreach ($bookedStage->getAvailability()->getMealAvailabilities() as $mealAvailability) {
-                if (!in_array($mealAvailability->meal, $meals)) {
+                if (!\in_array($mealAvailability->meal, $meals)) {
                     continue;
                 }
 
