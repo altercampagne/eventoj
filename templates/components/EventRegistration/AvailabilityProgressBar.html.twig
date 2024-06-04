@@ -1,15 +1,17 @@
 {% set name = availability.availability > 1 ? name ~ 's' : name %}
-{% if availability.availability > 1 %}
-    {% set title = availability.availability ~ ' places ' ~ name ~ ' (sur ' ~ availability.max ~ ') sont disponibles.' %}
+{% set realAvailability = availability.availability < 0 ? 0 : availability.availability %}
+
+{% if realAvailability > 1 %}
+    {% set title = realAvailability ~ ' places ' ~ name ~ ' (sur ' ~ availability.max ~ ') sont disponibles.' %}
 {% else %}
-    {% set title = availability.availability ~ ' place ' ~ name ~ ' (sur ' ~ availability.max ~ ') est disponible.' %}
+    {% set title = realAvailability ~ ' place ' ~ name ~ ' (sur ' ~ availability.max ~ ') est disponible.' %}
 {% endif %}
 
 <div
     class="progress mb-2 border"
     role="progressbar"
     aria-label="{{ name|title }} pour le {{ availability.meal|trans|lower }} du {{ availability.stage.date|format_date('short') }}"
-    aria-valuenow="{{ availability.availability }}"
+    aria-valuenow="{{ realAvailability }}"
     aria-valuemin="0"
     aria-valuemax="{{ availability.max }}"
     style="height: 25px"
@@ -20,6 +22,6 @@
         class="progress-bar overflow-visible text-dark bg-{{ availability.percent > 50 ? 'success' : availability.percent > 25 ? 'warning' : 'danger' }}-subtle ps-2"
         style="width: {{ availability.percent }}%"
     >
-        Il reste {{ availability.availability }} places {{ name }} sur {{ availability.max }}
+        Il reste {{ realAvailability }} place{{ realAvailability > 1 ? 's' }} {{ name }} sur {{ availability.max }}
     </div>
 </div>
