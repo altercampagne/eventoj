@@ -47,34 +47,11 @@ final class StageAvailability
         }
     }
 
-    public function isEnoughForRegistration(Registration $registration): bool
-    {
-        return $this->breakfast->isEnoughForRegistration($registration)
-            && $this->lunch->isEnoughForRegistration($registration)
-            && $this->dinner->isEnoughForRegistration($registration)
-        ;
-    }
-
     /**
      * @return MealAvailability[]
      */
     public function getMealAvailabilities(): array
     {
         return [$this->breakfast, $this->lunch, $this->dinner];
-    }
-
-    public function hasAvailability(): bool
-    {
-        foreach ($this->getMealAvailabilities() as $mealAvailability) {
-            if (!$this->stage->includesMeal($mealAvailability->meal)) {
-                continue;
-            }
-
-            if ($mealAvailability->adults->availability > 0) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

@@ -36,11 +36,15 @@
 
                     {% for choice in choices %}
                         {% set stage = choice.data %}
-                        {# Storage this data in a variable to avoid too many computations #}
+                        {# Store this data in a variable to avoid too many computations #}
                         {% set availability = stage.availability %}
-                        {% set isStageFull = not availability.isEnoughForRegistration(registration) %}
+
                         {% set isSelected = form.vars.value == choice.value %}
                         {% set isStageBooked = userEventComputedRegistrations.hasRegistrationForStage(stage) %}
+                        {% set isBreakfastFull = not availability.breakfast.isEnoughForRegistration(registration) %}
+                        {% set isLunchFull = not availability.lunch.isEnoughForRegistration(registration) %}
+                        {% set isDinnerFull = not availability.dinner.isEnoughForRegistration(registration) %}
+                        {% set isStageFull = isBreakfastFull and isLunchFull and isDinnerFull %}
 
                         <div
                             class="accordion-item"
@@ -48,9 +52,9 @@
                             data-full="{{ isStageFull }}"
                             data-booked="{{ isStageBooked }}"
                             data-fully-booked="{{ userEventComputedRegistrations.hasRegistrationForAllMealsOfStage(stage) }}"
-                            data-breakfast-full="{{ not availability.breakfast.isEnoughForRegistration(registration) }}"
-                            data-lunch-full="{{ not availability.lunch.isEnoughForRegistration(registration) }}"
-                            data-dinner-full="{{ not availability.dinner.isEnoughForRegistration(registration) }}"
+                            data-breakfast-full="{{ isBreakfastFull }}"
+                            data-lunch-full="{{ isLunchFull }}"
+                            data-dinner-full="{{ isDinnerFull }}"
                         >
                             <div class="accordion-header">
                                 <button

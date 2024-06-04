@@ -165,14 +165,31 @@ class EventRegistrationDTO
                     ->addViolation();
             }
         }
+    }
 
-        foreach ($this->getBookedStages() as $stage) {
-            $availability = $stage->getAvailability();
-            if (!$availability->isEnoughForRegistration($this->registration)) {
-                $context->buildViolation('Il n\'y a pas assez de disponibilités sur la période sélectionnée.')
-                        ->addViolation();
+    #[Assert\Callback(groups: ['choose_dates'])]
+    public function validateAvailability(ExecutionContextInterface $context, mixed $payload): void
+    {
+        foreach ($this->getBookedStages() as $bookedStage) {
+            if ($this->stageStart === $bookedStage) {
+                $meals = $this->getFirstDayMeals();
+            } elseif ($this->stageEnd === $bookedStage) {
+                $meals = $this->getLastDayMeals();
+            } else {
+                $meals = Meal::cases();
+            }
 
-                return;
+            foreach ($bookedStage->getAvailability()->getMealAvailabilities() as $mealAvailability) {
+                if (!in_array($mealAvailability->meal, $meals)) {
+                    continue;
+                }
+
+                if (!$mealAvailability->isEnoughForRegistration($this->registration)) {
+                    $context->buildViolation('Il n\'y a pas assez de disponibilités sur la période sélectionnée.')
+                            ->addViolation();
+
+                    return;
+                }
             }
         }
     }

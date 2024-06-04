@@ -28,10 +28,10 @@ final class MealAvailability
         if ($registration->countPeople() - $registration->countChildren() > $this->adults->availability) {
             return false;
         }
-        if ($registration->countChildren() > $this->children->availability) {
+        if ($registration->countChildren() > 0 && $registration->countChildren() > $this->children->availability) {
             return false;
         }
-        if ($registration->getNeededBike() > $this->bikes->availability) {
+        if ($registration->getNeededBike() > 0 && $registration->getNeededBike() > $this->bikes->availability) {
             return false;
         }
 
