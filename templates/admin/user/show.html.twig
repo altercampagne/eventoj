@@ -1,6 +1,9 @@
 {% extends 'admin/_base.html.twig' %}
 
 {% set title = user.fullname %}
+{% if user.publicName is not null %}
+    {% set title = title ~ ' "' ~ user.publicName ~ '"' %}
+{% endif %}
 
 {% block main %}
     <div class="row">

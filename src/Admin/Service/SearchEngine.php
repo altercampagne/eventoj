@@ -45,7 +45,7 @@ final readonly class SearchEngine
         $qb
             ->select('u')
             ->from(User::class, 'u')
-            ->where('LOWER(u.email) LIKE :query OR LOWER(UNACCENT(u.firstName)) LIKE UNACCENT(:query) OR UNACCENT(LOWER(u.lastName)) LIKE UNACCENT(:query)')
+            ->where('LOWER(u.email) LIKE :query OR LOWER(UNACCENT(u.firstName)) LIKE UNACCENT(:query) OR LOWER(UNACCENT(u.firstName)) LIKE UNACCENT(:query) OR UNACCENT(LOWER(u.lastName)) LIKE UNACCENT(:query) OR UNACCENT(LOWER(u.publicName)) LIKE UNACCENT(:query)')
             ->setParameter('query', $query)
         ;
 
