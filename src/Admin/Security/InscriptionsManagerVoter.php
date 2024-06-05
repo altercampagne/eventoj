@@ -50,6 +50,7 @@ class InscriptionsManagerVoter extends Voter
             Permission::MEMBERSHIP_LIST,
 
             Permission::PAYMENT_LIST,
+            Permission::PAYMENT_SYNC_WITH_HELLOASSO,
             Permission::PAYMENT_VIEW,
 
             Permission::QUESTION_LIST,
