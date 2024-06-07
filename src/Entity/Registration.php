@@ -50,6 +50,16 @@ class Registration
     ])]
     private int $neededBike = 0;
 
+    /**
+     * This date is computed at the registration booking date using the age of
+     * people at the first stage of this booking (because price can be
+     * different when using the date of the booking).
+     */
+    #[ORM\Column(type: Types::INTEGER, options: [
+        'comment' => 'How many children are part of this trip?',
+    ])]
+    private int $nbChildren = 0;
+
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
@@ -241,12 +251,17 @@ class Registration
 
     public function countPeople(): int
     {
-        return \count($this->getPeople());
+        return $this->companions->count() + 1 - $this->countChildren();
     }
 
     public function countChildren(): int
     {
-        return \count($this->getChildren());
+        return $this->nbChildren;
+    }
+
+    public function computeChildren(): void
+    {
+        $this->nbChildren = \count($this->getChildren());
     }
 
     public function getEndAt(): ?\DateTimeImmutable
@@ -369,6 +384,9 @@ class Registration
     public function setStagesRegistrations(array $stagesRegistrations): self
     {
         $this->stagesRegistrations = new ArrayCollection($stagesRegistrations);
+        // Number of children at the date of the first stage. That's why it can
+        // change when stages change.
+        $this->computeChildren();
 
         return $this;
     }
@@ -409,6 +427,7 @@ class Registration
     public function setCompanions(Collection $companions): self
     {
         $this->companions = $companions;
+        $this->computeChildren();
 
         return $this;
     }

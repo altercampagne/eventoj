@@ -46,7 +46,6 @@ enum Permission: string
     case STAGE_CREATE = 'stage.create';
     case STAGE_UPDATE = 'stage.update';
     case STAGE_VIEW = 'stage.view';
-    case STAGE_UPDATE_AVAILABILITY = 'stage.stage_update_availability';
 
     case USER_LIST = 'user.list';
     case USER_VIEW = 'user.view';
