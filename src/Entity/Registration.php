@@ -251,7 +251,7 @@ class Registration
 
     public function countPeople(): int
     {
-        return $this->companions->count() + 1 - $this->countChildren();
+        return $this->companions->count() + 1;
     }
 
     public function countChildren(): int
