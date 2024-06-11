@@ -128,7 +128,8 @@ class Registration
 
                 $stagesRegistrations[] = $stageRegistration;
             }
-            $this->stagesRegistrations = new ArrayCollection($stagesRegistrations);
+
+            $this->stagesRegistrations = new ArrayCollection($this->orderStagesRegistrations($stagesRegistrations));
         }
     }
 
@@ -201,9 +202,9 @@ class Registration
 
     public function payingDaysOfPresence(): float
     {
-        $payingDaysOfPresence = $this->stagesRegistrations->count() - $this->freeDaysOfPresence();
+        $payingDaysOfPresence = $this->daysOfPresence() - $this->freeDaysOfPresence();
 
-        if (false === $firstStageRegistration = $this->stagesRegistrations->first()) {
+        if (null === $firstStageRegistration = $this->getStageRegistrationStart()) {
             throw new \LogicException('No stage registration found for given registration');
         }
         // If the first day is a free day, the first meal of the first paying day must be the breakfast
@@ -212,7 +213,7 @@ class Registration
             $payingDaysOfPresence -= $firstStageRegistration->includesMeal(Meal::LUNCH) ? .2 : .6;
         }
 
-        if (false === $lastStageRegistration = $this->stagesRegistrations->last()) {
+        if (null === $lastStageRegistration = $this->getStageRegistrationEnd()) {
             throw new \LogicException('No stage registration found for given registration');
         }
         // If the last day is a free day, the last meal of the last paying day must be the dinner
@@ -226,14 +227,14 @@ class Registration
 
     public function freeDaysOfPresence(): int
     {
-        return $this->stagesRegistrations->filter(static function (StageRegistration $stageRegistration): bool {
+        return $this->getStagesRegistrations()->filter(static function (StageRegistration $stageRegistration): bool {
             return $stageRegistration->getStage()->isFree();
         })->count();
     }
 
     public function getStageRegistrationStart(): ?StageRegistration
     {
-        if (false !== $stageRegistration = $this->stagesRegistrations->first()) {
+        if (false !== $stageRegistration = $this->getStagesRegistrations()->first()) {
             return $stageRegistration;
         }
 
@@ -242,7 +243,7 @@ class Registration
 
     public function getStageRegistrationEnd(): ?StageRegistration
     {
-        if (false !== $stageRegistration = $this->stagesRegistrations->last()) {
+        if (false !== $stageRegistration = $this->getStagesRegistrations()->last()) {
             return $stageRegistration;
         }
 
@@ -375,7 +376,7 @@ class Registration
      */
     public function getStagesRegistrations(): Collection
     {
-        return $this->stagesRegistrations;
+        return new ArrayCollection($this->orderStagesRegistrations($this->stagesRegistrations->toArray()));
     }
 
     /**
@@ -383,7 +384,7 @@ class Registration
      */
     public function setStagesRegistrations(array $stagesRegistrations): self
     {
-        $this->stagesRegistrations = new ArrayCollection($stagesRegistrations);
+        $this->stagesRegistrations = new ArrayCollection($this->orderStagesRegistrations($stagesRegistrations));
         // Number of children at the date of the first stage. That's why it can
         // change when stages change.
         $this->computeChildren();
@@ -437,5 +438,22 @@ class Registration
         $this->companions->add($companion);
 
         return $this;
+    }
+
+    /**
+     * @param StageRegistration[] $stagesRegistrations
+     *
+     * @return StageRegistration[]
+     */
+    private function orderStagesRegistrations(array $stagesRegistrations): array
+    {
+        usort($stagesRegistrations, static function (StageRegistration $sr1, StageRegistration $sr2): int {
+            $date1 = $sr1->getStage()->getDate();
+            $date2 = $sr2->getStage()->getDate();
+
+            return $date1 == $date2 ? 0 : ($date1 > $date2 ? 1 : -1);
+        });
+
+        return $stagesRegistrations;
     }
 }
