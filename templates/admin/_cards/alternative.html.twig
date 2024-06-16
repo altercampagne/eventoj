@@ -16,12 +16,16 @@
                     <twig:Admin:ButtonCopyWithQuotedContent value="{{ alternative.slug }}" tooltip="Copier le slug" />
                 </li>
             {% endif %}
-            <li class="list-group-item" data-bs-toggle="tooltip" title="Évènements lors desquels nous sommes passés par cette alternative">
-                <i class="fa-solid fa-calendar-days fa-fw me-1"></i>
-                {% for event in alternative.events %}
-                    <a href="{{ path ('admin_event_show', { slug: event.slug }) }}" class="text-decoration-none">
-                        <span class="badge bg-secondary">{{ event.name }}</span>
-                    </a>
+            <li class="list-group-item">
+                <i class="fa-solid fa-calendar-days fa-fw me-1" data-bs-toggle="tooltip" title="Évènements lors desquels nous sommes passés par cette alternative"></i>
+                {% for event, stages in alternative.stagesByEvent %}
+                    <b><u>{{ (stages|first).event.name }} :</u></b>
+                    {% for stage in stages %}
+                        <a href="{{ path ('admin_stage_show', { slug: stage.slug }) }}" class="text-decoration-none ms-1">
+                            <span class="badge bg-secondary">{{ stage.name }}</span>
+                        </a>
+                    {% endfor %}
+                    {% if not loop.last %}<br />{% endif %}
                 {% endfor %}
             </li>
             {% if alternative.website is not null %}

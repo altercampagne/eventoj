@@ -95,6 +95,26 @@ class Alternative implements LocatedEntityInterface
         return array_unique($events, \SORT_REGULAR);
     }
 
+    /**
+     * @return array<string, Stage[]>
+     */
+    public function getStagesByEvent(): array
+    {
+        $data = [];
+        foreach ($this->stages as $stage) {
+            /** @var string $key */
+            $key = $stage->getEvent()->getSlug();
+
+            if (!\array_key_exists($key, $data)) {
+                $data[$key] = [];
+            }
+
+            $data[$key][] = $stage;
+        }
+
+        return $data;
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;
