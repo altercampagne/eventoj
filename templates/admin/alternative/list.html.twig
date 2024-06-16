@@ -18,6 +18,7 @@
                 {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
                     <th scope="col">Geocoding</th>
                 {% endif %}
+                <th scope="col">Image</th>
                 <th scope="col">Date</th>
             </tr>
         </thead>
@@ -36,6 +37,9 @@
                             <twig:Admin:IconBoolean value="{{ alternative.address.geocoded }}" tooltipTrue="Adresse géocodée" tooltipFalse="Adresse non géocodée" />
                         </td>
                     {% endif %}
+                    <td>
+                        <twig:Admin:IconBoolean value="{{ alternative.picture is not null }}" tooltipTrue="Cette alternative a bien une illustration" tooltipFalse="Cette alternative n'a pas d'illustration !" />
+                    </td>
                     <td>{{ alternative.createdAt|format_datetime }}</td>
                 </tr>
             {% endfor %}
