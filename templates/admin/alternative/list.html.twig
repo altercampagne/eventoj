@@ -31,7 +31,17 @@
                             <span class="badge bg-secondary">{{ event.name }}</span>
                         {% endfor %}
                     </td>
-                    <td>{{ alternative.description|striptags|u.truncate(100, '...', false) }}</td>
+                    <td>
+                        <span
+                            class="text-{{ alternative.description|length >= 500 ? 'success' : alternative.description|length > 200 ? 'warning' : 'danger' }}"
+                            data-bs-toggle="tooltip"
+                            title="Une description correcte, c'est au moins 200 caractères et idéalement plus de 500 !"
+                        >
+                            {% if alternative.description|length < 500 %}<b><u>{% endif %}
+                            {{ alternative.description|length }} caractères
+                            {% if alternative.description|length < 500 %}</b></u>{% endif %}
+                        </span>
+                    </td>
                     {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
                         <td>
                             <twig:Admin:IconBoolean value="{{ alternative.address.geocoded }}" tooltipTrue="Adresse géocodée" tooltipFalse="Adresse non géocodée" />
