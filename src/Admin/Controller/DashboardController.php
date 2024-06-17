@@ -58,7 +58,6 @@ class DashboardController extends AbstractController
             ->select('a, p')
             ->from(Alternative::class, 'a')
             ->leftJoin('a.picture', 'p')
-            ->where('LENGTH(a.description) < 500')
             ->orWhere('a.picture IS NULL')
             ->orderBy('a.updatedAt', 'ASC')
             ->setMaxResults(10)
