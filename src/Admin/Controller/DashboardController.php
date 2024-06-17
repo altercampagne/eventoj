@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Admin\Controller;
 
 use App\Admin\Security\Permission;
+use App\Entity\Alternative;
 use App\Entity\Event;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +24,17 @@ class DashboardController extends AbstractController
 
     public function __invoke(?string $slug = null): Response
     {
+        return $this->render('admin/dashboard.html.twig', [
+            'events' => $this->getComingEvents(),
+            'alternatives' => $this->getAlternativesToImprove(),
+        ]);
+    }
+
+    /**
+     * @return Event[]
+     */
+    private function getComingEvents(): array
+    {
         $qb = $this->em->createQueryBuilder();
         $qb
             ->select('e, s, p')
@@ -33,8 +45,24 @@ class DashboardController extends AbstractController
             ->setParameter('now', new \DateTimeImmutable())
         ;
 
-        return $this->render('admin/dashboard.html.twig', [
-            'events' => $qb->getQuery()->getResult(),
-        ]);
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Alternative[]
+     */
+    private function getAlternativesToImprove(): array
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb
+            ->select('a, p')
+            ->from(Alternative::class, 'a')
+            ->leftJoin('a.picture', 'p')
+            ->where('LENGTH(a.description) < 500')
+            ->orWhere('a.picture IS NULL')
+            ->setMaxResults(10)
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }

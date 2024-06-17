@@ -3,7 +3,7 @@
 {% set title = 'Dashboard' %}
 
 {% block main %}
-    <div class="row">
+    <div class="row justify-content-between">
         {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_LIST').value) %}
             <div class="col-12 col-md-4">
                 <h2 class="text-center">Évènements à venir</h2>
@@ -14,6 +14,24 @@
                 {% else %}
                     <div class="text-center">
                         Aucun évènement prévu pour le moment...
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_LIST').value) %}
+            <div class="col-12 col-md-4">
+                <h2 class="text-center">Alternatives à améliorer</h2>
+                <div class="alert alert-warning">
+                    <u>Description trop courte ou photo d'illustration manquante</u>, voici quelques alternatives qui mériteraient grandement d'être améliorées !<br />
+                    De nombreuses alternatives ont été importées automatiquement de l'ancien site. Pour ces dernières, l'adresse de la photo d'illustration à utiliser se trouve dans la description (il faut l'enregistrer sur ton PC pour pouvoir l'envoyer).
+                </div>
+                {% for alternative in alternatives %}
+                    <div class="mb-3">
+                        {{ include('admin/_cards/alternative.html.twig', { alternative: alternative }, with_context=false) }}
+                    </div>
+                {% else %}
+                    <div class="text-center">
+                        Toutes les alternatives semblent complètes ! 👌
                     </div>
                 {% endfor %}
             </div>
