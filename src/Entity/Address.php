@@ -12,9 +12,8 @@ use ZipCodeValidator\Constraints\ZipCode;
 #[ORM\Embeddable]
 class Address
 {
-    #[Assert\NotBlank]
-    #[ORM\Column]
-    private string $addressLine1;
+    #[ORM\Column(nullable: true)]
+    private ?string $addressLine1 = null;
 
     #[ORM\Column(nullable: true)]
     private ?string $addressLine2 = null;
@@ -41,12 +40,15 @@ class Address
 
     public function __toString(): string
     {
-        $addressLine = $this->addressLine1;
+        $addressLine = $this->addressLine1 ?: '';
         if (null !== $this->addressLine2) {
             $addressLine .= " {$this->addressLine2}";
         }
 
-        $address = $addressLine.', '.$this->zipCode.' '.$this->city;
+        $address = $this->zipCode.' '.$this->city;
+        if ('' !== $addressLine) {
+            $address = $addressLine.', '.$address;
+        }
 
         if ('FR' === $this->countryCode) {
             return $address;
@@ -71,12 +73,12 @@ class Address
         return null !== $this->latitude && null !== $this->longitude;
     }
 
-    public function getAddressLine1(): string
+    public function getAddressLine1(): ?string
     {
         return $this->addressLine1;
     }
 
-    public function setAddressLine1(string $addressLine1): self
+    public function setAddressLine1(?string $addressLine1): self
     {
         $this->addressLine1 = $addressLine1;
         $this->latitude = null;

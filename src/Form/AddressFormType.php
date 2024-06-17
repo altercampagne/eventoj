@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class AddressFormType extends AbstractType
 {
@@ -28,12 +29,14 @@ class AddressFormType extends AbstractType
             ])
             ->add('addressLine1', TextType::class, [
                 'label' => 'Adresse',
+                'required' => $options['address_line1_required'],
                 'attr' => [
                     'placeholder' => 'Ton adresse',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
+                'constraints' => $options['address_line1_required'] ? new Assert\NotBlank() : [],
             ])
             ->add('addressLine2', TextType::class, [
                 'label' => 'Complément d\'adresse (facultatif)',
@@ -70,6 +73,8 @@ class AddressFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Address::class,
+            'address_line1_required' => true,
         ]);
+        $resolver->setAllowedTypes('address_line1_required', 'bool');
     }
 }
