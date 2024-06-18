@@ -36,7 +36,7 @@ class ListController extends AbstractController
 
         return $this->render('admin/alternative/list.html.twig', [
             'pager' => $pager,
-            'events' => $this->em->getRepository(Event::class)->findAll(),
+            'events' => $this->getEvents(),
         ]);
     }
 
@@ -59,5 +59,22 @@ class ListController extends AbstractController
         }
 
         return $qb;
+    }
+
+    /**
+     * @return Event[]
+     */
+    private function getEvents(): array
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb
+            ->select('e, s, p')
+            ->from(Event::class, 'e')
+            ->leftJoin('e.stages', 's')
+            ->leftJoin('e.picture', 'p')
+            ->orderBy('s.date', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }
