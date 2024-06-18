@@ -39,8 +39,14 @@
         </thead>
         <tbody>
             {% for alternative in pager %}
-                <tr data-href="{{ path('admin_alternative_show', { slug: alternative.slug }) }}">
-                    <td>{{ alternative.name }}</td>
+                <tr>
+                    <td>
+                        <div class="position-relative">
+                            <a href="{{ path('admin_alternative_show', { slug: alternative.slug }) }}" class="link-body-emphasis text-decoration-none fw-bold stretched-link">
+                                {{ alternative.name }}
+                            </a>
+                        </div>
+                    </td>
                     <td>
                         {% for event in alternative.events %}
                             <span class="badge bg-secondary">{{ event.name }}</span>
