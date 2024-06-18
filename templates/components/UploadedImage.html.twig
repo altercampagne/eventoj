@@ -1,5 +1,6 @@
-<img{{ attributes.without('width', 'height', 'src') }}
-    width="{{ width }}"
-    height="{{ height }}"
-    src="{{ this.url }}"
-/>
+<div class="d-flex justify-content-center align-items-center">
+    <img{{ attributes.without('width', 'height', 'src') }}
+        width="100%"
+        src="{{ this.url }}"
+    />
+</div>

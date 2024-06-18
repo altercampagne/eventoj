@@ -2,23 +2,6 @@
 
 {% block title %}Évènements proposés par AlterCampagne{% endblock %}
 
-{% macro render_event(event) %}
-    <div class="col-12 col-md-6 col-lg-4 text-center mb-3">
-        <div class="card card-hover">
-            <div class="card-body">
-                <h3 class="card-title">{{ event.name }}</h3>
-            </div>
-            <div class="card-body">
-                <twig:UploadedImage file="{{ event.picture }}" width="300" height="300" alt="Illustration {{ event.name }}" class="mb-3" />
-
-                <div class="d-grid gap-2 mt-4">
-                    <a href="{{ path('event_show', { slug: event.slug }) }}" class="btn btn-primary btn-lg stretched-link">Plus d'info</a>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endmacro %}
-
 {% block main %}
     <div class="container">
         <div class="text-center">
@@ -40,7 +23,20 @@
 
         <div class="row justify-content-center mb-4">
             {% for event in events|filter(e => not e.isFinished) %}
-                {{ _self.render_event(event) }}
+                <div class="col-12 col-md-6 col-lg-4 text-center mb-3">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ event.name }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <twig:UploadedImage file="{{ event.picture }}" width="300" height="300" alt="Illustration {{ event.name }}" class="mb-3" />
+
+                            <div class="d-grid gap-2 mt-4">
+                                <a href="{{ path('event_show', { slug: event.slug }) }}" class="btn btn-primary btn-lg stretched-link">Plus d'info</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% else %}
                 <div class="row col-12 col-lg-8">
                     <div class="alert alert-warning text-center">
@@ -59,7 +55,20 @@
 
         <div class="row justify-content-center">
             {% for event in events|filter(e => e.isFinished) %}
-                {{ _self.render_event(event) }}
+                <div class="col-12 col-md-4 col-lg-3 text-center mb-3">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ event.name }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <twig:UploadedImage file="{{ event.picture }}" width="300" height="300" alt="Illustration {{ event.name }}" class="mb-3" />
+
+                            <div class="d-grid gap-2 mt-4">
+                                <a href="{{ path('event_show', { slug: event.slug }) }}" class="btn btn-primary btn-lg stretched-link">Plus d'info</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>
