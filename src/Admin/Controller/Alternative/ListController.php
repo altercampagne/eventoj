@@ -6,6 +6,7 @@ namespace App\Admin\Controller\Alternative;
 
 use App\Admin\Security\Permission;
 use App\Entity\Alternative;
+use App\Entity\Event;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
@@ -28,17 +29,18 @@ class ListController extends AbstractController
     public function __invoke(Request $request): Response
     {
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
-            new QueryAdapter($this->getQueryBuilder()),
+            new QueryAdapter($this->getQueryBuilder($request->query->get('event'))),
             (int) $request->query->getInt('page', 1),
             25
         );
 
         return $this->render('admin/alternative/list.html.twig', [
             'pager' => $pager,
+            'events' => $this->em->getRepository(Event::class)->findAll(),
         ]);
     }
 
-    private function getQueryBuilder(): QueryBuilder
+    private function getQueryBuilder(?string $event = null): QueryBuilder
     {
         $qb = $this->em->createQueryBuilder();
         $qb
@@ -48,6 +50,13 @@ class ListController extends AbstractController
             ->leftJoin('s.event', 'e')
             ->orderBy('a.name', 'ASC')
         ;
+
+        if (null !== $event) {
+            $qb
+                ->andWhere('e.slug = :event_slug')
+                ->setParameter('event_slug', $event)
+            ;
+        }
 
         return $qb;
     }

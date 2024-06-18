@@ -3,10 +3,25 @@
 {% set title = 'Toutes les alternatives (' ~ pager.nbResults ~ ')' %}
 
 {% block main %}
-    <div class="d-flex justify-content-end">
-        <a href="{{ path('admin_alternative_create') }}" class="btn btn-primary">
-            Créer une nouvelle alternative
-        </a>
+    <div class="d-md-flex align-items-center">
+        <div>
+            Filtrer par évènement:
+            {% for event in events %}
+                <a
+                    class="badge bg-{{ event.isPublished ? 'success' : 'warning' }} text-decoration-none"
+                    href="{{ path('admin_alternative_list', { event: event.slug }) }}"
+                    data-bs-toggle="tooltip"
+                    title="{% if event.isPublished %}Cet évènement est publié depuis le {{ event.publishedAt|format_date }}{% else %}Cet évènement n'est pas encore publié{% endif %}"
+                >
+                    {{ event.name }}
+                </a>
+            {% endfor %}
+        </div>
+        <div class="flex-shrink-0 mt-2 mt-md-0">
+            <a href="{{ path('admin_alternative_create') }}" class="btn btn-primary">
+                Créer une nouvelle alternative
+            </a>
+        </div>
     </div>
 
     <table class="table table-hover">

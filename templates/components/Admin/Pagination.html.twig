@@ -1,5 +1,8 @@
 <div class="row mt-4">
-    <div class="col d-flex justify-content-center">
+    <div class="col d-flex justify-content-between align-items-center">
+        <div>
+            <u>Total :</u> {% if pager.nbResults == 0 %}Aucun résultat{% else %}{{ pager.nbResults }} résultat{{ pager.nbResults > 1 ? 's' }}{% endif %}
+        </div>
         {{ pagerfanta(pager) }}
     </div>
 </div>
