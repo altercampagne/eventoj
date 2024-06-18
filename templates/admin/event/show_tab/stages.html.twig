@@ -26,10 +26,7 @@
         </thead>
         <tbody>
             {% for stage in event.stages %}
-                <tr
-                    {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %} data-href="{{ path('admin_stage_show', { slug: stage.slug }) }}"{% endif %}
-                    {% if app.user.isPrepaForStage(stage) %} class="table-primary border"{% endif %}
-                >
+                <tr{% if app.user.isPrepaForStage(stage) %} class="table-primary border"{% endif %}>
                     <td>
                         {% if stage.isFull %}
                             <span class="badge bg-warning" data-bs-toggle="tooltip" title="Cet étape est complète !">
@@ -54,8 +51,18 @@
                     </td>
                     <td>{{ stage.date|format_date }}</td>
                     <td>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %}
+                            <div class="position-relative">
+                                <a href="{{ path('admin_stage_show', { slug: stage.slug }) }}" class="link-body-emphasis text-decoration-none fw-bold stretched-link">
+                        {% endif %}
+
                         {% if stage.isBefore or stage.isAfter %}<span class="badge text-bg-secondary">{{ stage.type.value|upper }}</span>{% endif %}
                         {{ stage.name }}
+
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %}
+                                </a>
+                            </div>
+                        {% endif %}
                     </td>
                     <td>
                         {% for alternative in stage.alternatives %}
