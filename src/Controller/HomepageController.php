@@ -27,6 +27,7 @@ class HomepageController extends AbstractController
             ->leftJoin('e.stages', 's')
             ->leftJoin('e.picture', 'p')
             ->where('e.publishedAt < :now')
+            ->orderBy('s.date', 'DESC')
             ->setParameter('now', new \DateTimeImmutable())
         ;
 
