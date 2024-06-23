@@ -35,17 +35,14 @@
                 {% endif %}
                 <th scope="col">Image</th>
                 <th scope="col">Date</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for alternative in pager %}
                 <tr>
                     <td>
-                        <div class="position-relative">
-                            <a href="{{ path('admin_alternative_show', { slug: alternative.slug }) }}" class="link-body-emphasis text-decoration-none fw-bold stretched-link">
-                                {{ alternative.name }}
-                            </a>
-                        </div>
+                        {{ alternative.name }}
                     </td>
                     <td>
                         {% for event in alternative.events %}
@@ -72,6 +69,11 @@
                         <twig:Admin:IconBoolean value="{{ alternative.picture is not null }}" tooltipTrue="Cette alternative a bien une illustration" tooltipFalse="Cette alternative n'a pas d'illustration !" />
                     </td>
                     <td>{{ alternative.createdAt|format_datetime }}</td>
+                    <td>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_VIEW').value, alternative) %}
+                            <twig:Admin:IconView url="{{ path('admin_alternative_show', { slug: alternative.slug }) }}" />
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

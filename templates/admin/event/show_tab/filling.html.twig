@@ -22,12 +22,12 @@
                 <th scope="col">Petit-déjeuner</th>
                 <th scope="col">Déjeuner</th>
                 <th scope="col">Diner</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for stage in event.stages %}
                 <tr
-                    {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %} data-href="{{ path('admin_stage_show', { slug: stage.slug }) }}"{% endif %}
                     {% if app.user.isPrepaForStage(stage) %} class="table-primary border"{% endif %}
                 >
                     <td>{{ stage.date|format_date }}</td>
@@ -48,6 +48,11 @@
                             {% endif %}
                         </td>
                     {% endfor %}
+                    <td>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %}
+                            <twig:Admin:IconView url="{{ path('admin_stage_show', { slug: stage.slug }) }}" />
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

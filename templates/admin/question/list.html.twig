@@ -19,10 +19,15 @@
         </thead>
         <tbody>
             {% for question in questions %}
-                <tr data-href="{{ path('admin_question_show', { slug: question.slug }) }}">
+                <tr>
                     <td>{{ question.category|trans }}</td>
                     <td>{{ question.question }}</td>
                     <td>{{ question.answer|striptags|u.truncate(100, '...', false) }}</td>
+                    <td>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::QUESTION_VIEW').value, question) %}
+                            <twig:Admin:IconView url="{{ path('admin_question_show', { slug: question.slug }) }}" />
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -33,7 +33,7 @@
         </thead>
         <tbody>
             {% for payment in pager %}
-                <tr data-href="{{ path('admin_payment_show', { id: payment.id }) }}">
+                <tr>
                     <td>
                         {{ payment.payer.fullName }}
                     </td>
@@ -42,6 +42,11 @@
                         <twig:Admin:PaymentStatus payment="{{ payment }}" />
                     </td>
                     <td>{{ payment.createdAt|format_datetime }}</td>
+                    <td>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_VIEW').value, payment) %}
+                            <twig:Admin:IconView url="{{ path('admin_payment_show', { id: payment.id }) }}" />
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

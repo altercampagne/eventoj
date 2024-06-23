@@ -31,15 +31,21 @@
                 <th scope="col">Nom</th>
                 <th scope="col">Etapes</th>
                 <th scope="col">Date</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for event in events|filter(e => not e.isFinished) %}
-                <tr data-href="{{ path('admin_event_show', { slug: event.slug }) }}">
+                <tr>
                     <td><span class="badge text-bg-secondary">{{ event.type.value }}</span></td>
                     <td>{{ event.name }}</td>
                     <td>{{ event.stages|length }} étapes</td>
                     <td>{{ event.createdAt|format_datetime }}</td>
+                    <td>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_VIEW_REGISTRATIONS').value, event) %}
+                            <twig:Admin:IconView url="{{ path('admin_event_show', { slug: event.slug }) }}" />
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -54,15 +60,21 @@
                 <th scope="col">Nom</th>
                 <th scope="col">Etapes</th>
                 <th scope="col">Date</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for event in events|filter(e => e.isFinished) %}
-                <tr data-href="{{ path('admin_event_show', { slug: event.slug }) }}">
+                <tr>
                     <td><span class="badge text-bg-secondary">{{ event.type.value }}</span></td>
                     <td>{{ event.name }}</td>
                     <td>{{ event.stages|length }} étapes</td>
                     <td>{{ event.createdAt|format_datetime }}</td>
+                    <td>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_VIEW_REGISTRATIONS').value, event) %}
+                            <twig:Admin:IconView url="{{ path('admin_event_show', { slug: event.slug }) }}" />
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

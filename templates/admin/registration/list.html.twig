@@ -12,11 +12,12 @@
                 <th scope="col">Prix</th>
                 <th scope="col">Status</th>
                 <th scope="col">Date</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for registration in pager %}
-                <tr data-href="{{ path('admin_registration_show', { id: registration.id }) }}">
+                <tr>
                     <td>
                         {{ registration.event.name }}
                     </td>
@@ -31,6 +32,9 @@
                         <twig:Admin:RegistrationStatus registration="{{ registration }}" />
                     </td>
                     <td>{{ registration.createdAt|format_datetime }}</td>
+                    <td>
+                        <twig:Admin:IconView url="{{ path('admin_registration_show', { id: registration.id }) }}" />
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

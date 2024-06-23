@@ -15,18 +15,19 @@
             </twig:Admin:ButtonCopy>
         </div>
     {% endif %}
-    <table class="table table-hover table-bordered table-sm">
+    <table class="table table-hover table-sm">
         <thead>
             <tr>
                 <th scope="col">Utilisateurice</th>
                 <th scope="col">Durée</th>
                 <th scope="col">Prix</th>
                 <th scope="col">Date</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for registration in event.confirmedRegistrations %}
-                <tr data-href="{{ path('admin_registration_show', { id: registration.id }) }}">
+                <tr>
                     <td>
                         {{ registration.user.fullName }}
                         {% set companions = registration.companions|length %}
@@ -37,6 +38,11 @@
                     <td>{{ registration.daysOfPresence }} jours</td>
                     <td>{{ registration.price|format_price }}</td>
                     <td>{{ registration.createdAt|format_datetime }}</td>
+                    <td>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_VIEW').value, registration) %}
+                            <twig:Admin:IconView url="{{ path('admin_registration_show', { id: registration.id }) }}" />
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

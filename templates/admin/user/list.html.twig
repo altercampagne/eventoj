@@ -14,11 +14,12 @@
                 {% endif %}
                 <th scope="col">Date de naissance</th>
                 <th scope="col">Date d'inscription</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for user in pager %}
-                <tr data-href="{{ path('admin_user_show', { id: user.id }) }}">
+                <tr>
                     <td>
                         {{ user.fullName }}
                         <twig:Admin:UserRoles user="{{ user }}" />
@@ -37,6 +38,11 @@
                     {% endif %}
                     <td>{{ user.birthDate|format_date }}</td>
                     <td>{{ user.createdAt|format_datetime }}</td>
+                    <td>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_VIEW').value, user) %}
+                            <twig:Admin:IconView url="{{ path('admin_user_show', { id: user.id }) }}" />
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -130,24 +130,21 @@
                 {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_LIST').value, stage) %}
                     <div class="tab-pane" id="registrations-tab-pane" role="tabpanel" aria-labelledby="registrations-tab" tabindex="1">
                         {% if stage.confirmedStagesRegistrations|length > 0 %}
-                            <table class="table table-hover table-bordered table-sm">
+                            <table class="table table-hover table-sm">
                                 <thead>
                                     <tr>
                                         <th scope="col"></th>
                                         <th scope="col">Utilisateurice</th>
                                         <th scope="col">Repas</th>
                                         <th scope="col">Date</th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for stageRegistration in stage.confirmedStagesRegistrations %}
                                         {% set registration = stageRegistration.registration %}
 
-                                        <tr
-                                            {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_VIEW').value, registration) %}
-                                                data-href="{{ path('admin_registration_show', { id: registration.id }) }}"
-                                            {% endif %}
-                                        >
+                                        <tr>
                                             <td>
                                                 {% if registration.stageRegistrationStart.stage == stage %}
                                                     <i class="fa-solid fa-plane-arrival text-success" data-bs-toggle="tooltip" title="Cette personne arrive lors de cette étape"></i>
@@ -168,6 +165,11 @@
                                                 <twig:Admin:IconBoolean value="{{ stageRegistration.presentForDinner }}" tooltip="Présence pour le diner" />
                                             </td>
                                             <td>{{ registration.createdAt|format_datetime }}</td>
+                                            <td>
+                                                {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_VIEW').value, registration) %}
+                                                    <twig:Admin:IconView url="{{ path('admin_registration_show', { id: registration.id }) }}" />
+                                                {% endif %}
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

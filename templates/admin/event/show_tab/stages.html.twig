@@ -51,28 +51,35 @@
                     </td>
                     <td>{{ stage.date|format_date }}</td>
                     <td>
-                        {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %}
-                            <div class="position-relative">
-                                <a href="{{ path('admin_stage_show', { slug: stage.slug }) }}" class="link-body-emphasis text-decoration-none fw-bold stretched-link">
-                        {% endif %}
-
                         {% if stage.isBefore or stage.isAfter %}<span class="badge text-bg-secondary">{{ stage.type.value|upper }}</span>{% endif %}
                         {{ stage.name }}
-
-                        {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %}
-                                </a>
-                            </div>
-                        {% endif %}
                     </td>
                     <td>
                         {% for alternative in stage.alternatives %}
+                            {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_VIEW').value, alternative) %}
+                                <a href="{{ path('admin_alternative_show', { slug: alternative.slug }) }}">
+                            {% endif %}
                             <span class="badge bg-primary">{{ alternative.name }}</span>
+                            {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_VIEW').value, alternative) %}
+                                </a>
+                            {% endif %}
                         {% endfor %}
                     </td>
                     <td>
                         {% for preparer in stage.preparers %}
+                            {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_VIEW').value, preparer) %}
+                                <a href="{{ path('admin_user_show', { id: preparer.id }) }}">
+                            {% endif %}
                             <span class="badge bg-primary">{{ preparer.fullName }}</span>
+                            {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_VIEW').value, preparer) %}
+                                </a>
+                            {% endif %}
                         {% endfor %}
+                    </td>
+                    <td>
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %}
+                            <twig:Admin:IconView url="{{ path('admin_stage_show', { slug: stage.slug }) }}" />
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

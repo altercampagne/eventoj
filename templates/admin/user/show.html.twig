@@ -105,7 +105,7 @@
             <div class="tab-content border border-top-0 border-secondary-outline rounded-bottom p-3">
                 <div class="tab-pane fade show active" id="registrations-tab-pane" role="tabpanel" aria-labelledby="registrations-tab" tabindex="0">
                     {% if user.registrations|length > 0 %}
-                        <table class="table table-hover table-bordered table-sm">
+                        <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
                                     <th scope="col">Évènement</th>
@@ -113,12 +113,15 @@
                                     <th scope="col">Statut</th>
                                     <th scope="col">Prix payé</th>
                                     <th scope="col">Date</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for registration in user.registrations %}
-                                    <tr data-href="{{ path('admin_registration_show', { id: registration.id }) }}">
-                                        <td>{{ registration.event.name }}</td>
+                                    <tr>
+                                        <td>
+                                            {{ registration.event.name }}
+                                        </td>
                                         <td>{{ registration.daysOfPresence }} jours</td>
                                         <td>
                                             <twig:Admin:RegistrationStatus registration="{{ registration }}" />
@@ -127,6 +130,11 @@
                                             {{ registration.price|format_price }}
                                         </td>
                                         <td>{{ registration.createdAt|format_datetime }}</td>
+                                        <td>
+                                            {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_VIEW').value, registration) %}
+                                                <twig:Admin:IconView url="{{ path('admin_registration_show', { id: registration.id }) }}" />
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -223,22 +231,30 @@
 
                 <div class="tab-pane fade" id="payments-tab-pane" role="tabpanel" aria-labelledby="payments-tab" tabindex="0">
                     {% if user.payments|length > 0 %}
-                        <table class="table table-hover table-bordered table-sm">
+                        <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
                                     <th scope="col">Prix</th>
                                     <th scope="col">Statut</th>
                                     <th scope="col">Date de création</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for payment in user.payments %}
-                                    <tr data-href="{{ path('admin_payment_show', { id: payment.id }) }}">
-                                        <td>{{ payment.amount|format_price }}</td>
+                                    <tr>
+                                        <td>
+                                            {{ payment.amount|format_price }}
+                                        </td>
                                         <td>
                                             <twig:Admin:PaymentStatus payment="{{ payment }}" />
                                         </td>
                                         <td>{{ payment.createdAt|format_datetime }}</td>
+                                        <td>
+                                            {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_VIEW').value, payment) %}
+                                                <twig:Admin:IconView url="{{ path('admin_payment_show', { id: payment.id }) }}" />
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
