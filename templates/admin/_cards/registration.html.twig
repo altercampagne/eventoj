@@ -15,8 +15,10 @@
     {% endblock %}
 
     {% block content %}
-        {% set arrivalDate = registration.stageRegistrationStart.stage.date|format_date('long') %}
-        {% set departureDate = registration.stageRegistrationEnd.stage.date|format_date('long') %}
+        {% if registration.stageRegistrationStart is not null and registration.stageRegistrationEnd is not null %}
+            {% set arrivalDate = registration.stageRegistrationStart.stage.date|format_date('long') %}
+            {% set departureDate = registration.stageRegistrationEnd.stage.date|format_date('long') %}
+        {% endif %}
 
         {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
             <ul class="list-group">
@@ -28,24 +30,33 @@
         {% endif %}
 
         <div class="card-body border-bottom">
-            Inscription de <b>{{ registration.daysOfPresence }} jours</b> entre le <b>{{ arrivalDate }}</b> et le <b>{{ departureDate }}</b>
-            (
+            {% if arrivalDate is defined and departureDate is defined %}
+                Inscription de <b>{{ registration.daysOfPresence }} jours</b> entre le <b>{{ arrivalDate }}</b> et le <b>{{ departureDate }}</b>
+                (
+            {% endif %}
+
             <span class="text-secondary" data-bs-toggle="tooltip" title="{{ registration.countChildren }} enfant{{ registration.countChildren > 1 ? 's' }} pour cette réservation">
                 {{ registration.countChildren }} <i class="fa-solid fa-children"></i>
             </span> -
             <span class="text-secondary" data-bs-toggle="tooltip" title="{{ registration.neededBike }} vélo{{ registration.neededBike > 1 ? 's' }} de prêt pour cette réservation">
                 {{ registration.neededBike }} <i class="fa-solid fa-bicycle"></i>
             </span>
-            ).
+            {% if arrivalDate is defined %}
+                ).
+            {% endif %}
         </div>
 
         <ul class="list-group">
-            <li class="list-group-item">
-                <i class="fa-solid fa-plane-arrival fa-fw me-1"></i> Arrivée prévue le {{ arrivalDate }} ({{ registration.stageRegistrationStart.stage.name }}) pour le {{ registration.stageRegistrationStart.firstMeal|trans|lower }}
-            </li>
-            <li class="list-group-item">
-                <i class="fa-solid fa-plane-departure fa-fw me-1"></i> Départ prévu le {{ departureDate }} ({{ registration.stageRegistrationEnd.stage.name }}) pour le {{ registration.stageRegistrationEnd.lastMeal|trans|lower }}
-            </li>
+            {% if arrivalDate is defined %}
+                <li class="list-group-item">
+                    <i class="fa-solid fa-plane-arrival fa-fw me-1"></i> Arrivée prévue le {{ arrivalDate }} ({{ registration.stageRegistrationStart.stage.name }}) pour le {{ registration.stageRegistrationStart.firstMeal|trans|lower }}
+                </li>
+            {% endif %}
+            {% if departureDate is defined %}
+                <li class="list-group-item">
+                    <i class="fa-solid fa-plane-departure fa-fw me-1"></i> Départ prévu le {{ departureDate }} ({{ registration.stageRegistrationEnd.stage.name }}) pour le {{ registration.stageRegistrationEnd.lastMeal|trans|lower }}
+                </li>
+            {% endif %}
         </ul>
     {% endblock %}
 
