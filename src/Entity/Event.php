@@ -595,11 +595,15 @@ class Event
 
     public function countPeople(): int
     {
-        $people = 0;
+        $people = [];
         $this->getConfirmedRegistrations()->map(static function (Registration $registration) use (&$people): void {
-            $people += $registration->countPeople();
+            foreach ($registration->getPeople() as $person) {
+                $people[] = (string) $person->getId();
+            }
         });
 
-        return $people;
+        $people = array_unique($people);
+
+        return \count($people);
     }
 }
