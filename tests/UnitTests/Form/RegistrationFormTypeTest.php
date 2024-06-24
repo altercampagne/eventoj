@@ -107,7 +107,6 @@ class RegistrationFormTypeTest extends KernelTestCase
         yield ['Coucou3fail', 'Cette chaîne ne doit pas contenir de chiffres.'];
         yield ['COuUulala', 'Cette chaîne ne semble pas valide.'];
         yield ['PsDVll', 'Cette chaîne ne semble pas valide.'];
-        yield ['abc foo', 'Cette chaîne contient des caractères spéciaux non autorisés.'];
 
         // Forbidden values
         yield ['firstname', 'Cette chaîne n\'est pas autorisée.'];
@@ -154,6 +153,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         yield ['éàïöôè'];
         yield ['Pierre-Emmanuel'];
         yield ['D\'Ouis-Pinçon'];
+        yield ['Le Roy'];
     }
 
     /**

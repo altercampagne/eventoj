@@ -73,7 +73,7 @@ class HelloassoNameValidator extends ConstraintValidator
 
         // if (!$string->match("/^[[:alnum:]'ç-]*$/i")) {
         // @see https://www.php.net/manual/en/regexp.reference.unicode.php
-        if (!$string->match("/^[\p{L}'ç-]*$/i")) {
+        if (!$string->match("/^[\p{L}'ç -]*$/i")) {
             $this->context->buildViolation($constraint->forbiddenSpecialCharactersMessage)
                 ->setParameter('{{ value }}', $value)
                 ->addViolation();
