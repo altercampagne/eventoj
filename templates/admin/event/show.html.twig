@@ -11,22 +11,14 @@
 
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <i class="fa-solid fa-ticket fa-fw me-1"></i>
+                            <i class="fa-solid fa-ticket fa-fw me-1" data-bs-toggle="tooltip" title="Date d'ouverture des inscriptions"></i>
                             Inscriptions le {{ event.openingDateForBookings|format_datetime('long', 'short') }}
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fa-solid fa-file-invoice-dollar fa-fw me-1"></i>
-                            Paheko Project ID :
-                            {% if event.pahekoProjectId is not null %}
-                                <a href="{{ pahekoBaseUri }}/admin/acc/reports/journal.php?project={{ event.pahekoProjectId }}">{{ event.pahekoProjectId }}</a>
-                            {% else %}
-                                -
-                            {% endif %}
                         </li>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::SHOW_PAHEKO_DETAILS').value, event) %}
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div>
                                     <i class="fa-solid fa-piggy-bank fa-fw me-1" data-bs-toggle="tooltip" title="Identifiant Paheko"></i>
+                                    Paheko
                                     {% if event.pahekoProjectId is null %}
                                         -
                                     {% else %}
