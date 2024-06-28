@@ -99,11 +99,12 @@ class EventRegistrationChooseDates {
 
       // If the list item is already full or almost, we don't have anyhting
       // special to do, except saving this info to disable all following
-      // options
-      if (item.dataset.full == 1) {
+      // options (and eventually disable some meals if it's the same day)
+      if (item.dataset.breakfastFull == 1 || item.dataset.lunchFull == 1 || item.dataset.dinnerFull == 1) {
         disableNextStages = true;
-
-        return;
+        if (index != startIndex) {
+          return;
+        }
       }
 
       // Same day !
