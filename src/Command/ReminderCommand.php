@@ -47,7 +47,13 @@ class ReminderCommand extends Command
         $sentMail = 0;
         foreach ($stages as $stage) {
             foreach ($stage->getConfirmedStagesRegistrations() as $stageRegistration) {
-                $this->eventReminderSender->send($stageRegistration->getRegistration());
+                $registration = $stageRegistration->getRegistration();
+                // The registration must start at this specific day to send the reminder mail.
+                if ($registration->getStageRegistrationStart() !== $stageRegistration) {
+                    continue;
+                }
+
+                $this->eventReminderSender->send($registration);
                 ++$sentMail;
             }
         }
