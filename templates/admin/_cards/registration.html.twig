@@ -47,6 +47,11 @@
         </div>
 
         <ul class="list-group">
+            {% if registration.approvedPayment is not null %}
+                <li class="list-group-item">
+                    <i class="fa-regular fa-credit-card fa-fw me-1"></i> Réglement de <b>{{ registration.approvedPayment.amount|format_price }}</b> pour <b>{{ registration.payingDaysOfPresence }} jours</b> de présence <i class="text-secondary">(soit {{ (registration.approvedPayment.amount / registration.payingDaysOfPresence)|format_price }}/jour)</i>.
+                </li>
+            {% endif %}
             {% if arrivalDate is defined %}
                 <li class="list-group-item">
                     <i class="fa-solid fa-plane-arrival fa-fw me-1"></i> Arrivée prévue le {{ arrivalDate }} ({{ registration.stageRegistrationStart.stage.name }}) pour le {{ registration.stageRegistrationStart.firstMeal|trans|lower }}
