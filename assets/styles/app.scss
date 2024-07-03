@@ -5,6 +5,7 @@ $enable-negative-margins: true;
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';
 
 @import 'form';
+@import 'map';
 
 body {
     background-color: $gray-100;

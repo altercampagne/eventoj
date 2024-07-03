@@ -166,4 +166,22 @@ class Address
 
         return $this;
     }
+
+    public function getDepartment(): ?int
+    {
+        if ('FR' !== $this->countryCode) {
+            return null;
+        }
+
+        $department = mb_substr($this->zipCode, 0, 2);
+        if ('' === $department) {
+            return null;
+        }
+
+        if ('97' === $department) {
+            return (int) mb_substr($this->zipCode, 0, 3);
+        }
+
+        return (int) $department;
+    }
 }

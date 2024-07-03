@@ -28,8 +28,30 @@ class MapController extends AbstractController
             ->leftJoin('s.event', 'e')
         ;
 
+        $alternatives = $qb->getQuery()->getResult();
+
         return $this->render('alternative/map.html.twig', [
-            'alternatives' => $qb->getQuery()->getResult(),
+            'alternatives' => $alternatives,
+            'alternativeCountByDepartments' => $this->countAlternativesByDepartments($alternatives),
         ]);
+    }
+
+    /**
+     * @param Alternative[] $alternatives
+     *
+     * @return array<int, int>
+     */
+    private function countAlternativesByDepartments(array $alternatives): array
+    {
+        $departments = array_fill(1, 95, 0);
+        foreach ($alternatives as $alternative) {
+            if (null === $department = $alternative->getAddress()->getDepartment()) {
+                continue;
+            }
+
+            ++$departments[$department];
+        }
+
+        return $departments;
     }
 }

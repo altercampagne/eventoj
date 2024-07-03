@@ -17,6 +17,7 @@
                 <div
                     id="alternatives-map"
                     style="height: 650px"
+                    data-alternative-count-by-departments="{{ alternativeCountByDepartments|json_encode }}"
                 >
                     <ul class="d-none">
                         {% for alternative in alternatives|filter(a => a.address.isGeocoded) %}
