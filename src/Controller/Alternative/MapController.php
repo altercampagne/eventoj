@@ -20,8 +20,16 @@ class MapController extends AbstractController
 
     public function __invoke(): Response
     {
+        $qb = $this->em->createQueryBuilder();
+        $qb
+            ->select('a, s, e')
+            ->from(Alternative::class, 'a')
+            ->leftJoin('a.stages', 's')
+            ->leftJoin('s.event', 'e')
+        ;
+
         return $this->render('alternative/map.html.twig', [
-            'alternatives' => $this->em->getRepository(Alternative::class)->findAll(),
+            'alternatives' => $qb->getQuery()->getResult(),
         ]);
     }
 }
