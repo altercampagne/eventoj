@@ -21,7 +21,7 @@ final class ItemAvailability
 
     /**
      * Return the percent of available seats!
-     * 0 = full, 100 = no bookings
+     * 0 = full, 100 = no bookings.
      */
     public function getPercent(): float
     {
