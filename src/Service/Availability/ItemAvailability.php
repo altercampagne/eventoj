@@ -19,11 +19,15 @@ final class ItemAvailability
         $this->availability = $max;
     }
 
+    /**
+     * Return the percent of available seats!
+     * 0 = full, 100 = no bookings
+     */
     public function getPercent(): float
     {
         // This can happen for bikes
         if (0 === $this->max) {
-            return 0;
+            return (float) 0;
         }
 
         $percent = (float) $this->availability * 100 / $this->max;
@@ -33,6 +37,11 @@ final class ItemAvailability
         }
 
         return $percent;
+    }
+
+    public function isFull(): bool
+    {
+        return (float) 0 == $this->getPercent();
     }
 
     public function getBooked(): int

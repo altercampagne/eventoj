@@ -39,10 +39,14 @@
                         <td>
                             {% if stage.includesMeal(availability.meal) %}
                                 <div class="d-flex align-items-center">
-                                    {{ _self.item_availability(availability.adults, 'user', 'Nombre d\'adultes participants au '~availability.meal|trans|lower) }}
-                                    {{ _self.item_availability(availability.children, 'child', 'Nombre d\'enfants participants au '~availability.meal|trans|lower) }}
-                                    {% if 0 < event.bikesAvailable %}
-                                        {{ _self.item_availability(availability.bikes, 'bicycle', 'Nombre de de vélos nécessaires au moment du '~availability.meal|trans|lower) }}
+                                    {% if availability.adults.isFull %}
+                                        <span class="badge bg-success w-100 text-center">COMPLET</span>
+                                    {% else %}
+                                        {{ _self.item_availability(availability.adults, 'user', 'Nombre d\'adultes participants au '~availability.meal|trans|lower) }}
+                                        {{ _self.item_availability(availability.children, 'child', 'Nombre d\'enfants participants au '~availability.meal|trans|lower) }}
+                                        {% if 0 < event.bikesAvailable %}
+                                            {{ _self.item_availability(availability.bikes, 'bicycle', 'Nombre de de vélos nécessaires au moment du '~availability.meal|trans|lower) }}
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             {% endif %}
