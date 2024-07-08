@@ -8,11 +8,11 @@
         <twig:EventRegistration:AvailabilityProgressBar availability="{{ mealAvailability.children }}" name="enfant" />
         <twig:EventRegistration:AvailabilityProgressBar availability="{{ mealAvailability.bikes }}" name="vélo" />
 
-        <div class="d-grid gap-2 px-3">
+        <div class="d-grid gap-2 px-3 mt-4">
             {% if hasAvailability and not userEventComputedRegistrations.hasRegistrationForStageAndMeal(mealAvailability.stage, mealAvailability.meal) %}
                 <button
                     type="button"
-                    class="btn btn-primary choose-meal-button mt-4"
+                    class="btn btn-primary choose-meal-button"
                     data-stage="{{ mealAvailability.stage.id }}"
                     data-stage-label="{{ mealAvailability.stage.date|format_date('long') }}"
                     data-meal="{{ mealAvailability.meal.value }}"
@@ -20,6 +20,8 @@
                 >
                     Choisir
                 </button>
+            {% elseif not hasAvailability %}
+                <button type="button" class="btn btn-outline-secondary text-capitalize fw-bold" disabled>Complet</button>
             {% endif %}
         </div>
     </div>
