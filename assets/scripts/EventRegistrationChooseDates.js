@@ -97,21 +97,17 @@ class EventRegistrationChooseDates {
         return;
       }
 
-      // If the list item is already full or almost, we don't have anyhting
-      // special to do, except saving this info to disable all following
-      // options (and eventually disable some meals if it's the same day)
-      if (item.dataset.breakfastFull == 1 || item.dataset.lunchFull == 1 || item.dataset.dinnerFull == 1) {
-        disableNextStages = true;
-        if (index != startIndex) {
-          return;
-        }
-      }
-
       // Same day !
       // Depending on the previously selected first meal, we may have to
-      // disable some buttons.
+      // disable some buttons (and following days also!).
       if (index == startIndex) {
         if (this.firstMeal.value == 'breakfast') {
+          // Breakfast is selected but lunch or dinner is full the same day: we
+          // must disable all next stages.
+          if (item.dataset.lunchFull == 1 || item.dataset.dinnerFull == 1) {
+            disableNextStages = true;
+          }
+
           return;
         }
 
@@ -121,6 +117,12 @@ class EventRegistrationChooseDates {
         }
 
         if (this.firstMeal.value == 'lunch') {
+          // Lunch is selected but dinner is full: we must disable all next
+          // stages.
+          if (item.dataset.dinnerFull == 1) {
+            disableNextStages = true;
+          }
+
           return;
         }
 
@@ -130,6 +132,16 @@ class EventRegistrationChooseDates {
         }
 
         return;
+      }
+
+      // If the list item is already full or almost, we don't have anyhting
+      // special to do, except saving this info to disable all following
+      // options (and eventually disable some meals if it's the same day)
+      if (item.dataset.breakfastFull == 1 || item.dataset.lunchFull == 1 || item.dataset.dinnerFull == 1) {
+        disableNextStages = true;
+        if (index != startIndex) {
+          return;
+        }
       }
 
       // Already registered
