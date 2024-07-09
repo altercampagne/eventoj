@@ -27,7 +27,7 @@ class HomepageController extends AbstractController
             ->leftJoin('e.stages', 's')
             ->leftJoin('e.picture', 'p')
             ->where('e.publishedAt < :now')
-            ->orderBy('s.date', 'DESC')
+            ->orderBy('s.date', 'ASC') // Must be ordered like this to ensure `getFirtStage` & `getLastStage` from Event entity work correctly
             ->setParameter('now', new \DateTimeImmutable())
         ;
 
