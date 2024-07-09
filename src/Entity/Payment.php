@@ -106,7 +106,7 @@ class Payment
     public function fail(): void
     {
         $this->status = PaymentStatus::FAILED;
-        $this->approvedAt = new \DateTimeImmutable();
+        $this->failedAt = new \DateTimeImmutable();
     }
 
     public function isPending(): bool
