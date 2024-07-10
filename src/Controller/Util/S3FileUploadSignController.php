@@ -22,7 +22,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  * @see https://www.matsimitsu.com/blog/2021-04-20-remote-uploads-with-pre-signed-urls-on-scaleway-object-storage
  */
 #[IsGranted('ROLE_USER')]
-#[Route('/s3_file_upload_sign/{type}/{prefix}', name: 's3_file_upload_sign', methods: ['POST'])]
+#[Route('/s3_file_upload_sign/{type}/{prefix}/{width}/{height}', name: 's3_file_upload_sign', methods: ['POST'])]
 final class S3FileUploadSignController extends AbstractController
 {
     public function __construct(
@@ -38,6 +38,8 @@ final class S3FileUploadSignController extends AbstractController
         Request $request,
         UploadedFileType $type,
         string $prefix,
+        int $width,
+        int $height,
         #[MapRequestPayload]
         S3FileUploadSignInput $input,
     ): Response {
@@ -69,7 +71,7 @@ final class S3FileUploadSignController extends AbstractController
         return $this->json([
             'uploaded_file_id' => (string) $uploadedFile->getId(),
             'presigned_url' => $presignedUrl,
-            'uploaded_file_url' => $this->uploadedFileUrlGenerator->getImageUrl($uploadedFile, 300, 300),
+            'uploaded_file_url' => $this->uploadedFileUrlGenerator->getImageUrl($uploadedFile, $width, $height),
         ]);
     }
 }

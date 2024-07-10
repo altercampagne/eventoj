@@ -32,11 +32,17 @@ class UploadedFileType extends AbstractType
         $resolver->setAllowedTypes('type', UploadedFileTypeEnum::class);
         $resolver->setRequired('prefix');
         $resolver->setAllowedTypes('prefix', 'string');
+        $resolver->setRequired('preview_width');
+        $resolver->setAllowedTypes('preview_width', 'int');
+        $resolver->setRequired('preview_height');
+        $resolver->setAllowedTypes('preview_height', 'int');
 
         $resolver->setDefaults([
             'attr' => [
                 'class' => 'aws-file-upload d-none',
             ],
+            'preview_width' => 300,
+            'preview_height' => 300,
         ]);
     }
 
@@ -66,19 +72,28 @@ class UploadedFileType extends AbstractType
     {
         /** @var UploadedFileTypeEnum $type */
         $type = $options['type'];
+        /** @var int $width */
+        $width = $options['preview_width'];
+        /** @var int $height */
+        $height = $options['preview_height'];
 
         $view->vars['attr']['data-sign-url'] = $this->urlGenerator->generate('s3_file_upload_sign', [
             'type' => $type->value,
             'prefix' => $options['prefix'],
+            'width' => $width,
+            'height' => $height,
         ]);
 
         $file = $form->getData();
 
         if ($file instanceof UploadedFile) {
-            $view->vars['fileUrl'] = $this->uploadedFileUrlGenerator->getImageUrl($file, 300, 300);
+            $view->vars['fileUrl'] = $this->uploadedFileUrlGenerator->getImageUrl($file, $width, $height);
         } else {
-            $view->vars['fileUrl'] = 'https://placehold.co/300?text=Choisir une\nimage';
+            $view->vars['fileUrl'] = "https://placehold.co/{$width}x{$height}?text=Choisir une\nimage";
         }
+
+        $view->vars['preview_width'] = $width;
+        $view->vars['preview_height'] = $height;
     }
 
     public function getParent(): string

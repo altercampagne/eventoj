@@ -59,8 +59,10 @@ class AlternativeFormType extends AbstractType
                 'type' => UploadedFileTypeEnum::ALTERNATIVE,
                 'prefix' => (string) $alternative->getId(),
                 'label' => false,
-                'help' => 'Merci de choisir une image <b>carrée</b> et de dimensions respectables (600 x 600 minimum). Ce n\'est pas grave si l\'image est un peu lourde, ce sera automagiquement optimisé ! 👌',
+                'help' => 'Merci de choisir une image <b>au format paysage 4/3</b> (c\'est le format standard) et de bonne qualité (640 x 480 minimum). Ce n\'est pas grave si l\'image est un peu lourde, ce sera automagiquement optimisé ! 👌',
                 'help_html' => true,
+                'preview_width' => 480,
+                'preview_height' => 360,
             ])
             ->add('stations', CollectionType::class, [
                 'entry_type' => StationFormType::class,
