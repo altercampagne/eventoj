@@ -104,7 +104,7 @@
                 </div>
 
                 {% for alternative in stage.alternatives %}
-                    <div class="card mb-3">
+                    <div class="card card-hover mb-3">
                         <div class="card-header">
                             {{ alternative.name }}
                         </div>
@@ -119,7 +119,7 @@
                                 {{ alternative.description|striptags|u.replace('&nbsp;', ' ').truncate(500, '...', false) }}
                             </p>
                             <p class="card-text d-grid gap-2">
-                                <a href="{{ path('alternative_show', { slug: alternative.slug }) }}" class="btn btn-link">
+                                <a href="{{ path('alternative_show', { slug: alternative.slug }) }}" class="btn btn-link stretched-link">
                                     En savoir plus
                                 </a>
                             </p>
