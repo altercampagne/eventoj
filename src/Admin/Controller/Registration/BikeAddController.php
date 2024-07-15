@@ -25,7 +25,7 @@ class BikeAddController extends AbstractController
 
     public function __invoke(Registration $registration): Response
     {
-        if ($registration->getNeededBike() > $registration->countPeople()) {
+        if ($registration->getNeededBike() >= $registration->countPeople()) {
             $this->addFlash('danger', 'Impossible de demander plus de vélos que de personnes !');
 
             return $this->redirectToRoute('admin_registration_show', ['id' => $registration->getId()]);
