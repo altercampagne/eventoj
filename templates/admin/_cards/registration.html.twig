@@ -51,7 +51,7 @@
                 <li class="list-group-item">
                     <i class="fa-regular fa-credit-card fa-fw me-1"></i> Réglement de <b>{{ registration.approvedPayment.amount|format_price }}</b> pour <b>{{ registration.payingDaysOfPresence }} jours (payants)</b> de présence
                     {% if registration.payingDaysOfPresence > 0 %}
-                        <i class="text-secondary">(soit {{ (registration.approvedPayment.amount / registration.payingDaysOfPresence)|format_price }}/jour)</i>
+                        <i class="text-secondary">(soit {{ (registration.approvedPayment.amount / registration.payingDaysOfPresence / registration.countPeople)|format_price }}/jour/personne)</i>
                     {% endif %}
                     .
                 </li>
