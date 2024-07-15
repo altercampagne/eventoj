@@ -42,6 +42,8 @@ enum Permission: string
 
     case REGISTRATION_LIST = 'registration.list';
     case REGISTRATION_VIEW = 'registration.view';
+    case REGISTRATION_BIKE_ADD = 'registration.bike_add';
+    case REGISTRATION_BIKE_DELETE = 'registration.bike_delete';
 
     case STAGE_CREATE = 'stage.create';
     case STAGE_UPDATE = 'stage.update';

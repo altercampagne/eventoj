@@ -46,6 +46,28 @@
                 </small>
             </div>
 
+            <div class="d-grid gap-2">
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_BIKE_ADD').value, registration) %}
+                    <twig:ButtonPost
+                        url="{{ path('admin_registration_bike_add', { id: registration.id }) }}"
+                        tooltip="Ajouter un vélo de prêt à cette réservation"
+                        btnClass="btn btn-warning"
+                    >
+                        Ajouter un vélo de prêt
+                    </twig:ButtonPost>
+                {% endif %}
+
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_BIKE_DELETE').value, registration) %}
+                    <twig:ButtonPost
+                        url="{{ path('admin_registration_bike_delete', { id: registration.id }) }}"
+                        tooltip="Supprimer un vélo de prêt de cette réservation"
+                        btnClass="btn btn-warning"
+                    >
+                        Supprimer un vélo de prêt
+                    </twig:ButtonPost>
+                {% endif %}
+            </div>
+
             {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
                 <h3>Détails des étapes</h3>
                 <table class="table table-hover table-bordered">

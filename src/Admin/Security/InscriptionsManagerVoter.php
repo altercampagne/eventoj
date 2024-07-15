@@ -61,6 +61,8 @@ class InscriptionsManagerVoter extends Voter
 
             Permission::REGISTRATION_LIST,
             Permission::REGISTRATION_VIEW,
+            Permission::REGISTRATION_BIKE_ADD,
+            Permission::REGISTRATION_BIKE_DELETE,
 
             Permission::STAGE_VIEW,
 

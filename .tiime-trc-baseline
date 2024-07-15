@@ -32,3 +32,5 @@ admin_user_unpromote_admin
 admin_user_unpromote_inscriptions_manager
 admin_user_unpromote_stats_viewer
 charter
+admin_registration_bike_add
+admin_registration_bike_delete
