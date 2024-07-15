@@ -49,7 +49,11 @@
         <ul class="list-group">
             {% if registration.approvedPayment is not null %}
                 <li class="list-group-item">
-                    <i class="fa-regular fa-credit-card fa-fw me-1"></i> Réglement de <b>{{ registration.approvedPayment.amount|format_price }}</b> pour <b>{{ registration.payingDaysOfPresence }} jours</b> de présence <i class="text-secondary">(soit {{ (registration.approvedPayment.amount / registration.payingDaysOfPresence)|format_price }}/jour)</i>.
+                    <i class="fa-regular fa-credit-card fa-fw me-1"></i> Réglement de <b>{{ registration.approvedPayment.amount|format_price }}</b> pour <b>{{ registration.payingDaysOfPresence }} jours (payants)</b> de présence
+                    {% if registration.payingDaysOfPresence > 0 %}
+                        <i class="text-secondary">(soit {{ (registration.approvedPayment.amount / registration.payingDaysOfPresence)|format_price }}/jour)</i>
+                    {% endif %}
+                    .
                 </li>
             {% endif %}
             {% if arrivalDate is defined %}
