@@ -8,6 +8,9 @@
             {% for registration in registrations %}
                 <li>
                     <b>{{ registration.user.fullname }}</b> -
+                    {% if registration.neededBike > 0 %}
+                        {{ registration.neededBike }} <i class="fa-solid fa-bicycle"></i> -
+                    {% endif %}
                     <span class="text-secondary">
                         <a href="mailto:{{ registration.user.email }}">{{ registration.user.email }}</a> -
                         <a href="tel:{{ registration.user.phoneNumber|phone_number_format }}">{{ registration.user.phoneNumber|phone_number_format }}</a>
