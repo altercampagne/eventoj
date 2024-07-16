@@ -57,7 +57,7 @@
                     <td>
                         {% for alternative in stage.alternatives %}
                             {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_VIEW').value, alternative) %}
-                                <a href="{{ path('admin_alternative_show', { slug: alternative.slug }) }}">
+                                <a href="{{ path('admin_alternative_show', { slug: alternative.slug }) }}" class="text-decoration-none">
                             {% endif %}
                             <span class="badge bg-primary">{{ alternative.name }}</span>
                             {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_VIEW').value, alternative) %}
@@ -68,7 +68,7 @@
                     <td>
                         {% for preparer in stage.preparers %}
                             {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_VIEW').value, preparer) %}
-                                <a href="{{ path('admin_user_show', { id: preparer.id }) }}">
+                                <a href="{{ path('admin_user_show', { id: preparer.id }) }}" class="text-decoration-none">
                             {% endif %}
                             <span class="badge bg-primary">{{ preparer.fullName }}</span>
                             {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_VIEW').value, preparer) %}
