@@ -40,7 +40,14 @@
                             {% if stage.includesMeal(availability.meal) %}
                                 <div class="d-flex align-items-center">
                                     {% if availability.adults.isFull %}
-                                        <span class="badge bg-success w-100 text-center">COMPLET</span>
+                                        <span
+                                            class="badge bg-success w-100 text-center"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-html="true"
+                                            title="{{ availability.adults.booked }} adultes sur {{ availability.adults.max }}<br />{{ availability.children.booked }} enfants sur {{ availability.children.max }}<br />{{ availability.bikes.booked }} vélos sur {{ availability.bikes.max }}"
+                                        >
+                                            COMPLET
+                                        </span>
                                     {% else %}
                                         {{ _self.item_availability(availability.adults, 'user', 'Nombre d\'adultes participants au '~availability.meal|trans|lower) }}
                                         {{ _self.item_availability(availability.children, 'child', 'Nombre d\'enfants participants au '~availability.meal|trans|lower) }}
