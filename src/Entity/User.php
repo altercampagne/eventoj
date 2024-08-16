@@ -299,7 +299,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
 
     public function setEmail(string $email): self
     {
-        $this->email = $email;
+        $this->email = mb_strtolower($email);
         $this->isVerified = false;
 
         return $this;
