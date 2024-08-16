@@ -91,7 +91,7 @@ final class UserSynchronizer
             $this->logger->debug("Searching for {$user->getEmail()} in $nbPahekoUsers users from category {$category['name']}...");
 
             foreach ($pahekoUsers as $pahekoUser) {
-                if ($pahekoUser['email'] === $user->getEmail()) {
+                if (mb_strtolower((string) $pahekoUser['email']) === mb_strtolower($user->getEmail())) {
                     $this->logger->debug("Matchin user found (Paheko ID is {$pahekoUser['numero']})");
 
                     return (string) $pahekoUser['numero'];
