@@ -149,6 +149,9 @@
                         <table class="table table-hover table-bordered table-sm">
                             <thead>
                                 <tr>
+                                    {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                                        <th scope="col">Id</th>
+                                    {% endif %}
                                     <th scope="col">Nom</th>
                                     <th scope="col">Date de naissance</th>
                                     <th scope="col">Mail</th>
@@ -160,6 +163,11 @@
                             <tbody>
                                 {% for companion in user.companions %}
                                     <tr>
+                                        {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
+                                            <td>
+                                                <twig:Admin:ButtonCopy value="{{ companion.id }}" tooltip="Copier l'ID" />
+                                            </td>
+                                        {% endif %}
                                         <td>{{ companion.fullName }}</td>
                                         <td>{{ companion.birthDate|format_date('short') }}</td>
                                         <td>
