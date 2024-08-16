@@ -45,7 +45,7 @@ final class CreateOrUpdateController extends AbstractController
             $this->em->persist($event);
             $this->em->flush();
 
-            $this->addFlash('success', sprintf('L\'évènement a bien été %s ! 🥳', $creation ? 'créé' : 'modifié'));
+            $this->addFlash('success', \sprintf('L\'évènement a bien été %s ! 🥳', $creation ? 'créé' : 'modifié'));
 
             return $this->redirectToRoute('admin_event_show', ['slug' => $event->getSlug()]);
         }

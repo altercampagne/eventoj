@@ -44,7 +44,7 @@ final class CreateOrUpdateController extends AbstractController
             $this->em->persist($question);
             $this->em->flush();
 
-            $this->addFlash('success', sprintf('La question a bien été %s ! 🥳', $creation ? 'créée' : 'modifiée'));
+            $this->addFlash('success', \sprintf('La question a bien été %s ! 🥳', $creation ? 'créée' : 'modifiée'));
 
             return $this->redirectToRoute('admin_question_show', ['slug' => $question->getSlug()]);
         }

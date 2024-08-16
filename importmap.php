@@ -36,21 +36,21 @@ return [
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free' => [
-        'version' => '6.5.2',
+        'version' => '6.6.0',
     ],
     '@fortawesome/fontawesome-free/css/all.css' => [
-        'version' => '6.5.2',
+        'version' => '6.6.0',
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free/css/fontawesome.min.css' => [
-        'version' => '6.5.2',
+        'version' => '6.6.0',
         'type' => 'css',
     ],
     'trix' => [
-        'version' => '2.1.2',
+        'version' => '2.1.5',
     ],
     'trix/dist/trix.min.css' => [
-        'version' => '2.1.2',
+        'version' => '2.1.5',
         'type' => 'css',
     ],
     '@hotwired/stimulus' => [

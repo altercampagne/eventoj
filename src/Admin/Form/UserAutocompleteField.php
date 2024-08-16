@@ -19,7 +19,7 @@ class UserAutocompleteField extends AbstractType
             'class' => User::class,
             'searchable_fields' => ['firstName', 'lastName', 'publicName', 'email'],
             'choice_label' => static function (User $user): string {
-                return sprintf('%s (%s)', $user->getFullName(), $user->getPublicName());
+                return \sprintf('%s (%s)', $user->getFullName(), $user->getPublicName());
             },
         ]);
     }

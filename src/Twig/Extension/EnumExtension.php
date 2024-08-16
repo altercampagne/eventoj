@@ -35,7 +35,7 @@ class EnumExtension extends AbstractExtension
              */
             public function __call(string $name, array $arguments): mixed
             {
-                $enumFQN = sprintf('%s::%s', $this->enum, $name);
+                $enumFQN = \sprintf('%s::%s', $this->enum, $name);
 
                 if (\defined($enumFQN)) {
                     return \constant($enumFQN);

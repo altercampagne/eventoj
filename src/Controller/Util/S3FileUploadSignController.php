@@ -49,7 +49,7 @@ final class S3FileUploadSignController extends AbstractController
         }
 
         $randomPart = substr(bin2hex(random_bytes(5)), 0, 6);
-        $key = sprintf('%s/%s-%s.%s', $type->value, $prefix, $randomPart, $ext);
+        $key = \sprintf('%s/%s-%s.%s', $type->value, $prefix, $randomPart, $ext);
 
         $uploadedFile = new UploadedFile($type, $key, $input->filename);
         $uploadedFile
