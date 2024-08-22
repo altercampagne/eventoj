@@ -10,9 +10,15 @@
             {% for registration in event.confirmedRegistrations %}
                 {% set emails = emails|merge(registration.people|map(p => p.email)) %}
             {% endfor %}
-            <twig:Admin:ButtonCopy value="{{ emails|join(' ') }}" tooltip="Copier les adresses mails dans le presse-papier">
-                <div class="btn btn-primary">Copier les emails des participant·es</div>
-            </twig:Admin:ButtonCopy>
+            <div>
+                Copier les emails des participant·es :
+                <twig:Admin:ButtonCopy value="{{ emails|join(' ') }}" tooltip="Copier les adresses mails dans le presse-papier">
+                    <div class="btn btn-primary">Pour envoyer un email</div>
+                </twig:Admin:ButtonCopy>
+                <twig:Admin:ButtonCopy value="{{ emails|join('\n') }}" tooltip="Copier les adresses mails dans le presse-papier">
+                    <div class="btn btn-primary">Pour importer dans Brevo</div>
+                </twig:Admin:ButtonCopy>
+            </div>
         </div>
     {% endif %}
     <table class="table table-hover table-sm">
