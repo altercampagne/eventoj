@@ -89,7 +89,7 @@ class UploadedFileType extends AbstractType
         if ($file instanceof UploadedFile) {
             $view->vars['fileUrl'] = $this->uploadedFileUrlGenerator->getImageUrl($file, $width, $height);
         } else {
-            $view->vars['fileUrl'] = "https://placehold.co/{$width}x{$height}?text=Choisir une\nimage";
+            $view->vars['fileUrl'] = "https://placehold.co/{$width}x{$height}?text=Choisir une image";
         }
 
         $view->vars['preview_width'] = $width;
