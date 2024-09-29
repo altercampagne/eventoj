@@ -212,7 +212,7 @@ final readonly class PaymentSynchronizer
                     'id_project' => $event->getPahekoProjectId(),
                 ];
                 $lines[] = [
-                    'account' => 41, // Usagers et comptes rattachés
+                    'account' => $this->pahekoHelloassoAccountCode,
                     'credit' => $payment->getRegistrationOnlyAmount() / 100,
                     'debit' => 0,
                     'label' => $label,
@@ -232,7 +232,7 @@ final readonly class PaymentSynchronizer
                 'id_project' => $this->pahekoMembershipsProjectId,
             ];
             $lines[] = [
-                'account' => 41, // Usagers et comptes rattachés
+                'account' => $this->pahekoHelloassoAccountCode,
                 'credit' => $payment->getMembershipsAmount() / 100,
                 'debit' => 0,
                 'label' => $label,
