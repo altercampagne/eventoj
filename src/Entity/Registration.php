@@ -133,19 +133,10 @@ class Registration
         }
     }
 
-    public function canBeConfirmed(): bool
-    {
-        if (RegistrationStatus::WAITING_PAYMENT !== $this->status) {
-            return false;
-        }
-
-        return $this->event->isBookable();
-    }
-
     public function confirm(): void
     {
-        if (!$this->canBeConfirmed()) {
-            throw new \LogicException('Cannot confirm this registration.');
+        if (RegistrationStatus::WAITING_PAYMENT !== $this->status) {
+            throw new \LogicException('Cannot confirm this registration because not in waiting_payment status.');
         }
 
         $this->status = RegistrationStatus::CONFIRMED;
