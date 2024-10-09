@@ -28,12 +28,23 @@
                     {{ parent() }}
 
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <i class="fa-solid fa-handshake-angle me-1"></i> Helloasso ID :
-                            {% if payment.helloassoCheckoutIntentId is null %}
-                                -
-                            {% else %}
-                                <twig:Admin:ButtonCopyWithQuotedContent value="{{ payment.helloassoCheckoutIntentId }}" tooltip="Copier l'ID" />
+                        <li class="list-group-item d-flex justify-content-between">
+                            <div>
+                                <i class="fa-solid fa-handshake-angle me-1"></i> Helloasso ID :
+                                {% if payment.helloassoCheckoutIntentId is null %}
+                                    -
+                                {% else %}
+                                    <twig:Admin:ButtonCopyWithQuotedContent value="{{ payment.helloassoCheckoutIntentId }}" tooltip="Copier l'ID" />
+                                {% endif %}
+                            </div>
+                            {% if checkoutIntent is not null and checkoutIntent.order is not null %}
+                                <a
+                                    href="{{ helloassoUrl|replace({'api': 'www'}) }}/associations/altercampagne/checkout/paiement-attestation/{{ checkoutIntent.order.id }}"
+                                    data-bs-toggle="tooltip"
+                                    title="Voir le reçu Helloasso"
+                                >
+                                    <i class="fa-solid fa-receipt"></i>
+                                </a>
                             {% endif %}
                         </li>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) and checkoutIntent is not null %}
@@ -52,15 +63,6 @@
                                         </ul>
                                     {% endif %}
                                 </div>
-                                {% if checkoutIntent.order is not null %}
-                                    <a
-                                        href="{{ helloassoUrl|replace({'api': 'www'}) }}/associations/altercampagne/checkout/paiement-attestation/{{ checkoutIntent.order.id }}"
-                                        data-bs-toggle="tooltip"
-                                        title="Voir le reçu Helloasso"
-                                    >
-                                        <i class="fa-solid fa-receipt"></i>
-                                    </a>
-                                {% endif %}
                             </li>
                         {% endif %}
                     </ul>
