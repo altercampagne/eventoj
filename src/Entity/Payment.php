@@ -190,6 +190,16 @@ class Payment
         return $this->amount;
     }
 
+    public function getAmountWithoutMemberships(): int
+    {
+        $amount = $this->amount;
+        foreach ($this->memberships as $membership) {
+            $amount -= $membership->getPrice();
+        }
+
+        return $amount;
+    }
+
     public function getRefundedAmount(): ?int
     {
         return $this->refundedAmount;

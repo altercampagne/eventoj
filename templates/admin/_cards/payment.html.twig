@@ -22,6 +22,17 @@
                     <twig:Admin:ButtonCopyWithQuotedContent value="{{ payment.id }}" tooltip="Copier l'ID" />
                 </li>
             {% endif %}
+            <li class="list-group-item">
+                Paiement de {{ payment.amount|format_price }} découpé comme suit :
+                <ul>
+                    {% if payment.registration is not null %}
+                        <li>{{ payment.amountWithoutMemberships|format_price }} pour <a href="{{ path('admin_registration_show', { id: payment.registration.id }) }}">une inscription</a></li>
+                    {% endif %}
+                    {% for membership in payment.memberships %}
+                        <li>{{ membership.price|format_price }} pour l'adhésion de <b>{{ membership.person.fullname }}</b></li>
+                    {% endfor %}
+                </ul>
+            </li>
             {% if is_granted(constant('App\\Admin\\Security\\Permission::SHOW_PAHEKO_DETAILS').value, payment) %}
                 <li class="list-group-item">
                     <i class="fa-solid fa-piggy-bank fa-fw me-1" data-bs-toggle="tooltip" title="Informations Paheko"></i>
