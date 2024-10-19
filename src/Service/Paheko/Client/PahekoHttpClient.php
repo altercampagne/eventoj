@@ -64,9 +64,11 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
     private function request(string $method, string $uri, array $options = []): array
     {
         try {
-            return $this->pahekoClient->request('POST', 'user/new', $options)->toArray();
+            return $this->pahekoClient->request($method, $uri, $options)->toArray();
         } catch (HttpExceptionInterface $e) {
-            $this->logger->error('Error when calling Pahko API.', [
+            $this->logger->error('Error when calling Paheko API.', [
+                'request_method' => $method,
+                'request_uri' => $uri,
                 'response_code' => $e->getResponse()->getStatusCode(),
                 'response_content' => $e->getResponse()->getContent(false),
             ]);
