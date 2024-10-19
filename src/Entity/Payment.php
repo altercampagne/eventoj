@@ -100,10 +100,19 @@ class Payment
     /**
      * The given approval date must be the date of the order in helloasso.
      */
-    public function approve(\DateTimeImmutable $approvalDate): void
+    public function approve(\DateTimeImmutable $approvedAt): void
     {
         $this->status = PaymentStatus::APPROVED;
-        $this->approvedAt = $approvalDate;
+        $this->approvedAt = $approvedAt;
+    }
+
+    /**
+     * This method have been added to correct wrong dates in DB when syncyng a
+     * payment with helloasso.
+     */
+    public function setApprovedAt(\DateTimeImmutable $approvedAt): void
+    {
+        $this->approvedAt = $approvedAt;
     }
 
     public function fail(): void

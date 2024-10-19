@@ -8,6 +8,7 @@ use App\Admin\Security\Permission;
 use App\Entity\Payment;
 use App\Service\Payment\PaymentHandler;
 use App\Service\Payment\PaymentRefundHandler;
+use Doctrine\ORM\EntityManagerInterface;
 use Helloasso\Enums\PaymentState;
 use Helloasso\HelloassoClient;
 use Helloasso\Models\Statistics\OrderDetail;
@@ -25,6 +26,7 @@ class SyncWithHelloassoController extends AbstractController
         private readonly HelloassoClient $helloassoClient,
         private readonly PaymentHandler $paymentHandler,
         private readonly PaymentRefundHandler $paymentRefundHandler,
+        private readonly EntityManagerInterface $em,
     ) {
     }
 
@@ -38,6 +40,10 @@ class SyncWithHelloassoController extends AbstractController
         if (null === $order = $checkoutIntent->getOrder()) {
             return $this->return('warning', 'Aucun paiement trouvé chez Helloasso, paiement en erreur ?', $payment);
         }
+
+        $payment->setApprovedAt(\DateTimeImmutable::createFromMutable($order->getDate()));
+        $this->em->persist($payment);
+        $this->em->flush();
 
         if ($this->isOrderRefunded($order)) {
             if ($payment->isRefunded()) {

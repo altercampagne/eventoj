@@ -33,6 +33,7 @@ enum Permission: string
     case PAYMENT_LIST = 'payment.list';
     case PAYMENT_VIEW = 'payment.view';
     case PAYMENT_SYNC_WITH_HELLOASSO = 'payment.sync_with_helloasso';
+    case PAYMENT_SYNC_WITH_PAHEKO = 'payment.sync_with_paheko';
 
     case QUESTION_LIST = 'question.list';
     case QUESTION_VIEW = 'question.view';

@@ -22,6 +22,7 @@ admin_membership_list
 admin_payment_list
 admin_payment_show
 admin_payment_sync_with_helloasso
+admin_payment_sync_with_paheko
 admin_registration_show
 admin_stage_update_availability
 admin_user_promote_admin
