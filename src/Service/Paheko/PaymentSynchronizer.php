@@ -174,7 +174,7 @@ final readonly class PaymentSynchronizer
         $paymentAdminUrl = $this->urlGenerator->generate('admin_payment_show', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         return [
-            'id_year' => 'current',
+            'id_year' => $this->getIdYear($payment->getApprovedAt()),
             /* @phpstan-ignore-next-line */
             'date' => $payment->getApprovedAt()->format('Y-m-d'),
             'label' => $mainLabel,
@@ -243,7 +243,7 @@ final readonly class PaymentSynchronizer
         $paymentAdminUrl = $this->urlGenerator->generate('admin_payment_show', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         return [
-            'id_year' => 'current',
+            'id_year' => $this->getIdYear($payment->getApprovedAt()),
             /* @phpstan-ignore-next-line */
             'date' => $payment->getApprovedAt()->format('Y-m-d'),
             'label' => $mainLabel,
@@ -254,5 +254,27 @@ final readonly class PaymentSynchronizer
             'reference' => (string) $payment->getId(),
             'linked_transactions' => [$payment->getPahekoPaymentId()],
         ];
+    }
+
+    /**
+     * @see https://compta.altercampagne.net/admin/acc/years/
+     */
+    private function getIdYear(\DateTimeImmutable $date): int|string
+    {
+        if ($date < new \DateTimeImmutable('2023-10-01')) {
+            throw new \RuntimeException('Cannot sync a payment which is before 2023-10-01.');
+        }
+
+        $year = 2024;
+        $yearId = 2;
+
+        while (true) {
+            if ($date < new \DateTimeImmutable("$year-10-01")) {
+                return $yearId;
+            }
+
+            $year++;
+            $yearId++;
+        }
     }
 }
