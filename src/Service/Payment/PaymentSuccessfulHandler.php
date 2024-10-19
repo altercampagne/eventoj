@@ -8,6 +8,7 @@ use App\Entity\Payment;
 use App\Message\PahekoPaymentSync;
 use App\Service\MembershipCreator;
 use Doctrine\ORM\EntityManagerInterface;
+use Helloasso\Models\Statistics\OrderDetail;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final readonly class PaymentSuccessfulHandler
@@ -19,9 +20,9 @@ final readonly class PaymentSuccessfulHandler
     ) {
     }
 
-    public function onPaymentSuccess(Payment $payment): void
+    public function onPaymentSuccess(Payment $payment, OrderDetail $order): void
     {
-        $payment->approve();
+        $payment->approve(\DateTimeImmutable::createFromMutable($order->getDate()));
         $this->em->persist($payment);
 
         $memberships = $this->membershipCreator->createMembershipsFromPayment($payment);

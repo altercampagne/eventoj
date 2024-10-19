@@ -33,7 +33,7 @@ class MembershipCreatorTest extends TestCase
             new StageRegistration($stage, $registration),
         ]);
         $payment = new Payment($user, 20000, $registration);
-        $payment->approve();
+        $payment->approve(new \DateTimeImmutable());
 
         $memberships = (new MembershipCreator())->createMembershipsFromPayment($payment);
 

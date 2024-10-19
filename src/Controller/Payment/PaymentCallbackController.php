@@ -62,13 +62,13 @@ class PaymentCallbackController extends AbstractController
             return $this->fail($payment);
         }
 
-        if (!$this->paymentHandler->isPaymentSuccessful($payment)) {
+        if (null === $order = $this->paymentHandler->getCheckoutIntent($payment)->getOrder()) {
             $this->addFlash('danger', 'Impossible de vérifier que ton paiement est bien passé. Si tu es certain·e que c\'est bien le cas, contacte notre équipe avec ton nom / prénom / dates de réservation et en leur copiant ce message.');
 
             return $this->fail($payment);
         }
 
-        $this->paymentHandler->handlePaymentSuccess($payment);
+        $this->paymentHandler->handlePaymentSuccess($payment, $order);
 
         if (null !== $payment->getRegistration()) {
             $this->addFlash('success', 'Ta participation a bien été enregistrée ! 🥳');

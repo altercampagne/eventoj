@@ -204,7 +204,7 @@ class FixtureBuilder
         ?\DateTimeImmutable $startAt = null,
     ): Membership {
         $payment ??= self::createPayment(user: $user);
-        $payment->approve();
+        $payment->approve(new \DateTimeImmutable());
 
         return Membership::createForUser($user, $payment, $startAt);
     }

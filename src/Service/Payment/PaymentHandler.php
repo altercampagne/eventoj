@@ -10,6 +10,7 @@ use Helloasso\HelloassoClient;
 use Helloasso\Models\Carts\CheckoutIntentResponse;
 use Helloasso\Models\Carts\CheckoutPayer;
 use Helloasso\Models\Carts\InitCheckoutBody;
+use Helloasso\Models\Statistics\OrderDetail;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final readonly class PaymentHandler
@@ -77,18 +78,9 @@ final readonly class PaymentHandler
         return $this->helloassoClient->checkout->retrieve((int) $id);
     }
 
-    public function isPaymentSuccessful(Payment $payment): bool
+    public function handlePaymentSuccess(Payment $payment, OrderDetail $order): void
     {
-        if (0 === $payment->getAmount()) {
-            return true;
-        }
-
-        return null !== $this->getCheckoutIntent($payment)->getOrder();
-    }
-
-    public function handlePaymentSuccess(Payment $payment): void
-    {
-        $this->paymentSuccessfulHandler->onPaymentSuccess($payment);
+        $this->paymentSuccessfulHandler->onPaymentSuccess($payment, $order);
     }
 
     public function handlePaymentFailure(Payment $payment): void

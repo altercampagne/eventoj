@@ -19,7 +19,7 @@ class MembershipTest extends TestCase
         $user->setBirthDate(new \DateTimeImmutable('-20 years'));
 
         $payment = new Payment($user, 20000, new Registration($user, Event::AT()));
-        $payment->approve();
+        $payment->approve(new \DateTimeImmutable());
 
         $membership = Membership::createForUser($user, $payment, new \DateTimeImmutable('2024-05-01'));
 

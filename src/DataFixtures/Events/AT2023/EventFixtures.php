@@ -64,7 +64,7 @@ class EventFixtures extends AbstractFixture implements DependentFixtureInterface
             $manager->persist($registration);
 
             $payment = FixtureBuilder::createPayment(user: $user, registration: $registration);
-            $payment->approve();
+            $payment->approve(new \DateTimeImmutable());
             $manager->persist($payment);
 
             $membership = Membership::createForUser($user, $payment);

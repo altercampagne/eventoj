@@ -53,7 +53,7 @@ class SyncWithHelloassoController extends AbstractController
             return $this->return('success', 'Le paiement est acecpté des deux côtés !', $payment);
         }
 
-        $this->paymentHandler->handlePaymentSuccess($payment);
+        $this->paymentHandler->handlePaymentSuccess($payment, $order);
 
         return $this->return('warning', 'Le paiement n\'était pas approuvé chez nous mais maintenant, c\'est bien le cas !', $payment);
     }
