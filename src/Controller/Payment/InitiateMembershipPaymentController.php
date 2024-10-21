@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-#[Route('/payment/initiate_mmebership_payment', name: 'payment_initiate_membership_payment', methods: 'POST')]
+#[Route('/payment/initiate_membership_payment', name: 'payment_initiate_membership_payment', methods: 'POST')]
 class InitiateMembershipPaymentController extends AbstractController
 {
     public function __construct(

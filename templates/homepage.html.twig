@@ -11,6 +11,13 @@
                     <p class="lead">
                         Chaque année, l'association AlterCampagne organise des tours à vélos itinérants qui vont à la rencontre des alternatives : les personnes qui, seules ou en collectif, essaient d’améliorer la situation environnementale, climatique et sociale.
                     </p>
+                    <p class="lead">
+                        {% if app.user is null or not app.user.isMember %}
+                            <a href="{{ path('profile_memberships') }}" class="btn btn-warning btn-lg">
+                                Adhérer à l'association
+                            </a>
+                        {% endif %}
+                    </p>
                 </div>
             </div>
         </div>
