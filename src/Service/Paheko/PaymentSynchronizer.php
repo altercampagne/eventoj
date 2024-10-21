@@ -72,6 +72,10 @@ final readonly class PaymentSynchronizer
 
     private function syncPayment(Payment $payment): void
     {
+        if (null === $payment->getApprovedAt()) {
+            return;
+        }
+
         if (null !== $id = $payment->getPahekoPaymentId()) {
             $this->pahekoClient->updatePayment($id, $this->getPaymentData($payment));
 
@@ -173,8 +177,12 @@ final readonly class PaymentSynchronizer
 
         $paymentAdminUrl = $this->urlGenerator->generate('admin_payment_show', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
+        if (null == $approvedAt = $payment->getApprovedAt()) {
+            throw new \RuntimeException('Unable to sync a payment which has never been approved.');
+        }
+
         return [
-            'id_year' => $this->getIdYear($payment->getApprovedAt()),
+            'id_year' => $this->getIdYear($approvedAt),
             /* @phpstan-ignore-next-line */
             'date' => $payment->getApprovedAt()->format('Y-m-d'),
             'label' => $mainLabel,
@@ -242,8 +250,12 @@ final readonly class PaymentSynchronizer
 
         $paymentAdminUrl = $this->urlGenerator->generate('admin_payment_show', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
+        if (null == $approvedAt = $payment->getApprovedAt()) {
+            throw new \RuntimeException('Unable to sync a payment which has never been approved.');
+        }
+
         return [
-            'id_year' => $this->getIdYear($payment->getApprovedAt()),
+            'id_year' => $this->getIdYear($approvedAt),
             /* @phpstan-ignore-next-line */
             'date' => $payment->getApprovedAt()->format('Y-m-d'),
             'label' => $mainLabel,
@@ -259,7 +271,7 @@ final readonly class PaymentSynchronizer
     /**
      * @see https://compta.altercampagne.net/admin/acc/years/
      */
-    private function getIdYear(\DateTimeImmutable $date): int|string
+    private function getIdYear(\DateTimeImmutable $date): int
     {
         if ($date < new \DateTimeImmutable('2023-10-01')) {
             throw new \RuntimeException('Cannot sync a payment which is before 2023-10-01.');
@@ -273,8 +285,8 @@ final readonly class PaymentSynchronizer
                 return $yearId;
             }
 
-            $year++;
-            $yearId++;
+            ++$year;
+            ++$yearId;
         }
     }
 }
