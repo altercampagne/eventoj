@@ -6,16 +6,12 @@
     {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_EXPORT_EMAILS').value, event) %}
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3>{{ event.confirmedRegistrations|length }} inscriptions confirmées <span class="text-secondary">({{ event.countPeople }} participant·es)</span></h3>
-            {% set emails = [] %}
-            {% for registration in event.confirmedRegistrations %}
-                {% set emails = emails|merge(registration.people|map(p => p.email)) %}
-            {% endfor %}
             <div>
                 Copier les emails des participant·es :
-                <twig:Admin:ButtonCopy value="{{ emails|join(' ') }}" tooltip="Copier les adresses mails dans le presse-papier">
+                <twig:Admin:ButtonCopy value="{{ event.registeredPeopleEmails|join(' ') }}" tooltip="Copier les adresses mails dans le presse-papier">
                     <div class="btn btn-primary">Pour envoyer un email</div>
                 </twig:Admin:ButtonCopy>
-                <twig:Admin:ButtonCopy value="{{ emails|join('\n') }}" tooltip="Copier les adresses mails dans le presse-papier">
+                <twig:Admin:ButtonCopy value="{{ event.registeredPeopleEmails|join('\n') }}" tooltip="Copier les adresses mails dans le presse-papier">
                     <div class="btn btn-primary">Pour importer dans Brevo</div>
                 </twig:Admin:ButtonCopy>
             </div>

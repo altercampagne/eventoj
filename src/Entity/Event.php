@@ -606,4 +606,20 @@ class Event
 
         return \count($people);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getRegisteredPeopleEmails(): array
+    {
+        $mails = [];
+
+        foreach ($this->getConfirmedRegistrations() as $registration) {
+            foreach ($registration->getPeople() as $person) {
+                $mails[] = $person->getEmail();
+            }
+        }
+
+        return array_unique($mails);
+    }
 }
