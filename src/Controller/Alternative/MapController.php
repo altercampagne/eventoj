@@ -26,6 +26,7 @@ class MapController extends AbstractController
             ->from(Alternative::class, 'a')
             ->leftJoin('a.stages', 's')
             ->leftJoin('s.event', 'e')
+            ->andWhere('e.publishedAt is not null')
         ;
 
         $alternatives = $qb->getQuery()->getResult();
