@@ -64,7 +64,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for event in events|filter(e => e.isFinished) %}
+            {% for event in events|filter(e => e.isFinished)|reverse %}
                 <tr>
                     <td><span class="badge text-bg-secondary">{{ event.type.value }}</span></td>
                     <td>{{ event.name }}</td>
