@@ -36,31 +36,31 @@ return [
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free' => [
-        'version' => '6.6.0',
+        'version' => '6.7.0',
     ],
     '@fortawesome/fontawesome-free/css/all.css' => [
-        'version' => '6.6.0',
+        'version' => '6.7.0',
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free/css/fontawesome.min.css' => [
-        'version' => '6.6.0',
+        'version' => '6.7.0',
         'type' => 'css',
     ],
     'trix' => [
-        'version' => '2.1.5',
+        'version' => '2.1.8',
     ],
     'trix/dist/trix.min.css' => [
-        'version' => '2.1.5',
+        'version' => '2.1.8',
         'type' => 'css',
     ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
     'tom-select' => [
-        'version' => '2.3.1',
+        'version' => '2.4.0',
     ],
     'tom-select/dist/css/tom-select.bootstrap5.css' => [
-        'version' => '2.3.1',
+        'version' => '2.4.0',
         'type' => 'css',
     ],
     'clipboard' => [
@@ -72,5 +72,11 @@ return [
     'leaflet/dist/leaflet.min.css' => [
         'version' => '1.9.4',
         'type' => 'css',
+    ],
+    '@orchidjs/sifter' => [
+        'version' => '1.1.0',
+    ],
+    '@orchidjs/unicode-variants' => [
+        'version' => '1.1.2',
     ],
 ];

@@ -183,7 +183,6 @@ final readonly class PaymentSynchronizer
 
         return [
             'id_year' => $this->getIdYear($approvedAt),
-            /* @phpstan-ignore-next-line */
             'date' => $payment->getApprovedAt()->format('Y-m-d'),
             'label' => $mainLabel,
             'type' => 'ADVANCED',
@@ -256,7 +255,6 @@ final readonly class PaymentSynchronizer
 
         return [
             'id_year' => $this->getIdYear($approvedAt),
-            /* @phpstan-ignore-next-line */
             'date' => $payment->getApprovedAt()->format('Y-m-d'),
             'label' => $mainLabel,
             'type' => 'ADVANCED',
