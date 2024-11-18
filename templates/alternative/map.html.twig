@@ -59,5 +59,33 @@
                 </div>
             </div>
         </div>
+
+        <div class="row justify-content-center mt-3">
+            <div class="mb-3 text-center">
+                <h3>La liste des alternatives</h3>
+            </div>
+
+            <div id="alternatives-directory">
+                {% set previousLetter = 'A' %}
+                <h4>A</h4>
+                <ul>
+                    {% for alternative in alternatives|sort((a, b) => a.name|replace({'é':'e'})|upper <=> b.name|replace({'é':'e'})|upper) %}
+                        {% set currentLetter = alternative.name[:1]|replace({'é':'e'})|upper %}
+                        {% if currentLetter != previousLetter %}
+                            {% set previousLetter = currentLetter %}
+                            </ul>
+                            <h4>{{ previousLetter }}</h4>
+                            <ul>
+                        {% endif %}
+
+                        <li>
+                            <a href="{{ path('alternative_show', { slug: alternative.slug }) }}">
+                                {{ alternative.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
 {% endblock %}
