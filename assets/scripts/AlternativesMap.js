@@ -13,13 +13,10 @@ class AlternativesMap extends Map {
       ;
 
       markers.addLayer(marker);
-
-      for (event in element.dataset.events.split(',')) {
-      }
     });
 
     this.map.on('zoomend', () => {
-      if (this.map.getZoom() < 9) {
+      if (this.map.getZoom() < 8) {
         this.map.removeLayer(markers);
       } else {
         this.map.addLayer(markers);
@@ -39,6 +36,7 @@ class AlternativesMap extends Map {
         let geojson;
         geojson = L.geoJson(data, {
           style: (feature) => {
+            console.log(feature);
             let count = alternativeCountByDepartments[parseInt(feature.properties.code)];
 
             return {

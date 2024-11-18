@@ -3,7 +3,7 @@ import 'leaflet'
 class DepartmentDetail extends L.Control {
   onAdd(map) {
     const div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-    div.innerHTML = '<h4>Alternatives par département</h4>Survole un département sur la carte';
+    div.innerHTML = '<h4>Alternatives par département</h4>';
 
     return div;
   }

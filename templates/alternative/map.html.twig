@@ -12,8 +12,12 @@
             </div>
         </div>
 
-        <div class="row justify-content-center mt-4 mt-md-5">
-            <div class="bg-white p-3 rounded border border-secondary-outline">
+        <div class="row justify-content-center mt-3">
+            <p class="fs-4 text-center">
+                Parce que ce sont elles qui donnent tout leur intérêt aux évènmenents que nous organisons, voici une carte (non exhaustive) des nombreuses alternatives que nous avons pu traverser.
+            </p>
+
+            <div class="bg-white p-3 rounded border border-secondary-outline mt-2">
                 <div
                     id="alternatives-map"
                     style="height: 650px"
@@ -26,7 +30,29 @@
                                 data-longitude="{{ alternative.address.longitude }}"
                                 data-events="{{ alternative.events|map(e => e.slug)|join(',') }}"
                             >
-                                {{ alternative.name }}
+                                <div class="text-center">
+                                    {% for event in alternative.events %}
+                                        <a href="{{ path('event_show', { slug: event.slug }) }}" class="text-decoration-none">
+                                            <span class="badge text-bg-secondary">{{ event.name }}</span>
+                                        </a>
+                                    {% endfor %}
+                                    <h5 class="mt-2">{{ alternative.name }}</h5>
+                                    <p>
+                                        {{ alternative.description|striptags|u.replace('&nbsp;', ' ').truncate(300, '...', false) }}
+                                    </p>
+                                    <div>
+                                        <a class="btn btn-primary text-white" href="{{ path('alternative_show', { slug: alternative.slug }) }}">
+                                            Voir la fiche détaillée
+                                        </a>
+                                    </div>
+                                    {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}
+                                        <div class="mt-1">
+                                            <a href="{{ path('admin_alternative_update', { slug: alternative.slug, backToAlternative: true }) }}" class="text-sm">
+                                                Modifier cette alternative
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
