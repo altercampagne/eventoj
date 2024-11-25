@@ -36,14 +36,14 @@ return [
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free' => [
-        'version' => '6.7.0',
+        'version' => '6.7.1',
     ],
     '@fortawesome/fontawesome-free/css/all.css' => [
-        'version' => '6.7.0',
+        'version' => '6.7.1',
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free/css/fontawesome.min.css' => [
-        'version' => '6.7.0',
+        'version' => '6.7.1',
         'type' => 'css',
     ],
     'trix' => [
@@ -57,10 +57,10 @@ return [
         'version' => '3.2.2',
     ],
     'tom-select' => [
-        'version' => '2.4.0',
+        'version' => '2.4.1',
     ],
     'tom-select/dist/css/tom-select.bootstrap5.css' => [
-        'version' => '2.4.0',
+        'version' => '2.4.1',
         'type' => 'css',
     ],
     'clipboard' => [
@@ -78,5 +78,9 @@ return [
     ],
     '@orchidjs/unicode-variants' => [
         'version' => '1.1.2',
+    ],
+    'tom-select/dist/css/tom-select.default.min.css' => [
+        'version' => '2.4.1',
+        'type' => 'css',
     ],
 ];
