@@ -15,7 +15,7 @@
         <div class="row justify-content-center mt-4 mt-md-5">
             <div class="col-12 col-md-6 col-lg-5">
                 <div class="text-center">
-                    <twig:UploadedImage file="{{ alternative.picture }}" width="640" height="480" alt="{{ alternative.name }}" class="img-fluid" />
+                    <twig:UploadedImage file="{{ alternative.pictures|first|default(null) }}" width="640" height="480" alt="{{ alternative.name }}" class="img-fluid" />
                 </div>
 
                 {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}

@@ -5,8 +5,8 @@
 {% block main %}
     <div class="row">
         <div class="col-12 col-md-4 text-center">
-            <twig:UploadedImage file="{{ alternative.picture }}" width="640" height="480" alt="{{ alternative.name }}" class="img-fluid" />
-            <a href="{{ uploaded_image_url(alternative.picture) }}" class="btn btn-link text-secondary">
+            <twig:UploadedImage file="{{ alternative.pictures|first|default(null) }}" width="640" height="480" alt="{{ alternative.name }}" class="img-fluid" />
+            <a href="{{ uploaded_image_url(alternative.pictures|first|default(null)) }}" class="btn btn-link text-secondary">
                 Voir l'image originale
             </a>
         </div>

@@ -60,9 +60,14 @@ class Alternative implements LocatedEntityInterface
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt;
 
-    #[ORM\OneToOne(targetEntity: UploadedFile::class)]
-    #[ORM\JoinColumn(name: 'uploaded_file_id', referencedColumnName: 'id')]
-    private ?UploadedFile $picture = null;
+    /**
+     * @var Collection<int, UploadedFile>
+     */
+    #[ORM\JoinTable(name: 'alternative_pictures')]
+    #[ORM\JoinColumn(name: 'alternative_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'file_id', referencedColumnName: 'id', unique: true)]
+    #[ORM\ManyToMany(targetEntity: UploadedFile::class)]
+    private Collection $pictures;
 
     /**
      * @var Collection<int, Stage>
@@ -74,6 +79,7 @@ class Alternative implements LocatedEntityInterface
     {
         $this->id = new UuidV4();
         $this->createdAt = new \DateTimeImmutable();
+        $this->pictures = new ArrayCollection();
         $this->stages = new ArrayCollection();
     }
 
@@ -212,14 +218,17 @@ class Alternative implements LocatedEntityInterface
         return $this->updatedAt;
     }
 
-    public function getPicture(): ?UploadedFile
+    /**
+     * @return Collection<int, UploadedFile>
+     */
+    public function getPictures(): Collection
     {
-        return $this->picture;
+        return $this->pictures;
     }
 
-    public function setPicture(?UploadedFile $picture): self
+    public function addPicture(UploadedFile $picture): self
     {
-        $this->picture = $picture;
+        $this->pictures->add($picture);
 
         return $this;
     }

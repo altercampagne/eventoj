@@ -110,7 +110,7 @@
                         </div>
                         <div class="card-body">
                             <div class="text-center mb-3">
-                                <twig:UploadedImage file="{{ alternative.picture }}" width="640" height="480" alt="{{ alternative.name }}" class="img-fluid" />
+                                <twig:UploadedImage file="{{ alternative.pictures|first|default(null) }}" width="640" height="480" alt="{{ alternative.name }}" class="img-fluid" />
                             </div>
                             <p class="card-text">
                                 <u>Adresse :</u> {{ alternative.address }}
