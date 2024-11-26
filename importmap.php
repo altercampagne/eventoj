@@ -83,4 +83,25 @@ return [
         'version' => '2.4.1',
         'type' => 'css',
     ],
+    'lightgallery' => [
+        'version' => '2.8.1',
+    ],
+    'lightgallery/plugins/thumbnail' => [
+        'version' => '2.8.1',
+    ],
+    'lightgallery/plugins/zoom' => [
+        'version' => '2.8.1',
+    ],
+    'lightgallery/css/lightgallery.css' => [
+        'version' => '2.8.1',
+        'type' => 'css',
+    ],
+    'lightgallery/css/lg-zoom.css' => [
+        'version' => '2.8.1',
+        'type' => 'css',
+    ],
+    'lightgallery/css/lg-thumbnail.css' => [
+        'version' => '2.8.1',
+        'type' => 'css',
+    ],
 ];

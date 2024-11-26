@@ -14,8 +14,14 @@
 
         <div class="row justify-content-center mt-4 mt-md-5">
             <div class="col-12 col-md-6 col-lg-5">
-                <div class="text-center">
-                    <twig:UploadedImage file="{{ alternative.pictures|first|default(null) }}" width="640" height="480" alt="{{ alternative.name }}" class="img-fluid" />
+                <div class="row mx-0 lightgallery">
+                    {% for picture in alternative.pictures %}
+                        <div class="{% if loop.first %}col-12{% else %}col-lg-2 col-3{% endif %} pe-1 ps-0 pb-1 mb-n3">
+                            <a class="lg-item" data-src="{{ uploaded_image_url(picture, 1280, 960) }}" data-lg-size="1280-960">
+                                <img class="w-100 shadow-1-strong mb-3 img-thumbnail" src="{{ uploaded_image_url(picture, 320, 240) }}" />
+                            </a>
+                        </div>
+                    {% endfor %}
                 </div>
 
                 {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}

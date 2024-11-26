@@ -16,6 +16,7 @@ twig:
         komootPassword: '%env(KOMOOT_PASSWORD)%'
         openrunnerUser: '%env(OPENRUNNER_USER)%'
         openrunnerPassword: '%env(OPENRUNNER_PASSWORD)%'
+        lightGalleryLicenseKey: '%env(LIGHTGALLERY_LICENSE_KEY)%'
 
 when@test:
     twig:
