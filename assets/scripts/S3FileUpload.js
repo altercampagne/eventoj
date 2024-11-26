@@ -5,8 +5,6 @@ class S3FileUpload {
     this.image = document.querySelector(input.dataset.image);
     this.loader = document.querySelector(input.dataset.loader);
 
-    this.input.addEventListener('change', this.onFileChange.bind(this));
-
     this.image.addEventListener('load', (event) => {
         this.image.classList.remove('d-none');
         this.loader.classList.add('d-none');
@@ -55,8 +53,23 @@ class S3FileUpload {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('input[type=file].s3-file-upload').forEach((element) => {
-    (() => new S3FileUpload(element))();
-  });
+// When a remove button is clicked, its grand-parent (the "li" containing the div container) is deleted.
+document.addEventListener('click', () => {
+  const target = event.target.closest('.s3-file-upload-container button.delete-button');
+
+  if (target) {
+      event.preventDefault();
+
+      event.target.parentNode.parentNode.remove();
+  }
+});
+
+document.addEventListener('change', (event) => {
+  const target = event.target.closest('input[type=file].s3-file-upload');
+
+  if (target) {
+    const fileUpload = new S3FileUpload(target);
+
+    fileUpload.onFileChange(event);
+  }
 });

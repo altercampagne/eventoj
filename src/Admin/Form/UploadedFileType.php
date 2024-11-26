@@ -43,7 +43,10 @@ class UploadedFileType extends AbstractType
             ],
             'preview_width' => 300,
             'preview_height' => 300,
+            'allow_delete' => false,
         ]);
+
+        $resolver->setAllowedTypes('allow_delete', 'bool');
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -94,6 +97,8 @@ class UploadedFileType extends AbstractType
 
         $view->vars['preview_width'] = $width;
         $view->vars['preview_height'] = $height;
+
+        $view->vars['allow_delete'] = $options['allow_delete'];
     }
 
     public function getParent(): string
