@@ -17,8 +17,8 @@
                 <div class="row mx-0 lightgallery">
                     {% for picture in alternative.pictures %}
                         <div class="{% if loop.first %}col-12{% else %}col-lg-2 col-3{% endif %} pe-1 ps-0 pb-1 mb-n3">
-                            <a class="lg-item" data-src="{{ uploaded_image_url(picture, 1280, 960) }}" data-lg-size="1280-960">
-                                <img class="w-100 shadow-1-strong mb-3 img-thumbnail" src="{{ uploaded_image_url(picture, 320, 240) }}" />
+                            <a class="lg-item" data-src="{{ uploaded_image_url(picture, 1568, 1176) }}" data-lg-size="1568-1176">
+                                <img class="w-100 shadow-1-strong mb-3 img-thumbnail" src="{{ uploaded_image_url(picture, loop.first ? 640 : 320, loop.first ? 480 : 240) }}" />
                             </a>
                         </div>
                     {% endfor %}
