@@ -57,8 +57,8 @@ class DashboardController extends AbstractController
         $qb
             ->select('a, p')
             ->from(Alternative::class, 'a')
-            ->leftJoin('a.picture', 'p')
-            ->orWhere('a.picture IS NULL')
+            ->leftJoin('a.pictures', 'p')
+            ->where('p.id IS NULL')
             ->orderBy('a.updatedAt', 'ASC')
             ->setMaxResults(10)
         ;

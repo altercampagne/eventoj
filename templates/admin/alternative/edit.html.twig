@@ -44,9 +44,28 @@
                     <fieldset class="form-group border p-3 mt-3 bg-light">
                         <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-image me-2"></i> Illustration de l'alternative</legend>
                         <div class="alert bg-danger-subtle">
-                            Si tu souhaites prendre une image qui traine sur les internets pour illustrer ton alternative, fais bien attention à ce qu'elle soit <b>libre de droits</b> ! Tu trouveras tout plein de belles images sur <a href="https://unsplash.com/fr">Unsplash</a> si besoin !
+                            <u class="fw-bold">⚠️ Choisir une photo :</u><br />Si tu souhaites prendre une image qui traine sur les internets pour illustrer ton alternative, fais bien attention à ce qu'elle soit <b>libre de droits</b> ! Tu trouveras tout plein de belles images sur <a href="https://unsplash.com/fr">Unsplash</a> si besoin !
                         </div>
-                        {{ form_row(form.picture) }}
+
+                        <div {{ stimulus_controller('form-collection') }}
+                            data-form-collection-index-value="{{ form.pictures|length > 0 ? form.pictures|last.vars.name + 1 : 0 }}"
+                            data-form-collection-prototype-value="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}"
+                        >
+                            <ul {{ stimulus_target('form-collection', 'collectionContainer') }} class="row row-cols-3 list-unstyled text-center">
+                                {% for picture in form.pictures %}
+                                    <li>
+                                        {{ form_widget(picture) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                            <div class="d-grid mx-5">
+                                <button type="button" {{ stimulus_action('form-collection', 'addCollectionElement') }} class="btn btn-outline-success btn-lg">
+                                    Ajouter une photo
+                                </button>
+                            </div>
+                        </div>
+
                     </fieldset>
 
                     <fieldset class="form-group border p-3 mt-3 bg-light">

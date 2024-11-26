@@ -44,8 +44,9 @@ class ListController extends AbstractController
     {
         $qb = $this->em->createQueryBuilder();
         $qb
-            ->select('a, s, e')
+            ->select('a, s, e, p')
             ->from(Alternative::class, 'a')
+            ->leftJoin('a.pictures', 'p')
             ->leftJoin('a.stages', 's')
             ->leftJoin('s.event', 'e')
             ->orderBy('a.name', 'ASC')

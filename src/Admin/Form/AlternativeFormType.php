@@ -54,15 +54,21 @@ class AlternativeFormType extends AbstractType
             ->add('address', AddressFormType::class, [
                 'address_line1_required' => false,
             ])
-            ->add('picture', UploadedFileType::class, [
-                'required' => false,
-                'type' => UploadedFileTypeEnum::ALTERNATIVE,
-                'prefix' => (string) $alternative->getId(),
-                'label' => false,
-                'help' => 'Merci de choisir une image <b>au format paysage 4/3</b> (c\'est le format standard) et de bonne qualité (640 x 480 minimum). Ce n\'est pas grave si l\'image est un peu lourde, ce sera automagiquement optimisé ! 👌',
-                'help_html' => true,
-                'preview_width' => 480,
-                'preview_height' => 360,
+            ->add('pictures', CollectionType::class, [
+                'entry_type' => UploadedFileType::class,
+                'entry_options' => [
+                    'required' => false,
+                    'type' => UploadedFileTypeEnum::ALTERNATIVE,
+                    'prefix' => (string) $alternative->getId(),
+                    'label' => false,
+                    'help' => 'Merci de choisir une image <b>au format paysage 4/3</b> (c\'est le format standard) et de bonne qualité (640 x 480 minimum). Ce n\'est pas grave si l\'image est un peu lourde, ce sera automagiquement optimisé ! 👌',
+                    'help_html' => true,
+                    'preview_width' => 300,
+                    'preview_height' => 225,
+                    'allow_delete' => true,
+                ],
+                'allow_add' => true,
+                'allow_delete' => true,
             ])
             ->add('stations', CollectionType::class, [
                 'entry_type' => StationFormType::class,

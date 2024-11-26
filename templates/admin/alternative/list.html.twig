@@ -66,7 +66,7 @@
                         </td>
                     {% endif %}
                     <td>
-                        <twig:Admin:IconBoolean value="{{ alternative.picture is not null }}" tooltipTrue="Cette alternative a bien une illustration" tooltipFalse="Cette alternative n'a pas d'illustration !" />
+                        <twig:Admin:IconBoolean value="{{ alternative.pictures is not empty }}" tooltipTrue="Cette alternative a bien une illustration" tooltipFalse="Cette alternative n'a pas d'illustration !" />
                     </td>
                     <td>{{ alternative.createdAt|format_datetime }}</td>
                     <td>
