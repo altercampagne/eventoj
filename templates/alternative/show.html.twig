@@ -24,13 +24,20 @@
                     {% endfor %}
                 </div>
 
-                {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}
-                    <div class="d-grid gap-2">
-                        <a href="{{ path('admin_alternative_update', { slug: alternative.slug, backToAlternative: true }) }}" class="btn btn-warning mt-3">
+                <div class="d-grid gap-2 mt-3">
+                    {% dump alternative.website %}
+                    {% if alternative.website is not null %}
+                        <a href="{{ alternative.website }}" class="btn btn-outline-success" rel="external nofollow">
+                            Voir le site de l'alternative
+                        </a>
+                    {% endif %}
+
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}
+                        <a href="{{ path('admin_alternative_update', { slug: alternative.slug, backToAlternative: true }) }}" class="btn btn-warning">
                             Modifier cette alternative
                         </a>
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
 
             <div class="col-12 col-md-6 colg-lg-7">
