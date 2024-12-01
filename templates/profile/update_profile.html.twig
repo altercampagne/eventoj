@@ -53,9 +53,16 @@
                         </ul>
                     {% endif %}
 
-                    <fieldset class="form-group border p-3 mt-3">
-                        <legend class="w-auto px-2"><i class="fa-solid fa-user me-2"></i> Ta présentation <i class="text-secondary">(facultative)</i></legend>
 
+                    <fieldset class="form-group border p-3 mt-3">
+                        <legend class="w-auto px-2">
+                            <i class="fa-solid fa-map me-2"></i> Carte des alterpotes
+                            <small><a href="#" class=" mx-2" data-bs-toggle="modal" data-bs-target="#alterpotesMapDetails">
+                                (plus d'infos)
+                            </a></small>
+                        </legend>
+
+                        {{ form_row(form.visibleOnAlterpotesMap) }}
                         {{ form_row(form.biography) }}
                     </fieldset>
 
@@ -112,6 +119,26 @@
                         <i>
                              Même en possession d'un permis B, il n'y a aucune obligation de conduire les véhicules. Chaque jour des conducteurs.rices motivé.es se portent volontaires. Si tu possèdes un permis B et que tu es partant.es pour la conduite, pense à le prendre avec toi pendant l'AlterTour.
                         </i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="alterpotesMapDetails" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">La carte des alterpotes ?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert bg-info-subtle">
+                        La carte des alterpotes est visible uniquement par les membres à jour de leur cotisation, tes coordonées ne seront donc pas visibles publiquement.
+                    </div>
+
+                    <p>
+                        La carte des alterpotes permet de visualiser où habitent toutes les personnes qui le souhaitent et éventuellement de mettre les membres en relation les uns avec les autres.
                     </p>
                 </div>
             </div>

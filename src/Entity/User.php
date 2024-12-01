@@ -114,6 +114,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
+    #[ORM\Column(type: 'boolean', options: [
+        'default' => false,
+    ])]
+    private bool $visibleOnAlterpotesMap = false;
+
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
@@ -429,6 +434,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
     public function setHasDrivingLicence(bool $hasDrivingLicence): self
     {
         $this->hasDrivingLicence = $hasDrivingLicence;
+
+        return $this;
+    }
+
+    public function visibleOnAlterpotesMap(): bool
+    {
+        return $this->visibleOnAlterpotesMap;
+    }
+
+    public function setVisibleOnAlterpotesMap(bool $visibleOnAlterpotesMap): self
+    {
+        $this->visibleOnAlterpotesMap = $visibleOnAlterpotesMap;
 
         return $this;
     }

@@ -1,0 +1,67 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}La carte des alterpotes{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="mb-3 text-center">
+                    <h1>La carte des alterpotes</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-3">
+            {% if not app.user.visibleOnAlterpotesMap %}
+                <div class="alert alert-danger">
+                    <b>Pour le moment, tu ne figures pas sur la carte des alterpotes !</b><br />
+                    Tu souhaites appraitre dessus ? Il te suffit de <a href="{{ path('profile_update_profile') }}"> modifier tes préférences</a>.
+                </div>
+            {% endif %}
+
+            <div class="bg-white p-3 rounded border border-secondary-outline mt-2">
+                <div
+                    id="alterpotes-map"
+                    style="height: 650px"
+                >
+                    <ul class="d-none">
+                        {% for user in users %}
+                            <li
+                                data-latitude="{{ user.address.latitude }}"
+                                data-longitude="{{ user.address.longitude }}"
+                                data-itself="{{ app.user == user }}"
+                            >
+                                <div class="text-center">
+                                    <h5 class="mt-2">{{ user.publicName }}</h5>
+                                    {% if user.biography is not null %}
+                                        <p>
+                                            {{ user.biography }}
+                                        </p>
+                                    {% endif %}
+
+                                    <hr />
+
+                                    <a class="btn btn-link btn-sm" href="tel:{{ user.phoneNumber|phone_number_format }}">
+                                        {{ user.phoneNumber|phone_number_format }}
+                                    </a>
+                                    <a class="btn btn-link btn-sm" href="mailto:{{ user.email }}">
+                                        {{ user.email }}
+                                    </a>
+
+                                    {% if user == app.user %}
+                                        <hr />
+
+                                        <a href="{{ path('profile_update_profile') }}" class="btn btn-primary text-white btn-sm">
+                                            Modifier mes informations
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
