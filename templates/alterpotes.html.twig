@@ -36,7 +36,7 @@
                                     <h5 class="mt-2">{{ user.publicName }}</h5>
                                     {% if user.biography is not null %}
                                         <p>
-                                            {{ user.biography }}
+                                            {{ user.biography|nl2br }}
                                         </p>
                                     {% endif %}
 
