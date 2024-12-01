@@ -57,6 +57,9 @@ class ProfileUpdateFormType extends AbstractType
                 'label' => 'Ta présentation (visible sur la carte)',
                 'help' => 'N\'hésite pas à ajouter des informations utiles pour les autres membres de l\'association : est-ce que tu acceptes d\'héberger des altercyclistes ? dans quel contexte ?',
                 'required' => false,
+                'attr' => [
+                    'rows' => 5,
+                ],
             ])
         ;
 
