@@ -359,8 +359,7 @@ class EventFixtures extends AbstractFixture implements DependentFixtureInterface
 
     private function getAlternative(string $slug): Alternative
     {
-        /** @var Alternative $alternative */
-        $alternative = $this->getReference($slug);
+        $alternative = $this->getReference($slug, Alternative::class);
 
         return $alternative;
     }
