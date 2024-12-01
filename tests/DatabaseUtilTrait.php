@@ -15,8 +15,7 @@ trait DatabaseUtilTrait
 {
     public function save(object ...$objects): void
     {
-        /** @var EntityManagerInterface $em */
-        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $em = $this->getEntityManager();
 
         foreach ($objects as $object) {
             $em->persist($object);
@@ -76,5 +75,13 @@ trait DatabaseUtilTrait
         }
 
         return $event;
+    }
+
+    protected function getEntityManager(): EntityManagerInterface
+    {
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+
+        return $em;
     }
 }

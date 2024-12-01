@@ -8,7 +8,7 @@ class AlternativesMap extends Map {
 
     const markers = new L.FeatureGroup();
     container.querySelectorAll('ul > li').forEach((element) => {
-      const marker = L.marker([element.dataset.latitude, element.dataset.longitude], { icon: this.customIcon })
+      const marker = L.marker([element.dataset.latitude, element.dataset.longitude], { icon: this.customIconBlue })
         .bindPopup(element.innerHTML)
       ;
 
@@ -36,7 +36,6 @@ class AlternativesMap extends Map {
         let geojson;
         geojson = L.geoJson(data, {
           style: (feature) => {
-            console.log(feature);
             let count = alternativeCountByDepartments[parseInt(feature.properties.code)];
 
             return {

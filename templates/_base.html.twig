@@ -19,6 +19,11 @@
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{ path('alternative_map') }}">Alternatives</a>
                             </li>
+                            {% if is_granted('ROLE_USER') and app.user.isMember %}
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{{ path('alterpotes_map') }}">Carte des alterpotes</a>
+                                </li>
+                            {% endif %}
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{ path('faq') }}">Foire aux questions</a>
                             </li>
@@ -128,5 +133,11 @@
         </footer>
     {% endblock %}
 
-    <div class="d-none" id="leaflet-config" data-marker-icon="{{ asset('images/leaflet/marker-icon.png') }}"></div>
+    <div
+        class="d-none"
+        id="leaflet-config"
+        data-marker-icon="{{ asset('images/leaflet/marker-icon.png') }}"
+        data-marker-icon-blue="{{ asset('images/leaflet/marker-icon-blue.svg') }}"
+        data-marker-icon-purple="{{ asset('images/leaflet/marker-icon-purple.svg') }}"
+    ></div>
 {% endblock %}

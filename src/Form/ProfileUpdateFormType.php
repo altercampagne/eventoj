@@ -9,6 +9,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -47,15 +48,14 @@ class ProfileUpdateFormType extends AbstractType
                 'help_html' => true,
                 'required' => false,
             ])
-            ->add('biography', TextType::class, [
-                'label' => false,
-                'attr' => [
-                    'placeholder' => 'Ta présentation',
-                ],
-                'row_attr' => [
-                    'class' => 'form-floating mb-3',
-                ],
-                'help' => 'N\'hésite pas à nous en dire un peu plus te concernant (aucune obligation bien sûr). 😊',
+            ->add('visibleOnAlterpotesMap', CheckboxType::class, [
+                'label' => "J'accepte d'apparaitre sur la carte des alterpotes",
+                'help' => 'La carte est visible uniquement pour les membres à jour de leur cotisation.',
+                'required' => false,
+            ])
+            ->add('biography', TextareaType::class, [
+                'label' => 'Ta présentation (visible sur la carte)',
+                'help' => 'N\'hésite pas à ajouter des informations utiles pour les autres membres de l\'association : est-ce que tu acceptes d\'héberger des altercyclistes ? dans quel contexte ?',
                 'required' => false,
             ])
         ;

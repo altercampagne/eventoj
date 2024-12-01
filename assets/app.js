@@ -11,6 +11,7 @@ import './styles/app.scss'
 
 import './scripts/AlternativeMap.js'
 import './scripts/AlternativesMap.js'
+import './scripts/AlterpotesMap.js'
 import './scripts/EventRegistrationBikeSelector.js'
 import './scripts/EventRegistrationChooseDates.js'
 import './scripts/EventRegistrationChoosePrice.js'

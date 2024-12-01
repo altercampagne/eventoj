@@ -7,8 +7,14 @@ export default class Map {
     longitude = 1.7191,
     zoomLevel = 13,
   } = {}) {
-    this.customIcon = L.icon({
-      iconUrl: document.getElementById('leaflet-config').dataset.markerIcon,
+    this.customIconBlue = L.icon({
+      iconUrl: document.getElementById('leaflet-config').dataset.markerIconBlue,
+      iconSize: [30, 45],
+      popupAnchor: [0, -10],
+    });
+
+    this.customIconPurple = L.icon({
+      iconUrl: document.getElementById('leaflet-config').dataset.markerIconPurple,
       iconSize: [30, 45],
       popupAnchor: [0, -10],
     });

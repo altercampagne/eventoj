@@ -7,7 +7,7 @@ class AlternativeMap extends Map {
       longitude: container.dataset.longitude,
     });
 
-    L.marker([container.dataset.latitude, container.dataset.longitude], { icon: this.customIcon }).addTo(this.map)
+    L.marker([container.dataset.latitude, container.dataset.longitude], { icon: this.customIconBlue }).addTo(this.map)
       .bindPopup(container.dataset.tooltip)
       .openPopup();
   }

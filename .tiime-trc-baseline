@@ -6,7 +6,6 @@ payment_initiate_membership_payment
 payment_callback_back
 payment_callback_error
 payment_callback_return
-profile_memberships
 profile_registrations
 registration_cancel
 logout
