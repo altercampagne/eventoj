@@ -2,9 +2,9 @@
 
 {% block title %}Tes inscriptions aux évènements organisés par AlterCampagne{% endblock %}
 
-{% macro render_registration(registration, active) %}
+{% macro render_registration(registration, isComing) %}
     <div class="card mb-3">
-        <div class="card-header{% if active %} bg-primary-subtle{% endif %}">
+        <div class="card-header{% if isComing %} bg-primary-subtle{% endif %}">
             <h3 class="card-title fs-4 m-0">{{ registration.event.name }}</h3>
         </div>
         <div class="card-body">
@@ -39,30 +39,32 @@
                     </div>
                 {% endif %}
             </p>
-            {% if registration.canBeCanceled %}
-                <div class="d-grid gap-2 d-none">
-                    <twig:ButtonPostWithConfirmation
-                        url="{{ path('registration_cancel', { id: registration.id }) }}"
-                        buttonLabel="Annuler mon inscription"
-                        buttonClass="btn btn-outline-danger"
-                        modalTitle="Annulation de ton inscription"
-                        modalButtonClass="btn btn-danger"
-                        modalButtonLabel="Confirmer l'annulation de mon inscription"
-                    >
-                        Cette action est <b>IRRÉVERSIBLE</b>.<br /><br />
-                        Tu seras remboursé de l'intégralité de ton paiement, excepté le montant des adhésions et l'éventuel don à Helloasso, soit un montant de <b>{{ registration.approvedPayment.registrationOnlyAmount|format_price }}</b>.
-                    </twig:ButtonPostWithConfirmation>
-                    <small class="text-center text-secondary">
-                        (disponible jusqu'au {{ registration.cancelationDate|format_date('long') }})
-                    </small>
-                </div>
-            {% else %}
-                <div class="alert bg-danger-subtle mb-0">
-                    L'évènement démarre bientôt, ton inscription ne peut plus être annulée.
-                    {% if registration.event.exchangeMarketLink is not null %}
-                        <br />En revanche, peut-être que tu peux proposer tes places sur <a href="{{ registration.event.exchangeMarketLink }}" rel="nofollow">la bourse aux échanges</a> !
-                    {% endif %}
-                </div>
+            {% if isComing %}
+                {% if registration.canBeCanceled %}
+                    <div class="d-grid gap-2 d-none">
+                        <twig:ButtonPostWithConfirmation
+                            url="{{ path('registration_cancel', { id: registration.id }) }}"
+                            buttonLabel="Annuler mon inscription"
+                            buttonClass="btn btn-outline-danger"
+                            modalTitle="Annulation de ton inscription"
+                            modalButtonClass="btn btn-danger"
+                            modalButtonLabel="Confirmer l'annulation de mon inscription"
+                        >
+                            Cette action est <b>IRRÉVERSIBLE</b>.<br /><br />
+                            Tu seras remboursé de l'intégralité de ton paiement, excepté le montant des adhésions et l'éventuel don à Helloasso, soit un montant de <b>{{ registration.approvedPayment.registrationOnlyAmount|format_price }}</b>.
+                        </twig:ButtonPostWithConfirmation>
+                        <small class="text-center text-secondary">
+                            (disponible jusqu'au {{ registration.cancelationDate|format_date('long') }})
+                        </small>
+                    </div>
+                {% else %}
+                    <div class="alert bg-danger-subtle mb-0">
+                        L'évènement démarre bientôt, ton inscription ne peut plus être annulée.
+                        {% if registration.event.exchangeMarketLink is not null %}
+                            <br />En revanche, peut-être que tu peux proposer tes places sur <a href="{{ registration.event.exchangeMarketLink }}" rel="nofollow">la bourse aux échanges</a> !
+                        {% endif %}
+                    </div>
+                {% endif %}
             {% endif %}
         </div>
     </div>
