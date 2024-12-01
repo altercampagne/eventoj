@@ -178,7 +178,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        if ('' === $identifier = (string) $this->email) {
+            throw new \RuntimeException('Found a user with an empty email!');
+        }
+
+        return $identifier;
     }
 
     /**
