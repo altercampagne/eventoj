@@ -57,10 +57,14 @@
                     <fieldset class="form-group border p-3 mt-3">
                         <legend class="w-auto px-2">
                             <i class="fa-solid fa-map me-2"></i> Carte des alterpotes
-                            <small><a href="#" class=" mx-2" data-bs-toggle="modal" data-bs-target="#alterpotesMapDetails">
-                                (plus d'infos)
-                            </a></small>
                         </legend>
+
+                        <p>
+                        <a href="{{ path('alterpotes_map') }}">La carte des alterpotes</a> permet de visualiser où habitent toutes les personnes qui le souhaitent et éventuellement de mettre les membres en relation les uns avec les autres.
+                        </p>
+                        <p class="text-secondary">
+                             La carte des alterpotes est visible uniquement par les membres à jour de leur cotisation, tes coordonées ne seront donc pas visibles publiquement.
+                        </p>
 
                         {{ form_row(form.visibleOnAlterpotesMap) }}
                         {{ form_row(form.biography) }}

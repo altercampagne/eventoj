@@ -50,7 +50,6 @@ class ProfileUpdateFormType extends AbstractType
             ])
             ->add('visibleOnAlterpotesMap', CheckboxType::class, [
                 'label' => "J'accepte d'apparaitre sur la carte des alterpotes",
-                'help' => 'La carte est visible uniquement pour les membres à jour de leur cotisation.',
                 'required' => false,
             ])
             ->add('biography', TextareaType::class, [
