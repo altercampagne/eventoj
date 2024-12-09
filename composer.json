@@ -123,7 +123,7 @@
         }
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "doctrine/doctrine-fixtures-bundle": "^4.0",
         "fakerphp/faker": "^1.23",
         "phpunit/phpunit": "^11.4",
         "symfony/browser-kit": "7.2.*",
