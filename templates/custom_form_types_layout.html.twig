@@ -2,7 +2,7 @@
     <div class="s3-file-upload-container mb-3">
         <div class="d-flex justify-content-center">
             <label for="{{ form.vars.id }}-file-input" style="width: {{ form.vars.preview_width }}px; height: {{ form.vars.preview_height }}px" class="d-flex justify-content-center align-items-center s3-upload-file">
-                <img src="{{ fileUrl }}" class="rounded" id="{{ form.vars.id }}-img" />
+                <img loading="lazy" src="{{ fileUrl }}" class="rounded" id="{{ form.vars.id }}-img" />
                 <i class="fa-solid fa-circle-notch fa-spin fa-5x d-none" id="{{ form.vars.id }}-loader"></i>
             </label>
         </div>
