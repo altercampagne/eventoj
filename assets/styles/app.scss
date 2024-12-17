@@ -9,6 +9,8 @@ $enable-negative-margins: true;
 
 body {
     background-color: $gray-100;
+    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display
+    font-display: swap;
     font-family: 'Libre Franklin', sans-serif;
 }
 
