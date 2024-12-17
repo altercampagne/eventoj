@@ -1,6 +1,7 @@
 {% extends '_base.html.twig' %}
 
-{% block title %}{{ event.name }}{% endblock %}
+{% block title %}{{ event.name }} - un évènement d'AlterCampagne{% endblock %}
+{% block meta_description %}{{ event.name }} est un évènement organisé par AlterCampagne du {{ event.firstStage.date|format_date('long') }} au {{ event.lastStage.date|format_date('long') }}{% endblock %}
 
 {% block main %}
     <div class="container">

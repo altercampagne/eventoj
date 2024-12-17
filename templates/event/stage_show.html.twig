@@ -1,6 +1,7 @@
 {% extends '_base.html.twig' %}
 
-{% block title %}{{ stage.event.name ~ ' - ' ~ stage.name }}{% endblock %}
+{% block title %}{{ stage.event.name }}: {{ stage.name }} le {{ stage.date|format_date('long') }}{% endblock %}
+{% block meta_description %}Durant l'évènement {{ stage.event.name }}: {{ stage.name }} une étape qui aura lieu le {{ stage.date|format_date('long') }}{% endblock %}
 
 {% block main %}
     <div class="container mt-n4">
@@ -20,6 +21,7 @@
                 {% endif %}
             </div>
         </div>
+
         <div class="mb-3 text-center">
             <h1>{{ stage.name }}</h1>
             <span class="fs-4 text-body-secondary fw-bold text-uppercase">

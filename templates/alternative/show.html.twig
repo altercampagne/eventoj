@@ -1,6 +1,7 @@
 {% extends '_base.html.twig' %}
 
-{% block title %}{{ alternative.name }}{% endblock %}
+{% block title %}{{ alternative.name }} à {{ alternative.address.city }} ({{ alternative.address.zipCode[:2] }}){% endblock %}
+{% block meta_description %}{{ alternative.name }} est une alternative située à {{ alternative.address.city }} ({{ alternative.address.zipCode[:2] }}) et visitée par des altercyclistes{% endblock %}
 
 {% block main %}
     <div class="container">
