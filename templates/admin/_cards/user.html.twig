@@ -39,6 +39,15 @@
                     {% endif %}
                 </li>
             {% endif %}
+            <li class="list-group-item">
+                {% set membership = user.latestMembership %}
+                <i class="fa-solid fa-ticket-simple fa-fw me-1 {{ membership is not null and membership.isValid ? 'text-success' : 'text-danger' }}"></i>
+                {% if membership is not null and membership.isValid %}
+                    Adhésion valide jusqu'au <b>{{ membership.endAt|format_date }}</b>
+                {% else %}
+                    Pas d'adhésion en cours
+                {% endif %}
+            </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div>
                     <i
