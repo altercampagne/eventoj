@@ -55,4 +55,24 @@ class ProfileMembershipsTest extends WebTestCase
         // $this->assertResponseIsSuccessful();
         // $this->assertRouteSame('payment_initiate_membership_payment');
     }
+
+    public function testInitiatePaymentWithActiveMembership(): void
+    {
+        $client = static::createClient();
+
+        $user = FixtureBuilder::createUser();
+        $membership = FixtureBuilder::createMembershipForUser($user);
+        $this->save($user, $membership, $membership->getPayment());
+        $this->getEntityManager()->clear();
+
+        $client->loginUser($user);
+
+        $client->request('POST', '/payment/initiate_membership_payment');
+
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+        $this->assertRouteSame('profile_memberships');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Tes adhésions');
+    }
 }

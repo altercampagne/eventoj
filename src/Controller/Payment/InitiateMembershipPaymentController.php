@@ -28,7 +28,7 @@ class InitiateMembershipPaymentController extends AbstractController
         $payer = $this->getUser();
 
         if ($payer->isMember()) {
-            return $this->redirectToRoute('profile_mmeberships');
+            return $this->redirectToRoute('profile_memberships');
         }
 
         return $this->redirect($this->paymentHandler->initiatePayment(new Payment($payer, Membership::PRICE)));
