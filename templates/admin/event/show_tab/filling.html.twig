@@ -3,7 +3,7 @@
 {% set tab = 'filling' %}
 
 {% macro item_availability(availability, icon, legend) %}
-    {% set color = availability.percent >= 100 ? 'danger': availability.percent > 50 ? 'warning' : 'success' %}
+    {% set color = availability.percent >= 100 ? 'danger' : availability.percent > 50 ? 'warning' : 'success' %}
 
     <div data-bs-toggle="tooltip" data-bs-title="{{ legend }}">
         <span class="badge text-bg-{{ color }} ms-2">
@@ -49,10 +49,10 @@
                                             COMPLET
                                         </span>
                                     {% else %}
-                                        {{ _self.item_availability(availability.adults, 'user', 'Nombre d\'adultes participants au '~availability.meal|trans|lower) }}
-                                        {{ _self.item_availability(availability.children, 'child', 'Nombre d\'enfants participants au '~availability.meal|trans|lower) }}
+                                        {{ _self.item_availability(availability.adults, 'user', 'Nombre d\'adultes participants au ' ~ availability.meal|trans|lower) }}
+                                        {{ _self.item_availability(availability.children, 'child', 'Nombre d\'enfants participants au ' ~ availability.meal|trans|lower) }}
                                         {% if 0 < event.bikesAvailable %}
-                                            {{ _self.item_availability(availability.bikes, 'bicycle', 'Nombre de de vélos nécessaires au moment du '~availability.meal|trans|lower) }}
+                                            {{ _self.item_availability(availability.bikes, 'bicycle', 'Nombre de de vélos nécessaires au moment du ' ~ availability.meal|trans|lower) }}
                                         {% endif %}
                                     {% endif %}
                                 </div>
@@ -61,7 +61,7 @@
                     {% endfor %}
                     <td>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %}
-                            <twig:Admin:IconView url="{{ path('admin_stage_show', { slug: stage.slug }) }}" />
+                            <twig:Admin:IconView url="{{ path('admin_stage_show', {slug: stage.slug}) }}" />
                         {% endif %}
                     </td>
                 </tr>

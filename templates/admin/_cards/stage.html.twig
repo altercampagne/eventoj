@@ -23,14 +23,14 @@
             {% endif %}
             <li class="list-group-item">
                 <i class="fa-solid fa-calendar-days fa-fw me-1" data-bs-toggle="tooltip" title="L'évènement lié à cette étape"></i>
-                <a href="{{ path('admin_event_show', { slug: stage.event.slug }) }}" data-bs-toggle="tooltip" title="Voir l'évènement">
+                <a href="{{ path('admin_event_show', {slug: stage.event.slug}) }}" data-bs-toggle="tooltip" title="Voir l'évènement">
                     {{ stage.event.name }}
                 </a>
             </li>
             <li class="list-group-item">
                 <i class="fa-solid fa-map-location-dot fa-fw me-1" data-bs-toggle="tooltip" title="Les alternatives traversées"></i>
                 {% for alternative in stage.alternatives %}
-                    <a href="{{ path('admin_alternative_show', { slug: alternative.slug }) }}" data-bs-toggle="tooltip" title="Voir l'alternative">
+                    <a href="{{ path('admin_alternative_show', {slug: alternative.slug}) }}" data-bs-toggle="tooltip" title="Voir l'alternative">
                         <span class="badge bg-primary">{{ alternative.name }}</span>
                     </a>
                 {% else %}
@@ -40,7 +40,7 @@
             <li class="list-group-item">
                 <i class="fa-solid fa-users fa-fw me-1" data-bs-toggle="tooltip" title="Les préparateurices d'étape"></i>
                 {% for preparer in stage.preparers %}
-                    <a href="{{ path('admin_user_show', { id: preparer.id }) }}" data-bs-toggle="tooltip" title="Voir cette personne">
+                    <a href="{{ path('admin_user_show', {id: preparer.id}) }}" data-bs-toggle="tooltip" title="Voir cette personne">
                         <span class="badge bg-primary">{{ preparer.fullName }}</span>
                     </a>
                 {% else %}
@@ -51,6 +51,6 @@
     {% endblock %}
 
     {% block footer %}
-        <a href="{{ path('admin_stage_show', { slug: stage.slug }) }}" class="btn btn-link btn-sm">Voir l'étape</a>
+        <a href="{{ path('admin_stage_show', {slug: stage.slug}) }}" class="btn btn-link btn-sm">Voir l'étape</a>
     {% endblock %}
 </div>

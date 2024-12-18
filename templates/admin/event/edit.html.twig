@@ -1,6 +1,6 @@
 {% extends 'admin/_base.html.twig' %}
 
-{% set title = creation ? 'Création d\'un évènement de type '~(event.type|trans) : 'Modification de l\'évènement '~form.vars.data.name %}
+{% set title = creation ? 'Création d\'un évènement de type ' ~ (event.type|trans) : 'Modification de l\'évènement ' ~ form.vars.data.name %}
 
 {% block main %}
     <div class="container">

@@ -45,21 +45,21 @@
 
                     <twig:EventRegistration:Buttons step="choose_dates" />
 
-                    {% include 'event/_day_modal.html.twig' with {
+                    {{ include('event/_day_modal.html.twig', {
                         title: 'Choix du jour d\'arrivée',
                         registration: registration,
                         form: form.stageStart,
                         modal: 'start',
                         userEventComputedRegistrations: userEventComputedRegistrations,
-                    } only %}
+                    }, false) }}
 
-                    {% include 'event/_day_modal.html.twig' with {
+                    {{ include('event/_day_modal.html.twig', {
                         title: 'Choix du jour de départ',
                         registration: registration,
                         form: form.stageEnd,
                         modal: 'end',
                         userEventComputedRegistrations: userEventComputedRegistrations,
-                    } only %}
+                    }, false) }}
 
                     <div class="d-none">
                         {{ form_rest(form) }}

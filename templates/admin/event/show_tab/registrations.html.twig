@@ -42,7 +42,7 @@
                     <td>{{ registration.createdAt|format_datetime }}</td>
                     <td>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_VIEW').value, registration) %}
-                            <twig:Admin:IconView url="{{ path('admin_registration_show', { id: registration.id }) }}" />
+                            <twig:Admin:IconView url="{{ path('admin_registration_show', {id: registration.id}) }}" />
                         {% endif %}
                     </td>
                 </tr>

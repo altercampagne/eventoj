@@ -55,7 +55,7 @@
                         data-bs-toggle="tooltip"
                         data-bs-title="Email{% if not user.isVerified %} non{% endif %} vérifié"
                     ></i>
-                    <a href="mailto:{{ user.email}}">
+                    <a href="mailto:{{ user.email }}">
                         {{ user.email }}
                     </a>
                 </div>
@@ -71,6 +71,6 @@
     {% endblock %}
 
     {% block footer %}
-        <a href="{{ path('admin_user_show', { id: user.id }) }}" class="btn btn-link btn-sm">Voir ce·tte utilisateurice</a>
+        <a href="{{ path('admin_user_show', {id: user.id}) }}" class="btn btn-link btn-sm">Voir ce·tte utilisateurice</a>
     {% endblock %}
 </div>

@@ -35,7 +35,7 @@
                 {% else %}
                     <div class="alert alert-danger">
                         <b>Paiment non trouvé ! 😧</b><br />
-                        Ce n'est pas normal, <a href="{{ path('contact')}}">contacte-nous pour en discuter !</a> 🙏
+                        Ce n'est pas normal, <a href="{{ path('contact') }}">contacte-nous pour en discuter !</a> 🙏
                     </div>
                 {% endif %}
             </p>
@@ -43,7 +43,7 @@
                 {% if registration.canBeCanceled %}
                     <div class="d-grid gap-2 d-none">
                         <twig:ButtonPostWithConfirmation
-                            url="{{ path('registration_cancel', { id: registration.id }) }}"
+                            url="{{ path('registration_cancel', {id: registration.id}) }}"
                             buttonLabel="Annuler mon inscription"
                             buttonClass="btn btn-outline-danger"
                             modalTitle="Annulation de ton inscription"

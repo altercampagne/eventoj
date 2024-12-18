@@ -9,7 +9,7 @@
                     {{ alternative.name }}
                 </div>
                 <div>
-                    <a href="{{ path('alternative_show', { slug: alternative.slug }) }}">Voir sur le site</a>
+                    <a href="{{ path('alternative_show', {slug: alternative.slug}) }}">Voir sur le site</a>
                     {% if descriptionLength < 500 %}
                         <span class="badge bg-{{ descriptionLength < 200 ? 'danger' : 'warning' }} ms-1" data-bs-toggle="tooltip" title="La description est {{ descriptionLength >= 200 ? '(un peu) ' }}trop courte ({{ descriptionLength }} caractères) !">
                             D
@@ -44,7 +44,7 @@
                 {% for event, stages in alternative.stagesByEvent %}
                     <b><u>{{ (stages|first).event.name }} :</u></b>
                     {% for stage in stages %}
-                        <a href="{{ path ('admin_stage_show', { slug: stage.slug }) }}" class="text-decoration-none ms-1">
+                        <a href="{{ path ('admin_stage_show', {slug: stage.slug}) }}" class="text-decoration-none ms-1">
                             <span class="badge bg-secondary">{{ stage.name }}</span>
                         </a>
                     {% endfor %}
@@ -61,6 +61,6 @@
     {% endblock %}
 
     {% block footer %}
-        <a href="{{ path('admin_alternative_show', { slug: alternative.slug }) }}" class="btn btn-link btn-sm">Voir l'alternative</a>
+        <a href="{{ path('admin_alternative_show', {slug: alternative.slug}) }}" class="btn btn-link btn-sm">Voir l'alternative</a>
     {% endblock %}
 </div>

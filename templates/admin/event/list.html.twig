@@ -14,7 +14,7 @@
                 <ul class="dropdown-menu">
                     {% for type in enum('\\App\\Entity\\EventType').cases %}
                         <li>
-                            <a class="dropdown-item" href="{{ path('admin_event_create', { type: type.value }) }}">
+                            <a class="dropdown-item" href="{{ path('admin_event_create', {type: type.value}) }}">
                                 {{ type|trans }}
                             </a>
                         </li>
@@ -43,7 +43,7 @@
                     <td>{{ event.createdAt|format_datetime }}</td>
                     <td>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_VIEW_REGISTRATIONS').value, event) %}
-                            <twig:Admin:IconView url="{{ path('admin_event_show', { slug: event.slug }) }}" />
+                            <twig:Admin:IconView url="{{ path('admin_event_show', {slug: event.slug}) }}" />
                         {% endif %}
                     </td>
                 </tr>
@@ -72,7 +72,7 @@
                     <td>{{ event.createdAt|format_datetime }}</td>
                     <td>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_VIEW_REGISTRATIONS').value, event) %}
-                            <twig:Admin:IconView url="{{ path('admin_event_show', { slug: event.slug }) }}" />
+                            <twig:Admin:IconView url="{{ path('admin_event_show', {slug: event.slug}) }}" />
                         {% endif %}
                     </td>
                 </tr>

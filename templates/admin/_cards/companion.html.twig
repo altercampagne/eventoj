@@ -12,7 +12,7 @@
         {% endif %}
 
         <li class="list-group-item">
-            <a href="mailto:{{ companion.email}}">
+            <a href="mailto:{{ companion.email }}">
                 {{ companion.email }}
             </a>
         </li>
@@ -27,5 +27,5 @@
         {% endif %}
     </ul>
 
-    <a href="{{ path('admin_user_show', { id: companion.user.id }) }}" class="btn btn-link btn-sm">Voir l'utilisateurice {{ companion.user.fullName }}</a>
+    <a href="{{ path('admin_user_show', {id: companion.user.id}) }}" class="btn btn-link btn-sm">Voir l'utilisateurice {{ companion.user.fullName }}</a>
 </div>

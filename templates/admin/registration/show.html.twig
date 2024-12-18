@@ -15,7 +15,7 @@
                 </div>
             {% endif %}
 
-            {% embed 'admin/_cards/registration.html.twig' with { registration: registration } only %}
+            {% embed 'admin/_cards/registration.html.twig' with {registration: registration} only %}
                 {% block content %}
                     {{ parent() }}
 
@@ -49,7 +49,7 @@
             <div class="d-grid gap-2">
                 {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_BIKE_ADD').value, registration) %}
                     <twig:ButtonPost
-                        url="{{ path('admin_registration_bike_add', { id: registration.id }) }}"
+                        url="{{ path('admin_registration_bike_add', {id: registration.id}) }}"
                         tooltip="Ajouter un vélo de prêt à cette réservation"
                         btnClass="btn btn-warning"
                     >
@@ -59,7 +59,7 @@
 
                 {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_BIKE_DELETE').value, registration) %}
                     <twig:ButtonPost
-                        url="{{ path('admin_registration_bike_delete', { id: registration.id }) }}"
+                        url="{{ path('admin_registration_bike_delete', {id: registration.id}) }}"
                         tooltip="Supprimer un vélo de prêt de cette réservation"
                         btnClass="btn btn-warning"
                     >
@@ -107,14 +107,14 @@
 
         <div class="col-4 border-start">
             <h3 class="text-center fw-bold"><u>Utilisateurice</u></h3>
-            {{ include('admin/_cards/user.html.twig', { user: registration.user }, with_context = false) }}
+            {{ include('admin/_cards/user.html.twig', {user: registration.user}, with_context: false) }}
 
             <h3 class="text-center fw-bold mt-4"><u>Évènement</u></h3>
-            {{ include('admin/_cards/event.html.twig', { event: registration.event }, with_context = false) }}
+            {{ include('admin/_cards/event.html.twig', {event: registration.event}, with_context: false) }}
 
             {% if registration.approvedPayment is not null %}
                 <h3 class="text-center fw-bold mt-4"><u>Paiement</u></h3>
-                {{ include('admin/_cards/payment.html.twig', { payment: registration.approvedPayment }, with_context = false) }}
+                {{ include('admin/_cards/payment.html.twig', {payment: registration.approvedPayment}, with_context: false) }}
             {% endif %}
         </div>
     </div>

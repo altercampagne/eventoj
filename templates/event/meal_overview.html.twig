@@ -15,7 +15,7 @@
         <script type="text/javascript">
             (function() {
                 if(!window.location.hash) {
-                    window.location = "{{ path('event_meal_overview', { slug: event.slug }) }}#{{ today }}";
+                    window.location = "{{ path('event_meal_overview', {slug: event.slug}) }}#{{ today }}";
                 }
 
             })();

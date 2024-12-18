@@ -80,7 +80,9 @@ cs-lint: ## Lint all files
 	@$(DOCKER_COMPOSE) run php bin/console lint:yaml config/
 	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/php-cs-fixer
 	@$(DOCKER_COMPOSE) run php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
+	@$(DOCKER_COMPOSE) run php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer lint
 
 cs-fix: ## Fix CS using PHP-CS
 	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/php-cs-fixer
 	@$(DOCKER_COMPOSE) run php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
+	@$(DOCKER_COMPOSE) run php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer fix

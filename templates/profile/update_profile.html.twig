@@ -1,6 +1,6 @@
 {% extends '_base.html.twig' %}
 
-{% set title = (form.diet.vars.data is null ? 'Création' : 'Mise à jour') ~' de ton profil' %}
+{% set title = (form.diet.vars.data is null ? 'Création' : 'Mise à jour') ~ ' de ton profil' %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -52,7 +52,6 @@
                             </li>
                         </ul>
                     {% endif %}
-
 
                     <fieldset class="form-group border p-3 mt-3">
                         <legend class="w-auto px-2">

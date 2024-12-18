@@ -33,7 +33,7 @@
                             >
                                 <div class="text-center">
                                     {% for event in alternative.events %}
-                                        <a href="{{ path('event_show', { slug: event.slug }) }}" class="text-decoration-none">
+                                        <a href="{{ path('event_show', {slug: event.slug}) }}" class="text-decoration-none">
                                             <span class="badge text-bg-secondary">{{ event.name }}</span>
                                         </a>
                                     {% endfor %}
@@ -42,13 +42,13 @@
                                         {{ alternative.description|striptags|u.replace('&nbsp;', ' ').truncate(300, '...', false) }}
                                     </p>
                                     <div>
-                                        <a class="btn btn-primary text-white" href="{{ path('alternative_show', { slug: alternative.slug }) }}">
+                                        <a class="btn btn-primary text-white" href="{{ path('alternative_show', {slug: alternative.slug}) }}">
                                             Voir la fiche détaillée
                                         </a>
                                     </div>
                                     {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}
                                         <div class="mt-1">
-                                            <a href="{{ path('admin_alternative_update', { slug: alternative.slug, backToAlternative: true }) }}" class="text-sm">
+                                            <a href="{{ path('admin_alternative_update', {slug: alternative.slug, backToAlternative: true}) }}" class="text-sm">
                                                 Modifier cette alternative
                                             </a>
                                         </div>
@@ -70,8 +70,8 @@
                 {% set previousLetter = 'A' %}
                 <h4>A</h4>
                 <ul>
-                    {% for alternative in alternatives|sort((a, b) => a.name|replace({'é':'e'})|upper <=> b.name|replace({'é':'e'})|upper) %}
-                        {% set currentLetter = alternative.name[:1]|replace({'é':'e'})|upper %}
+                    {% for alternative in alternatives|sort((a, b) => a.name|replace({é: 'e'})|upper <=> b.name|replace({é: 'e'})|upper) %}
+                        {% set currentLetter = alternative.name[:1]|replace({é: 'e'})|upper %}
                         {% if currentLetter != previousLetter %}
                             {% set previousLetter = currentLetter %}
                             </ul>
@@ -80,7 +80,7 @@
                         {% endif %}
 
                         <li>
-                            <a href="{{ path('alternative_show', { slug: alternative.slug }) }}">
+                            <a href="{{ path('alternative_show', {slug: alternative.slug}) }}">
                                 {{ alternative.name }}
                             </a>
                         </li>

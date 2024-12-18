@@ -20,7 +20,7 @@
             {% if is_granted(constant('App\\Admin\\Security\\Permission::QUESTION_UPDATE').value, this.question) %}
                 <div class="modal-footer d-block">
                     <div class="d-grid gap-2">
-                        <a href="{{ path('admin_question_update', { slug: this.question.slug }) }}" class="btn btn-warning">Modifier cette réponse</a>
+                        <a href="{{ path('admin_question_update', {slug: this.question.slug}) }}" class="btn btn-warning">Modifier cette réponse</a>
                     </div>
                 </div>
             {% endif %}

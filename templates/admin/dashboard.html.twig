@@ -9,7 +9,7 @@
                 <h2 class="text-center">Évènements à venir</h2>
                 {% for event in events %}
                     <div class="mb-3">
-                        {{ include('admin/_cards/event.html.twig', { event: event }, with_context=false) }}
+                        {{ include('admin/_cards/event.html.twig', {event: event}, with_context: false) }}
                     </div>
                 {% else %}
                     <div class="text-center">
@@ -27,7 +27,7 @@
                 </div>
                 {% for alternative in alternatives %}
                     <div class="mb-3">
-                        {{ include('admin/_cards/alternative.html.twig', { alternative: alternative }, with_context=false) }}
+                        {{ include('admin/_cards/alternative.html.twig', {alternative: alternative}, with_context: false) }}
                     </div>
                 {% else %}
                     <div class="text-center">
