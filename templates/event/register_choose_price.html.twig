@@ -60,7 +60,7 @@
                     <span class="text-secondary">En prenant en compte les repas auxquels tu participes: la valeur utilisée pour le calcul est de <b>{{ registration.payingDaysOfPresence }} jour{{ registration.payingDaysOfPresence > 1 ? 's' }} de présence</b>.</span>
                 </p>
 
-                {{ include('event/_price_explanations.html.twig', { registration: registration, bill: bill }, with_context=false) }}
+                {{ include('event/_price_explanations.html.twig', {registration: registration, bill: bill}, with_context: false) }}
 
                 <hr class="mt-4" />
 
@@ -137,7 +137,7 @@
 
                     <h5>Prix solidaire</h5>
                     <p>
-                    Le <b>prix solidaire</b> est compris entre <b>{{ registration.event.minimumPricePerDay|format_price }} / personne / jour</b> (le prix minimum) et <b>{{ (registration.event.breakEvenPricePerDay-1)|format_price }} / personne / jour</b> (prix d'équilibre). L'exemple donné utilise le prix minimum ({{ registration.event.minimumPricePerDay|format_price }} / personne / jour)
+                    Le <b>prix solidaire</b> est compris entre <b>{{ registration.event.minimumPricePerDay|format_price }} / personne / jour</b> (le prix minimum) et <b>{{ (registration.event.breakEvenPricePerDay - 1)|format_price }} / personne / jour</b> (prix d'équilibre). L'exemple donné utilise le prix minimum ({{ registration.event.minimumPricePerDay|format_price }} / personne / jour)
                     </p>
                     <div class="alert alert-warning">
                         Afin de permettre au plus grand nombre de bénéficier du tarif minimum, le prix solidaire est limité à {{ registration.event.daysAtSolidarityPrice }} jours maximum par personne. Au delà, le prix d'équilibre sera automatiquement appliqué.
@@ -145,7 +145,7 @@
 
                     <h5>Prix de soutien</h5>
                     <p>
-                        Le <b>prix de soutien</b> est à partir de <b>{{ (registration.event.breakEvenPricePerDay+100)|format_price }} / personne / jour</b>. L'exemple utilise un prix de <b>{{ registration.event.supportPricePerDay|format_price }} / personne / jour</b>.
+                        Le <b>prix de soutien</b> est à partir de <b>{{ (registration.event.breakEvenPricePerDay + 100)|format_price }} / personne / jour</b>. L'exemple utilise un prix de <b>{{ registration.event.supportPricePerDay|format_price }} / personne / jour</b>.
                     </p>
 
                     <hr />

@@ -33,7 +33,7 @@
                     {% endif %}
 
                     {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}
-                        <a href="{{ path('admin_alternative_update', { slug: alternative.slug, backToAlternative: true }) }}" class="btn btn-warning">
+                        <a href="{{ path('admin_alternative_update', {slug: alternative.slug, backToAlternative: true}) }}" class="btn btn-warning">
                             Modifier cette alternative
                         </a>
                     {% endif %}
@@ -75,7 +75,7 @@
                             <div class="col-12 col-sm-6">
                                 <div class="bg-white p-3 rounded border border-secondary-outline mt-2">
                                     <i class="fa-solid fa-{{ station.type }} fa-fw me-2" data-bs-toggle="tooltip" title="Gare de {{ station.type }}"></i>
-                                    {{station.name }} <span class="text-secondary">({{ station.distance }} km{% if station.distance > 1 %}s{% endif %})</span>
+                                    {{ station.name }} <span class="text-secondary">({{ station.distance }} km{% if station.distance > 1 %}s{% endif %})</span>
                                 </div>
                             </div>
                         {% endfor %}

@@ -26,7 +26,7 @@
                 </ul>
 
                 <div class="d-grid gap-2 p-2">
-                    <a href="{{ path('admin_question_update', { slug: question.slug }) }}" class="btn btn-outline-primary">Modifier la question</a>
+                    <a href="{{ path('admin_question_update', {slug: question.slug}) }}" class="btn btn-outline-primary">Modifier la question</a>
 
                     {% if question.isLocked %}
                         <button class="btn btn-outline-danger disabled">
@@ -34,7 +34,7 @@
                         </button>
                     {% else %}
                         <twig:Admin:ButtonDelete
-                            url="{{ path('admin_question_delete', { slug: question.slug }) }}"
+                            url="{{ path('admin_question_delete', {slug: question.slug}) }}"
                             buttonLabel="Supprimer la question"
                         />
                     {% endif %}

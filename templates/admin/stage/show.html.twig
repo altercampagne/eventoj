@@ -9,7 +9,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         {% if previous_stage is not null %}
-            <a href="{{ path('admin_stage_show', { slug: previous_stage.slug }) }}" class="btn btn-outline-primary">
+            <a href="{{ path('admin_stage_show', {slug: previous_stage.slug}) }}" class="btn btn-outline-primary">
                 <i class="fa-solid fa-chevron-left me-2"></i> {{ previous_stage.date|format_date('long') }}<span class="d-none d-md-inline"> - {{ previous_stage.name }}</span>
             </a>
         {% endif %}
@@ -17,7 +17,7 @@
     <h1 class="fw-bold text-uppercase text-primary">{{ title }}</h1>
     <div>
         {% if next_stage is not null %}
-            <a href="{{ path('admin_stage_show', { slug: next_stage.slug }) }}" class="btn btn-outline-primary">
+            <a href="{{ path('admin_stage_show', {slug: next_stage.slug}) }}" class="btn btn-outline-primary">
                 {{ next_stage.date|format_date('long') }}<span class="d-none d-md-inline"> - {{ next_stage.name }}</span> <i class="fa-solid fa-chevron-right ms-2"></i>
             </a>
         {% endif %}
@@ -28,11 +28,11 @@
 {% block main %}
     <div class="row">
         <div class="col-4">
-            {% embed 'admin/_cards/stage.html.twig' with { stage: stage } only %}
+            {% embed 'admin/_cards/stage.html.twig' with {stage: stage} only %}
                 {% block footer %}
                     <div class="d-grid gap-2 p-2">
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_UPDATE').value, stage) %}
-                            <a href="{{ path('admin_stage_update', { slug: stage.slug }) }}" class="btn btn-outline-primary">Modifier l'étape</a>
+                            <a href="{{ path('admin_stage_update', {slug: stage.slug}) }}" class="btn btn-outline-primary">Modifier l'étape</a>
                         {% endif %}
                     </div>
                 {% endblock %}
@@ -167,7 +167,7 @@
                                             <td>{{ registration.createdAt|format_datetime }}</td>
                                             <td>
                                                 {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_VIEW').value, registration) %}
-                                                    <twig:Admin:IconView url="{{ path('admin_registration_show', { id: registration.id }) }}" />
+                                                    <twig:Admin:IconView url="{{ path('admin_registration_show', {id: registration.id}) }}" />
                                                 {% endif %}
                                             </td>
                                         </tr>

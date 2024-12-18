@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-end mb-2">
         <div{% if event.isPublished %} data-bs-toggle="tooltip" title="Il n'est plus possible d'ajouter des étapes à un évènement publié"{% endif %}>
             <a
-                href="{{ path('admin_stage_create', { slug: event.slug }) }}"
+                href="{{ path('admin_stage_create', {slug: event.slug}) }}"
                 class="btn btn-outline-success{% if event.isPublished %} disabled{% endif %}"
             >
                 Ajouter une nouvelle étape
@@ -57,7 +57,7 @@
                     <td>
                         {% for alternative in stage.alternatives %}
                             {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_VIEW').value, alternative) %}
-                                <a href="{{ path('admin_alternative_show', { slug: alternative.slug }) }}" class="text-decoration-none">
+                                <a href="{{ path('admin_alternative_show', {slug: alternative.slug}) }}" class="text-decoration-none">
                             {% endif %}
                             <span class="badge bg-primary">{{ alternative.name }}</span>
                             {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_VIEW').value, alternative) %}
@@ -68,7 +68,7 @@
                     <td>
                         {% for preparer in stage.preparers %}
                             {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_VIEW').value, preparer) %}
-                                <a href="{{ path('admin_user_show', { id: preparer.id }) }}" class="text-decoration-none">
+                                <a href="{{ path('admin_user_show', {id: preparer.id}) }}" class="text-decoration-none">
                             {% endif %}
                             <span class="badge bg-primary">{{ preparer.fullName }}</span>
                             {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_VIEW').value, preparer) %}
@@ -78,7 +78,7 @@
                     </td>
                     <td>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %}
-                            <twig:Admin:IconView url="{{ path('admin_stage_show', { slug: stage.slug }) }}" />
+                            <twig:Admin:IconView url="{{ path('admin_stage_show', {slug: stage.slug}) }}" />
                         {% endif %}
                     </td>
                 </tr>

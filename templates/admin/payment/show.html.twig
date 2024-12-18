@@ -23,7 +23,7 @@
                 </div>
             {% endif %}
 
-            {% embed 'admin/_cards/payment.html.twig' with { payment: payment, checkoutIntent: checkoutIntent } only %}
+            {% embed 'admin/_cards/payment.html.twig' with {payment: payment, checkoutIntent: checkoutIntent} only %}
                 {% block content %}
                     {{ parent() }}
 
@@ -39,7 +39,7 @@
                             </div>
                             {% if checkoutIntent is not null and checkoutIntent.order is not null %}
                                 <a
-                                    href="{{ helloassoUrl|replace({'api': 'www'}) }}/associations/altercampagne/checkout/paiement-attestation/{{ checkoutIntent.order.id }}"
+                                    href="{{ helloassoUrl|replace({api: 'www'}) }}/associations/altercampagne/checkout/paiement-attestation/{{ checkoutIntent.order.id }}"
                                     data-bs-toggle="tooltip"
                                     title="Voir le reçu Helloasso"
                                 >
@@ -73,7 +73,7 @@
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_SYNC_WITH_HELLOASSO').value, payment) and payment.helloassoCheckoutIntentId is not null %}
                             <div class="col d-grid gap-2">
                                 <twig:ButtonPost
-                                    url="{{ path('admin_payment_sync_with_helloasso', { id: payment.id }) }}"
+                                    url="{{ path('admin_payment_sync_with_helloasso', {id: payment.id}) }}"
                                     label="Synchroniser le paiement avec Helloasso"
                                     tooltip="Permet de s'assurer que le paiement a bien le même status chez nous que chez Helloasso"
                                     btnClass="btn btn-warning btn-fill"
@@ -83,7 +83,7 @@
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_SYNC_WITH_PAHEKO').value, payment) %}
                             <div class="col d-grid gap-2">
                                 <twig:ButtonPost
-                                    url="{{ path('admin_payment_sync_with_paheko', { id: payment.id }) }}"
+                                    url="{{ path('admin_payment_sync_with_paheko', {id: payment.id}) }}"
                                     label="Synchroniser le paiement avec Paheko"
                                     tooltip="Permet de s'assurer que le paiement est bien sycnhronisé chez Paheko"
                                     btnClass="btn btn-warning"
@@ -113,11 +113,11 @@
         </div>
         <div class="col-4 border-start">
             <h3 class="text-center fw-bold"><u>Utilisateurice</u></h3>
-            {{ include('admin/_cards/user.html.twig', { user: payment.payer }, with_context = false) }}
+            {{ include('admin/_cards/user.html.twig', {user: payment.payer}, with_context: false) }}
 
             {% if payment.registration is not null %}
                 <h3 class="text-center fw-bold mt-4"><u>Inscription</u></h3>
-                {{ include('admin/_cards/registration.html.twig', { registration: payment.registration }, with_context = false) }}
+                {{ include('admin/_cards/registration.html.twig', {registration: payment.registration}, with_context: false) }}
             {% endif %}
         </div>
     </div>

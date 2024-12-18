@@ -9,7 +9,7 @@
             {% for event in events %}
                 <a
                     class="badge bg-{{ event.isPublished ? 'success' : 'warning' }} text-decoration-none"
-                    href="{{ path('admin_alternative_list', { event: event.slug }) }}"
+                    href="{{ path('admin_alternative_list', {event: event.slug}) }}"
                     data-bs-toggle="tooltip"
                     title="{% if event.isPublished %}Cet évènement est publié depuis le {{ event.publishedAt|format_date }}{% else %}Cet évènement n'est pas encore publié{% endif %}"
                 >
@@ -71,7 +71,7 @@
                     <td>{{ alternative.createdAt|format_datetime }}</td>
                     <td>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_VIEW').value, alternative) %}
-                            <twig:Admin:IconView url="{{ path('admin_alternative_show', { slug: alternative.slug }) }}" />
+                            <twig:Admin:IconView url="{{ path('admin_alternative_show', {slug: alternative.slug}) }}" />
                         {% endif %}
                     </td>
                 </tr>

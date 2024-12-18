@@ -26,7 +26,7 @@
                 Paiement de {{ payment.amount|format_price }} découpé comme suit :
                 <ul>
                     {% if payment.registration is not null %}
-                        <li>{{ payment.amountWithoutMemberships|format_price }} pour <a href="{{ path('admin_registration_show', { id: payment.registration.id }) }}">une inscription</a></li>
+                        <li>{{ payment.amountWithoutMemberships|format_price }} pour <a href="{{ path('admin_registration_show', {id: payment.registration.id}) }}">une inscription</a></li>
                     {% endif %}
                     {% for membership in payment.memberships %}
                         <li>{{ membership.price|format_price }} pour l'adhésion de <b>{{ membership.person.fullname }}</b></li>
@@ -65,6 +65,6 @@
     {% endblock %}
 
     {% block footer %}
-        <a href="{{ path('admin_payment_show', { id: payment.id }) }}" class="btn btn-link btn-sm">Voir ce paiement</a>
+        <a href="{{ path('admin_payment_show', {id: payment.id}) }}" class="btn btn-link btn-sm">Voir ce paiement</a>
     {% endblock %}
 </div>

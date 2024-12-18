@@ -15,7 +15,7 @@
                     Tous
                 </a>
                 {% for status in enum('\\App\\Entity\\PaymentStatus').cases() %}
-                    <a href="{{ path('admin_payment_list', { status: status.value }) }}" class="btn btn-outline-primary{{ status == selectedStatus ? ' active' }}">
+                    <a href="{{ path('admin_payment_list', {status: status.value}) }}" class="btn btn-outline-primary{{ status == selectedStatus ? ' active' }}">
                         {{ status|trans }}
                     </a>
                 {% endfor %}
@@ -44,7 +44,7 @@
                     <td>{{ payment.createdAt|format_datetime }}</td>
                     <td>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_VIEW').value, payment) %}
-                            <twig:Admin:IconView url="{{ path('admin_payment_show', { id: payment.id }) }}" />
+                            <twig:Admin:IconView url="{{ path('admin_payment_show', {id: payment.id}) }}" />
                         {% endif %}
                     </td>
                 </tr>

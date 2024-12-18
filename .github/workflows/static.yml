@@ -46,6 +46,27 @@ jobs:
       - name: PHP-CS-Fixer
         run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php-cs-fixer.dist.php
 
+  twig-cs-fixer:
+    name: Twig CS Fixer
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+
+      - name: Install twig-cs-fixer
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--working-dir=tools/twig-cs-fixer"
+
+      - name: Twig CS Fixer
+        run: tools/twig-cs-fixer/vendor/bin/twig-cs-fixer lint
+
   linters:
     name: 🧹 Linters
     runs-on: ubuntu-latest

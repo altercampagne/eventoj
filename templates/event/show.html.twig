@@ -13,7 +13,7 @@
                         {% if event.isFull %}
                             <span class="badge bg-warning fs-4">Évènement complet !</span>
                         {% else %}
-                            <a href="{{ path('event_register', { slug: event.slug }) }}" class="btn btn-primary btn-lg">
+                            <a href="{{ path('event_register', {slug: event.slug}) }}" class="btn btn-primary btn-lg">
                                 M'inscrire à l'évènement
                             </a>
                         {% endif %}
@@ -47,7 +47,7 @@
                         {% if event.isFull %}
                             <span class="badge bg-warning fs-4 mt-4">Évènement complet !</span>
                         {% else %}
-                            <a href="{{ path('event_register', { slug: event.slug }) }}" class="btn btn-primary btn-lg mt-4">
+                            <a href="{{ path('event_register', {slug: event.slug}) }}" class="btn btn-primary btn-lg mt-4">
                                 M'inscrire à l'évènement
                             </a>
                         {% endif %}
@@ -104,8 +104,8 @@
                         <div class="tab-pane fade show active" id="stages-tab-pane" role="tabpanel" aria-labelledby="stages-tab" tabindex="0">
                             <div class="list-group list-group-flush">
                                 {% for stage in event.stages %}
-                                    <a href="{{ path('event_stage_show', { event_slug: event.slug, stage_slug: stage.slug }) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                                        <span><b>{{ stage.date|format_date(pattern='EEEE d MMMM')|capitalize }} :</b> {{ stage.name }}</span>
+                                    <a href="{{ path('event_stage_show', {event_slug: event.slug, stage_slug: stage.slug}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <span><b>{{ stage.date|format_date(pattern: 'EEEE d MMMM')|capitalize }} :</b> {{ stage.name }}</span>
                                         <div>
                                             {% if stage.isFull %}
                                                 <span class="badge bg-warning">COMPLET</span>
@@ -120,7 +120,7 @@
                     <div class="tab-pane fade{{ event.isFinished ? ' show active' }}" id="alternatives-tab-pane" role="tabpanel" aria-labelledby="alternatives-tab" tabindex="0">
                         <div class="list-group list-group-flush d-flex justify-content-between align-items-center">
                             {% for alternative in event.alternatives %}
-                                <a href="{{ path('alternative_show', { slug: alternative.slug }) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                <a href="{{ path('alternative_show', {slug: alternative.slug}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     <b>{{ alternative.name }}</b>
                                     <i class="fa-solid fa-chevron-right ms-2"></i>
                                 </a>

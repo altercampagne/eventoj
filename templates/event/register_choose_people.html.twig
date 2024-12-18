@@ -31,7 +31,7 @@
                                     <span class="text-secondary">{{ companionForm.vars.attr['data-age'] }} an{% if companionForm.vars.attr['data-age'] > 1 %}s{% endif %}</span>
                                 </div>
                             </div>
-                            <a href="{{ path('profile_companion_update', { id: companionForm.vars.value, backToEvent: event.slug }) }}" class="btn btn-link">
+                            <a href="{{ path('profile_companion_update', {id: companionForm.vars.value, backToEvent: event.slug}) }}" class="btn btn-link">
                                 Modifier
                             </a>
                         </li>
@@ -39,7 +39,7 @@
                 </ul>
 
                 <div class="d-grid mt-2">
-                    <a href="{{ path('profile_companion_create', { backToEvent: event.slug }) }}" class="btn btn-link">
+                    <a href="{{ path('profile_companion_create', {backToEvent: event.slug}) }}" class="btn btn-link">
                         Ajouter un·e compagnon·e
                     </a>
                 </div>
@@ -58,7 +58,7 @@
                                 Vélos nécessaires
                             </label>
                             <div class="col-auto">
-                                {{ form_widget(form.neededBike, { attr: { size: 2 }}) }}
+                                {{ form_widget(form.neededBike, {attr: {size: 2}}) }}
                             </div>
                         </li>
                     </ul>

@@ -8,14 +8,14 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 {% if previous_stage is not null %}
-                    <a href="{{ path('event_stage_show', { event_slug: stage.event.slug, stage_slug: previous_stage.slug }) }}" class="text-secondary">
+                    <a href="{{ path('event_stage_show', {event_slug: stage.event.slug, stage_slug: previous_stage.slug}) }}" class="text-secondary">
                         <i class="fa-solid fa-chevron-left me-2"></i> {{ previous_stage.date|format_date('long') }}<span class="d-none d-md-inline"> - {{ previous_stage.name }}</span>
                     </a>
                 {% endif %}
             </div>
             <div>
                 {% if next_stage is not null %}
-                    <a href="{{ path('event_stage_show', { event_slug: stage.event.slug, stage_slug: next_stage.slug }) }}" class="text-secondary">
+                    <a href="{{ path('event_stage_show', {event_slug: stage.event.slug, stage_slug: next_stage.slug}) }}" class="text-secondary">
                         {{ next_stage.date|format_date('long') }}<span class="d-none d-md-inline"> - {{ next_stage.name }}</span> <i class="fa-solid fa-chevron-right ms-2"></i>
                     </a>
                 {% endif %}
@@ -25,7 +25,7 @@
         <div class="mb-3 text-center">
             <h1>{{ stage.name }}</h1>
             <span class="fs-4 text-body-secondary fw-bold text-uppercase">
-                <a href="{{ path('event_show', { slug: stage.event.slug }) }}" class="text-body-secondary">{{ stage.event.name }}</a> - {{ stage.date|format_date('long') }} 
+                <a href="{{ path('event_show', {slug: stage.event.slug}) }}" class="text-body-secondary">{{ stage.event.name }}</a> - {{ stage.date|format_date('long') }}
             </span>
         </div>
 
@@ -93,7 +93,7 @@
 
                 {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_UPDATE').value, stage) %}
                     <div class="d-grid gap-2">
-                        <a href="{{ path('admin_stage_update', { slug: stage.slug, backToStage: true }) }}" class="btn btn-warning mt-3">
+                        <a href="{{ path('admin_stage_update', {slug: stage.slug, backToStage: true}) }}" class="btn btn-warning mt-3">
                             Modifier cette étape
                         </a>
                     </div>
@@ -121,7 +121,7 @@
                                 {{ alternative.description|striptags|u.replace('&nbsp;', ' ').truncate(500, '...', false) }}
                             </p>
                             <p class="card-text d-grid gap-2">
-                                <a href="{{ path('alternative_show', { slug: alternative.slug }) }}" class="btn btn-link stretched-link">
+                                <a href="{{ path('alternative_show', {slug: alternative.slug}) }}" class="btn btn-link stretched-link">
                                     En savoir plus
                                 </a>
                             </p>

@@ -9,8 +9,8 @@
 
     <p>
         Le tableau des repas est disponible à l'adresse suivante :
-        <a href="{{ path('event_meal_overview', { slug: event.slug }) }}">
-            {{ url('event_meal_overview', { slug: event.slug }) }}
+        <a href="{{ path('event_meal_overview', {slug: event.slug}) }}">
+            {{ url('event_meal_overview', {slug: event.slug}) }}
         </a>.
         Par facilité, il est recommandé de générer un QR Code et de l'imprimer. Cela permettra à l'ensemble des participant·es d'y accéder sans devoir taper l'URL complète. Pour cela, un site tel que <a href="https://www.the-qrcode-generator.com/">www.the-qrcode-generator.com</a> peut être utilisé.
     </p>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="d-grid gap-2">
-        <a href="{{ path('event_meal_overview', { slug: event.slug }) }}" class="btn btn-primary">
+        <a href="{{ path('event_meal_overview', {slug: event.slug}) }}" class="btn btn-primary">
             Voir le tableau des repas
         </a>
     </div>

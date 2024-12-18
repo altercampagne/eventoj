@@ -33,7 +33,7 @@
                     </td>
                     <td>{{ registration.createdAt|format_datetime }}</td>
                     <td>
-                        <twig:Admin:IconView url="{{ path('admin_registration_show', { id: registration.id }) }}" />
+                        <twig:Admin:IconView url="{{ path('admin_registration_show', {id: registration.id}) }}" />
                     </td>
                 </tr>
             {% endfor %}

@@ -40,7 +40,7 @@
                     <td>{{ user.createdAt|format_datetime }}</td>
                     <td>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_VIEW').value, user) %}
-                            <twig:Admin:IconView url="{{ path('admin_user_show', { id: user.id }) }}" />
+                            <twig:Admin:IconView url="{{ path('admin_user_show', {id: user.id}) }}" />
                         {% endif %}
                     </td>
                 </tr>

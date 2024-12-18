@@ -16,7 +16,7 @@
         </div>
 
         <div class="col-12 col-md-8">
-            {% embed 'admin/_cards/alternative.html.twig' with { alternative: alternative } only %}
+            {% embed 'admin/_cards/alternative.html.twig' with {alternative: alternative} only %}
                 {% block content %}
                     {{ parent() }}
 
@@ -44,7 +44,7 @@
                             {% for station in alternative.stations %}
                                 <div>
                                     <i class="fa-solid fa-{{ station.type }} fa-fw" data-bs-toggle="tooltip" title="Gare de {{ station.type }}"></i>
-                                    {{station.name }} <span class="text-secondary">({{ station.distance }} kms)</span>
+                                    {{ station.name }} <span class="text-secondary">({{ station.distance }} kms)</span>
                                 </div>
                             {% else %}
                                 <div class="alert bg-danger-subtle mb-0">Aucune gare définie !</div>
@@ -56,7 +56,7 @@
                 {% block footer %}
                     <div class="d-grid gap-2 p-2">
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}
-                            <a href="{{ path('admin_alternative_update', { slug: alternative.slug }) }}" class="btn btn-outline-primary">Modifier l'alternative</a>
+                            <a href="{{ path('admin_alternative_update', {slug: alternative.slug}) }}" class="btn btn-outline-primary">Modifier l'alternative</a>
                         {% endif %}
 
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_DELETE').value, alternative) %}
@@ -66,7 +66,7 @@
                                 </button>
                             {% else %}
                                 <twig:Admin:ButtonDelete
-                                    url="{{ path('admin_alternative_delete', { slug: alternative.slug }) }}"
+                                    url="{{ path('admin_alternative_delete', {slug: alternative.slug}) }}"
                                     buttonLabel="Supprimer l'alternative"
                                 />
                             {% endif %}

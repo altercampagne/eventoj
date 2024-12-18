@@ -6,7 +6,7 @@
     {% endif %}
         <div class="d-flex justify-content-between align-items-center">
             {% if step != 'choose_people' %}
-                <a href="{{ path('event_register_choose_people', { slug: event.slug }) }}">
+                <a href="{{ path('event_register_choose_people', {slug: event.slug}) }}">
             {% endif %}
 
             <div class="{% if step == 'choose_people' %}fs-2{% else %}fs-4{% endif %}">
@@ -24,7 +24,7 @@
                 ····
 
                 {% if step == 'choose_price' %}
-                    <a href="{{ path('event_register_choose_dates', { slug: event.slug }) }}">
+                    <a href="{{ path('event_register_choose_dates', {slug: event.slug}) }}">
                 {% endif %}
                 <div class="{% if step == 'choose_dates' %}fs-2{% else %}fs-4{% endif %}">
                     <span class="fa-stack text-{% if step == 'choose_dates' %}primary{% else %}secondary{% endif %}" style="vertical-align: top;">
