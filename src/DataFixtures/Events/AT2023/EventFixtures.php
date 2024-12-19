@@ -6,16 +6,18 @@ namespace App\DataFixtures\Events\AT2023;
 
 use App\DataFixtures\AbstractFixture;
 use App\DataFixtures\AlternativeFixtures;
-use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Alternative;
 use App\Entity\Event;
-use App\Entity\Membership;
 use App\Entity\Registration;
 use App\Entity\RegistrationStatus;
 use App\Entity\Stage;
 use App\Entity\StageRegistration;
 use App\Entity\StageType;
 use App\Entity\User;
+use App\Factory\EventFactory;
+use App\Factory\MembershipFactory;
+use App\Factory\PaymentFactory;
+use App\Factory\UserFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
@@ -28,21 +30,16 @@ class EventFixtures extends AbstractFixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $picture = FixtureBuilder::createUploadedFile(path: 'event/altertour-2023.jpg');
-        $manager->persist($picture);
-
-        $event = Event::AT();
-        $event
-            ->setName('AlterTour 2023')
-            ->setPublishedAt(new \DateTimeImmutable('2023-02-01'))
-            ->setOpeningDateForBookings(new \DateTimeImmutable('2023-05-01'))
-            ->setDescription(<<<END
+        $event = EventFactory::new()->create([
+            'name' => 'AlterTour 2023',
+            'publishedAt' => new \DateTimeImmutable('2023-02-01'),
+            'openingDateForBookings' => new \DateTimeImmutable('2023-05-01'),
+            'description' => <<<END
                 Cet été, l’AlterTour roulera du 10 juillet au 19 août, de Montluçon (03) à Besançon (25).
                 Ce sera la 16e édition ! 🥳
-                END)
-            ->setPicture($picture)
-            ->setPahekoProjectId('1')
-        ;
+                END,
+            'pahekoProjectId' => 1,
+        ])->_real();
 
         $startDate = new \DateTime('2023-07-08');
         foreach ($this->getStages($event) as $stage) {
@@ -57,18 +54,18 @@ class EventFixtures extends AbstractFixture implements DependentFixtureInterface
         $manager->persist($event);
 
         for ($i = 0; $i < 100; ++$i) {
-            $user = FixtureBuilder::createUser();
-            $manager->persist($user);
+            $user = UserFactory::createOne()->_real();
 
             $registration = $this->generateRegistration($event, $user);
             $manager->persist($registration);
 
-            $payment = FixtureBuilder::createPayment(user: $user, registration: $registration);
-            $payment->approve(new \DateTimeImmutable());
-            $manager->persist($payment);
-
-            $membership = Membership::createForUser($user, $payment);
-            $manager->persist($membership);
+            MembershipFactory::createOne([
+                'user' => $user,
+                'payment' => PaymentFactory::new()->approved()->create([
+                    'payer' => $user,
+                    'registration' => $registration,
+                ]),
+            ]);
         }
 
         $manager->flush();

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\UnitTests\Form\EventRegistration;
 
-use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Event;
 use App\Entity\Meal;
 use App\Entity\Registration;
 use App\Entity\User;
+use App\Factory\CompanionFactory;
+use App\Factory\EventFactory;
+use App\Factory\UserFactory;
 use App\Form\EventRegistration\ChooseDatesFormType;
 use App\Form\EventRegistration\EventRegistrationDTO;
 use App\Tests\DatabaseUtilTrait;
@@ -17,10 +19,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Zenstruck\Foundry\Test\Factories;
 
 class ChooseDatesFormTypeTest extends KernelTestCase
 {
     use DatabaseUtilTrait;
+    use Factories;
     use FormAssertionsTrait;
 
     private Event $event;
@@ -30,9 +34,8 @@ class ChooseDatesFormTypeTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        $this->user = FixtureBuilder::createUser();
-        $this->event = FixtureBuilder::createAT();
-        $this->save($this->user, $this->event);
+        $this->user = UserFactory::createOne()->_real();
+        $this->event = EventFactory::new()->published()->withStages()->create()->_real();
 
         $this->registration = new Registration($this->user, $this->event);
 
@@ -76,14 +79,11 @@ class ChooseDatesFormTypeTest extends KernelTestCase
     public function testWithTooManyChildren(): void
     {
         $companions = [];
-        $ids = [];
-        for ($i = 0; $i < $this->event->getChildrenCapacity() + 2; ++$i) {
-            $companion = FixtureBuilder::createCompanion(user: $this->user, children: true);
-            $ids[] = (string) $companion->getId();
-            $companions[] = $companion;
+        for ($i = 0; $i < $this->event->getAdultsCapacity() + 2; ++$i) {
+            $companions[] = CompanionFactory::new()->children()->create(['user' => $this->user])->_real();
         }
         $this->registration->setCompanions(new ArrayCollection($companions));
-        $this->save($this->registration, ...$companions);
+        $this->save($this->registration);
 
         $this->form->submit([
             /* @phpstan-ignore-next-line */
@@ -102,14 +102,11 @@ class ChooseDatesFormTypeTest extends KernelTestCase
     public function testWithTooManyAdults(): void
     {
         $companions = [];
-        $ids = [];
         for ($i = 0; $i < $this->event->getAdultsCapacity() + 2; ++$i) {
-            $companion = FixtureBuilder::createCompanion(user: $this->user, children: false);
-            $ids[] = (string) $companion->getId();
-            $companions[] = $companion;
+            $companions[] = CompanionFactory::new()->adult()->create(['user' => $this->user])->_real();
         }
         $this->registration->setCompanions(new ArrayCollection($companions));
-        $this->save($this->registration, ...$companions);
+        $this->save($this->registration);
 
         $this->form->submit([
             /* @phpstan-ignore-next-line */

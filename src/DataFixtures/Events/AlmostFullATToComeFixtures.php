@@ -6,10 +6,11 @@ namespace App\DataFixtures\Events;
 
 use App\DataFixtures\AbstractFixture;
 use App\DataFixtures\AlternativeFixtures;
-use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Registration;
 use App\Entity\Stage;
 use App\Entity\StageRegistration;
+use App\Factory\EventFactory;
+use App\Factory\UserFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
@@ -22,15 +23,13 @@ class AlmostFullATToComeFixtures extends AbstractFixture implements DependentFix
 
     public function load(ObjectManager $manager): void
     {
-        $event = FixtureBuilder::createAT(
-            name: 'AT presque complet',
-            description: 'Voilà un AT dans le futur et dont les réservations sont ouvertes mais presque pleines ! 🥳',
-        );
-        $manager->persist($event);
+        $event = EventFactory::new()->AT()->published()->withStages('first day of July', 31)->create([
+            'name' => 'AT presque complet',
+            'description' => 'Voilà un AT dans le futur et dont les réservations sont ouvertes mais presque pleines ! 🥳',
+        ])->_real();
 
         foreach ($this->getStaysConfiguration() as $stay) {
-            $user = FixtureBuilder::createUser(children: $stay['children'] ?? false);
-            $manager->persist($user);
+            $user = $stay['children'] ?? false ? UserFactory::new()->children()->create()->_real() : UserFactory::createOne()->_real();
 
             $registration = new Registration($user, $event);
             $registration->setNeededBike($stay['needed_bike'] ?? 0);

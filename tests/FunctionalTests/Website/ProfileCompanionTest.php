@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Website;
 
-use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Diet;
+use App\Factory\EventFactory;
+use App\Factory\UserFactory;
 use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -17,8 +18,7 @@ class ProfileCompanionTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = FixtureBuilder::createUser();
-        $this->save($user);
+        $user = UserFactory::createOne()->_real();
 
         $client->loginUser($user);
 
@@ -81,13 +81,14 @@ class ProfileCompanionTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = FixtureBuilder::createUser(diet: Diet::VEGETARIAN);
-        $event = FixtureBuilder::createAT();
-        $this->save($user, $event);
-
+        $user = UserFactory::createOne(['diet' => Diet::VEGETARIAN])->_real();
+        $event = EventFactory::new()->published()->withStages()->create()->_real();
         $client->loginUser($user);
 
         $client->request('GET', "/event/{$event->getSlug()}/register");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('event_register');
 
         $this->assertSelectorNotExists('input[data-fullname="Companion ForTests"]');
 

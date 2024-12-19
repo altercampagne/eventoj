@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Website\EventRegister;
 
-use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Diet;
 use App\Entity\Meal;
+use App\Factory\EventFactory;
+use App\Factory\UserFactory;
 use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -19,9 +20,8 @@ class MostSimpleTest extends WebTestCase
         $client = static::createClient();
         $faker = \Faker\Factory::create('fr_FR');
 
-        $event = FixtureBuilder::createAT();
-        $user = FixtureBuilder::createUser(birthDate: new \DateTimeImmutable('-20 years'), diet: Diet::VEGETARIAN);
-        $this->save($event, $user);
+        $event = EventFactory::new()->published()->withStages()->create()->_real();
+        $user = UserFactory::createOne(['diet' => Diet::VEGETARIAN])->_real();
 
         $client->loginUser($user);
 

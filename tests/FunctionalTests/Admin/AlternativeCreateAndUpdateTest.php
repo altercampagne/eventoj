@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Admin;
 
-use App\DataFixtures\Util\FixtureBuilder;
+use App\Factory\UserFactory;
 use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -17,8 +17,7 @@ class AlternativeCreateAndUpdateTest extends WebTestCase
         $faker = \Faker\Factory::create('fr_FR');
         $client = static::createClient();
 
-        $user = FixtureBuilder::createUser(admin: true);
-        $this->save($user);
+        $user = UserFactory::new()->admin()->create()->_real();
 
         $client->loginUser($user);
 

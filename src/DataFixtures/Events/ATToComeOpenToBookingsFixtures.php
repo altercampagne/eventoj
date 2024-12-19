@@ -7,7 +7,7 @@ namespace App\DataFixtures\Events;
 use App\DataFixtures\AbstractFixture;
 use App\DataFixtures\AlternativeFixtures;
 use App\DataFixtures\Events\AT2023\EventFixtures as AT2023EventFixtures;
-use App\Entity\Event;
+use App\Factory\EventFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
@@ -25,14 +25,10 @@ class ATToComeOpenToBookingsFixtures extends AbstractFixture implements Dependen
 
     public function load(ObjectManager $manager): void
     {
-        $event = Event::AT();
-        $event
-            ->setName('AT à venir (ouvert)')
-            ->setPublishedAt(new \DateTimeImmutable())
-            ->setOpeningDateForBookings(new \DateTimeImmutable())
-            ->setDescription('Voilà un AT dans le futur et dont les réservations sont ouvertes ! 🥳')
-            ->setPahekoProjectId('1')
-        ;
+        $event = EventFactory::new()->AT()->published()->create([
+            'name' => 'AT à venir (ouvert)',
+            'description' => 'Voilà un AT dans le futur et dont les réservations sont ouvertes ! 🥳',
+        ])->_real();
 
         $startDate = $this->getStartDate();
         foreach ($this->at2023EventFixtures->getStages($event) as $stage) {

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Website;
 
-use App\DataFixtures\Util\FixtureBuilder;
+use App\Factory\MembershipFactory;
+use App\Factory\UserFactory;
 use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -14,12 +15,10 @@ class ProfileMembershipsTest extends WebTestCase
 
     public function testWithActiveMembership(): void
     {
-        $client = static::createClient();
+        $user = UserFactory::createOne()->_real();
+        MembershipFactory::createOne(['user' => $user]);
 
-        $user = FixtureBuilder::createUser();
-        $membership = FixtureBuilder::createMembershipForUser($user);
-        $this->save($user, $membership, $membership->getPayment());
-        $this->getEntityManager()->clear();
+        $client = static::createClient();
 
         $client->loginUser($user);
 
@@ -36,8 +35,7 @@ class ProfileMembershipsTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = FixtureBuilder::createUser();
-        $this->save($user);
+        $user = UserFactory::createOne()->_real();
 
         $client->loginUser($user);
 
@@ -60,10 +58,8 @@ class ProfileMembershipsTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = FixtureBuilder::createUser();
-        $membership = FixtureBuilder::createMembershipForUser($user);
-        $this->save($user, $membership, $membership->getPayment());
-        $this->getEntityManager()->clear();
+        $user = UserFactory::createOne()->_real();
+        MembershipFactory::createOne(['user' => $user]);
 
         $client->loginUser($user);
 
