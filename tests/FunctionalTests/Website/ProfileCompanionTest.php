@@ -7,13 +7,10 @@ namespace App\Tests\FunctionalTests\Website;
 use App\Entity\Diet;
 use App\Factory\EventFactory;
 use App\Factory\UserFactory;
-use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ProfileCompanionTest extends WebTestCase
 {
-    use DatabaseUtilTrait;
-
     public function testCreateAndUdateCompanion(): void
     {
         $client = static::createClient();

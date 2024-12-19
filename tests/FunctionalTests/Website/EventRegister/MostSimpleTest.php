@@ -8,13 +8,10 @@ use App\Entity\Diet;
 use App\Entity\Meal;
 use App\Factory\EventFactory;
 use App\Factory\UserFactory;
-use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class MostSimpleTest extends WebTestCase
 {
-    use DatabaseUtilTrait;
-
     public function testRegistration(): void
     {
         $client = static::createClient();

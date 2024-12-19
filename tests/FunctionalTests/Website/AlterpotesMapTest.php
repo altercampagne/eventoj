@@ -6,13 +6,10 @@ namespace App\Tests\FunctionalTests\Website;
 
 use App\Factory\MembershipFactory;
 use App\Factory\UserFactory;
-use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class AlterpotesMapTest extends WebTestCase
 {
-    use DatabaseUtilTrait;
-
     public function testWithUserWithoutMembership(): void
     {
         $client = static::createClient();

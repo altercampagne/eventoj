@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Tests\UnitTests\Form\EventRegistration;
 
 use App\Entity\Companion;
-use App\Entity\Registration;
 use App\Entity\User;
 use App\Factory\CompanionFactory;
-use App\Factory\EventFactory;
+use App\Factory\RegistrationFactory;
 use App\Factory\UserFactory;
 use App\Form\EventRegistration\ChoosePeopleFormType;
 use App\Form\EventRegistration\EventRegistrationDTO;
-use App\Tests\DatabaseUtilTrait;
 use App\Tests\UnitTests\FormAssertionsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -21,7 +19,6 @@ use Zenstruck\Foundry\Test\Factories;
 
 class ChoosePeopleFormTypeTest extends KernelTestCase
 {
-    use DatabaseUtilTrait;
     use Factories;
     use FormAssertionsTrait;
 
@@ -34,10 +31,7 @@ class ChoosePeopleFormTypeTest extends KernelTestCase
         CompanionFactory::new()->children()->create(['user' => $user]);
         CompanionFactory::new()->adult()->create(['user' => $user]);
 
-        $event = EventFactory::new()->published()->withStages()->create()->_real();
-        $registration = new Registration($user, $event);
-        $this->save($registration);
-
+        $registration = RegistrationFactory::createOne(['user' => $user])->_real();
         $this->user = $user;
 
         /** @var FormFactoryInterface $formFactory */

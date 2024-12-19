@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Website;
 
-use App\Tests\DatabaseUtilTrait;
+use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ProfileUpdateContactDetailsTest extends WebTestCase
 {
-    use DatabaseUtilTrait;
-
     public function testWithoutUpdatingEmail(): void
     {
         $faker = \Faker\Factory::create('fr_FR');
 
         $client = static::createClient();
 
-        $user = $this->getRandomUser();
+        $user = UserFactory::createOne()->_real();
 
         $client->loginUser($user);
 
@@ -54,7 +52,7 @@ class ProfileUpdateContactDetailsTest extends WebTestCase
         $faker = \Faker\Factory::create('fr_FR');
 
         $client = static::createClient();
-        $client->loginUser($this->getRandomUser());
+        $client->loginUser(UserFactory::createOne()->_real());
 
         $client->request('GET', '/me/details');
 

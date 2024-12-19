@@ -6,13 +6,10 @@ namespace App\Tests\FunctionalTests\Website;
 
 use App\Entity\Diet;
 use App\Factory\UserFactory;
-use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ProfileUpdateProfileTest extends WebTestCase
 {
-    use DatabaseUtilTrait;
-
     public function testUpdateWithAdult(): void
     {
         $client = static::createClient();

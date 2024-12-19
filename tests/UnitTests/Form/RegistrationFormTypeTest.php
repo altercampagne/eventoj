@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\UnitTests\Form;
 
+use App\Factory\UserFactory;
 use App\Form\RegistrationFormType;
-use App\Tests\DatabaseUtilTrait;
 use App\Tests\UnitTests\FormAssertionsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormInterface;
 
 class RegistrationFormTypeTest extends KernelTestCase
 {
-    use DatabaseUtilTrait;
     use FormAssertionsTrait;
 
     public function testSubmitValidData(): void
@@ -28,7 +27,7 @@ class RegistrationFormTypeTest extends KernelTestCase
     {
         $form = $this->getForm();
         $form->submit(array_merge($this->getValidFormData(), [
-            'email' => $this->getRandomUser()->getEmail(), // Use a random user email to be sure this email exists
+            'email' => UserFactory::createOne()->getEmail(),
         ]));
 
         $this->assertFormInvalid($form, [

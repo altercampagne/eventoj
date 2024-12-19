@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\FunctionalTests\Admin;
 
 use App\Factory\UserFactory;
-use App\Tests\DatabaseUtilTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class EventCreateAndUpdateTest extends WebTestCase
 {
-    use DatabaseUtilTrait;
-
     public function testCreateAndUdateAT(): void
     {
         $client = static::createClient();

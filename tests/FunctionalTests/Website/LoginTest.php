@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Website;
 
-use App\Tests\DatabaseUtilTrait;
+use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class LoginTest extends WebTestCase
 {
-    use DatabaseUtilTrait;
-
     public function testHomepage(): void
     {
         $client = static::createClient();
@@ -20,7 +18,7 @@ class LoginTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Se connecter');
 
         $client->submitForm('Se connecter', [
-            '_username' => $this->getRandomUser()->getEmail(),
+            '_username' => UserFactory::createOne()->getEmail(),
             '_password' => 'password',
         ]);
 
