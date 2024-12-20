@@ -15,7 +15,7 @@ class RegisterTest extends WebTestCase
 
         $client = static::createClient();
 
-        $event = EventFactory::new()->published()->withStages()->create();
+        $event = EventFactory::new()->published()->withRandomStages()->create();
         $client->request('GET', "/event/{$event->getSlug()}/register");
 
         $this->assertResponseRedirects();

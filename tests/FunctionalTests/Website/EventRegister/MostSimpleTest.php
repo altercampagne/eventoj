@@ -17,7 +17,7 @@ class MostSimpleTest extends WebTestCase
         $client = static::createClient();
         $faker = \Faker\Factory::create('fr_FR');
 
-        $event = EventFactory::new()->published()->withStages()->create()->_real();
+        $event = EventFactory::new()->published()->withRandomStages()->create()->_real();
         $user = UserFactory::createOne(['diet' => Diet::VEGETARIAN])->_real();
 
         $client->loginUser($user);

@@ -7,9 +7,10 @@ namespace App\DataFixtures;
 use App\Factory\CompanionFactory;
 use App\Factory\MembershipFactory;
 use App\Factory\UserFactory;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class UserFixtures extends AbstractFixture
+class UserFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -64,7 +65,5 @@ class UserFixtures extends AbstractFixture
         $admin = UserFactory::createOne([
             'email' => 'change-my-password@test-only.user',
         ])->_real();
-
-        $manager->flush();
     }
 }

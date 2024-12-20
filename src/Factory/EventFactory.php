@@ -47,7 +47,7 @@ final class EventFactory extends PersistentProxyObjectFactory
         return $this->with(['publishedAt' => $publishedAt ?? new \DateTimeImmutable()]);
     }
 
-    public function withStages(string $date = 'first day of July', int $count = 31): self
+    public function withRandomStages(string $date = 'first day of July', int $count = 31): self
     {
         $date = new \DateTimeImmutable($date);
         if ($date < new \DateTimeImmutable()) {
@@ -56,16 +56,18 @@ final class EventFactory extends PersistentProxyObjectFactory
 
         return $this
             ->afterPersist(static function (Event $event) use ($date, $count): void {
-                for ($i = 1; $i <= $count; ++$i) {
-                    StageFactory::createOne([
-                        'event' => $event,
-                        'name' => "Day #$i",
-                        'description' => "Jour #$i",
-                        'date' => $date,
-                    ]);
+                StageFactory::createSequence(static function () use ($event, $date, $count): iterable {
+                    for ($i = 1; $i <= $count; ++$i) {
+                        yield [
+                            'event' => $event,
+                            'name' => "Day #$i",
+                            'description' => "Jour #$i",
+                            'date' => $date,
+                        ];
 
-                    $date = $date->modify('+1 day');
-                }
+                        $date = $date->modify('+1 day');
+                    }
+                });
             })
         ;
     }

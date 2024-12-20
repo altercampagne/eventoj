@@ -33,7 +33,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
     protected function setUp(): void
     {
         $this->user = UserFactory::createOne()->_real();
-        $this->event = EventFactory::new()->published()->withStages()->create()->_real();
+        $this->event = EventFactory::new()->published()->withRandomStages()->create()->_real();
 
         $this->registration = new Registration($this->user, $this->event);
 
