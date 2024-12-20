@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace App\Tests\UnitTests\Form\EventRegistration;
 
-use App\DataFixtures\Util\FixtureBuilder;
 use App\Entity\Companion;
-use App\Entity\Registration;
 use App\Entity\User;
+use App\Factory\CompanionFactory;
+use App\Factory\RegistrationFactory;
+use App\Factory\UserFactory;
 use App\Form\EventRegistration\ChoosePeopleFormType;
 use App\Form\EventRegistration\EventRegistrationDTO;
-use App\Tests\DatabaseUtilTrait;
 use App\Tests\UnitTests\FormAssertionsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Zenstruck\Foundry\Test\Factories;
 
 class ChoosePeopleFormTypeTest extends KernelTestCase
 {
-    use DatabaseUtilTrait;
+    use Factories;
     use FormAssertionsTrait;
 
     private User $user;
@@ -26,11 +27,11 @@ class ChoosePeopleFormTypeTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        $user = FixtureBuilder::createUser();
-        $event = FixtureBuilder::createAT();
-        $registration = new Registration($user, $event);
-        $this->save($user, $event, $registration, FixtureBuilder::createCompanion(user: $user, children: false), FixtureBuilder::createCompanion(user: $user, children: true));
+        $user = UserFactory::createOne()->_real();
+        CompanionFactory::new()->children()->create(['user' => $user]);
+        CompanionFactory::new()->adult()->create(['user' => $user]);
 
+        $registration = RegistrationFactory::createOne(['user' => $user])->_real();
         $this->user = $user;
 
         /** @var FormFactoryInterface $formFactory */

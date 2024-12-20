@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Command;
 
+use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -13,6 +14,7 @@ class PahekoSyncUsersCommandTest extends KernelTestCase
     public function testExecute(): void
     {
         $application = new Application(self::bootKernel());
+        UserFactory::new()->many(10)->create();
 
         $command = $application->find('eventoj:paheko:sync:users');
         $commandTester = new CommandTester($command);
@@ -30,7 +32,7 @@ class PahekoSyncUsersCommandTest extends KernelTestCase
 
         $command = $application->find('eventoj:paheko:sync:users');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(['email' => 'admin@altercampagne.net']);
+        $commandTester->execute(['email' => UserFactory::createOne()->getEmail()]);
 
         $commandTester->assertCommandIsSuccessful();
 

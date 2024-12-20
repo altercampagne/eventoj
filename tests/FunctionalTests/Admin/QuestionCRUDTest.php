@@ -4,21 +4,16 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Admin;
 
-use App\DataFixtures\Util\FixtureBuilder;
-use App\Tests\DatabaseUtilTrait;
+use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class QuestionCRUDTest extends WebTestCase
 {
-    use DatabaseUtilTrait;
-
     public function testCreateAndUdateAT(): void
     {
-        $faker = \Faker\Factory::create('fr_FR');
         $client = static::createClient();
 
-        $user = FixtureBuilder::createUser(admin: true);
-        $this->save($user);
+        $user = UserFactory::new()->admin()->create()->_real();
 
         $client->loginUser($user);
 

@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Website;
 
-use App\Tests\DatabaseUtilTrait;
+use App\Factory\EventFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RegisterTest extends WebTestCase
 {
-    use DatabaseUtilTrait;
-
     public function testRegisterStartingFromEventPage(): void
     {
         $faker = \Faker\Factory::create('fr_FR');
 
         $client = static::createClient();
 
-        $event = $this->getBookableEvent();
+        $event = EventFactory::new()->published()->withRandomStages()->create();
         $client->request('GET', "/event/{$event->getSlug()}/register");
 
         $this->assertResponseRedirects();

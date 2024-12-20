@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Command;
 
+use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -16,7 +17,7 @@ class GeocodeUserCommandTest extends KernelTestCase
 
         $command = $application->find('eventoj:geocode:users');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(['email' => 'admin@altercampagne.net'], ['--force']);
+        $commandTester->execute(['email' => UserFactory::createOne()->getEmail()], ['--force']);
 
         $commandTester->assertCommandIsSuccessful();
 

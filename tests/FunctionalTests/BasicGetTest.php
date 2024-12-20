@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests;
 
-use App\Tests\DatabaseUtilTrait;
+use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BasicGetTest extends WebTestCase
 {
-    use DatabaseUtilTrait;
-
     /**
      * @return iterable<array{0: string, 1?: string, 2?: string}>
      */
@@ -58,7 +56,7 @@ class BasicGetTest extends WebTestCase
     public function testAdminPages(string $url, string $expectedTitle): void
     {
         $client = static::createClient();
-        $user = $this->getRandomAdminUser();
+        $user = UserFactory::new()->admin()->create()->_real();
         $client->loginUser($user);
 
         $this->checkPage($client, $url, 'Admin - '.$expectedTitle, $expectedTitle);

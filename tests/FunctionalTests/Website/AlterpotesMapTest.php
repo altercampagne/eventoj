@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\FunctionalTests\Website;
 
-use App\DataFixtures\Util\FixtureBuilder;
-use App\Tests\DatabaseUtilTrait;
+use App\Factory\MembershipFactory;
+use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class AlterpotesMapTest extends WebTestCase
 {
-    use DatabaseUtilTrait;
-
     public function testWithUserWithoutMembership(): void
     {
         $client = static::createClient();
 
-        $user = FixtureBuilder::createUser();
-        $this->save($user);
+        $user = UserFactory::createOne()->_real();
 
         $client->loginUser($user);
 
@@ -34,12 +31,8 @@ class AlterpotesMapTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = FixtureBuilder::createUser();
-        $membership = FixtureBuilder::createMembershipForUser($user);
-        $this->save($user, $membership->getPayment(), $membership);
-        $this->getEntityManager()->clear();
-
-        // dd($user->isMember());
+        $user = UserFactory::createOne()->_real();
+        MembershipFactory::createOne(['user' => $user]);
 
         $client->loginUser($user);
 
