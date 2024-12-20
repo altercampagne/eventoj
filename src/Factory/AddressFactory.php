@@ -17,9 +17,6 @@ final class AddressFactory extends ObjectFactory
         return Address::class;
     }
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     */
     protected function defaults(): array|callable
     {
         return [

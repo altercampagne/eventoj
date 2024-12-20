@@ -53,9 +53,6 @@ final class UserFactory extends PersistentProxyObjectFactory
         ]);
     }
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     */
     protected function defaults(): array|callable
     {
         return [
@@ -73,9 +70,6 @@ final class UserFactory extends PersistentProxyObjectFactory
         ];
     }
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-     */
     protected function initialize(): static
     {
         return $this

@@ -35,14 +35,10 @@ final class QuestionFactory extends PersistentProxyObjectFactory
         ];
     }
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-     */
     protected function initialize(): static
     {
         return $this
             ->instantiateWith(Instantiator::withConstructor()->alwaysForce('locked'))
-            // ->afterInstantiate(function(Question $question): void {})
         ;
     }
 }
