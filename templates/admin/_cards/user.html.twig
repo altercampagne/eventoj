@@ -58,6 +58,20 @@
                     <a href="mailto:{{ user.email }}">
                         {{ user.email }}
                     </a>
+                    {% if not user.isVerified and is_granted(constant('App\\Admin\\Security\\Permission::USER_VERIFY_EMAIL').value, user) %}
+                        <twig:ButtonPostWithConfirmation
+                            id="user-verify-email-{{ user.id }}"
+                            url="{{ path('admin_user_verify_email', {id: user.id}) }}"
+                            buttonLabel="Adresse mail vérifiée ! 👌"
+                            buttonClass="btn btn-outline-warning btn-sm py-0 ms-2"
+                            modalTitle="Confirmation de la vérification de l'adresse mail"
+                            modalButtonClass="btn btn-warning"
+                            modalButtonLabel="Confirmer qu'il s'agit d'une adresse mail vérifiée"
+                        >
+                        Merci de valider <b><u>UNIQUEMENT</u> des adresse mails sûres à 200%</b> (typiquement : mail reçu de la personne en question).<br /><br />
+                            Est-ce que c'est bien le cas pour l'adresse mail <q>{{ user.email }}</q> ?
+                        </twig:ButtonPostWithConfirmation>
+                    {% endif %}
                 </div>
                 <twig:Admin:ButtonCopy value="{{ user.email }}" tooltip="Copier l'adresse mail de l'utilisateur" />
             </li>

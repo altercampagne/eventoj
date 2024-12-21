@@ -4,7 +4,7 @@
 {% endif %}
 
 {% set id = id|default(url|slug) %}
-<button type="button" class="{{ buttonClass }}" data-bs-toggle="modal" data-bs-target="#post-{{ id }}">
+<button type="button" class="{{ buttonClass }}" data-bs-toggle="modal" data-bs-target="#post-{{ id }}" id="button-{{ id }}">
     {{ buttonLabel|default('Supprimer')|raw }}
 </button>
 
