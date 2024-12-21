@@ -53,4 +53,5 @@ enum Permission: string
     case USER_LIST = 'user.list';
     case USER_VIEW = 'user.view';
     case USER_MANAGEMENT = 'user.management';
+    case USER_VERIFY_EMAIL = 'user.verify_email';
 }
