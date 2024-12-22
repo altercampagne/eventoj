@@ -87,14 +87,10 @@ class UploadedFileType extends AbstractType
             'height' => $height,
         ]);
 
+        /** @var ?UploadedFile $file */
         $file = $form->getData();
 
-        if ($file instanceof UploadedFile) {
-            $view->vars['fileUrl'] = $this->uploadedFileUrlGenerator->getImageUrl($file, $width, $height);
-        } else {
-            $view->vars['fileUrl'] = "https://placehold.co/{$width}x{$height}?text=Choisir une image";
-        }
-
+        $view->vars['fileUrl'] = $this->uploadedFileUrlGenerator->getImageUrl($file, $width, $height);
         $view->vars['preview_width'] = $width;
         $view->vars['preview_height'] = $height;
 
