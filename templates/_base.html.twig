@@ -31,6 +31,12 @@
 
                         <ul class="navbar-nav">
                             {% if app.user is not null %}
+                                {% if not app.user.isMember %}
+                                    <li class="nav-item">
+                                        <a class="btn btn-warning py-1 me-3 mt-1" aria-current="page" href="{{ path('profile_memberships') }}">Adhérer à l'association</a>
+                                    </li>
+                                {% endif %}
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="connected-as">
                                         {{ app.user.fullName }}
