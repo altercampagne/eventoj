@@ -1,14 +1,14 @@
 {% extends '_base.html.twig' %}
 
-{% block title %}Tous les évènements proposés par AlterCampagne{% endblock %}
-{% block meta_description %}Découvre toutes les informations concernant les prochaines évènements organisés par l'association{% endblock %}
+{% block title %}Bienvenu sur le partie membres du site d'AlterCampagne{% endblock %}
+{% block meta_description %}Évènements à venir, carte des AlterPotes, et bien d'autres, découvre ton espace membre !{% endblock %}
 
 {% block main %}
     <div class="container">
         <div class="text-center">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-9">
-                    <h1>Tous les évènements</h1>
+                    <h1>Bienvenue sur ton espace membre</h1>
                     <p class="lead">
                         Chaque année, l'association AlterCampagne organise des tours à vélos itinérants qui vont à la rencontre des alternatives : les personnes qui, seules ou en collectif, essaient d’améliorer la situation environnementale, climatique et sociale.
                     </p>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="row justify-content-center mb-4">
-            {% for event in events|filter(e => not e.isFinished) %}
+            {% for event in events %}
                 <div class="col-12 col-md-6 col-lg-4 text-center mb-3">
                     <div class="card card-hover">
                         <div class="card-body">
@@ -57,27 +57,81 @@
 
         <hr class="mb-4">
 
-        <div class="text-center mb-5">
-            <h2>Les évènements passés</h2>
+        <div class="text-center mb-4">
+            <h2>Les avantages de ton espace membre</h2>
         </div>
 
-        <div class="row justify-content-center">
-            {% for event in events|reverse|filter(e => e.isFinished) %}
-                <div class="col-12 col-md-4 col-lg-3 text-center mb-3">
-                    <div class="card card-hover">
-                        <div class="card-body">
-                            <h3 class="card-title h4">{{ event.name }}</h3>
-                        </div>
-                        <div class="card-body">
-                            <twig:UploadedImage file="{{ event.picture }}" width="300" height="300" alt="Illustration {{ event.name }}" class="mb-3" />
-
-                            <div class="d-grid gap-2 mt-4">
-                                <a href="{{ path('event_show', {slug: event.slug}) }}" class="btn btn-primary btn-lg stretched-link">Plus d'info</a>
-                            </div>
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-4">
+            <div class="col">
+                <div class="card card-hover">
+                    <div>
+                        <img loading="lazy" src="{{ image_url(asset('images/bike-on-road.jpg'), 828, 550) }}" class="card-img-top" alt"Un vélo seul sur une route qui serpente dans un magnifique paysage vallonné" style="max-height: 275px" />
+                        <p class="float-end text-secondary fw-ligher me-2 mb-0">
+                            <small>Photo de <a href="https://unsplash.com/fr/@urban_vintage" rel="nofollow" class="text-reset">Urban Vintage</a></small>
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title h5">Inscriptions aux évènements</h3>
+                        <p class="card-text">Pour t'inscrire aux prochains évènements organisés par AlterCampagne et participer aux AlterTour, Alter-D-Tour et autres Échappées Belles !</p>
+                        <div class="d-grid gap-2 mt-4">
+                            {% if not is_granted('ROLE_USER') %}
+                                <a href="{{ path('register') }}" class="btn btn-primary stretched-link">Créer un compte</a>
+                            {% else %}
+                                <a href="{{ path('event_list') }}" class="btn btn-primary stretched-link">Voir les évènements</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+
+            <div class="col">
+                <div class="card card-hover">
+                    <div>
+                        <img loading="lazy" src="{{ image_url(asset('images/people-doing-hearth.jpg'), 828, 550) }}" class="card-img-top" alt="Quatre personnes debout dans un champ, de dos et faisant des coeurs avec leur mains." style="max-height: 275px" />
+                        <p class="float-end text-secondary fw-ligher me-2 mb-0">
+                            <small>Photo de <a href="https://unsplash.com/fr/@melissaaskew" rel="nofollow" class="text-reset">Melissa Askew</a></small>
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title h5">Gestion de tes adhésions</h3>
+                        <p class="card-text">Pour devenir adhérent d'AlterCampagne et soutenir les activités de l'association.</p>
+                        <div class="d-grid gap-2 mt-4">
+                            {% if not is_granted('ROLE_USER') %}
+                                <a href="{{ path('register') }}" class="btn btn-primary stretched-link">Créer un compte</a>
+                            {% elseif not app.user.isMember %}
+                                <a href="{{ path('profile_memberships') }}" class="btn btn-primary stretched-link">Adhérer à l'association</a>
+                            {% else %}
+                                <a href="{{ path('profile_memberships') }}" class="btn btn-primary stretched-link">Voir mes adhésions</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card card-hover">
+                    <div>
+                        <img loading="lazy" src="{{ image_url(asset('images/map-with-pins.jpg'), 828, 550) }}" class="card-img-top" alt="Quatre personnes debout dans un champ, de dos et faisant des coeurs avec leur mains." style="max-height: 275px" />
+                        <p class="float-end text-secondary fw-ligher me-2 mb-0">
+                            <small>Photo de <a href="https://unsplash.com/fr/@dead____artist" rel="nofollow" class="text-reset">Z</a></small>
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title h5">Carte des AlterPotes</h3>
+                        <p class="card-text">Accède à la carte interactive des AlterPotes ! Tous·tes les membres qui le souhaite peuvent apparaître sur cette carte.</p>
+                        <div class="d-grid gap-2 mt-4">
+                            {% if not is_granted('ROLE_USER') %}
+                                <a href="{{ path('register') }}" class="btn btn-primary stretched-link">Créer un compte</a>
+                            {% elseif not app.user.isMember %}
+                                <a href="{{ path('profile_memberships') }}" class="btn btn-primary stretched-link">Adhérer à l'association</a>
+                            {% else %}
+                                <a href="{{ path('alterpotes_map') }}" class="btn btn-primary stretched-link">Voir la carte</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 {% endblock %}

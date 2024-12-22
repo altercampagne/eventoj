@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Event;
 
 use App\Entity\Event;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,8 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/', name: 'homepage')]
-class HomepageController extends AbstractController
+#[Route('/event', name: 'event_list')]
+class ListController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
@@ -31,10 +31,8 @@ class HomepageController extends AbstractController
             ->setParameter('now', new \DateTimeImmutable())
         ;
 
-        return $this->render('homepage.html.twig', [
-            'events' => array_filter($qb->getQuery()->getResult(), static function (Event $event): bool {
-                return !$event->isFinished();
-            }),
+        return $this->render('event/list.html.twig', [
+            'events' => $qb->getQuery()->getResult(),
         ]);
     }
 }

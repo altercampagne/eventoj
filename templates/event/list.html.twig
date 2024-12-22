@@ -1,0 +1,74 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Tous les évènements proposés par AlterCampagne{% endblock %}
+{% block meta_description %}Retrouve ici l'historique (presque) complet des évènements organisés par l'association depuis sa création !{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="text-center">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-9">
+                    <h1>Tous les évènements</h1>
+                    <p class="lead">{{ block('meta_description') }}</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="mb-4">
+
+        <div class="text-center mb-4">
+            <h2>Les évènements à venir</h2>
+        </div>
+
+        <div class="row justify-content-center mb-4">
+            {% for event in events|filter(e => not e.isFinished) %}
+                <div class="col-12 col-md-6 col-lg-4 text-center mb-3">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ event.name }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <twig:UploadedImage file="{{ event.picture }}" width="300" height="300" alt="Illustration {{ event.name }}" class="mb-3" />
+
+                            <div class="d-grid gap-2 mt-4">
+                                <a href="{{ path('event_show', {slug: event.slug}) }}" class="btn btn-primary btn-lg stretched-link">Plus d'info</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row col-12 col-lg-8">
+                    <div class="alert alert-warning text-center">
+                        <strong>Pas d'évènement à venir pour le moment :</strong>
+                        n'hésite pas à revenir un peu plus tard dans l'année pour voir si de nouveaux évènements sont annoncés. :)
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <hr class="mb-4">
+
+        <div class="text-center mb-5">
+            <h2>Les évènements passés</h2>
+        </div>
+
+        <div class="row justify-content-center">
+            {% for event in events|reverse|filter(e => e.isFinished) %}
+                <div class="col-12 col-md-4 col-lg-3 text-center mb-3">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h3 class="card-title h4">{{ event.name }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <twig:UploadedImage file="{{ event.picture }}" width="300" height="300" alt="Illustration {{ event.name }}" class="mb-3" />
+
+                            <div class="d-grid gap-2 mt-4">
+                                <a href="{{ path('event_show', {slug: event.slug}) }}" class="btn btn-primary btn-lg stretched-link">Plus d'info</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

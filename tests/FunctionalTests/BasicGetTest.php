@@ -15,7 +15,8 @@ class BasicGetTest extends WebTestCase
      */
     public static function publicPages(): iterable
     {
-        yield ['/', 'Tous les évènements proposés par AlterCampagne', 'Tous les évènements'];
+        yield ['/', 'Bienvenu sur le partie membres du site d\'AlterCampagne', 'Bienvenue sur ton espace membre'];
+        yield ['/event', 'Tous les évènements proposés par AlterCampagne', 'Tous les évènements'];
         yield ['/event/altertour-2023', 'AlterTour 2023', 'AlterTour 2023'];
         yield ['/event/altertour-2023/de-herisson-a-tortezais', 'AlterTour 2023: De Hérisson à Tortezais le 12 juillet 2023', 'De Hérisson à Tortezais'];
         yield ['/alternative/les-champs-de-lile', 'Les Champs de l\'Île', 'Les Champs de l\'Île'];
