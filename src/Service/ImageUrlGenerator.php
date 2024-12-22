@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\UploadedFile;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
-final readonly class UploadedFileUrlGenerator
+final readonly class ImageUrlGenerator
 {
     public function __construct(
         #[Autowire(env: 'CLOUDIMG_TOKEN')]
@@ -17,16 +16,16 @@ final readonly class UploadedFileUrlGenerator
     ) {
     }
 
-    public function getImageUrl(?UploadedFile $file, ?int $width = null, ?int $height = null): string
+    public function getImageUrl(?string $image = null, ?int $width = null, ?int $height = null): string
     {
-        if (null === $file) {
+        if (null === $image) {
             $width = $width ?: 500;
             $height = $height ?: 500;
 
             return "https://placehold.co/{$width}x{$height}?text=Image\\nnon trouvée";
         }
 
-        $path = "https://{$this->cloudimgToken}.cloudimg.io/{$this->cloudimgAlias}/{$file->getPath()}";
+        $path = "https://{$this->cloudimgToken}.cloudimg.io/{$this->cloudimgAlias}/{$image}";
 
         $parameters = [];
         if (null !== $width) {

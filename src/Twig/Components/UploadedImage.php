@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Twig\Components;
 
 use App\Entity\UploadedFile;
-use App\Service\UploadedFileUrlGenerator;
+use App\Service\ImageUrlGenerator;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
@@ -16,12 +16,12 @@ final class UploadedImage
     public int $height;
 
     public function __construct(
-        private readonly UploadedFileUrlGenerator $uploadedFileUrlGenerator,
+        private readonly ImageUrlGenerator $imageUrlGenerator,
     ) {
     }
 
     public function getUrl(): string
     {
-        return $this->uploadedFileUrlGenerator->getImageUrl($this->file, $this->width, $this->height);
+        return $this->imageUrlGenerator->getImageUrl($this->file?->getPath(), $this->width, $this->height);
     }
 }
