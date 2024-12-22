@@ -13,6 +13,8 @@ final readonly class ImageUrlGenerator
         private string $cloudimgToken,
         #[Autowire(env: 'CLOUDIMG_ALIAS')]
         private string $cloudimgAlias,
+        #[Autowire(param: 'kernel.environment')]
+        private string $environment,
     ) {
     }
 
@@ -23,6 +25,13 @@ final readonly class ImageUrlGenerator
             $height = $height ?: 500;
 
             return "https://placehold.co/{$width}x{$height}?text=Image\\nnon trouvée";
+        }
+
+        // If we're not in production, we don't use cloudimg.io for local images.
+        if ('prod' !== $this->environment) {
+            if (preg_match('#assets/images#', $image)) {
+                return $image;
+            }
         }
 
         $path = "https://{$this->cloudimgToken}.cloudimg.io/{$this->cloudimgAlias}/{$image}";
