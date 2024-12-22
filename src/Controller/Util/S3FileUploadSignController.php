@@ -6,7 +6,7 @@ namespace App\Controller\Util;
 
 use App\Entity\UploadedFile;
 use App\Entity\UploadedFileType;
-use App\Service\ImageUrlGenerator;
+use App\Service\UploadedFileUrlGenerator;
 use Aws\S3\S3Client;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +28,7 @@ final class S3FileUploadSignController extends AbstractController
     public function __construct(
         private readonly S3Client $s3Client,
         private readonly EntityManagerInterface $em,
-        private readonly ImageUrlGenerator $imageUrlGenerator,
+        private readonly UploadedFileUrlGenerator $uploadedFileUrlGenerator,
         #[Autowire(env: 'S3_BUCKET_NAME')]
         private readonly string $bucketName,
     ) {
@@ -71,7 +71,7 @@ final class S3FileUploadSignController extends AbstractController
         return $this->json([
             'uploaded_file_id' => (string) $uploadedFile->getId(),
             'presigned_url' => $presignedUrl,
-            'uploaded_file_url' => $this->imageUrlGenerator->getImageUrl($uploadedFile->getPath(), $width, $height),
+            'uploaded_file_url' => $this->uploadedFileUrlGenerator->getImageUrl($uploadedFile, $width, $height),
         ]);
     }
 }

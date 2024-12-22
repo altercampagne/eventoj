@@ -6,7 +6,7 @@ namespace App\Admin\Form;
 
 use App\Entity\UploadedFile;
 use App\Entity\UploadedFileType as UploadedFileTypeEnum;
-use App\Service\ImageUrlGenerator;
+use App\Service\UploadedFileUrlGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -22,7 +22,7 @@ class UploadedFileType extends AbstractType
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly EntityManagerInterface $em,
-        private readonly ImageUrlGenerator $imageUrlGenerator,
+        private readonly UploadedFileUrlGenerator $uploadedFileUrlGenerator,
     ) {
     }
 
@@ -87,10 +87,14 @@ class UploadedFileType extends AbstractType
             'height' => $height,
         ]);
 
-        /** @var ?UploadedFile $file */
         $file = $form->getData();
 
-        $view->vars['fileUrl'] = $this->imageUrlGenerator->getImageUrl($file?->getPath(), $width, $height);
+        if ($file instanceof UploadedFile) {
+            $view->vars['fileUrl'] = $this->uploadedFileUrlGenerator->getImageUrl($file, $width, $height);
+        } else {
+            $view->vars['fileUrl'] = "https://placehold.co/{$width}x{$height}?text=Choisir une image";
+        }
+
         $view->vars['preview_width'] = $width;
         $view->vars['preview_height'] = $height;
 
