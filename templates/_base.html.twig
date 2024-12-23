@@ -2,6 +2,8 @@
 
 {% block body %}
     {% block header %}
+        {% set current_route = app.request.attributes.get('_route') %}
+
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top text-bg-primary">
                 <div class="container-fluid">
@@ -14,18 +16,18 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ path('event_list') }}">Évènements</a>
+                                <a class="nav-link{% if current_route starts with 'event_' %} active{% endif %}" aria-current="page" href="{{ path('event_list') }}">Évènements</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ path('alternative_map') }}">Alternatives</a>
+                                <a class="nav-link{% if current_route starts with 'alternative_' %} active{% endif %}" aria-current="page" href="{{ path('alternative_map') }}">Alternatives</a>
                             </li>
                             {% if is_granted('ROLE_USER') and app.user.isMember %}
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="{{ path('alterpotes_map') }}">Carte des alterpotes</a>
+                                    <a class="nav-link{% if current_route == 'alterpotes_map' %} active{% endif %}" aria-current="page" href="{{ path('alterpotes_map') }}">Carte des alterpotes</a>
                                 </li>
                             {% endif %}
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ path('faq') }}">Foire aux questions</a>
+                                <a class="nav-link{% if current_route == 'faq' %} active{% endif %}" aria-current="page" href="{{ path('faq') }}">Foire aux questions</a>
                             </li>
                         </ul>
 
