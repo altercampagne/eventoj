@@ -15,7 +15,7 @@ class LoginController extends AbstractController
     public function __invoke(AuthenticationUtils $authenticationUtils): Response
     {
         if (null !== $this->getUser()) {
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('profile_homepage');
         }
 
         // get the login error if there is one

@@ -16,79 +16,55 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
-                                <a class="nav-link{% if current_route starts with 'event_' %} active{% endif %}" aria-current="page" href="{{ path('event_list') }}">Évènements</a>
+                                <a class="nav-link"{% if current_route starts with 'event_' %} aria-current="page"{% endif %} href="{{ path('event_list') }}">Évènements</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link{% if current_route starts with 'alternative_' %} active{% endif %}" aria-current="page" href="{{ path('alternative_map') }}">Alternatives</a>
+                                <a class="nav-link" {% if current_route starts with 'alternative_' %} aria-current="page"{% endif %} href="{{ path('alternative_map') }}">Alternatives</a>
                             </li>
                             {% if is_granted('ROLE_USER') and app.user.isMember %}
                                 <li class="nav-item">
-                                    <a class="nav-link{% if current_route == 'alterpotes_map' %} active{% endif %}" aria-current="page" href="{{ path('alterpotes_map') }}">Carte des alterpotes</a>
+                                    <a class="nav-link" {% if current_route == 'alterpotes_map' %} aria-current="page"{% endif %} href="{{ path('alterpotes_map') }}">Carte des alterpotes</a>
                                 </li>
                             {% endif %}
                             <li class="nav-item">
-                                <a class="nav-link{% if current_route == 'faq' %} active{% endif %}" aria-current="page" href="{{ path('faq') }}">Foire aux questions</a>
+                                <a class="nav-link" {% if current_route == 'faq' %} aria-current="page"{% endif %} href="{{ path('faq') }}">
+                                    <span class="d-md-none d-lg-block">Foire aux questions</span>
+                                    <span class="d-none d-md-block d-lg-none">FAQ</span>
+                                </a>
                             </li>
                         </ul>
 
                         <ul class="navbar-nav">
                             {% if app.user is not null %}
+                                {% if 'test' == app.environment %}
+                                    {# It's useful it test to be able to verify which user is connected #}
+                                    <span id="connected-as">{{ app.user.fullName }}</span>
+                                {% endif %}
+
                                 {% if not app.user.isMember %}
                                     <li class="nav-item">
-                                        <a class="btn btn-warning py-1 me-3 mt-1" aria-current="page" href="{{ path('profile_memberships') }}">Adhérer à l'association</a>
+                                        <twig:ButtonPost btnClass="btn btn-warning py-1 me-3 mt-1" url="{{ path('payment_initiate_membership_payment') }}">
+                                            Adhérer à l'association
+                                        </twig:ButtonPost>
                                     </li>
                                 {% endif %}
 
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="connected-as">
-                                        {{ app.user.fullName }}
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a class="dropdown-item" href="{{ path('profile_update_profile') }}">
-                                                <i class="fa-solid fa-user fa-fw me-1"></i> Mon profil
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ path('profile_update_contact_details') }}">
-                                                <i class="fa-solid fa-at fa-fw me-1"></i> Mes coordonnées
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ path('profile_companions') }}">
-                                                <i class="fa-solid fa-users fa-fw me-1"></i> Mes compagnon·es
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ path('profile_memberships') }}">
-                                                <i class="fa-regular fa-face-smile fa-fw me-1"></i> Mes adhésions
-                                            </a>
-                                        </li>
-                                        {% if app.user.registrations|filter(r => not r.isWaitingPayment)|length > 0 %}
-                                            <li>
-                                                <a class="dropdown-item" href="{{ path('profile_registrations') }}">
-                                                    <i class="fa-solid fa-ticket fa-fw me-1"></i> Mes participations
-                                                </a>
-                                            </li>
-                                        {% endif %}
-                                        {% if is_granted(constant('App\\Admin\\Security\\Permission::ADMIN_ACCESS').value) %}
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li>
-                                                <a class="dropdown-item" href="{{ path('admin') }}">
-                                                    <i class="fa-solid fa-screwdriver-wrench fa-fw me-1"></i>
-                                                    Administration
-                                                    <i class="fa-solid fa-screwdriver-wrench fa-fw ms-1"></i>
-                                                </a>
-                                            </li>
-                                        {% endif %}
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ path('logout') }}">
-                                                <i class="fa-solid fa-right-from-bracket fa-fw me-1"></i> Se déconnecter
-                                            </a>
-                                        </li>
-                                    </ul>
+                                <li class="nav-item">
+                                    <a class="nav-link" {% if current_route starts with 'profile_' %} aria-current="page"{% endif %} href="{{ path('profile_homepage') }}">Espace membre</a>
                                 </li>
+
+                                {% if is_granted(constant('App\\Admin\\Security\\Permission::ADMIN_ACCESS').value) %}
+                                    <li class="nav-item ms-md-3 mt-3 mt-md-0 d-grid d-md-block">
+                                        <a class="btn btn-light" href="{{ path('admin') }}">
+                                            <span class="d-md-none d-lg-block">
+                                                <i class="fa-solid fa-screwdriver-wrench fa-fw me-1"></i>
+                                                Administration
+                                                <i class="fa-solid fa-screwdriver-wrench fa-fw ms-1"></i>
+                                            </span>
+                                            <span class="d-none d-md-block d-lg-none">Admin</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
                             {% else %}
                                 <li class="nav-item">
                                     <a href="{{ path('login') }}" class="nav-link">
@@ -124,7 +100,9 @@
             </div>
         {% endif %}
 
-        {% block main %}{% endblock %}
+        {% block main_decorator %}
+            {% block main %}{% endblock %}
+        {% endblock %}
 
     </main>
 

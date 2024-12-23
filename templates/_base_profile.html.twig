@@ -1,0 +1,44 @@
+{% extends '_base.html.twig' %}
+
+{% macro menu_link(route, content, starts_with = null) %}
+    {% set is_active = app.request.attributes.get('_route') starts with starts_with|default(route) %}
+
+    <a
+        class="nav-link{% if is_active %} active{% endif %}"
+        href="{{ path(route) }}"
+        {% if is_active %} aria-current="page"{% endif %}
+    >
+        {{ content|raw }}
+    </a>
+{% endmacro %}
+
+{% block main_decorator %}
+    {% set current_route = app.request.attributes.get('_route') %}
+
+    <div class="container">
+        <div class="row text-center mb-3">
+            <h1>{{ block('title') }}</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-3 d-none d-md-block">
+                <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                    {{ _self.menu_link('profile_homepage', 'Accueil') }}
+                    {{ _self.menu_link('profile_update_profile', '<i class="fa-solid fa-user fa-fw me-1"></i> Mon profil') }}
+                    {{ _self.menu_link('profile_update_contact_details', '<i class="fa-solid fa-at fa-fw me-1"></i> Mes coordonnées') }}
+                    {{ _self.menu_link('profile_companions', '<i class="fa-solid fa-users fa-fw me-1"></i> Mes compagnon·es', starts_with: 'profile_companion') }}
+                    {{ _self.menu_link('profile_memberships', '<i class="fa-regular fa-face-smile fa-fw me-1"></i> Mes adhésions') }}
+                    {{ _self.menu_link('profile_registrations', '<i class="fa-solid fa-ticket fa-fw me-1"></i> Mes participations') }}
+
+                    <a class="nav-link text-secondary" href="{{ path('logout') }}">
+                        <small><i class="fa-solid fa-right-from-bracket fa-fw me-1"></i> Se déconnecter</small>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-9">
+                {% block main %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

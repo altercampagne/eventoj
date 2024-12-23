@@ -1,6 +1,6 @@
-{% extends '_base.html.twig' %}
+{% extends '_base_profile.html.twig' %}
 
-{% block title %}Tes inscriptions aux évènements organisés par AlterCampagne{% endblock %}
+{% block title %}Tes participations{% endblock %}
 
 {% macro render_registration(registration, isComing) %}
     <div class="card mb-3">
@@ -71,27 +71,19 @@
 {% endmacro %}
 
 {% block main %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-sm-8 col-md-6 m-auto">
-                <div class="row text-center mb-3">
-                    <h1>Tes participations</h1>
-                </div>
+    <div class="justify-content-center">
+            <h2 class="mb-3">À venir</h2>
+            {% for registration in coming_registrations %}
+                {{ _self.render_registration(registration, true) }}
+            {% else %}
+                Tu n'es inscrit à aucun évènement pour le moment !
+            {% endfor %}
 
-                <h2 class="mb-3">À venir</h2>
-                {% for registration in coming_registrations %}
-                    {{ _self.render_registration(registration, true) }}
-                {% else %}
-                    Tu n'es inscrit à aucun évènement pour le moment !
+            {% if past_registrations|length > 0 %}
+                <h2 class="mb-3 mt-4">Passées</h2>
+                {% for registration in past_registrations %}
+                    {{ _self.render_registration(registration, false) }}
                 {% endfor %}
-
-                {% if past_registrations|length > 0 %}
-                    <h2 class="mb-3 mt-4">Passées</h2>
-                    {% for registration in past_registrations %}
-                        {{ _self.render_registration(registration, false) }}
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
+            {% endif %}
     </div>
 {% endblock %}

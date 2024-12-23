@@ -21,13 +21,25 @@ class ProfileUpdateFormType extends AbstractType
         /** @var User $user */
         $user = $options['data'];
 
+        $dietOptions = [
+            'required' => false, // This information is required but the HTML5 validation if perfectible on mobile devices (Android only?)
+            'label' => 'Ton régime alimentaire',
+            'class' => Diet::class,
+            'placeholder' => 'Choix du régime alimentaire',
+            'help' => 'Nous avons besoin de cette information si tu souhaites participer à un évènement.',
+        ];
+
+        if (null === $user->getDiet()) {
+            $dietOptions['attr'] = [
+                'class' => 'border-warning',
+            ];
+            $dietOptions['help_attr'] = [
+                'class' => 'text-warning fw-bold',
+            ];
+        }
+
         $builder
-            ->add('diet', EnumType::class, [
-                'required' => false, // This information is required but the HTML5 validation if perfectible on mobile devices (Android only?)
-                'label' => 'Ton régime alimentaire',
-                'class' => Diet::class,
-                'placeholder' => 'Choix du régime alimentaire',
-            ])
+            ->add('diet', EnumType::class, $dietOptions)
             ->add('glutenIntolerant', CheckboxType::class, [
                 'label' => 'Intolérance au gluten',
                 'required' => false,

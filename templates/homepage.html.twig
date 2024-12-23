@@ -1,6 +1,6 @@
 {% extends '_base.html.twig' %}
 
-{% block title %}Bienvenue sur le partie membres du site d'AlterCampagne{% endblock %}
+{% block title %}Bienvenue sur la partie membres du site d'AlterCampagne{% endblock %}
 {% block meta_description %}Évènements à venir, carte des AlterPotes, et bien d'autres, découvre ton espace membre !{% endblock %}
 
 {% block main %}
@@ -8,16 +8,9 @@
         <div class="text-center">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-9">
-                    <h1>Bienvenue sur ton espace membre</h1>
+                    <h1>Bienvenue à toi !</h1>
                     <p class="lead">
                         Chaque année, l'association AlterCampagne organise des tours à vélos itinérants qui vont à la rencontre des alternatives : les personnes qui, seules ou en collectif, essaient d’améliorer la situation environnementale, climatique et sociale.
-                    </p>
-                    <p class="lead">
-                        {% if app.user is null or not app.user.isMember %}
-                            <a href="{{ path('profile_memberships') }}" class="btn btn-warning btn-lg">
-                                Adhérer à l'association
-                            </a>
-                        {% endif %}
                     </p>
                 </div>
             </div>
@@ -58,7 +51,7 @@
         <hr class="mb-4">
 
         <div class="text-center mb-4">
-            <h2>Les avantages de ton espace membre</h2>
+            <h2>Les avantages à devenir membre</h2>
         </div>
 
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-4">

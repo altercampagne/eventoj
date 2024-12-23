@@ -79,7 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
     #[ORM\Column(type: 'string', enumType: Diet::class, nullable: true, options: [
         'comment' => 'Diet of the user (omnivore, vegetarien, vegan)',
     ])]
-    private ?Diet $diet;
+    private ?Diet $diet = null;
 
     #[ORM\Column(type: 'boolean', options: [
         'default' => false,

@@ -1,0 +1,94 @@
+{% extends '_base_profile.html.twig' %}
+
+{% block title %}Ton espace membre{% endblock %}
+
+{% block main %}
+    {% if not app.user.isMember %}
+        <div class="alert alert-danger">
+            <b>Tu n'es actuellement pas membre de l'association.</b><br />
+            Si tu veux participer à l'un de nos évènements ou à l'orga, une adhésion est obligatoire.<br />
+            Pour en savoir plus : <twig:FAQQuestion slug="pourquoi-adherer-a-lassociation" class="btn btn-link p-0" />
+
+            <div class="d-grid gap-2 mt-3">
+                <twig:ButtonPost url="{{ path('payment_initiate_membership_payment') }}">
+                    Adhérer à l'association
+                </twig:ButtonPost>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if not app.user.diet %}
+        <div class="alert alert-warning">
+            <b>Tu ne nous as pas encore communiqué ton régime alimentaire</b><br />
+            Nous avons besoin de cette information si tu souhaites participer à l'un de nos évènements.
+
+            <div class="d-grid gap-2 mt-3">
+                <twig:ButtonPost btnClass="btn btn-warning" url="{{ path('profile_update_profile') }}">
+                    Mettre à jour mon profil
+                </twig:ButtonPost>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-4">
+        <div class="col">
+            <div class="card card-hover">
+                <div class="card-body">
+                    <h3 class="card-title h5">Mise à jour de ton profil</h3>
+                    <p class="card-text">Régime alimentaire, permis, carte des alterpotes, c'est ici que ça se passe.</p>
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="{{ path('profile_update_profile') }}" class="btn btn-primary stretched-link">Mettre à jour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card card-hover">
+                <div class="card-body">
+                    <h3 class="card-title h5">Gestion de tes coordonées</h3>
+                    <p class="card-text">Informations personnelles, adresse postale, numéro de téléphone, c'est par là.</p>
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="{{ path('profile_update_contact_details') }}" class="btn btn-primary stretched-link">Mettre à jour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card card-hover">
+                <div class="card-body">
+                    <h3 class="card-title h5">Tes compagnon·es</h3>
+                    <p class="card-text">Pour gérer les compagnon·es qui t'accompagnent sur le tour, clique-ici.</p>
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="{{ path('profile_companions') }}" class="btn btn-primary stretched-link">Gérer mes compagnon·es</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card card-hover">
+                <div class="card-body">
+                    <h3 class="card-title h5">Tes adhésions</h3>
+                    <p class="card-text">Pour adhérer à l'association (si ce n'est pas déjà fait) ou voir ton historique.</p>
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="{{ path('profile_memberships') }}" class="btn btn-primary stretched-link">Gérer les adhésions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card card-hover">
+                <div class="card-body">
+                    <h3 class="card-title h5">Tes participations</h3>
+                    <p class="card-text">Pour voir tes billets pour des évènements à venir ou passés, viens voir par ici.</p>
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="{{ path('profile_registrations') }}" class="btn btn-primary stretched-link">Tes participations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

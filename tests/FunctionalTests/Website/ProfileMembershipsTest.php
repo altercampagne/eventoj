@@ -36,9 +36,15 @@ class ProfileMembershipsTest extends WebTestCase
 
         $client->loginUser($user);
 
-        $client->request('GET', '/me/memberships');
+        $client->request('GET', '/me');
 
         $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('.alert-danger', 'Tu n\'es actuellement pas membre de l\'association.');
+
+        $client->clickLink('Gérer les adhésions');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertRouteSame('profile_memberships');
         $this->assertSelectorTextContains('h1', 'Tes adhésions');
         $this->assertSelectorTextContains('.alert-danger', 'Tu n\'es actuellement pas membre de l\'association.');
 

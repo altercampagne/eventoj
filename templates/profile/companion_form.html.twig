@@ -1,70 +1,60 @@
-{% extends '_base.html.twig' %}
+{% extends '_base_profile.html.twig' %}
 
-{% block title %}Mettre à jour de ton profil{% endblock %}
+{% block title %}
+    {% if creation %}
+        Ajout d'un·e compagnon·e
+    {% else %}
+        {{ form.vars.data.fullName }}
+    {% endif %}
+{% endblock %}
 
 {% block main %}
-    <div class="container">
-        <div class="row text-center mb-3">
-            <h1>
-                {% if creation %}
-                    Ajout d'un·e compagnon·e
-                {% else %}
-                    {{ form.vars.data.fullName }}
-                {% endif %}
-            </h1>
-        </div>
+    {{ form_errors(form) }}
 
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8">
-                {{ form_errors(form) }}
+    {{ form_start(form) }}
+    <fieldset class="form-group border p-3 mt-3">
+        <legend class="w-auto px-2"><i class="fa-solid fa-id-card me-2"></i> Ses informations personnelles</legend>
 
-                {{ form_start(form) }}
-                    <fieldset class="form-group border p-3 mt-3">
-                        <legend class="w-auto px-2"><i class="fa-solid fa-id-card me-2"></i> Ses informations personnelles</legend>
-
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                {{ form_row(form.firstName) }}
-                            </div>
-                            <div class="col-12 col-md-6">
-                                {{ form_row(form.lastName) }}
-                            </div>
-                        </div>
-                        {{ form_row(form.birthDate) }}
-                    </fieldset>
-
-                    <fieldset class="form-group border p-3 mt-3">
-                        <legend class="w-auto px-2"><i class="fa-solid fa-address-book me-2"></i> Ses coordonnées</legend>
-
-                        {{ form_row(form.email) }}
-                        {{ form_row(form.phoneNumber) }}
-                    </fieldset>
-
-                    <fieldset class="form-group border p-3 mt-3">
-                        <legend class="w-auto px-2"><i class="fa-solid fa-carrot me-2"></i> Son régime alimentaire</legend>
-
-                        {{ form_row(form.diet) }}
-
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                {{ form_row(form.glutenIntolerant) }}
-                            </div>
-                            <div class="col-12 col-md-6">
-                                {{ form_row(form.lactoseIntolerant) }}
-                            </div>
-                        </div>
-
-                        {{ form_row(form.dietDetails) }}
-                    </fieldset>
-
-                    <div class="d-grid gap-2 mt-4">
-                        <button type="submit" class="btn btn-lg btn-primary">
-                            {% if creation %}Ajouter{% else %}Modifier{% endif %}
-                        </button>
-                    </div>
-
-                {{ form_end(form) }}
+        <div class="row">
+            <div class="col-12 col-md-6">
+                {{ form_row(form.firstName) }}
+            </div>
+            <div class="col-12 col-md-6">
+                {{ form_row(form.lastName) }}
             </div>
         </div>
+        {{ form_row(form.birthDate) }}
+    </fieldset>
+
+    <fieldset class="form-group border p-3 mt-3">
+        <legend class="w-auto px-2"><i class="fa-solid fa-address-book me-2"></i> Ses coordonnées</legend>
+
+        {{ form_row(form.email) }}
+        {{ form_row(form.phoneNumber) }}
+    </fieldset>
+
+    <fieldset class="form-group border p-3 mt-3">
+        <legend class="w-auto px-2"><i class="fa-solid fa-carrot me-2"></i> Son régime alimentaire</legend>
+
+        {{ form_row(form.diet) }}
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+                {{ form_row(form.glutenIntolerant) }}
+            </div>
+            <div class="col-12 col-md-6">
+                {{ form_row(form.lactoseIntolerant) }}
+            </div>
+        </div>
+
+        {{ form_row(form.dietDetails) }}
+    </fieldset>
+
+    <div class="d-grid gap-2 mt-4">
+        <button type="submit" class="btn btn-lg btn-primary">
+            {% if creation %}Ajouter{% else %}Modifier{% endif %}
+                </button>
     </div>
+
+    {{ form_end(form) }}
 {% endblock %}
