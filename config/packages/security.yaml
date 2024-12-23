@@ -20,6 +20,7 @@ security:
                 login_path: login
                 check_path: login
                 enable_csrf: true
+                default_target_path: /me
             remember_me:
                 secret: '%kernel.secret%' # required
                 lifetime: 604800 # 1 week in seconds
