@@ -80,7 +80,7 @@ class PasswordResetTest extends WebTestCase
         $this->assertResponseRedirects();
         $response = $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertRouteSame('homepage');
+        $this->assertRouteSame('profile_homepage');
         $this->assertSelectorExists('#connected-as');
     }
 
