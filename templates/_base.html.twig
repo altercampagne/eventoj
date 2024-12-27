@@ -1,9 +1,9 @@
 {% extends '_skeleton.html.twig' %}
 
+{% set current_route = app.request.attributes.get('_route') %}
+
 {% block body %}
     {% block header %}
-        {% set current_route = app.request.attributes.get('_route') %}
-
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top text-bg-primary">
                 <div class="container-fluid">
@@ -107,13 +107,55 @@
     </main>
 
     {% block footer %}
-        <footer class="bg-primary-subtle border-top border-primary-subtle mt-5">
-            <div class="container mt-3">
-                <div class="d-flex justify-content-between flex-wrap">
-                    {% if app.request.get('_route') != 'contact' %}
-                        <p class="flex-fill">💬 Besoin d'aide ? Une question ? <a href="{{ path('contact') }}" class="text-black">C'est par ici</a> !</p>
-                    {% endif %}
-                    <p class="flex-fill text-end">Développé avec <span class="text-danger">♥</span> et <a href="https://github.com/altercampagne/eventoj/" class="text-black">en open source</a>.</p>
+        <footer class="modern-footer pt-5 mt-5">
+            <div class="container footer-content">
+                <div class="row g-4 mb-5">
+
+                    <div class="col-lg-4 col-md-6">
+                        <a href="{{ path('homepage') }}" class="footer-logo d-block mb-4">
+                            AlterCampagne<span class="text-primary">.</span>
+                        </a>
+                        <p class="text-muted mb-4">Des tours itinérants à vélo à la rencontre des alternatives.</p>
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/AlterTour/" class="social-icon" rel="nofollow"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.youtube.com/user/altertour" class="social-icon" rel"nofollow"><i class="fab fa-youtube"></i></a>
+                            <a href="https://github.com/altercampagne/" class="social-icon" rel"nofollow"><i class="fab fa-github"></i></a>
+                            <!--
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                            -->
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <h3 class="footer-title">Liens utiles</h3>
+                        <ul class="quick-links">
+                            <li><a href="{{ path('event_list') }}">Nos évènements</a></li>
+                            <li><a href="{{ path('alternative_map') }}">Les alternatives</a></li>
+                            <li><a href="{{ path('faq') }}">Foire aux questions</a></li>
+                            <li><a href="https://www.altercampagne.net/">Blog</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12">
+                        <h3 class="footer-title">Contact</h3>
+                        <p class="text-muted mb-4">Besoin d'aide ? Une question ? Nos bénévoles te répondrons dans les meilleurs délais.</p>
+                        <a href="{{ current_route == 'contact' ? 'mailto:inscriptions@altertour.net' : path('contact') }}" class="btn btn-primary btn-lg w-100 opacity-75">Nous contacter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom border-top">
+                <div class="container">
+                    <div class="row py-4 text-secondary">
+                        <div class="col-md-6 text-center text-md-start">
+                            <p class="mb-0">&copy; 2024 AlterCampagne.</p>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <p class="mb-0">Développé avec <i class="fas fa-heart text-danger"></i> et <a href="https://github.com/altercampagne/eventoj/">en open source</a>.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>
