@@ -523,4 +523,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
 
         return $membership;
     }
+
+    public function addMembership(Membership $membership): void
+    {
+        $this->memberships->add($membership);
+    }
 }

@@ -86,12 +86,18 @@ class Membership
 
     public static function createForUser(User $user, Payment $payment, ?\DateTimeImmutable $startAt = null): self
     {
-        return new self($payment, user: $user, startAt: $startAt);
+        $membership = new self($payment, user: $user, startAt: $startAt);
+        $user->addMembership($membership);
+
+        return $membership;
     }
 
     public static function createForCompanion(Companion $companion, Payment $payment, ?\DateTimeImmutable $startAt = null): self
     {
-        return new self($payment, companion: $companion, startAt: $startAt);
+        $membership = new self($payment, companion: $companion, startAt: $startAt);
+        $companion->addMembership($membership);
+
+        return $membership;
     }
 
     public function isValid(): bool

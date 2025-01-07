@@ -12,16 +12,19 @@ class ProfileMembershipsTest extends WebTestCase
 {
     public function testWithActiveMembership(): void
     {
+        $client = static::createClient();
+
         $user = UserFactory::createOne()->_real();
         MembershipFactory::createOne(['user' => $user]);
-
-        $client = static::createClient();
 
         $client->loginUser($user);
 
         $client->request('GET', '/me/memberships');
 
         $year = (int) date('Y');
+        if (5 > (int) date('m')) {
+            --$year;
+        }
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Tes adhésions');
         $this->assertSelectorTextContains('.bg-success-subtle', \sprintf('Adhésion du 1 mai %d au 30 avril %d', $year, $year + 1));
