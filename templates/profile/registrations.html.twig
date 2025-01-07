@@ -18,7 +18,7 @@
             </p>
             {% if registration.neededBike > 0 %}
                 <p class="card-text">
-                    Avec <b>{{ registration.neededBike }} vélo{{ registration.neededBike > 1 ? 's' }} de prêt.
+                    Avec <b>{{ registration.neededBike }} vélo{{ registration.neededBike > 1 ? 's' }} de prêt</b>.
                 </p>
             {% endif %}
             {% if registration.companions|length > 0 %}
