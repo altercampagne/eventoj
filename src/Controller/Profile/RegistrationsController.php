@@ -23,7 +23,7 @@ class RegistrationsController extends AbstractController
         $coming = [];
         $past = [];
         foreach ($user->getRegistrations() as $registration) {
-            if (!$registration->isConfirmed()) {
+            if ($registration->isWaitingPayment()) {
                 continue;
             }
 

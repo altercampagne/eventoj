@@ -4,8 +4,11 @@
 
 {% macro render_registration(registration, isComing) %}
     <div class="card mb-3">
-        <div class="card-header{% if isComing %} bg-primary-subtle{% endif %}">
+        <div class="card-header d-flex justify-content-between align-items-center{% if registration.isCanceled %} bg-secondary-subtle{% elseif isComing %} bg-primary-subtle{% endif %}">
             <h3 class="card-title fs-4 m-0">{{ registration.event.name }}</h3>
+            {% if registration.canceled %}
+                <span class="badge bg-secondary">Inscription annulée</span>
+            {% endif %}
         </div>
         <div class="card-body">
             <p class="card-text">
@@ -32,6 +35,9 @@
             <p class="card-text">
                 {% if registration.approvedPayment is not null %}
                     <b>Paiement</b> de <b>{{ registration.approvedPayment.amount|format_price }}</b> réglé le <b>{{ registration.approvedPayment.approvedAt|format_date('short') }}</b>.
+                    {% if registration.approvedPayment.refunded %}
+                        <br /><b>Remboursement</b> de <b>{{ registration.approvedPayment.refundedAmount|format_price }}</b> fait le <b>{{ registration.approvedPayment.refundedAt|format_date('short') }}</b>.
+                    {% endif %}
                 {% else %}
                     <div class="alert alert-danger">
                         <b>Paiment non trouvé ! 😧</b><br />
@@ -39,9 +45,9 @@
                     </div>
                 {% endif %}
             </p>
-            {% if isComing %}
+            {% if isComing and not registration.isCanceled %}
                 {% if registration.canBeCanceled %}
-                    <div class="d-grid gap-2 d-none">
+                    <div class="d-grid gap-2">
                         <twig:ButtonPostWithConfirmation
                             url="{{ path('registration_cancel', {id: registration.id}) }}"
                             buttonLabel="Annuler mon inscription"
