@@ -21,6 +21,7 @@ vendors-update: ## Update all vendors
 	@$(DOCKER_COMPOSE) run php composer up
 	@$(DOCKER_COMPOSE) run php composer --working-dir tools/php-cs-fixer up
 	@$(DOCKER_COMPOSE) run php composer --working-dir tools/phpstan up
+	@$(DOCKER_COMPOSE) run php composer --working-dir tools/twig-cs-fixer up
 	@$(DOCKER_COMPOSE) run php bin/console importmap:update
 
 ##@ Docker commands
@@ -71,18 +72,22 @@ test: ## Run all tests
 	@$(DOCKER_COMPOSE) run php bin/phpunit
 	@$(DOCKER_COMPOSE) run php bin/console tiime:tested-routes-checker:check
 
-phpstan: ## Run PHPStan
-	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/phpstan
+phpstan: tools/phpstan/vendor ## Run PHPStan
 	@$(DOCKER_COMPOSE) run php tools/phpstan/vendor/bin/phpstan analyse --memory-limit=512M
 
-cs-lint: ## Lint all files
+cs-lint: tools/php-cs-fixer/vendor tools/twig-cs-fixer/vendor ## Lint all files
 	@$(DOCKER_COMPOSE) run php bin/console lint:twig templates/
 	@$(DOCKER_COMPOSE) run php bin/console lint:yaml config/
-	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/php-cs-fixer
 	@$(DOCKER_COMPOSE) run php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
 	@$(DOCKER_COMPOSE) run php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer lint
 
-cs-fix: ## Fix CS using PHP-CS
-	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/php-cs-fixer
+cs-fix: tools/php-cs-fixer/vendor ## Fix CS using PHP-CS
 	@$(DOCKER_COMPOSE) run php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
 	@$(DOCKER_COMPOSE) run php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer fix
+
+tools/php-cs-fixer/vendor: tools/php-cs-fixer/composer.json tools/php-cs-fixer/composer.lock
+	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/php-cs-fixer
+tools/phpstan/vendor: tools/phpstan/composer.json tools/phpstan/composer.lock
+	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/phpstan
+tools/twig-cs-fixer/vendor: tools/twig-cs-fixer/composer.json tools/twig-cs-fixer/composer.lock
+	@$(DOCKER_COMPOSE) run twig composer install --working-dir=tools/twig-cs-fixer
