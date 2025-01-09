@@ -9,6 +9,9 @@
             <div class="col">
                 <div class="mb-3 text-center">
                     <h1>{{ alternative.name }}</h1>
+                    {% for category in alternative.categories %}
+                        <twig:Alternative:Category category="{{ category }}" />
+                    {% endfor %}
                 </div>
             </div>
         </div>

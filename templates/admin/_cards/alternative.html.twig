@@ -39,6 +39,12 @@
                     <twig:Admin:ButtonCopyWithQuotedContent value="{{ alternative.slug }}" tooltip="Copier le slug" />
                 </li>
             {% endif %}
+            <li class="list-group-item bg-light">
+                <i class="fa-solid fa-layer-group me-2" data-bs-toggle="tooltip" title="Catégories de cette alternative"></i>
+                {% for category in alternative.categories %}
+                    <twig:Alternative:Category category="{{ category }}" />
+                {% endfor %}
+            </li>
             <li class="list-group-item">
                 <i class="fa-solid fa-calendar-days fa-fw me-1" data-bs-toggle="tooltip" title="Évènements lors desquels nous sommes passés par cette alternative"></i>
                 {% for event, stages in alternative.stagesByEvent %}

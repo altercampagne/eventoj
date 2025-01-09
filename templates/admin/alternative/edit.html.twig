@@ -42,7 +42,26 @@
                     </fieldset>
 
                     <fieldset class="form-group border p-3 mt-3 bg-light">
-                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-image me-2"></i> Illustration de l'alternative</legend>
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-layer-group me-2"></i> Catégories</legend>
+
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 justify-content-center">
+                            {% for theme in enum('App\\Entity\\AlternativeCategoryTheme').cases %}
+                                <div class="col">
+                                    <div class="border p-2 h-100" style="--bs-border-color: {{ theme.color }}">
+                                        <b style="color: {{ theme.color }}">{{ theme|trans }}</b>
+                                        <div class="mt-2">
+                                            {% for category in theme.categories %}
+                                                {{ form_widget(form.categories|filter(v => v.vars.value == category.value)|first) }}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-image me-2"></i> Illustrations de l'alternative</legend>
                         <div class="alert bg-danger-subtle">
                             <u class="fw-bold">⚠️ Choisir une photo :</u><br />Si tu souhaites prendre une image qui traine sur les internets pour illustrer ton alternative, fais bien attention à ce qu'elle soit <b>libre de droits</b> ! Tu trouveras tout plein de belles images sur <a href="https://unsplash.com/fr">Unsplash</a> si besoin !
                         </div>

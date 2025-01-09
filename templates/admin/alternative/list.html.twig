@@ -28,6 +28,7 @@
         <thead>
             <tr>
                 <th scope="col">Nom</th>
+                <th scope="col">Categories</th>
                 <th scope="col">Évènements</th>
                 <th scope="col">Description</th>
                 {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
@@ -43,6 +44,14 @@
                 <tr>
                     <td>
                         {{ alternative.name }}
+                    </td>
+                    <td>
+                        {% for category in alternative.categories|slice(0, 2) %}
+                            <twig:Alternative:Category category="{{ category }}" />
+                        {% endfor %}
+                        {% if alternative.categories|length > 2 %}
+                            <span class="badge text-bg-secondary">+ {{ alternative.categories|length - 2 }}</span>
+                        {% endif %}
                     </td>
                     <td>
                         {% for event in alternative.events %}

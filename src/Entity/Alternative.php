@@ -48,6 +48,12 @@ class Alternative implements LocatedEntityInterface
     private Address $address;
 
     /**
+     * @var AlternativeCategory[]
+     */
+    #[ORM\Column(type: 'text[]', enumType: AlternativeCategory::class)]
+    private array $categories = [];
+
+    /**
      * @var Station[]
      */
     #[ORM\Column(type: 'json_document', options: ['jsonb' => true])]
@@ -175,6 +181,24 @@ class Alternative implements LocatedEntityInterface
     public function setAddress(Address $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return AlternativeCategory[]
+     */
+    public function getCategories(): array
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param AlternativeCategory[] $categories
+     */
+    public function setCategories(array $categories): self
+    {
+        $this->categories = $categories;
 
         return $this;
     }
