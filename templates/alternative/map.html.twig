@@ -33,11 +33,14 @@
                             >
                                 <div class="text-center">
                                     {% for event in alternative.events %}
-                                        <a href="{{ path('event_show', {slug: event.slug}) }}" class="text-decoration-none">
+                                        <a href="{{ path('event_show', {slug: event.slug}) }}" class="text-decoration-none fs-5">
                                             <span class="badge text-bg-secondary">{{ event.name }}</span>
                                         </a>
                                     {% endfor %}
                                     <h5 class="mt-2">{{ alternative.name }}</h5>
+                                    {% for category in alternative.categories %}
+                                        <twig:Alternative:Category category="{{ category }}" />
+                                    {% endfor %}
                                     <p>
                                         {{ alternative.description|striptags|u.replace('&nbsp;', ' ').truncate(300, '...', false) }}
                                     </p>

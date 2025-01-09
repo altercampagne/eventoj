@@ -18,12 +18,18 @@ class AlternativeCreateAndUpdateTest extends WebTestCase
 
         $client->loginUser($user);
 
-        $client->request('GET', '/_admin/alternatives/create');
+        $crawler = $client->request('GET', '/_admin/alternatives/create');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Création d\'une alternative');
 
-        $client->submitForm('Ajouter', [
+        $form = $crawler->selectButton('Ajouter')->form();
+        /* @phpstan-ignore-next-line */
+        $form['alternative_form[categories][0]']->tick();
+        /* @phpstan-ignore-next-line */
+        $form['alternative_form[categories][3]']->tick();
+
+        $client->submit($form, [
             'alternative_form[name]' => 'alternative de test',
             'alternative_form[description]' => 'Juste un truc de test.',
             'alternative_form[address][countryCode]' => 'FR',

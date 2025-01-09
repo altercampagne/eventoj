@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Admin\Form;
 
 use App\Entity\Alternative;
+use App\Entity\AlternativeCategory;
 use App\Entity\UploadedFileType as UploadedFileTypeEnum;
 use App\Form\AddressFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -50,6 +52,11 @@ class AlternativeFormType extends AbstractType
                 ],
                 'help' => '<b>Ne surtout pas</b> indiquer d\'informations spécifiques à ton étape (lieu de rencontre, date, ...) dans cette description, ce n\'est pas prévu pour ! 🙏',
                 'help_html' => true,
+            ])
+            ->add('categories', EnumType::class, [
+                'class' => AlternativeCategory::class,
+                'multiple' => true,
+                'expanded' => true,
             ])
             ->add('address', AddressFormType::class, [
                 'address_line1_required' => false,
