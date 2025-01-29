@@ -18,11 +18,11 @@ vendors-install: ## Install vendors
 	@$(DOCKER_COMPOSE) exec php bin/console importmap:install
 
 vendors-update: ## Update all vendors
-	@$(DOCKER_COMPOSE) run php composer up
-	@$(DOCKER_COMPOSE) run php composer --working-dir tools/php-cs-fixer up
-	@$(DOCKER_COMPOSE) run php composer --working-dir tools/phpstan up
-	@$(DOCKER_COMPOSE) run php composer --working-dir tools/twig-cs-fixer up
-	@$(DOCKER_COMPOSE) run php bin/console importmap:update
+	@$(DOCKER_COMPOSE) run --rm php composer up
+	@$(DOCKER_COMPOSE) run --rm php composer --working-dir tools/php-cs-fixer up
+	@$(DOCKER_COMPOSE) run --rm php composer --working-dir tools/phpstan up
+	@$(DOCKER_COMPOSE) run --rm php composer --working-dir tools/twig-cs-fixer up
+	@$(DOCKER_COMPOSE) run --rm php bin/console importmap:update
 
 ##@ Docker commands
 build: ## Build docker stack
@@ -50,44 +50,44 @@ psql-test: ## Enter in Test DB container
 
 ##@ Backends commands
 db-reset: ## Reset DB
-	@$(DOCKER_COMPOSE) run php bin/reset-db
-	@$(DOCKER_COMPOSE) run php bin/console eventoj:event:update-stage-full-property
+	@$(DOCKER_COMPOSE) run --rm php bin/reset-db
+	@$(DOCKER_COMPOSE) run --rm php bin/console eventoj:event:update-stage-full-property
 
 db-reset-test: ## Reset test DB
 	@$(DOCKER_COMPOSE) run -e APP_ENV=test php bin/reset-db
 
 messenger-consume: ## Consume messages from async queue
-	@$(DOCKER_COMPOSE) run php bin/console messenger:consume async -vv -l 1 --time-limit=60
+	@$(DOCKER_COMPOSE) run --rm php bin/console messenger:consume async -vv -l 1 --time-limit=60
 
 ##@ Assets commands
 assets-install: ## Download assets dependencies
-	@$(DOCKER_COMPOSE) run php bin/console importmap:install
+	@$(DOCKER_COMPOSE) run --rm php bin/console importmap:install
 
 assets-build: ## Build assets (SASS)
-	@$(DOCKER_COMPOSE) run php bin/console sass:build
+	@$(DOCKER_COMPOSE) run --rm php bin/console sass:build
 
 ##@ Quality commands
 test: ## Run all tests
-	@$(DOCKER_COMPOSE) run php rm -f var/cache/tiime_tested_routes_checker_bundle_route_storage
-	@$(DOCKER_COMPOSE) run php bin/phpunit
-	@$(DOCKER_COMPOSE) run php bin/console tiime:tested-routes-checker:check
+	@$(DOCKER_COMPOSE) run --rm php rm -f var/cache/tiime_tested_routes_checker_bundle_route_storage
+	@$(DOCKER_COMPOSE) run --rm php bin/phpunit
+	@$(DOCKER_COMPOSE) run --rm php bin/console tiime:tested-routes-checker:check
 
 phpstan: tools/phpstan/vendor ## Run PHPStan
-	@$(DOCKER_COMPOSE) run php tools/phpstan/vendor/bin/phpstan analyse --memory-limit=512M
+	@$(DOCKER_COMPOSE) run --rm php tools/phpstan/vendor/bin/phpstan analyse --memory-limit=512M
 
 cs-lint: tools/php-cs-fixer/vendor tools/twig-cs-fixer/vendor ## Lint all files
-	@$(DOCKER_COMPOSE) run php bin/console lint:twig templates/
-	@$(DOCKER_COMPOSE) run php bin/console lint:yaml config/
-	@$(DOCKER_COMPOSE) run php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
-	@$(DOCKER_COMPOSE) run php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer lint
+	@$(DOCKER_COMPOSE) run --rm php bin/console lint:twig templates/
+	@$(DOCKER_COMPOSE) run --rm php bin/console lint:yaml config/
+	@$(DOCKER_COMPOSE) run --rm php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
+	@$(DOCKER_COMPOSE) run --rm php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer lint
 
 cs-fix: tools/php-cs-fixer/vendor ## Fix CS using PHP-CS
-	@$(DOCKER_COMPOSE) run php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
-	@$(DOCKER_COMPOSE) run php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer fix
+	@$(DOCKER_COMPOSE) run --rm php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
+	@$(DOCKER_COMPOSE) run --rm php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer fix
 
 tools/php-cs-fixer/vendor: tools/php-cs-fixer/composer.json tools/php-cs-fixer/composer.lock
-	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/php-cs-fixer
+	@$(DOCKER_COMPOSE) run --rm php composer install --working-dir=tools/php-cs-fixer
 tools/phpstan/vendor: tools/phpstan/composer.json tools/phpstan/composer.lock
-	@$(DOCKER_COMPOSE) run php composer install --working-dir=tools/phpstan
+	@$(DOCKER_COMPOSE) run --rm php composer install --working-dir=tools/phpstan
 tools/twig-cs-fixer/vendor: tools/twig-cs-fixer/composer.json tools/twig-cs-fixer/composer.lock
 	@$(DOCKER_COMPOSE) run twig composer install --working-dir=tools/twig-cs-fixer
