@@ -15,6 +15,7 @@ class ProfileUpdateFormTypeTest extends KernelTestCase
 {
     use FormAssertionsTrait;
 
+    /** @var FormInterface<User> */
     private FormInterface $form;
 
     protected function setUp(): void
@@ -23,7 +24,7 @@ class ProfileUpdateFormTypeTest extends KernelTestCase
         $user->setBirthDate(new \DateTimeImmutable('-20 years'));
 
         /** @var FormFactoryInterface $formFactory */
-        $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
+        $formFactory = self::getContainer()->get(FormFactoryInterface::class);
         $this->form = $formFactory->create(ProfileUpdateFormType::class, $user, [
             'csrf_protection' => false,
         ]);

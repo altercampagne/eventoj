@@ -14,6 +14,7 @@ class ChoosePriceFormTypeTest extends KernelTestCase
 {
     use FormAssertionsTrait;
 
+    /** @var FormInterface<array{price: int}> */
     private FormInterface $form;
 
     protected function setUp(): void

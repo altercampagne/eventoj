@@ -65,7 +65,6 @@ class RegisterChoosePriceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @phpstan-ignore-next-line */
             $price = (int) $form->getData()['price'];
 
             $registration->setPrice($price);

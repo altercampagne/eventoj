@@ -12,7 +12,7 @@ use App\Entity\User;
 
 final class MealAggregator
 {
-    /* @phpstan-ignore-next-line */
+    /* @phpstan-ignore missingType.iterableValue */
     public function aggregate(Event $event): array
     {
         $overview = [];
@@ -61,7 +61,6 @@ final class MealAggregator
         return $overview;
     }
 
-    /* @phpstan-ignore-next-line */
     private function addPersonForMeal(User|Companion $person, string $stageName, Meal $meal, array &$overview): void
     {
         ++$overview[$stageName]['meals'][$meal->value]['total'];

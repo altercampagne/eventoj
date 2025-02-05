@@ -16,6 +16,7 @@ class CompanionFormTypeTest extends KernelTestCase
 {
     use FormAssertionsTrait;
 
+    /** @var FormInterface<Companion> */
     private FormInterface $form;
 
     protected function setUp(): void

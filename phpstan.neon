@@ -1,12 +1,12 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
     level: max
 
     paths:
       - src
       - tests
-
-    excludePaths:
-      - src/Migrations
 
     doctrine:
       objectManagerLoader: tests/doctrine-object-manager.php

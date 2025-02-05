@@ -18,6 +18,7 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
 
     public function createUser(array $data): array
     {
+        /* @phpstan-ignore return.type */
         return $this->request('POST', 'user/new', [
             'body' => $data,
         ]);
@@ -25,6 +26,7 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
 
     public function updateUser(string $pahekoId, array $data): array
     {
+        /* @phpstan-ignore return.type */
         return $this->request('POST', "user/$pahekoId", [
             'body' => $data,
         ]);
@@ -44,6 +46,7 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
 
     public function createPayment(array $data): array
     {
+        /* @phpstan-ignore return.type */
         return $this->request('POST', 'accounting/transaction', [
             'body' => $data,
         ]);
@@ -51,6 +54,7 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
 
     public function updatePayment(string $pahekoId, array $data): array
     {
+        /* @phpstan-ignore return.type */
         return $this->request('POST', "accounting/transaction/$pahekoId", [
             'body' => $data,
         ]);

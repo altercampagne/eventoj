@@ -18,7 +18,10 @@ final class MembershipFactory extends PersistentProxyObjectFactory
         return Membership::class;
     }
 
-    protected function defaults(): array|callable
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaults(): array
     {
         return [
             'user' => UserFactory::new(),

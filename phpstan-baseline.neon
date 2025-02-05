@@ -1,0 +1,61 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Cannot access offset ''breakfast''\|''dinner''\|''lunch'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 6
+			path: src/Service/MealOverview/MealAggregator.php
+
+		-
+			message: '#^Cannot access offset ''dietDetails'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Service/MealOverview/MealAggregator.php
+
+		-
+			message: '#^Cannot access offset ''glutenIntolerant'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Service/MealOverview/MealAggregator.php
+
+		-
+			message: '#^Cannot access offset ''lactoseIntolerant'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Service/MealOverview/MealAggregator.php
+
+		-
+			message: '#^Cannot access offset ''meals'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 6
+			path: src/Service/MealOverview/MealAggregator.php
+
+		-
+			message: '#^Cannot access offset ''omnivore''\|''vegan''\|''vegetarian'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Service/MealOverview/MealAggregator.php
+
+		-
+			message: '#^Cannot access offset ''total'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Service/MealOverview/MealAggregator.php
+
+		-
+			message: '#^Cannot access offset string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Service/MealOverview/MealAggregator.php
+
+		-
+			message: '#^Cannot use \+\+ on mixed\.$#'
+			identifier: preInc.type
+			count: 4
+			path: src/Service/MealOverview/MealAggregator.php
+
+		-
+			message: '#^Method App\\Service\\MealOverview\\MealAggregator\:\:addPersonForMeal\(\) has parameter \$overview with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Service/MealOverview/MealAggregator.php

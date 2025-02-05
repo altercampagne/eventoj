@@ -18,12 +18,19 @@ final class UploadedFileFactory extends PersistentProxyObjectFactory
         return UploadedFile::class;
     }
 
-    protected function defaults(): array|callable
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaults(): array
     {
+        /** @var non-falsy-string $originalFileName */
+        /* @phpstan-ignore binaryOp.invalid */
+        $originalFileName = self::faker()->word().'.'.self::faker()->fileExtension();
+
         return [
             'path' => 'event/altertour-2023.jpg',
             'type' => self::faker()->randomElement(UploadedFileType::cases()),
-            'originalFileName' => self::faker()->word().'.'.self::faker()->fileExtension(),
+            'originalFileName' => $originalFileName,
         ];
     }
 
@@ -31,8 +38,11 @@ final class UploadedFileFactory extends PersistentProxyObjectFactory
     {
         return $this
             ->afterInstantiate(static function (UploadedFile $uploadedFile): void {
+                /** @var ?string $mimeType */
+                $mimeType = self::faker()->optional()->mimeType();
+
                 $uploadedFile->setSize(self::faker()->optional()->randomDigit());
-                $uploadedFile->setMimeType(self::faker()->optional()->mimeType());
+                $uploadedFile->setMimeType($mimeType);
             })
         ;
     }

@@ -17,7 +17,10 @@ final class AddressFactory extends ObjectFactory
         return Address::class;
     }
 
-    protected function defaults(): array|callable
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaults(): array
     {
         return [
             'addressLine1' => self::faker()->optional()->streetAddress(),

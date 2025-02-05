@@ -26,7 +26,10 @@ final class PaymentFactory extends PersistentProxyObjectFactory
         ;
     }
 
-    protected function defaults(): array|callable
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaults(): array
     {
         return [
             'payer' => UserFactory::new(),

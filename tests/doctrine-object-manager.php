@@ -9,6 +9,7 @@ require __DIR__.'/../vendor/autoload.php';
 
 (new Dotenv())->bootEnv(__DIR__.'/../.env');
 
+/* @phpstan-ignore argument.type */
 $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
 $kernel->boot();
 

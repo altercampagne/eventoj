@@ -72,7 +72,10 @@ final class EventFactory extends PersistentProxyObjectFactory
         ;
     }
 
-    protected function defaults(): array|callable
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaults(): array
     {
         return [
             'name' => self::faker()->words(3, true),

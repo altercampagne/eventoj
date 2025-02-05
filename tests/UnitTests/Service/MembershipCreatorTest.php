@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\UnitTests\Service;
 
 use App\Entity\Event;
-use App\Entity\Membership;
 use App\Entity\Payment;
 use App\Entity\Registration;
 use App\Entity\Stage;
@@ -40,7 +39,6 @@ class MembershipCreatorTest extends TestCase
         $this->assertCount(1, $memberships);
 
         $membership = $memberships[0];
-        $this->assertInstanceOf(Membership::class, $membership);
 
         $this->assertSame($expectedMembershipStartAt, $membership->getStartAt()->format('Y-m-d'));
     }

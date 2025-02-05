@@ -35,6 +35,7 @@ class RouteUrlTransformer implements DataTransformerInterface
             return null;
         }
 
+        /* @phpstan-ignore function.alreadyNarrowedType */
         if (!\is_string($value)) {
             throw new TransformationFailedException('Expected a string.');
         }

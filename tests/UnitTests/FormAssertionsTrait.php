@@ -9,6 +9,9 @@ use Symfony\Component\Form\FormInterface;
 trait FormAssertionsTrait
 {
     /**
+     * @template TData
+     *
+     * @param FormInterface<TData>           $form
      * @param array<string, string|string[]> $expectedErrors
      */
     public function assertFormInvalid(FormInterface $form, array $expectedErrors = []): void
@@ -31,6 +34,11 @@ trait FormAssertionsTrait
         }
     }
 
+    /**
+     * @template TData
+     *
+     * @param FormInterface<TData> $form
+     */
     public function assertFormValid(FormInterface $form): void
     {
         $this->assertTrue($form->isSynchronized());
@@ -39,6 +47,10 @@ trait FormAssertionsTrait
     }
 
     /**
+     * @template TData
+     *
+     * @param FormInterface<TData> $form
+     *
      * @return array<string, string[]>
      */
     private function getFlattenErrors(FormInterface $form): array
