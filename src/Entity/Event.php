@@ -546,6 +546,7 @@ class Event
             throw new \LogicException('Given stage does not belong to this event!');
         }
 
+        $index = (int) $index;
         if (0 === $index) {
             return null;
         }
@@ -558,6 +559,7 @@ class Event
         if (false === $index = $this->stages->indexOf($stage)) {
             throw new \LogicException('Given stage does not belong to this event!');
         }
+        $index = (int) $index;
 
         return $this->stages->get(++$index);
     }

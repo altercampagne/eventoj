@@ -15,6 +15,7 @@ class EventFormTypeTest extends KernelTestCase
 {
     use FormAssertionsTrait;
 
+    /** @var FormInterface<Event> */
     private FormInterface $form;
 
     protected function setUp(): void

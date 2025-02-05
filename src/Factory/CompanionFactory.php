@@ -32,7 +32,10 @@ final class CompanionFactory extends PersistentProxyObjectFactory
         ]);
     }
 
-    protected function defaults(): array|callable
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaults(): array
     {
         return [
             'birthDate' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),

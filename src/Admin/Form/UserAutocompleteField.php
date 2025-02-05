@@ -10,6 +10,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\Autocomplete\Form\AsEntityAutocompleteField;
 use Symfony\UX\Autocomplete\Form\BaseEntityAutocompleteType;
 
+/**
+ * @extends AbstractType<User>
+ */
 #[AsEntityAutocompleteField]
 class UserAutocompleteField extends AbstractType
 {

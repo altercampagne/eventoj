@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\UnitTests\Form;
 
+use App\Entity\User;
 use App\Factory\UserFactory;
 use App\Form\RegistrationFormType;
 use App\Tests\UnitTests\FormAssertionsTrait;
@@ -178,10 +179,14 @@ class RegistrationFormTypeTest extends KernelTestCase
         ];
     }
 
+    /**
+     * @return FormInterface<User>
+     */
     private function getForm(): FormInterface
     {
         /** @var FormFactoryInterface $formFactory */
         $formFactory = $this->getContainer()->get(FormFactoryInterface::class);
+        /** @var FormInterface<User> $form */
         $form = $formFactory->create(RegistrationFormType::class, null, [
             'csrf_protection' => false,
         ]);

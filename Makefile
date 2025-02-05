@@ -90,7 +90,10 @@ test: ## Run all tests
 
 .PHONY: phpstan
 phpstan: tools/phpstan/vendor ## Run PHPStan
-	@$(DOCKER_COMPOSE) run --rm php tools/phpstan/vendor/bin/phpstan analyse --memory-limit=512M
+	@$(DOCKER_COMPOSE) run --rm php tools/phpstan/vendor/bin/phpstan analyse
+
+phpstan-generate-baseline: tools/phpstan/vendor ## Run PHPStan to generate the baseline
+	@$(DOCKER_COMPOSE) run --rm php tools/phpstan/vendor/bin/phpstan analyse --generate-baseline
 
 .PHONY: cs-lint
 cs-lint: tools/php-cs-fixer/vendor tools/twig-cs-fixer/vendor ## Lint all files

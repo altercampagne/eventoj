@@ -53,7 +53,10 @@ final class UserFactory extends PersistentProxyObjectFactory
         ]);
     }
 
-    protected function defaults(): array|callable
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaults(): array
     {
         return [
             'address' => AddressFactory::new(),

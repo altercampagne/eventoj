@@ -11,6 +11,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @extends AbstractType<Stage>
+ */
 class StageFormType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
@@ -23,7 +26,10 @@ class StageFormType extends AbstractType
         $resolver->setDefaults([
             'class' => Stage::class,
             'choices' => static function (Options $options): iterable {
-                return $options['registration']->getEvent()->getStages()->filter(static function (Stage $stage): bool {
+                /** @var Registration $registration */
+                $registration = $options['registration'];
+
+                return $registration->getEvent()->getStages()->filter(static function (Stage $stage): bool {
                     return !$stage->isOver();
                 });
             },

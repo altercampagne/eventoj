@@ -28,6 +28,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
     private Event $event;
     private User $user;
     private Registration $registration;
+    /** @var FormInterface<EventRegistrationDTO> */
     private FormInterface $form;
 
     protected function setUp(): void

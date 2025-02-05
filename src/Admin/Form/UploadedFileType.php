@@ -17,6 +17,9 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * @extends AbstractType<string>
+ */
 class UploadedFileType extends AbstractType
 {
     public function __construct(
@@ -80,6 +83,7 @@ class UploadedFileType extends AbstractType
         /** @var int $height */
         $height = $options['preview_height'];
 
+        /* @phpstan-ignore offsetAccess.nonOffsetAccessible */
         $view->vars['attr']['data-sign-url'] = $this->urlGenerator->generate('s3_file_upload_sign', [
             'type' => $type->value,
             'prefix' => $options['prefix'],

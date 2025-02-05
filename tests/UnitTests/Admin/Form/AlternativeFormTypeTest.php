@@ -15,6 +15,7 @@ class AlternativeFormTypeTest extends KernelTestCase
 {
     use FormAssertionsTrait;
 
+    /** @var FormInterface<Alternative> */
     private FormInterface $form;
 
     protected function setUp(): void

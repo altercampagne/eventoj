@@ -34,7 +34,7 @@ final class HelloassoRequestParser extends AbstractRequestParser
     /**
      * @throws JsonException
      */
-    protected function doParse(Request $request, #[\SensitiveParameter] string $secret): ?RemoteEvent
+    protected function doParse(Request $request, #[\SensitiveParameter] string $secret): RemoteEvent
     {
         $payload = $request->getPayload();
 
