@@ -2,9 +2,9 @@
 
 CURDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-RETURN=0
-
 "$CURDIR/domain-checker" eventoj.local
+
+RETURN=$?
 
 # Ensure make is installed
 if ! which make >/dev/null 2>&1; then

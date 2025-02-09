@@ -4,10 +4,14 @@ DOCKER_COMPOSE=docker compose $*
 
 .PHONY: help
 help:
-	@echo "\033[1;36mEVENTOJ AVAILABLE COMMANDS :\033[0m"
+	@echo "\033[1;36mAVAILABLE COMMANDS :\033[0m"
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[32m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[33m%s\033[0m\n", substr($$0, 5) } ' Makefile
 
 ##@ Base commands
+.PHONY: doctor
+doctor: ## Check that everything is OK
+	@bin/doctor
+
 .PHONY: install
 install: build start vendors-install db-reset assets-install assets-build ## Start the docker stack and prepare the application
 	@echo "\n"
