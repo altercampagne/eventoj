@@ -18,7 +18,7 @@
         "doctrine/orm": "^3.3",
         "doskyft/helloasso-php": "dev-main",
         "dunglas/doctrine-json-odm": "^1.4",
-        "geocoder-php/photon-provider": "^0.6.0",
+        "geocoder-php/photon-provider": "^0.7.0",
         "martin-georgiev/postgresql-for-doctrine": "^2.1",
         "odolbeau/phone-number-bundle": "^4.0",
         "pagerfanta/doctrine-orm-adapter": "^4.5",
