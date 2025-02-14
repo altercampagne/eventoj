@@ -7,9 +7,12 @@ namespace App\Tests\FunctionalTests\Website;
 use App\Entity\Diet;
 use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 
 class ProfileUpdateProfileTest extends WebTestCase
 {
+    use Factories;
+
     public function testUpdateWithAdult(): void
     {
         $client = static::createClient();

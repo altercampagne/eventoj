@@ -6,9 +6,12 @@ namespace App\Tests\FunctionalTests\Website;
 
 use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 
 class LoginTest extends WebTestCase
 {
+    use Factories;
+
     public function testHomepage(): void
     {
         $client = static::createClient();

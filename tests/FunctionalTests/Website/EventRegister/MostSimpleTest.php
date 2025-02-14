@@ -9,9 +9,12 @@ use App\Entity\Meal;
 use App\Factory\EventFactory;
 use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 
 class MostSimpleTest extends WebTestCase
 {
+    use Factories;
+
     public function testRegistration(): void
     {
         $client = static::createClient();

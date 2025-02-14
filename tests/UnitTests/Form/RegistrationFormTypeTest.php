@@ -8,12 +8,16 @@ use App\Entity\User;
 use App\Factory\UserFactory;
 use App\Form\RegistrationFormType;
 use App\Tests\UnitTests\FormAssertionsTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Zenstruck\Foundry\Test\Factories;
 
 class RegistrationFormTypeTest extends KernelTestCase
 {
+    use Factories;
+
     use FormAssertionsTrait;
 
     public function testSubmitValidData(): void
@@ -52,9 +56,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         ]);
     }
 
-    /**
-     * @dataProvider invalidDataProvider
-     */
+    #[DataProvider('invalidDataProvider')]
     public function testVariousErrors(string $field, ?string $value, string $expectedError): void
     {
         $form = $this->getForm();
@@ -79,9 +81,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         yield ['birthDate', (new \DateTimeImmutable('-130 years'))->format('Y-m-d'), 'Une vraie date de naissance, ce serait mieux ! :)'];
     }
 
-    /**
-     * @dataProvider invalidNames
-     */
+    #[DataProvider('invalidNames')]
     public function testInvalidNames(mixed $name, string $expectedError): void
     {
         $form = $this->getForm();
@@ -128,9 +128,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         yield ['last--name', 'Cette chaîne contient des caractères spéciaux non autorisés.'];
     }
 
-    /**
-     * @dataProvider validNames
-     */
+    #[DataProvider('validNames')]
     public function testValidNames(string $name): void
     {
         $form = $this->getForm();

@@ -8,9 +8,12 @@ use App\Entity\Diet;
 use App\Factory\EventFactory;
 use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 
 class ProfileCompanionTest extends WebTestCase
 {
+    use Factories;
+
     public function testCreateAndUdateCompanion(): void
     {
         $client = static::createClient();

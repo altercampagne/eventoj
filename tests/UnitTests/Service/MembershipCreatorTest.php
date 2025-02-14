@@ -11,13 +11,12 @@ use App\Entity\Stage;
 use App\Entity\StageRegistration;
 use App\Entity\User;
 use App\Service\MembershipCreator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class MembershipCreatorTest extends TestCase
 {
-    /**
-     * @dataProvider createMembershipsFromPaymentProvider
-     */
+    #[DataProvider('createMembershipsFromPaymentProvider')]
     public function testCreateMembershipsFromPayment(string $registrationDate, string $expectedMembershipStartAt): void
     {
         $user = new User();

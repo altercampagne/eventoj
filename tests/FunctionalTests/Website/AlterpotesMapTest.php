@@ -7,9 +7,12 @@ namespace App\Tests\FunctionalTests\Website;
 use App\Factory\MembershipFactory;
 use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 
 class AlterpotesMapTest extends WebTestCase
 {
+    use Factories;
+
     public function testWithUserWithoutMembership(): void
     {
         $client = static::createClient();

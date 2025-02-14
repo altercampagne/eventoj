@@ -6,9 +6,12 @@ namespace App\Tests\FunctionalTests\Admin;
 
 use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 
 class UserShowTest extends WebTestCase
 {
+    use Factories;
+
     public function testShowAndVerifyMail(): void
     {
         $client = static::createClient();

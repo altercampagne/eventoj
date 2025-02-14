@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Tests\UnitTests\Admin\Form\DataTransformer;
 
 use App\Admin\Form\DataTransformer\RouteUrlTransformer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class RouteUrlTransformerTest extends TestCase
 {
-    /**
-     * @dataProvider validReverseTransformData
-     */
+    #[DataProvider('validReverseTransformData')]
     public function testReverseTransform(string $input, string $expectedUrl): void
     {
         $this->assertSame($expectedUrl, (new RouteUrlTransformer())->reverseTransform($input));

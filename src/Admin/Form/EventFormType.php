@@ -176,6 +176,7 @@ class EventFormType extends AbstractType
                     'class' => 'form-floating mb-3',
                 ],
                 'help' => 'Généralement un Google doc pour permettre aux personnes qui ne viennent plus d\'échanger / de revendre leurs places. Si aucun fichier n\'est renseigné, l\'évènement pourra tout de même être publié mais la bourse aux échanges ne sera pas suggérée sur le site.',
+                'default_protocol' => null,
             ])
         ;
     }

@@ -6,9 +6,12 @@ namespace App\Tests\FunctionalTests\Admin;
 
 use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 
 class EventCreateAndUpdateTest extends WebTestCase
 {
+    use Factories;
+
     public function testCreateAndUdateAT(): void
     {
         $client = static::createClient();

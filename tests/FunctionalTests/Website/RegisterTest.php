@@ -6,9 +6,12 @@ namespace App\Tests\FunctionalTests\Website;
 
 use App\Factory\EventFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 
 class RegisterTest extends WebTestCase
 {
+    use Factories;
+
     public function testRegisterStartingFromEventPage(): void
     {
         $faker = \Faker\Factory::create('fr_FR');

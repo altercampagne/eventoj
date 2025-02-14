@@ -6,9 +6,12 @@ namespace App\Tests\FunctionalTests\Website;
 
 use App\Factory\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 
 class ProfileUpdateContactDetailsTest extends WebTestCase
 {
+    use Factories;
+
     public function testWithoutUpdatingEmail(): void
     {
         $faker = \Faker\Factory::create('fr_FR');

@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace App\Tests\FunctionalTests;
 
 use App\Factory\UserFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\Factories;
 
 class BasicGetTest extends WebTestCase
 {
+    use Factories;
+
     /**
      * @return iterable<array{0: string, 1?: string, 2?: string}>
      */
@@ -43,17 +47,13 @@ class BasicGetTest extends WebTestCase
         yield ["/_admin/events/$eventSlug/arrivals", 'AT à venir (ouvert)'];
     }
 
-    /**
-     * @dataProvider publicPages
-     */
+    #[DataProvider('publicPages')]
     public function testPublicPages(string $url, ?string $expectedTitle = null, ?string $expectedH1 = null): void
     {
         $this->checkPage(static::createClient(), $url, $expectedTitle, $expectedH1);
     }
 
-    /**
-     * @dataProvider adminPages
-     */
+    #[DataProvider('adminPages')]
     public function testAdminPages(string $url, string $expectedTitle): void
     {
         $client = static::createClient();

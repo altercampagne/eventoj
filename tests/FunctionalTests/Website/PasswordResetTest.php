@@ -9,9 +9,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
+use Zenstruck\Foundry\Test\Factories;
 
 class PasswordResetTest extends WebTestCase
 {
+    use Factories;
+
     public function testWithExistingMail(): void
     {
         $client = static::createClient();
