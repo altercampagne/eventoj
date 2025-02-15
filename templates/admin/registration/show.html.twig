@@ -47,6 +47,16 @@
             </div>
 
             <div class="d-grid gap-2">
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_CONFIRMATION_EMAIL_SEND').value, registration) %}
+                    <twig:ButtonPost
+                        url="{{ path('admin_registration_confirmation_email_send', {id: registration.id}) }}"
+                        tooltip="Renvoyer le mail de confirmation"
+                        btnClass="btn btn-info"
+                    >
+                        Renvoyer le mail de confirmation
+                    </twig:ButtonPost>
+                {% endif %}
+
                 {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_BIKE_ADD').value, registration) %}
                     <twig:ButtonPost
                         url="{{ path('admin_registration_bike_add', {id: registration.id}) }}"

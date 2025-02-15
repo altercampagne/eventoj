@@ -7,7 +7,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use App\Service\Paheko\Client\PahekoClientInterface;
 use App\Service\Paheko\Client\PahekoHttpClient;
 use App\Service\Paheko\Client\PahekoNullClient;
-use App\Twig\Runtime\PriceExtensionRuntime;
+use App\Service\PriceFormatter;
 use Aws\S3\S3Client;
 use Helloasso\HelloassoClient;
 use Helloasso\HelloassoClientFactory;
@@ -38,7 +38,7 @@ return function (ContainerConfigurator $container): void {
         ->arg('$httpClient', service('helloasso.client'))
     ;
 
-    $services->set(PriceExtensionRuntime::class)
+    $services->set(PriceFormatter::class)
         ->arg('$intlExtension', service('twig.extension.intl'))
     ;
 
