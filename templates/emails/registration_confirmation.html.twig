@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+  <body>
+    <div
+      style='background-color:#FFFFFF;color:#03124A;font-family:Avenir, "Avenir Next LT Pro", Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;font-size:16px;font-weight:400;letter-spacing:0.15008px;line-height:1.5;margin:0;padding:32px 0;min-height:100%;width:100%'
+    >
+      <table
+        align="center"
+        width="100%"
+        style="margin:0 auto;max-width:600px;background-color:#FFFFFF"
+        role="presentation"
+        cellspacing="0"
+        cellpadding="0"
+        border="0"
+      >
+        <tbody>
+          <tr style="width:100%">
+            <td>
+              <div style="padding:24px 24px 24px 24px;text-align:left">
+                <img
+                  alt=""
+                  src="https://www.altercampagne.net/wp-content/uploads/2018/02/logo-altertour-menu-vert.png"
+                  height="32"
+                  style="height:32px;outline:none;border:none;text-decoration:none;vertical-align:middle;display:inline-block;max-width:100%"
+                />
+              </div>
+              <h2
+                style="font-weight:bold;text-align:left;margin:0;font-size:24px;padding:16px 24px 0px 24px"
+              >
+                🎉 Ton inscription est validée ! 🎉
+              </h2>
+              <div
+                style="font-size:16px;font-weight:normal;text-align:left;padding:16px 24px 16px 24px"
+              >
+                Bravo {{ member.displayName }}, on se voit cet été.
+              </div>
+              <div style="padding:8px 24px 8px 24px">
+                <div
+                  style="background-color:#f8f8f8;padding:24px 16px 24px 16px"
+                >
+                  <table
+                    align="center"
+                    width="100%"
+                    cellpadding="0"
+                    border="0"
+                    style="table-layout:fixed;border-collapse:collapse"
+                  >
+                    <tbody style="width:100%">
+                      <tr style="width:100%">
+                        <td
+                          style="box-sizing:content-box;vertical-align:middle;padding-left:0;padding-right:8px;width:64px"
+                        >
+                          <div style="padding:0px 0px 0px 0px">
+                            <div
+                              style="text-align:left;padding:0px 0px 0px 0px"
+                            >
+                              <img
+                                alt="{{ event.name }}"
+                                src="{{ event.imageUrl }}"
+                                height="64"
+                                width="64"
+                                style="outline:none;border:none;text-decoration:none;object-fit:cover;height:64px;width:64px;max-width:100%;display:inline-block;vertical-align:middle;text-align:center;border-radius:64px"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td
+                          style="box-sizing:content-box;vertical-align:middle;padding-left:8px;padding-right:0"
+                        >
+                          <div style="padding:0px 0px 0px 0px">
+                            <h3
+                              style="font-weight:bold;text-align:left;margin:0;font-size:20px;padding:0px 0px 0px 0px"
+                            >
+                              {{ event.name }}
+                            </h3>
+                            <div
+                              style="color:#2e3c68;font-size:14px;font-weight:normal;text-align:left;padding:0px 0px 0px 0px"
+                            >
+                              Du {{ event.startDate }} au {{ event.endDate }}
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div style="text-align:center;padding:16px 24px 16px 24px">
+                <a
+                  href="{{ registration.url }}"
+                  style="color:#FFFFFF;font-size:16px;font-weight:bold;background-color:#447733;border-radius:4px;display:inline-block;padding:16px 32px;text-decoration:none"
+                  target="_blank"
+                  ><span
+                    ><!--[if mso
+                      ]><i
+                        style="letter-spacing: 32px;mso-font-width:-100%;mso-text-raise:48"
+                        hidden
+                        >&nbsp;</i
+                      ><!
+                    [endif]--></span
+                  ><span>Voir le détail de ta réservation</span
+                  ><span
+                    ><!--[if mso
+                      ]><i
+                        style="letter-spacing: 32px;mso-font-width:-100%"
+                        hidden
+                        >&nbsp;</i
+                      ><!
+                    [endif]--></span
+                  ></a
+                >
+              </div>
+              <div style="padding:24px 24px 24px 24px;text-align:left">
+                <a
+                  href="{{ registration.url }}"
+                  style="text-decoration:none"
+                  target="_blank"
+                  ><img
+                    alt="Des altercyclistes sur la route"
+                    src="https://www.altercampagne.net/wp-content/uploads/2024/07/AT24_Photo-dAccueil_V21.png"
+                    style="outline:none;border:none;text-decoration:none;vertical-align:middle;display:inline-block;max-width:100%"
+                /></a>
+              </div>
+              <h2
+                style="font-weight:bold;text-align:left;margin:0;font-size:24px;padding:0px 24px 0px 24px"
+              >
+                Détails de ton inscription
+              </h2>
+              <div
+                style="font-size:16px;font-weight:normal;text-align:left;padding:0px 24px 16px 24px"
+              >
+                {{ event.name }}
+              </div>
+              <div style="padding:16px 24px 16px 24px">
+                <hr
+                  style="width:100%;border:none;border-top:1px solid #EEEEEE;margin:0"
+                />
+              </div>
+              <div style="padding:8px 24px 8px 24px">
+                <h3
+                  style="font-weight:bold;text-align:left;margin:0;font-size:20px;padding:0px 0px 8px 0px"
+                >
+                  Arrivée
+                </h3>
+                <div
+                  style="font-size:16px;font-weight:normal;text-align:left;padding:0px 0px 16px 0px"
+                >
+                  Le {{ arrival.date }} pour le {{ arrival.firstMeal }}.
+                </div>
+                <h3
+                  style="font-weight:bold;text-align:left;margin:0;font-size:20px;padding:16px 0px 8px 0px"
+                >
+                  Départ
+                </h3>
+                <div
+                  style="font-size:16px;font-weight:normal;text-align:left;padding:0px 0px 16px 0px"
+                >
+                  Le {{ departure.date }} après le {{ departure.lastMeal }}.
+                </div>
+                <div style="padding:16px 0px 16px 0px">
+                  <hr
+                    style="width:100%;border:none;border-top:1px solid #EEEEEE;margin:0"
+                  />
+                </div>
+              </div>
+              <div style="padding:8px 24px 8px 24px">
+                <h3
+                  style="font-weight:bold;text-align:left;margin:0;font-size:20px;padding:0px 0px 16px 0px"
+                >
+                  Paiement
+                </h3>
+                <div style="padding:24px 0px 16px 0px">
+                  <table
+                    align="center"
+                    width="100%"
+                    cellpadding="0"
+                    border="0"
+                    style="table-layout:fixed;border-collapse:collapse"
+                  >
+                    <tbody style="width:100%">
+                      <tr style="width:100%">
+                        <td
+                          style="box-sizing:content-box;vertical-align:middle;padding-left:0;padding-right:0"
+                        >
+                          <div style="padding:0px 0px 0px 0px">
+                            <div
+                              style="font-size:16px;font-weight:bold;text-align:left;padding:0px 0px 0px 0px"
+                            >
+                              Total (EUR)
+                            </div>
+                          </div>
+                        </td>
+                        <td
+                          style="box-sizing:content-box;vertical-align:middle;padding-left:0;padding-right:0"
+                        >
+                          <div style="padding:0px 0px 0px 0px">
+                            <div
+                              style="font-size:16px;font-weight:bold;text-align:right;padding:0px 0px 0px 0px"
+                            >
+                              {{ registration.price }}
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div style="padding:16px 0px 16px 0px">
+                  <hr
+                    style="width:100%;border:none;border-top:1px solid #EEEEEE;margin:0"
+                  />
+                </div>
+              </div>
+              <div style="padding:8px 24px 0px 24px">
+                <h3
+                  style="font-weight:bold;text-align:left;margin:0;font-size:20px;padding:0px 0px 8px 0px"
+                >
+                  Annulation
+                </h3>
+                <div
+                  style="font-size:16px;font-weight:normal;text-align:left;padding:0px 0px 24px 0px"
+                >
+                  {{ faq.cancellation|raw }}
+                </div>
+                <div style="padding:16px 0px 16px 0px">
+                  <hr
+                    style="width:100%;border:none;border-top:1px solid #EEEEEE;margin:0"
+                  />
+                </div>
+              </div>
+              <div
+                style="font-size:14px;font-weight:normal;text-align:left;padding:16px 24px 16px 24px"
+              >
+                <p>
+                  Une question ? N&#39;hésite pas à
+                  <a
+                    href="https://inscriptions.altercampagne.net/faq"
+                    target="_blank"
+                    >consulter notre FAQ</a
+                  >.
+                </p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

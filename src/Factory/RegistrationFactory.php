@@ -56,7 +56,7 @@ final class RegistrationFactory extends PersistentProxyObjectFactory
 
     public function confirmed(): self
     {
-        return $this->afterInstantiate(static function (Registration $registration): void {
+        return $this->withStagesRegistrations()->afterInstantiate(static function (Registration $registration): void {
             $registration->confirm();
         });
     }

@@ -44,6 +44,11 @@ class QuestionFixtures extends Fixture
                 'question' => 'Comment est déterminée la difficulté d\'une étape ?',
                 'answer' => '<div>Explications détaillées ici</div>',
             ],
+            [
+                'category' => QuestionCategory::CANCELATION,
+                'question' => 'Est-ce que je peux annuler ma participation ?',
+                'answer' => "<div>L'annulation est possible jusque 15 jours avant le début de l'évènement, dans votre espace Participation.<br><br>Au delà, il faudra que vous trouviez vous-même des personnes susceptibles de vous racheter vos places via la bourse d'échange. Le lien vers la bourse d'échange est disponible sur la page de l'évènement. Il faudra être connecté sur le site pour y accéder.<br><br>En cas de force majeure, envoyer votre demande à inscriptions@altertour.net . Elle sera traitée entre début octobre et fin novembre.</div>",
+            ],
         ]);
     }
 }

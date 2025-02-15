@@ -198,18 +198,14 @@ class Registration
         if (null === $firstStageRegistration = $this->getStageRegistrationStart()) {
             throw new \LogicException('No stage registration found for given registration');
         }
-        // If the first day is a free day, the first meal of the first paying day must be the breakfast
-        $firstMeal = $firstStageRegistration->getStage()->isFree() ? Meal::BREAKFAST : $firstStageRegistration->getFirstMeal();
-        if (Meal::BREAKFAST !== $firstMeal) {
+        if (Meal::BREAKFAST !== $this->getFirstMeal()) {
             $payingDaysOfPresence -= $firstStageRegistration->includesMeal(Meal::LUNCH) ? .2 : .6;
         }
 
         if (null === $lastStageRegistration = $this->getStageRegistrationEnd()) {
             throw new \LogicException('No stage registration found for given registration');
         }
-        // If the last day is a free day, the last meal of the last paying day must be the dinner
-        $lastMeal = $lastStageRegistration->getStage()->isFree() ? Meal::DINNER : $lastStageRegistration->getLastMeal();
-        if (Meal::DINNER !== $lastMeal) {
+        if (Meal::DINNER !== $this->getLastMeal()) {
             $payingDaysOfPresence -= $lastStageRegistration->includesMeal(Meal::LUNCH) ? .4 : .8;
         }
 
@@ -256,6 +252,15 @@ class Registration
         $this->nbChildren = \count($this->getChildren());
     }
 
+    public function getStartAt(): ?\DateTimeImmutable
+    {
+        if (null === $stageRegistration = $this->getStageRegistrationStart()) {
+            return null;
+        }
+
+        return $stageRegistration->getStage()->getDate();
+    }
+
     public function getEndAt(): ?\DateTimeImmutable
     {
         if (null === $stageRegistration = $this->getStageRegistrationEnd()) {
@@ -263,6 +268,32 @@ class Registration
         }
 
         return $stageRegistration->getStage()->getDate();
+    }
+
+    /**
+     * If the first day is a free day, the first meal of the first paying day
+     * must be the breakfast.
+     */
+    public function getFirstMeal(): Meal
+    {
+        if (null === $firstStageRegistration = $this->getStageRegistrationStart()) {
+            throw new \LogicException('No stage registration found for given registration');
+        }
+
+        return $firstStageRegistration->getStage()->isFree() ? Meal::BREAKFAST : $firstStageRegistration->getFirstMeal();
+    }
+
+    /**
+     * If the last day is a free day, the last meal of the last paying day must
+     * be the dinner.
+     */
+    public function getLastMeal(): Meal
+    {
+        if (null === $lastStageRegistration = $this->getStageRegistrationStart()) {
+            throw new \LogicException('No stage registration found for given registration');
+        }
+
+        return $lastStageRegistration->getStage()->isFree() ? Meal::DINNER : $lastStageRegistration->getLastMeal();
     }
 
     /**

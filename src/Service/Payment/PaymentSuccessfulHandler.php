@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Payment;
 
+use App\Email\RegistrationConfirmationSender;
 use App\Entity\Payment;
 use App\Message\PahekoPaymentSync;
 use App\Service\MembershipCreator;
@@ -17,6 +18,7 @@ final readonly class PaymentSuccessfulHandler
         private EntityManagerInterface $em,
         private MembershipCreator $membershipCreator,
         private MessageBusInterface $bus,
+        private RegistrationConfirmationSender $registrationConfirmationSender,
     ) {
     }
 
@@ -42,6 +44,8 @@ final readonly class PaymentSuccessfulHandler
             }
 
             $this->em->persist($registration);
+
+            $this->registrationConfirmationSender->send($registration);
         }
 
         $this->em->flush();
