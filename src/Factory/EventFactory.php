@@ -79,7 +79,7 @@ final class EventFactory extends PersistentProxyObjectFactory
     {
         return [
             'name' => self::faker()->words(3, true),
-            'description' => self::faker()->sentence(),
+            'description' => '<div>'.self::faker()->sentence().'</div>',
             'firstMealOfFirstDay' => self::faker()->randomElement(Meal::cases()),
             'lastMealOfLastDay' => self::faker()->randomElement(Meal::cases()),
             'openingDateForBookings' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),

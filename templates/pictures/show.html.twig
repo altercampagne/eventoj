@@ -27,7 +27,7 @@
                                     <p class="card-text">
                                         Du <b>{{ event.firstStage.date|format_date('long') }}</b> au <b>{{ event.lastStage.date|format_date('long') }}</b>
                                     </p>
-                                    <p class="card-text">{{ event.description }}</p>
+                                    <p class="card-text">{{ event.description|raw }}</p>
                                     <a href="{{ path('pictures_event', {slug: event.slug}) }}" class="btn btn-primary btn-lg stretched-link mt-3">Voir les photos</a>
                                 </div>
                             </div>

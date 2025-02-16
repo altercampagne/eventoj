@@ -43,8 +43,8 @@ final class AlterTour2023Story extends Story
             'publishedAt' => new \DateTimeImmutable('2023-02-01'),
             'openingDateForBookings' => new \DateTimeImmutable('2023-05-01'),
             'description' => <<<END
-                Cet été, l’AlterTour roulera du 10 juillet au 19 août, de Montluçon (03) à Besançon (25).
-                Ce sera la 16e édition ! 🥳
+                <div>Cet été, l’AlterTour roulera <b>du 10 juillet au 19 août</b>, de Montluçon (03) à Besançon (25).
+                Ce sera la 16e édition ! 🥳</div>
                 END,
             'pahekoProjectId' => 1,
         ])->_real();
