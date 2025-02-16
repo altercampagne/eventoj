@@ -30,6 +30,14 @@ class BasicGetTest extends WebTestCase
     }
 
     /**
+     * @return iterable<array{0: string, 1?: string, 2?: string}>
+     */
+    public static function memberPages(): iterable
+    {
+        yield ['/event/altertour-2023/pictures/upload', 'AlterTour 2023: Envoi de tes photos', 'AlterTour 2023: Tes photos'];
+    }
+
+    /**
      * @return iterable<array{string, string}>
      */
     public static function adminPages(): iterable
@@ -51,6 +59,18 @@ class BasicGetTest extends WebTestCase
     public function testPublicPages(string $url, ?string $expectedTitle = null, ?string $expectedH1 = null): void
     {
         $this->checkPage(static::createClient(), $url, $expectedTitle, $expectedH1);
+    }
+
+    #[DataProvider('memberPages')]
+    public function testMemberPages(string $url, string $expectedTitle, ?string $expectedH1 = null): void
+    {
+        $client = static::createClient();
+        $user = UserFactory::new()->create()->_real();
+        $client->loginUser($user);
+
+        $this->checkPage($client, $url, $expectedTitle, $expectedH1);
+
+        $this->assertSelectorExists('#connected-as');
     }
 
     #[DataProvider('adminPages')]

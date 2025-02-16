@@ -1,8 +1,8 @@
-{% block uploaded_file_widget -%}
-    <div class="s3-file-upload-container mb-3">
+{% block uploaded_image_widget -%}
+    <div class="s3-image-upload-container mb-3">
         <div class="d-flex justify-content-center">
             <label for="{{ form.vars.id }}-file-input" style="width: {{ form.vars.preview_width }}px; height: {{ form.vars.preview_height }}px" class="d-flex justify-content-center align-items-center s3-upload-file">
-                <img loading="lazy" src="{{ fileUrl }}" class="rounded" id="{{ form.vars.id }}-img" />
+                <img loading="lazy" src="{{ fileUrl }}" class="rounded" id="{{ form.vars.id }}-img" width="{{ form.vars.preview_width }}" height="{{ form.vars.preview_height }}" />
                 <i class="fa-solid fa-circle-notch fa-spin fa-5x d-none" id="{{ form.vars.id }}-loader"></i>
             </label>
         </div>
@@ -13,7 +13,7 @@
             data-original-input="#{{ form.vars.id }}"
             data-image="#{{ form.vars.id }}-img"
             data-loader="#{{ form.vars.id }}-loader"
-            class="d-none s3-file-upload"
+            class="d-none s3-image-upload"
         />
 
         {% if form.vars.allow_delete %}
@@ -24,7 +24,7 @@
 
         {{- block('form_widget_simple') -}}
     </div>
-{%- endblock uploaded_file_widget %}
+{%- endblock uploaded_image_widget %}
 
 {% block trix_row -%}
     <fieldset class="form-group border px-3 pb-3 bg-white mb-3 rounded">

@@ -18,15 +18,30 @@
 
         <div class="row justify-content-center mt-4 mt-md-5">
             <div class="col-12 col-md-6 col-lg-5">
-                <div class="row mx-0 lightgallery">
-                    {% for picture in alternative.pictures %}
-                        <div class="{% if loop.first %}col-12{% else %}col-lg-2 col-3{% endif %} pe-1 ps-0 pb-1 mb-n3">
-                            <a class="lg-item" data-src="{{ uploaded_image_url(picture, 1568, 1176) }}" data-lg-size="1568-1176">
-                                <img loading="lazy" class="w-100 shadow-1-strong mb-3 img-thumbnail" src="{{ uploaded_image_url(picture, loop.first ? 640 : 320, loop.first ? 480 : 240) }}" />
+                {% if alternative.pictures is not empty %}
+                    <div class="row mx-0 lightgallery">
+                        {# First picture is displayed bigger than following #}
+                        <div class="col-12">
+                            <a class="gallery-item" data-src="{{ uploaded_image_url(alternative.pictures|first, 'lg') }}" data-lg-size="{{ (alternative.pictures|first).dimensions.widthLarge }}-{{ (alternative.pictures|first).dimensions.heightLarge }}">
+                                <img loading="lazy" class="w-100 shadow-1-strong mb-3 img-thumbnail" src="{{ uploaded_image_url(alternative.pictures|first, 'md') }}" />
                             </a>
                         </div>
-                    {% endfor %}
-                </div>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            {% for picture in alternative.pictures[1:] %}
+                                <div class="pe-1 ps-0 pb-1 mb-n3">
+                                    <a class="gallery-item" data-src="{{ uploaded_image_url(picture, 'lg') }}" data-lg-size="{{ picture.dimensions.widthLarge }}-{{ picture.dimensions.heightLarge }}">
+                                        <img
+                                            loading="lazy"
+                                            class="w-100 shadow-1-strong mb-3 img-thumbnail"
+                                            src="{{ uploaded_image_url(picture, 'sm') }}"
+                                            style="max-height: 90px"
+                                        />
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
 
                 <div class="d-grid gap-2 mt-3">
                     {% if alternative.website is not null %}

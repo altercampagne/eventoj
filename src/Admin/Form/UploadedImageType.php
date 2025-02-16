@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Admin\Form;
 
-use App\Entity\UploadedFile;
-use App\Entity\UploadedFileType as UploadedFileTypeEnum;
-use App\Service\UploadedFileUrlGenerator;
+use App\Entity\Document\UploadedImage;
+use App\Entity\Document\UploadedImageType as UploadedImageTypeEnum;
+use App\Service\UploadedImageUrlGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -20,19 +20,19 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * @extends AbstractType<string>
  */
-class UploadedFileType extends AbstractType
+class UploadedImageType extends AbstractType
 {
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly EntityManagerInterface $em,
-        private readonly UploadedFileUrlGenerator $uploadedFileUrlGenerator,
+        private readonly UploadedImageUrlGenerator $uploadedImageUrlGenerator,
     ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('type');
-        $resolver->setAllowedTypes('type', UploadedFileTypeEnum::class);
+        $resolver->setAllowedTypes('type', UploadedImageTypeEnum::class);
         $resolver->setRequired('prefix');
         $resolver->setAllowedTypes('prefix', 'string');
         $resolver->setRequired('preview_width');
@@ -56,19 +56,19 @@ class UploadedFileType extends AbstractType
     {
         $builder
             ->addModelTransformer(new CallbackTransformer(
-                static function (?UploadedFile $uploadedFile): ?string {
-                    if (null === $uploadedFile) {
+                static function (?UploadedImage $uploadedImage): ?string {
+                    if (null === $uploadedImage) {
                         return null;
                     }
 
-                    return (string) $uploadedFile->getId();
+                    return (string) $uploadedImage->getId();
                 },
-                function (?string $id): ?UploadedFile {
+                function (?string $id): ?UploadedImage {
                     if (null === $id) {
                         return null;
                     }
 
-                    return $this->em->find(UploadedFile::class, $id);
+                    return $this->em->find(UploadedImage::class, $id);
                 }
             ))
         ;
@@ -76,7 +76,7 @@ class UploadedFileType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        /** @var UploadedFileTypeEnum $type */
+        /** @var UploadedImageTypeEnum $type */
         $type = $options['type'];
         /** @var int $width */
         $width = $options['preview_width'];
@@ -91,10 +91,10 @@ class UploadedFileType extends AbstractType
             'height' => $height,
         ]);
 
-        /** @var ?UploadedFile $file */
+        /** @var ?UploadedImage $file */
         $file = $form->getData();
 
-        $view->vars['fileUrl'] = $this->uploadedFileUrlGenerator->getImageUrl($file, $width, $height);
+        $view->vars['fileUrl'] = $this->uploadedImageUrlGenerator->getImageUrl($file, width: $width, height: $height);
         $view->vars['preview_width'] = $width;
         $view->vars['preview_height'] = $height;
 

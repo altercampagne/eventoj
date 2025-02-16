@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Factory;
 
-use App\Entity\UploadedFile;
-use App\Entity\UploadedFileType;
+use App\Entity\Document\UploadedImage;
+use App\Entity\Document\UploadedImageType;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<UploadedFile>
+ * @extends PersistentProxyObjectFactory<UploadedImage>
  */
-final class UploadedFileFactory extends PersistentProxyObjectFactory
+final class UploadedImageFactory extends PersistentProxyObjectFactory
 {
     public static function class(): string
     {
-        return UploadedFile::class;
+        return UploadedImage::class;
     }
 
     /**
@@ -29,7 +29,7 @@ final class UploadedFileFactory extends PersistentProxyObjectFactory
 
         return [
             'path' => 'event/altertour-2023.jpg',
-            'type' => self::faker()->randomElement(UploadedFileType::cases()),
+            'type' => self::faker()->randomElement(UploadedImageType::cases()),
             'originalFileName' => $originalFileName,
         ];
     }
@@ -37,12 +37,12 @@ final class UploadedFileFactory extends PersistentProxyObjectFactory
     protected function initialize(): static
     {
         return $this
-            ->afterInstantiate(static function (UploadedFile $uploadedFile): void {
+            ->afterInstantiate(static function (UploadedImage $uploadedImage): void {
                 /** @var ?string $mimeType */
                 $mimeType = self::faker()->optional()->mimeType();
 
-                $uploadedFile->setSize(self::faker()->optional()->randomDigit());
-                $uploadedFile->setMimeType($mimeType);
+                $uploadedImage->setSize(self::faker()->optional()->randomDigit());
+                $uploadedImage->setMimeType($mimeType);
             })
         ;
     }

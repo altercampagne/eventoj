@@ -7,7 +7,7 @@ import 'trix/dist/trix.min.css'
 import ClipboardJS from 'clipboard'
 import './styles/admin/admin.scss'
 
-import './scripts/S3FileUpload.js'
+import './scripts/Upload/SingleS3FileUpload.js'
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))

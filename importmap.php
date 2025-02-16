@@ -104,4 +104,14 @@ return [
         'version' => '2.8.2',
         'type' => 'css',
     ],
+    'dropzone' => [
+        'version' => '6.0.0-beta.2',
+    ],
+    'just-extend' => [
+        'version' => '5.1.1',
+    ],
+    'dropzone/dist/dropzone.css' => [
+        'version' => '6.0.0-beta.2',
+        'type' => 'css',
+    ],
 ];

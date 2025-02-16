@@ -8,7 +8,7 @@
             <div class="row row-cols-2">
                 {% for picture in alternative.pictures %}
                     <a href="{{ uploaded_image_url(picture) }}" class="btn btn-link text-secondary mb-3">
-                        <twig:UploadedImage file="{{ picture }}" width="640" height="480" alt="{{ alternative.name }}" class="img-fluid img-thumbnail" />
+                        <twig:UploadedImage file="{{ picture }}" alt="{{ alternative.name }}" class="img-fluid img-thumbnail" />
                     </a>
                 {% endfor %}
             </div>

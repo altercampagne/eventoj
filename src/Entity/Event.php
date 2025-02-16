@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Document\EventPicture;
+use App\Entity\Document\UploadedImage;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -104,9 +106,9 @@ class Event
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt;
 
-    #[ORM\OneToOne(targetEntity: UploadedFile::class)]
+    #[ORM\OneToOne(targetEntity: UploadedImage::class)]
     #[ORM\JoinColumn(name: 'uploaded_file_id', referencedColumnName: 'id')]
-    private ?UploadedFile $picture = null;
+    private ?UploadedImage $picture = null;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 10, enumType: Meal::class)]
@@ -134,6 +136,13 @@ class Event
     #[ORM\OrderBy(['createdAt' => 'ASC'])]
     private Collection $registrations;
 
+    /**
+     * @var Collection<int, EventPicture>
+     */
+    #[ORM\OneToMany(targetEntity: EventPicture::class, mappedBy: 'event')]
+    #[ORM\OrderBy(['createdAt' => 'ASC'])]
+    private Collection $pictures;
+
     private function __construct(EventType $type)
     {
         $this->id = new UuidV4();
@@ -143,6 +152,7 @@ class Event
         $this->createdAt = new \DateTimeImmutable();
         $this->stages = new ArrayCollection();
         $this->registrations = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
         $this->openingDateForBookings = new \DateTimeImmutable('+6 months');
     }
 
@@ -389,12 +399,12 @@ class Event
         return $this;
     }
 
-    public function getPicture(): ?UploadedFile
+    public function getPicture(): ?UploadedImage
     {
         return $this->picture;
     }
 
-    public function setPicture(?UploadedFile $picture): self
+    public function setPicture(?UploadedImage $picture): self
     {
         $this->picture = $picture;
 
@@ -623,5 +633,13 @@ class Event
         }
 
         return array_unique($mails);
+    }
+
+    /**
+     * @return Collection<int, EventPicture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
     }
 }
