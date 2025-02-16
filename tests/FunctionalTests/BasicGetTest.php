@@ -34,7 +34,9 @@ class BasicGetTest extends WebTestCase
      */
     public static function memberPages(): iterable
     {
-        yield ['/event/altertour-2023/pictures/upload', 'AlterTour 2023: Envoi de tes photos', 'AlterTour 2023: Tes photos'];
+        yield ['/pictures', 'Toutes les photos de nos évènements', 'Les photos de nos évènements'];
+        yield ['/pictures/altertour-2023', 'AlterTour 2023: Toutes les photos', 'AlterTour 2023: Les photos'];
+        yield ['/pictures/altertour-2023/upload', 'AlterTour 2023: Envoi de tes photos', 'AlterTour 2023: Tes photos'];
     }
 
     /**
@@ -65,6 +67,12 @@ class BasicGetTest extends WebTestCase
     public function testMemberPages(string $url, string $expectedTitle, ?string $expectedH1 = null): void
     {
         $client = static::createClient();
+
+        // Ensure page is protected
+        $client->request('GET', $url);
+        $this->assertResponseStatusCodeSame(302);
+
+        // Check with a user
         $user = UserFactory::new()->create()->_real();
         $client->loginUser($user);
 

@@ -25,6 +25,11 @@
                                 <li class="nav-item">
                                     <a class="nav-link" {% if current_route == 'alterpotes_map' %} aria-current="page"{% endif %} href="{{ path('alterpotes_map') }}">Carte des alterpotes</a>
                                 </li>
+                                {% if app.user.registrations|filter(r => r.isConfirmed)|length > 0 %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" {% if current_route starts with 'pictures' %} aria-current="page"{% endif %} href="{{ path('pictures_show') }}">Les photos</a>
+                                    </li>
+                                {% endif %}
                             {% endif %}
                             <li class="nav-item">
                                 <a class="nav-link" {% if current_route == 'faq' %} aria-current="page"{% endif %} href="{{ path('faq') }}">

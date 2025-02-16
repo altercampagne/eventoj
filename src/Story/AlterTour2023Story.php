@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Story;
 
 use App\Entity\Alternative;
-use App\Entity\Registration;
-use App\Entity\RegistrationStatus;
 use App\Entity\StageType;
+use App\Entity\User;
 use App\Factory\EventFactory;
 use App\Factory\MembershipFactory;
 use App\Factory\PaymentFactory;
@@ -79,9 +78,23 @@ final class AlterTour2023Story extends Story
 
             // 2 chances out of 3 to have a confirmed reservation
             if (0 < random_int(1, 3) % 3) {
-                (new \ReflectionProperty(Registration::class, 'status'))->setValue($registration, RegistrationStatus::CONFIRMED);
-                (new \ReflectionProperty(Registration::class, 'confirmedAt'))->setValue($registration, new \DateTimeImmutable());
+                $registration->confirm();
             }
+
+            MembershipFactory::createOne([
+                'user' => $user,
+                'payment' => PaymentFactory::new()->approved()->create([
+                    'payer' => $user,
+                    'registration' => $registration,
+                ]),
+            ]);
+        }
+
+        if (null !== $user = $this->em->getRepository(User::class)->findOneByEmail('admin@altercampagne.net')) {
+            $registration = RegistrationFactory::new()->confirmed()->withStagesRegistrations()->create([
+                'user' => $user,
+                'event' => $event,
+            ])->_real();
 
             MembershipFactory::createOne([
                 'user' => $user,

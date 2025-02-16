@@ -1,0 +1,40 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}Toutes les photos de nos évènements{% endblock %}
+{% block meta_description %}Pour revivre de bons moments de chez soi !{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 text-center">
+                <h1>Les photos de nos évènements</h1>
+
+                <p class="fs-4 text-center mt-3">
+                    Voici tous les albums photo des évènements auxquels tu as participé !
+                </p>
+            </div>
+
+            <div class="col-12 col-md-10">
+                {% for event in events|filter(event => app.user.hasParticipatedToEvent(event)) %}
+                    <div class="card card-hover mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-3">
+                                <twig:UploadedImage file="{{ event.picture }}" width="300" height="300" alt="Illustration {{ event.name }}" class="img-fluid p-2" />
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body">
+                                    <h2 class="card-title h2">{{ event.name }}</h2>
+                                    <p class="card-text">
+                                        Du <b>{{ event.firstStage.date|format_date('long') }}</b> au <b>{{ event.lastStage.date|format_date('long') }}</b>
+                                    </p>
+                                    <p class="card-text">{{ event.description }}</p>
+                                    <a href="{{ path('pictures_event', {slug: event.slug}) }}" class="btn btn-primary btn-lg stretched-link mt-3">Voir les photos</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
