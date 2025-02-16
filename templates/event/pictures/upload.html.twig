@@ -1,0 +1,41 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}{{ event.name }}: Envoi de tes photos{% endblock %}
+{% block meta_description %}C'est ici que tu peux partager tes photos{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <h1>{{ event.name }}: Tes photos</h1>
+
+                <h2 class="mt-3">Comment ça marche ?</h2>
+                <p>
+                    En envoyant tes photos grâce à cet outil, tu acceptes que ces dernières soient visibles par <b>tous⋅tes les participant⋅es de l'évènement</b> ainsi que par l'équipe des organisateur⋅ices.
+                </p>
+
+                <h2 class="mt-5">Téléchargement de tes photos</h2>
+                <div class="alert alert-info">
+                    Tu peux télécharger tes images originales, <b>qu'importe leur taille</b>, celles-ci seront redimensionnées pour apparaitre correctement sur le site.
+                </div>
+                <div class="dropzone border-2 border-primary bg-white rounded-5" data-sign-url="{{ uploadSignUrl }}">
+                    <div class="dz-message fw-2">Clique dans cette zone ou glisses-y directement tes photos</div>
+                </div>
+            </div>
+
+            {% if pictures|length > 0 %}
+                <div class="col-12 col-md-8">
+                    <h2 class="mt-5">Tes photos déjà visibles pour cet évènement</h2>
+                </div>
+
+                <div class="col-12">
+                    <div class="d-flex flex-wrap justify-content-center">
+                        {% for picture in pictures %}
+                            <img loading="lazy" class="img-thumbnail mt-2 me-2" src="{{ uploaded_image_url(picture, 'sm') }}" style="max-height: 200px" />
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

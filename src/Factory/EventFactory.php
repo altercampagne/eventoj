@@ -83,7 +83,7 @@ final class EventFactory extends PersistentProxyObjectFactory
             'firstMealOfFirstDay' => self::faker()->randomElement(Meal::cases()),
             'lastMealOfLastDay' => self::faker()->randomElement(Meal::cases()),
             'openingDateForBookings' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'picture' => UploadedFileFactory::new(),
+            'picture' => UploadedImageFactory::new(),
             'adultsCapacity' => 10,
             'childrenCapacity' => 5,
             'bikesAvailable' => 5,

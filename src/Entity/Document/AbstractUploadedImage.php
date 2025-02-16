@@ -2,18 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Entity\Document;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
-#[ORM\Table(name: '`uploaded_file`')]
-#[UniqueEntity(fields: ['path'], message: 'Il y a déjà un fichier avec ce chemin.')]
-#[ORM\Index(name: 'idx_uploaded_file_path', fields: ['path'])]
+#[ORM\MappedSuperclass]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
-class UploadedFile
+abstract class AbstractUploadedImage
 {
     /**
      * This property should be marked as readonly but is not due to a bug in Doctrine.
@@ -23,11 +19,6 @@ class UploadedFile
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     private UuidV4 $id;
-
-    #[ORM\Column(type: 'string', enumType: UploadedFileType::class, options: [
-        'comment' => 'Type of this file which correspond to the entity its linked to (event, alternative, ...).',
-    ])]
-    private readonly UploadedFileType $type;
 
     #[ORM\Column(options: [
         'comment' => 'This is the path on ObjectStorage.',
@@ -43,14 +34,25 @@ class UploadedFile
     #[ORM\Column(nullable: true)]
     private ?string $mimeType = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $width = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $height = null;
+
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
 
-    public function __construct(UploadedFileType $type, string $path, string $originalFileName)
-    {
+    public function __construct(
+        string $path,
+        string $originalFileName,
+        ?int $width = null,
+        ?int $height = null,
+    ) {
         $this->id = new UuidV4();
-        $this->type = $type;
         $this->path = $path;
+        $this->width = $width;
+        $this->height = $height;
         $this->originalFileName = $originalFileName;
         $this->createdAt = new \DateTimeImmutable();
     }
@@ -63,11 +65,6 @@ class UploadedFile
     public function getId(): UuidV4
     {
         return $this->id;
-    }
-
-    public function getType(): UploadedFileType
-    {
-        return $this->type;
     }
 
     public function getPath(): string
@@ -100,6 +97,25 @@ class UploadedFile
     public function setMimeType(?string $mimeType): self
     {
         $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    public function getDimensions(): Dimensions
+    {
+        return new Dimensions($this->width, $this->height);
+    }
+
+    public function setWidth(?int $width): self
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    public function setHeight(?int $height): self
+    {
+        $this->height = $height;
 
         return $this;
     }

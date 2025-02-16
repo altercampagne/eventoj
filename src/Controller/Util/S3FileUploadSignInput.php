@@ -15,4 +15,20 @@ final class S3FileUploadSignInput
     public ?int $size = null;
 
     public ?string $type = null;
+
+    #[Assert\Type('integer')]
+    public ?int $width = null;
+
+    #[Assert\Type('integer')]
+    public ?int $height = null;
+
+    public function getExt(): string
+    {
+        $ext = pathinfo($this->filename, \PATHINFO_EXTENSION);
+        if ('' == $ext) {
+            $ext .= '.tmp';
+        }
+
+        return $ext;
+    }
 }

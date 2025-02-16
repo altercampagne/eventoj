@@ -12,6 +12,7 @@ registration_cancel
 logout
 security_verify_email
 s3_file_upload_sign
+s3_file_upload_sign_user_upload_event
 admin_alternative_delete
 admin_alternative_list
 admin_debug

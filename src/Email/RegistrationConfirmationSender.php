@@ -7,7 +7,7 @@ namespace App\Email;
 use App\Entity\Registration;
 use App\Repository\QuestionRepository;
 use App\Service\PriceFormatter;
-use App\Service\UploadedFileUrlGenerator;
+use App\Service\UploadedImageUrlGenerator;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -24,7 +24,7 @@ final readonly class RegistrationConfirmationSender
     public function __construct(
         private MailerInterface $mailer,
         private UrlGeneratorInterface $urlGenerator,
-        private UploadedFileUrlGenerator $uploadedFileUrlGenerator,
+        private UploadedImageUrlGenerator $uploadedImageUrlGenerator,
         private PriceFormatter $priceFormatter,
         private TranslatorInterface $translator,
         private QuestionRepository $questionRepository,
@@ -61,7 +61,7 @@ final readonly class RegistrationConfirmationSender
                     'startDate' => $dateFormatter->format($event->getFirstStage()?->getDate()),
                     /* @phpstan-ignore argument.type */
                     'endDate' => $dateFormatter->format($event->getLastStage()?->getDate()),
-                    'imageUrl' => $this->uploadedFileUrlGenerator->getImageUrl($event->getPicture(), 150, 150),
+                    'imageUrl' => $this->uploadedImageUrlGenerator->getImageUrl($event->getPicture(), width: 150, height: 150),
                 ],
                 'registration' => [
                     'url' => $this->urlGenerator->generate('profile_registrations', [], UrlGeneratorInterface::ABSOLUTE_URL),

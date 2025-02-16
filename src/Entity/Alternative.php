@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Document\UploadedImage;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -67,12 +68,12 @@ class Alternative implements LocatedEntityInterface
     private ?\DateTimeImmutable $updatedAt;
 
     /**
-     * @var Collection<int, UploadedFile>
+     * @var Collection<int, UploadedImage>
      */
     #[ORM\JoinTable(name: 'alternative_pictures')]
     #[ORM\JoinColumn(name: 'alternative_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'file_id', referencedColumnName: 'id', unique: true)]
-    #[ORM\ManyToMany(targetEntity: UploadedFile::class)]
+    #[ORM\ManyToMany(targetEntity: UploadedImage::class)]
     private Collection $pictures;
 
     /**
@@ -243,14 +244,14 @@ class Alternative implements LocatedEntityInterface
     }
 
     /**
-     * @return Collection<int, UploadedFile>
+     * @return Collection<int, UploadedImage>
      */
     public function getPictures(): Collection
     {
         return $this->pictures;
     }
 
-    public function addPicture(UploadedFile $picture): self
+    public function addPicture(UploadedImage $picture): self
     {
         $this->pictures->add($picture);
 

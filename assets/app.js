@@ -15,10 +15,11 @@ import './scripts/AlterpotesMap.js'
 import './scripts/EventRegistrationBikeSelector.js'
 import './scripts/EventRegistrationChooseDates.js'
 import './scripts/EventRegistrationChoosePrice.js'
+import './scripts/Upload/Dropzone.js'
 
 document.querySelectorAll('.lightgallery').forEach((element) => {
   lightGallery(element, {
-      selector: '.lg-item',
+      selector: '.gallery-item',
       plugins: [lgZoom, lgThumbnail],
       thumbnail: true,
       licenseKey: document.getElementById('lightgallery-license-key').value,

@@ -6,7 +6,7 @@ namespace App\Admin\Form;
 
 use App\Entity\Alternative;
 use App\Entity\AlternativeCategory;
-use App\Entity\UploadedFileType as UploadedFileTypeEnum;
+use App\Entity\Document\UploadedImageType as UploadedImageTypeEnum;
 use App\Form\AddressFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -65,10 +65,10 @@ class AlternativeFormType extends AbstractType
                 'address_line1_required' => false,
             ])
             ->add('pictures', CollectionType::class, [
-                'entry_type' => UploadedFileType::class,
+                'entry_type' => UploadedImageType::class,
                 'entry_options' => [
                     'required' => false,
-                    'type' => UploadedFileTypeEnum::ALTERNATIVE,
+                    'type' => UploadedImageTypeEnum::ALTERNATIVE,
                     'prefix' => (string) $alternative->getId(),
                     'label' => false,
                     'help' => 'Merci de choisir une image <b>au format paysage 4/3</b> (c\'est le format standard) et de bonne qualité (640 x 480 minimum). Ce n\'est pas grave si l\'image est un peu lourde, ce sera automagiquement optimisé ! 👌',
