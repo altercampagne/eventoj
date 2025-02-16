@@ -141,7 +141,7 @@ class Event
      */
     #[ORM\OneToMany(targetEntity: EventPicture::class, mappedBy: 'event')]
     #[ORM\OrderBy(['createdAt' => 'ASC'])]
-    private Collection $pictures;
+    private Collection $memberUploadedPictures;
 
     private function __construct(EventType $type)
     {
@@ -152,7 +152,7 @@ class Event
         $this->createdAt = new \DateTimeImmutable();
         $this->stages = new ArrayCollection();
         $this->registrations = new ArrayCollection();
-        $this->pictures = new ArrayCollection();
+        $this->memberUploadedPictures = new ArrayCollection();
         $this->openingDateForBookings = new \DateTimeImmutable('+6 months');
     }
 
@@ -638,8 +638,8 @@ class Event
     /**
      * @return Collection<int, EventPicture>
      */
-    public function getPictures(): Collection
+    public function getMemberUploadedPictures(): Collection
     {
-        return $this->pictures;
+        return $this->memberUploadedPictures;
     }
 }
