@@ -20,7 +20,7 @@ class EventPicture extends AbstractUploadedImage
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private readonly User $user;
 
-    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'eventPictures')]
+    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'memberUploadedPictures')]
     #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id', nullable: false)]
     private readonly Event $event;
 

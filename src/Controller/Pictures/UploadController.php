@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Event\Pictures;
+namespace App\Controller\Pictures;
 
 use App\Entity\Event;
 use App\Entity\User;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-#[Route('/event/{slug}/pictures/upload', name: 'event_pictures_upload')]
+#[Route('/pictures/{slug}/upload', name: 'pictures_upload')]
 class UploadController extends AbstractController
 {
     public function __construct(
@@ -31,7 +31,7 @@ class UploadController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        return $this->render('event/pictures/upload.html.twig', [
+        return $this->render('pictures/upload.html.twig', [
             'event' => $event,
             'pictures' => $this->eventPictureRepository->findByUserAndEvent($user, $event),
             'uploadSignUrl' => $this->urlGenerator->generate('s3_file_upload_sign_user_upload_event', [

@@ -9,9 +9,10 @@ use App\Factory\RegistrationFactory;
 use App\Factory\UserFactory;
 use App\Story\AlterTour2023Story;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class EventFixtures extends Fixture
+class EventFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -64,6 +65,11 @@ class EventFixtures extends Fixture
                 'bikesAvailable' => 0,
             ]),
         ]);
+    }
+
+    public function getDependencies(): array
+    {
+        return [UserFixtures::class];
     }
 
     /**

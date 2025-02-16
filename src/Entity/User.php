@@ -260,6 +260,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
         return $this;
     }
 
+    public function hasParticipatedToEvent(Event $event): bool
+    {
+        foreach ($this->getRegistrations() as $registration) {
+            if ($event === $registration->getEvent() && $registration->isConfirmed() && $registration->getStartAt() < new \DateTimeImmutable()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @see UserInterface
      */

@@ -1,0 +1,49 @@
+{% extends '_base.html.twig' %}
+
+{% block title %}{{ event.name }}: Toutes les photos{% endblock %}
+{% block meta_description %}Toutes les photos de l'évènements envoyées par les participant⋅es{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <h1>{{ event.name }}: Les photos</h1>
+
+                <p class="lead">
+                    Ces photos sont visibles uniquement <b>par les participant⋅es de l'évènement</b> ainsi que par l'équipe d'orga.
+                </p>
+                <p class="text-dark-subtle">
+                    <i>Merci de ne pas diffuser ces photos en dehors de l'association sans l'autorisation explicite de leur propriétaire.</i>
+                </p>
+
+                <div class="d-grid px-5 mb-3">
+                    <a href="{{ path('pictures_upload', {slug: event.slug}) }}" class="btn btn-warning">
+                        Envoyer mes photos
+                    </a>
+                </div>
+
+                <div class="lightgallery">
+                    <div class="d-flex flex-wrap justify-content-center">
+                        {% for picture in event.memberUploadedPictures %}
+                            <div class="pe-1 ps-0 pb-1 mb-n3">
+                                <a
+                                    class="gallery-item"
+                                    data-src="{{ uploaded_image_url(picture, 'lg') }}"
+                                    data-lg-size="{{ picture.dimensions.widthLarge }}-{{ picture.dimensions.heightLarge }}"
+                                    data-sub-html="Photo prise par <b>{{ picture.user.publicName }}</b>"
+                                >
+                                    <img
+                                        loading="lazy"
+                                        class="w-100 shadow-1-strong mb-3 img-thumbnail"
+                                        src="{{ uploaded_image_url(picture, 'sm') }}"
+                                        style="max-height: 90px"
+                                    />
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
