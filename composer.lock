@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ebac84c11fecf55704d7c0ee307beae4",
+    "content-hash": "63a78cb00d7eecf3c6d3071b9402dd57",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2106,22 +2106,22 @@
         },
         {
             "name": "geocoder-php/photon-provider",
-            "version": "0.7.0",
+            "version": "0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geocoder-php/photon-provider.git",
-                "reference": "f31a548b4a3b55c38965babf60f03e0546a7a829"
+                "reference": "4ad49f766774797e97ebbfc66aad90bb5d5a18f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/photon-provider/zipball/f31a548b4a3b55c38965babf60f03e0546a7a829",
-                "reference": "f31a548b4a3b55c38965babf60f03e0546a7a829",
+                "url": "https://api.github.com/repos/geocoder-php/photon-provider/zipball/4ad49f766774797e97ebbfc66aad90bb5d5a18f6",
+                "reference": "4ad49f766774797e97ebbfc66aad90bb5d5a18f6",
                 "shasum": ""
             },
             "require": {
                 "geocoder-php/common-http": "^4.1",
                 "php": "^8.0",
-                "willdurand/geocoder": "^4.0"
+                "willdurand/geocoder": "^4.0|^5.0"
             },
             "provide": {
                 "geocoder-php/provider-implementation": "1.0"
@@ -2152,9 +2152,9 @@
             "description": "Geocoder Photon adapter",
             "homepage": "http://geocoder-php.org/Geocoder/",
             "support": {
-                "source": "https://github.com/geocoder-php/photon-provider/tree/0.7.0"
+                "source": "https://github.com/geocoder-php/photon-provider/tree/0.8.0"
             },
-            "time": "2025-02-09T14:04:58+00:00"
+            "time": "2025-02-16T10:51:21+00:00"
         },
         {
             "name": "geocoder-php/plugin",
@@ -14012,6 +14012,6 @@
         "ext-iconv": "*",
         "ext-xsl": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
