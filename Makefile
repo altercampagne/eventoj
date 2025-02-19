@@ -111,9 +111,19 @@ cs-fix: tools/php-cs-fixer/vendor ## Fix CS using PHP-CS
 	@$(DOCKER_COMPOSE) run --rm php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
 	@$(DOCKER_COMPOSE) run --rm php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer fix
 
+.PHONY: rector-dry-run
+rector-dry-run: tools/rector/vendor ## Launch Rector in dry-run mode
+	@$(DOCKER_COMPOSE) run --rm php tools/rector/vendor/bin/rector process --dry-run
+
+.PHONY: rector-fix
+rector-fix: tools/rector/vendor ## Launch Rector to fix files
+	@$(DOCKER_COMPOSE) run --rm php tools/rector/vendor/bin/rector process
+
 tools/php-cs-fixer/vendor:
 	@$(DOCKER_COMPOSE) run --rm php composer install --working-dir=tools/php-cs-fixer
 tools/phpstan/vendor:
 	@$(DOCKER_COMPOSE) run --rm php composer install --working-dir=tools/phpstan
+tools/rector/vendor:
+	@$(DOCKER_COMPOSE) run --rm php composer install --working-dir=tools/rector
 tools/twig-cs-fixer/vendor:
 	@$(DOCKER_COMPOSE) run --rm php composer install --working-dir=tools/twig-cs-fixer
