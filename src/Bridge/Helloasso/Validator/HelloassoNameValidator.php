@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
  */
 class HelloassoNameValidator extends ConstraintValidator
 {
-    private const FORBIDDEN_VALUES = ['firstname', 'lastname', 'unknown', 'first_name', 'last_name', 'anonyme', 'user', 'admin', 'name', 'nom', 'prénom', 'test'];
+    private const array FORBIDDEN_VALUES = ['firstname', 'lastname', 'unknown', 'first_name', 'last_name', 'anonyme', 'user', 'admin', 'name', 'nom', 'prénom', 'test'];
 
     public function validate(mixed $value, Constraint $constraint): void
     {

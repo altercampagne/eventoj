@@ -73,7 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
     private PhoneNumber $phoneNumber;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $biography;
+    private ?string $biography = null;
 
     #[Assert\NotBlank(groups: ['profile_update'], message: 'Le régime alimentaire est obligatoire.')]
     #[ORM\Column(type: 'string', enumType: Diet::class, nullable: true, options: [
@@ -124,7 +124,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
 
     #[ORM\Column(nullable: true)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, Registration>

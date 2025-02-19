@@ -9,7 +9,7 @@ use Symfony\Component\Uid\UuidV4;
 
 #[ORM\MappedSuperclass]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
-abstract class AbstractUploadedImage
+abstract class AbstractUploadedImage implements \Stringable
 {
     /**
      * This property should be marked as readonly but is not due to a bug in Doctrine.

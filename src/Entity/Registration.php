@@ -65,7 +65,7 @@ class Registration
 
     #[ORM\Column(nullable: true)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(nullable: true, options: [
         'comment' => 'Date on which the reservation was confirmed.',
@@ -214,9 +214,7 @@ class Registration
 
     public function freeDaysOfPresence(): int
     {
-        return $this->getStagesRegistrations()->filter(static function (StageRegistration $stageRegistration): bool {
-            return $stageRegistration->getStage()->isFree();
-        })->count();
+        return $this->getStagesRegistrations()->filter(static fn (StageRegistration $stageRegistration): bool => $stageRegistration->getStage()->isFree())->count();
     }
 
     public function getStageRegistrationStart(): ?StageRegistration
@@ -431,9 +429,7 @@ class Registration
 
     public function getApprovedPayment(): ?Payment
     {
-        return $this->payments->findFirst(static function (int $key, Payment $payment): bool {
-            return $payment->isApproved() || $payment->isRefunded();
-        });
+        return $this->payments->findFirst(static fn (int $key, Payment $payment): bool => $payment->isApproved() || $payment->isRefunded());
     }
 
     /**

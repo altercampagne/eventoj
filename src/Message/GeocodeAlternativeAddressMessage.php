@@ -6,10 +6,10 @@ namespace App\Message;
 
 use Symfony\Component\Uid\UuidV4;
 
-final class GeocodeAlternativeAddressMessage
+final readonly class GeocodeAlternativeAddressMessage
 {
     public function __construct(
-        private readonly UuidV4 $id,
+        private UuidV4 $id,
     ) {
     }
 

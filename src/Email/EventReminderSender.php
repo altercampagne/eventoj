@@ -12,7 +12,7 @@ use Symfony\Component\Mime\Address;
 class EventReminderSender
 {
     public function __construct(
-        private MailerInterface $mailer,
+        private readonly MailerInterface $mailer,
     ) {
     }
 

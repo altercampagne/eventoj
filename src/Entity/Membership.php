@@ -48,7 +48,7 @@ class Membership
 
     #[ORM\Column(nullable: true)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $canceledAt = null;

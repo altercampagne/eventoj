@@ -8,8 +8,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class Station
 {
-    public const TYPE_TRAIN = 'train';
-    public const TYPE_BUS = 'bus';
+    public const string TYPE_TRAIN = 'train';
+    public const string TYPE_BUS = 'bus';
 
     public function __construct(
         #[Assert\NotNull]

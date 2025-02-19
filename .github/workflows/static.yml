@@ -46,6 +46,27 @@ jobs:
       - name: PHP-CS-Fixer
         run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php-cs-fixer.dist.php
 
+  rector:
+    name: Rector
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+
+      - name: Install rector
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: "--working-dir=tools/rector"
+
+      - name: Rector
+        run: tools/rector/vendor/bin/rector --dry-run --ansi
+
   twig-cs-fixer:
     name: Twig CS Fixer
     runs-on: ubuntu-latest

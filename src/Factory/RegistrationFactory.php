@@ -43,9 +43,7 @@ final class RegistrationFactory extends PersistentProxyObjectFactory
                 }
             }
 
-            $stagesRegistrations = array_map(function (Stage $stage) use ($registration): StageRegistration {
-                return new StageRegistration(stage: $stage, registration: $registration);
-            }, $stages);
+            $stagesRegistrations = array_map(fn (Stage $stage): StageRegistration => new StageRegistration(stage: $stage, registration: $registration), $stages);
 
             $registration
                 ->setStagesRegistrations($stagesRegistrations)
@@ -72,6 +70,7 @@ final class RegistrationFactory extends PersistentProxyObjectFactory
         ];
     }
 
+    #[\Override]
     protected function initialize(): static
     {
         return $this

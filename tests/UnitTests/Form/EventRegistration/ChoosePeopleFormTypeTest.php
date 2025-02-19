@@ -46,9 +46,7 @@ class ChoosePeopleFormTypeTest extends KernelTestCase
     public function testWithValidData(): void
     {
         $this->form->submit([
-            'companions' => array_map(static function (Companion $companion): string {
-                return (string) $companion->getId();
-            }, $this->user->getCompanions()->toArray()),
+            'companions' => array_map(static fn (Companion $companion): string => (string) $companion->getId(), $this->user->getCompanions()->toArray()),
             'neededBike' => 1,
         ]);
         $this->assertTrue($this->form->isValid());

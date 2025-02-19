@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use ZipCodeValidator\Constraints\ZipCode;
 
 #[ORM\Embeddable]
-class Address
+class Address implements \Stringable
 {
     #[ORM\Column(nullable: true)]
     private ?string $addressLine1 = null;

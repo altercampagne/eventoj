@@ -29,16 +29,13 @@ class StageFormType extends AbstractType
                 /** @var Registration $registration */
                 $registration = $options['registration'];
 
-                return $registration->getEvent()->getStages()->filter(static function (Stage $stage): bool {
-                    return !$stage->isOver();
-                });
+                return $registration->getEvent()->getStages()->filter(static fn (Stage $stage): bool => !$stage->isOver());
             },
-            'choice_label' => static function (Stage $stage): string {
-                return $stage->getDate()->format('d/m').' - '.$stage->getName();
-            },
+            'choice_label' => static fn (Stage $stage): string => $stage->getDate()->format('d/m').' - '.$stage->getName(),
         ]);
     }
 
+    #[\Override]
     public function getParent(): string
     {
         return EntityType::class;

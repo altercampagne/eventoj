@@ -18,13 +18,13 @@ use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
 use Symfony\Component\RemoteEvent\RemoteEvent;
 
 #[AsRemoteEventConsumer('helloasso')]
-final class HelloassoWebhookConsumer implements ConsumerInterface
+final readonly class HelloassoWebhookConsumer implements ConsumerInterface
 {
     public function __construct(
-        private readonly HelloassoClient $helloassoClient,
-        private readonly EntityManagerInterface $em,
-        private readonly PaymentRefundHandler $paymentRefundHandler,
-        private readonly LoggerInterface $debugLogger,
+        private HelloassoClient $helloassoClient,
+        private EntityManagerInterface $em,
+        private PaymentRefundHandler $paymentRefundHandler,
+        private LoggerInterface $debugLogger,
         #[Autowire(env: 'bool:STAGING')]
         private bool $staging,
     ) {

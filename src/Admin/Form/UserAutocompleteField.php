@@ -21,12 +21,11 @@ class UserAutocompleteField extends AbstractType
         $resolver->setDefaults([
             'class' => User::class,
             'searchable_fields' => ['firstName', 'lastName', 'publicName', 'email'],
-            'choice_label' => static function (User $user): string {
-                return \sprintf('%s (%s)', $user->getFullName(), $user->getPublicName());
-            },
+            'choice_label' => static fn (User $user): string => \sprintf('%s (%s)', $user->getFullName(), $user->getPublicName()),
         ]);
     }
 
+    #[\Override]
     public function getParent(): string
     {
         return BaseEntityAutocompleteType::class;

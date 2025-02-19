@@ -6,10 +6,10 @@ namespace App\Service\Paheko\Client;
 
 use Psr\Log\LoggerInterface;
 
-final class PahekoNullClient implements PahekoClientInterface
+final readonly class PahekoNullClient implements PahekoClientInterface
 {
     public function __construct(
-        private readonly LoggerInterface $logger,
+        private LoggerInterface $logger,
     ) {
     }
 

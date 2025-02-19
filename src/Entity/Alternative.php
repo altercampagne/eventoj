@@ -65,7 +65,7 @@ class Alternative implements LocatedEntityInterface
 
     #[ORM\Column(nullable: true)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, UploadedImage>
