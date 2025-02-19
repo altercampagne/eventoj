@@ -31,13 +31,11 @@ class ChoosePeopleFormType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'choices' => $registration->getUser()->getCompanions(),
-                'choice_attr' => static function (Companion $companion): array {
-                    return [
-                        'data-fullname' => $companion->getFullName(),
-                        'data-birthdate' => $companion->getBirthDate()->format('d/m/Y'),
-                        'data-age' => $companion->getAge(),
-                    ];
-                },
+                'choice_attr' => static fn (Companion $companion): array => [
+                    'data-fullname' => $companion->getFullName(),
+                    'data-birthdate' => $companion->getBirthDate()->format('d/m/Y'),
+                    'data-age' => $companion->getAge(),
+                ],
             ])
         ;
 

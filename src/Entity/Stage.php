@@ -76,7 +76,7 @@ class Stage
 
     #[ORM\Column(nullable: true)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, Alternative>
@@ -374,8 +374,6 @@ class Stage
      */
     public function getConfirmedStagesRegistrations(): Collection
     {
-        return $this->stagesRegistrations->filter(static function (StageRegistration $stageRegistration): bool {
-            return $stageRegistration->getRegistration()->isConfirmed();
-        });
+        return $this->stagesRegistrations->filter(static fn (StageRegistration $stageRegistration): bool => $stageRegistration->getRegistration()->isConfirmed());
     }
 }

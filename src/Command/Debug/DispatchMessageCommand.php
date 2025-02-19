@@ -28,7 +28,7 @@ class DispatchMessageCommand extends Command
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
-        private MessageBusInterface $bus,
+        private readonly MessageBusInterface $bus,
     ) {
         parent::__construct();
     }

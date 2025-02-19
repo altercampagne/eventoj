@@ -9,10 +9,10 @@ use App\Entity\Registration;
 use App\Entity\User;
 use App\Service\MembershipCreator;
 
-final class BillCreator
+final readonly class BillCreator
 {
     public function __construct(
-        private readonly MembershipCreator $membershipCreator,
+        private MembershipCreator $membershipCreator,
     ) {
     }
 

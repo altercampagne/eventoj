@@ -7,14 +7,14 @@ namespace App\Service\Availability;
 use App\Entity\Meal;
 use App\Entity\Stage;
 
-final class StageAvailability
+final readonly class StageAvailability
 {
-    public readonly MealAvailability $breakfast;
-    public readonly MealAvailability $lunch;
-    public readonly MealAvailability $dinner;
+    public MealAvailability $breakfast;
+    public MealAvailability $lunch;
+    public MealAvailability $dinner;
 
     public function __construct(
-        private readonly Stage $stage,
+        private Stage $stage,
     ) {
         $this->breakfast = new MealAvailability($stage, Meal::BREAKFAST);
         $this->lunch = new MealAvailability($stage, Meal::LUNCH);

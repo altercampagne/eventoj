@@ -44,7 +44,7 @@ class Event
     #[ORM\Column(nullable: true, options: [
         'comment' => 'ID of the Paheko project to which all transactions will ba attached.',
     ])]
-    private ?string $pahekoProjectId;
+    private ?string $pahekoProjectId = null;
 
     #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['name'])]
@@ -104,7 +104,7 @@ class Event
 
     #[ORM\Column(nullable: true)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToOne(targetEntity: UploadedImage::class)]
     #[ORM\JoinColumn(name: 'uploaded_file_id', referencedColumnName: 'id')]
@@ -600,9 +600,7 @@ class Event
      */
     public function getConfirmedRegistrations(): Collection
     {
-        return $this->registrations->filter(static function (Registration $registration): bool {
-            return $registration->isConfirmed();
-        });
+        return $this->registrations->filter(static fn (Registration $registration): bool => $registration->isConfirmed());
     }
 
     public function countPeople(): int

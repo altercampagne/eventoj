@@ -25,6 +25,7 @@ class AlternativeAutocompleteField extends AbstractType
         ]);
     }
 
+    #[\Override]
     public function getParent(): string
     {
         return BaseEntityAutocompleteType::class;

@@ -11,6 +11,7 @@ class DoesNotOverlapWithAnotherRegistration extends Constraint
 {
     public string $message = 'Tu es déjà inscrit pour tout ou partie de ces dates.';
 
+    #[\Override]
     public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;

@@ -13,7 +13,7 @@ use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 class PasswordResetSender
 {
     public function __construct(
-        private MailerInterface $mailer,
+        private readonly MailerInterface $mailer,
     ) {
     }
 

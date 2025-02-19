@@ -14,13 +14,13 @@ use Symfony\Component\HttpClient\Exception\ClientException;
 /**
  * @see https://paheko.cloud/api#membres
  */
-final class UserSynchronizer
+final readonly class UserSynchronizer
 {
     public function __construct(
-        private readonly PahekoClientInterface $pahekoClient,
-        private readonly EntityManagerInterface $em,
-        private readonly PhoneNumberHelper $phoneNumberHelper,
-        private readonly LoggerInterface $logger,
+        private PahekoClientInterface $pahekoClient,
+        private EntityManagerInterface $em,
+        private PhoneNumberHelper $phoneNumberHelper,
+        private LoggerInterface $logger,
     ) {
     }
 

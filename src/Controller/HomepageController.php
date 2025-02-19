@@ -32,9 +32,7 @@ class HomepageController extends AbstractController
         ;
 
         return $this->render('homepage.html.twig', [
-            'events' => array_filter($qb->getQuery()->getResult(), static function (Event $event): bool {
-                return !$event->isFinished();
-            }),
+            'events' => array_filter($qb->getQuery()->getResult(), static fn (Event $event): bool => !$event->isFinished()),
         ]);
     }
 }

@@ -10,6 +10,7 @@ use Twig\TwigFilter;
 
 class PriceExtension extends AbstractExtension
 {
+    #[\Override]
     public function getFilters(): array
     {
         return [

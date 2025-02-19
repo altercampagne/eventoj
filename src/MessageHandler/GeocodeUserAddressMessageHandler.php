@@ -11,11 +11,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-final class GeocodeUserAddressMessageHandler
+final readonly class GeocodeUserAddressMessageHandler
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly AddressGeocoder $addressGeocoder,
+        private EntityManagerInterface $em,
+        private AddressGeocoder $addressGeocoder,
     ) {
     }
 

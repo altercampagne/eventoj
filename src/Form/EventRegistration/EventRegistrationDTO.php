@@ -52,9 +52,7 @@ class EventRegistrationDTO
             $this->stageStart = $stageStart;
 
             $endDate = $stageStart->getDate()->modify('+4 days');
-            $stageEnd = $registration->getEvent()->getStages()->findFirst(static function (int $key, Stage $stage) use ($endDate): bool {
-                return $stage->getDate() >= $endDate;
-            });
+            $stageEnd = $registration->getEvent()->getStages()->findFirst(static fn (int $key, Stage $stage): bool => $stage->getDate() >= $endDate);
 
             $this->stageEnd = $stageEnd ?: $registration->getEvent()->getStages()->last() ?: throw new \RuntimeException('Looks like it is not possible to determine an end date.');
         }
@@ -96,10 +94,9 @@ class EventRegistrationDTO
         return array_uintersect(
             $this->firstMeal->getFollowingMeals(includeSelf: true),
             $this->lastMeal->getPreviousMeals(includeSelf: true),
-            static function ($meal1, $meal2): int {
+            static fn ($meal1, $meal2): int =>
                 /* @phpstan-ignore-next-line */
-                return $meal1->compare($meal2);
-            }
+                $meal1->compare($meal2)
         );
     }
 
@@ -115,10 +112,9 @@ class EventRegistrationDTO
         return array_uintersect(
             $this->firstMeal->getFollowingMeals(includeSelf: true),
             $this->lastMeal->getPreviousMeals(includeSelf: true),
-            static function ($meal1, $meal2): int {
+            static fn ($meal1, $meal2): int =>
                 /* @phpstan-ignore-next-line */
-                return $meal1->compare($meal2);
-            }
+                $meal1->compare($meal2)
         );
     }
 

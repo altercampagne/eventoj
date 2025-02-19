@@ -17,6 +17,7 @@ class TrixType extends AbstractType
     {
     }
 
+    #[\Override]
     public function getParent(): string
     {
         return HiddenType::class;

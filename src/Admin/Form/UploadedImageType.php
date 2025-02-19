@@ -101,6 +101,7 @@ class UploadedImageType extends AbstractType
         $view->vars['allow_delete'] = $options['allow_delete'];
     }
 
+    #[\Override]
     public function getParent(): string
     {
         return TextType::class;
