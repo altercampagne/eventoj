@@ -29,6 +29,7 @@ vendors-update: ## Update all vendors
 	@$(DOCKER_COMPOSE) run --rm php composer --working-dir tools/php-cs-fixer up
 	@$(DOCKER_COMPOSE) run --rm php composer --working-dir tools/phpstan up
 	@$(DOCKER_COMPOSE) run --rm php composer --working-dir tools/twig-cs-fixer up
+	@$(DOCKER_COMPOSE) run --rm php composer --working-dir tools/rector up
 	@$(DOCKER_COMPOSE) run --rm php bin/console importmap:update
 
 ##@ Docker commands
