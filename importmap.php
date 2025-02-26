@@ -108,7 +108,7 @@ return [
         'version' => '6.0.0-beta.2',
     ],
     'just-extend' => [
-        'version' => '5.1.1',
+        'version' => '6.2.0',
     ],
     'dropzone/dist/dropzone.css' => [
         'version' => '6.0.0-beta.2',
