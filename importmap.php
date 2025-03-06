@@ -84,24 +84,24 @@ return [
         'type' => 'css',
     ],
     'lightgallery' => [
-        'version' => '2.8.2',
+        'version' => '2.8.3',
     ],
     'lightgallery/plugins/thumbnail' => [
-        'version' => '2.8.2',
+        'version' => '2.8.3',
     ],
     'lightgallery/plugins/zoom' => [
-        'version' => '2.8.2',
+        'version' => '2.8.3',
     ],
     'lightgallery/css/lightgallery.css' => [
-        'version' => '2.8.2',
+        'version' => '2.8.3',
         'type' => 'css',
     ],
     'lightgallery/css/lg-zoom.css' => [
-        'version' => '2.8.2',
+        'version' => '2.8.3',
         'type' => 'css',
     ],
     'lightgallery/css/lg-thumbnail.css' => [
-        'version' => '2.8.2',
+        'version' => '2.8.3',
         'type' => 'css',
     ],
     'dropzone' => [
