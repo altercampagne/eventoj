@@ -27,9 +27,6 @@ class StageFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var Stage $stage */
-        $stage = $options['data'];
-
         $builder
             ->add('type', EnumType::class, [
                 'class' => StageType::class,

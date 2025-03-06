@@ -38,7 +38,7 @@ class Registration
     #[ORM\Column(type: 'string', length: 20, enumType: RegistrationStatus::class, options: [
         'comment' => 'Status of this registration (waiting_payment, confirmed, canceled)',
     ])]
-    private RegistrationStatus $status;
+    private RegistrationStatus $status = RegistrationStatus::WAITING_PAYMENT;
 
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'The total price choose by the user.',
@@ -102,7 +102,6 @@ class Registration
         $this->id = new UuidV4();
         $this->user = $user;
         $this->event = $event;
-        $this->status = RegistrationStatus::WAITING_PAYMENT;
         $this->createdAt = new \DateTimeImmutable();
         $this->payments = new ArrayCollection();
         $this->companions = new ArrayCollection();
@@ -198,6 +197,7 @@ class Registration
         if (null === $firstStageRegistration = $this->getStageRegistrationStart()) {
             throw new \LogicException('No stage registration found for given registration');
         }
+
         if (Meal::BREAKFAST !== $this->getFirstMeal()) {
             $payingDaysOfPresence -= $firstStageRegistration->includesMeal(Meal::LUNCH) ? .2 : .6;
         }
@@ -205,6 +205,7 @@ class Registration
         if (null === $lastStageRegistration = $this->getStageRegistrationEnd()) {
             throw new \LogicException('No stage registration found for given registration');
         }
+
         if (Meal::DINNER !== $this->getLastMeal()) {
             $payingDaysOfPresence -= $lastStageRegistration->includesMeal(Meal::LUNCH) ? .4 : .8;
         }

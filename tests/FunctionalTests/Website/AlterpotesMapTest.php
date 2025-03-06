@@ -24,7 +24,7 @@ class AlterpotesMapTest extends WebTestCase
         $client->request('GET', '/alterpotes');
 
         $this->assertResponseRedirects();
-        $response = $client->followRedirect();
+        $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_memberships');
         $this->assertSelectorTextContains('.alert-danger', 'Une adhésion à jour est nécessaire pour accéder à la carte des alterpotes !');

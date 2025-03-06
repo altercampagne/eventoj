@@ -62,6 +62,7 @@ class Membership
         if (null === $user && null === $companion) {
             throw new \LogicException('Membership must be attached to a user or a companion.');
         }
+
         if (!$payment->isApproved()) {
             throw new \LogicException('Given payment must be approved.');
         }
@@ -72,6 +73,7 @@ class Membership
                 $startAt = $startAt->modify('-1 year');
             }
         }
+
         $endAt = $startAt->modify('+1 year -1 day');
 
         $this->id = new UuidV4();

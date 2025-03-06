@@ -50,7 +50,7 @@ final class S3FileUploadSignController extends AbstractController
 
         $uploadedImage = new UploadedImage($type, "{$type->value}/{$prefix}-{$randomPart}.{$input->getExt()}", $input->filename);
 
-        return $this->sign($request, $uploadedImage, $input);
+        return $this->sign($uploadedImage, $input);
     }
 
     #[Route('/s3_file_upload_sign_user_upload_event/{event_slug}', name: 's3_file_upload_sign_user_upload_event', methods: ['POST'])]
@@ -68,11 +68,10 @@ final class S3FileUploadSignController extends AbstractController
 
         $document = new EventPicture($user, $event, "user_upload/event/{$event->getSlug()}/{$user->getId()}/{$randomPart}.{$input->getExt()}", $input->filename);
 
-        return $this->sign($request, $document, $input);
+        return $this->sign($document, $input);
     }
 
     private function sign(
-        Request $request,
         AbstractUploadedImage $document,
         S3FileUploadSignInput $input,
     ): Response {

@@ -32,7 +32,7 @@ class ProfileUpdateProfileTest extends WebTestCase
             'profile_update_form[lactoseIntolerant]' => false,
             'profile_update_form[dietDetails]' => null,
             'profile_update_form[hasDrivingLicence]' => true,
-            'profile_update_form[biography]' => 'O\'m only an humble test user.',
+            'profile_update_form[biography]' => "O'm only an humble test user.",
         ]);
 
         $this->assertResponseRedirects();

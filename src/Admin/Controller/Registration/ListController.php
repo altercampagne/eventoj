@@ -30,7 +30,7 @@ class ListController extends AbstractController
     {
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
             new QueryAdapter($this->getQueryBuilder($request)),
-            (int) $request->query->getInt('page', 1),
+            $request->query->getInt('page', 1),
             25
         );
 
@@ -53,7 +53,7 @@ class ListController extends AbstractController
 
         if (null !== $slug = $request->query->get('event')) {
             if (null == $event = $this->em->getRepository(Event::class)->findOneBySlug($slug)) {
-                throw $this->createNotFoundException("No event $slug found.");
+                throw $this->createNotFoundException("No event {$slug} found.");
             }
 
             $qb

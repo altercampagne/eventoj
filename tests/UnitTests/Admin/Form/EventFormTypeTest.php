@@ -31,7 +31,7 @@ class EventFormTypeTest extends KernelTestCase
     {
         $this->form->submit([
             'name' => 'AT 2042',
-            'description' => 'Un AT qui s\'annonce incoyable',
+            'description' => "Un AT qui s'annonce incoyable",
             'openingDateForBookings' => (new \DateTimeImmutable('3 months'))->format('Y-m-d H:i:s'),
             'firstMealOfFirstDay' => 'dinner',
             'lastMealOfLastDay' => 'breakfast',

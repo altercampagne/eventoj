@@ -12,7 +12,9 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 final class FAQQuestion
 {
     public string $slug;
+
     public string $label;
+
     private ?Question $question = null;
 
     public function __construct(
@@ -25,6 +27,7 @@ final class FAQQuestion
         if (null !== $this->question) {
             return $this->question;
         }
+
         $this->question = $this->em->getRepository(Question::class)->findOneBySlug($this->slug);
 
         if (null === $this->question) {

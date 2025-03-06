@@ -37,7 +37,7 @@ class Payment
     #[ORM\Column(type: 'string', length: 20, enumType: PaymentStatus::class, options: [
         'comment' => 'Status of this payment (pending, approved, failed, refunded)',
     ])]
-    private PaymentStatus $status;
+    private PaymentStatus $status = PaymentStatus::PENDING;
 
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'The amount of this payment',
@@ -88,7 +88,6 @@ class Payment
         $this->payer = $payer;
         $this->amount = $amount;
         $this->registration = $registration;
-        $this->status = PaymentStatus::PENDING;
         $this->createdAt = new \DateTimeImmutable();
         $this->memberships = new ArrayCollection();
 

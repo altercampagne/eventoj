@@ -81,7 +81,7 @@ class PasswordResetTest extends WebTestCase
         ]);
 
         $this->assertResponseRedirects();
-        $response = $client->followRedirect();
+        $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_homepage');
         $this->assertSelectorExists('#connected-as');
@@ -102,6 +102,7 @@ class PasswordResetTest extends WebTestCase
         foreach ($results as $request) {
             $em->remove($request);
         }
+
         $em->flush();
     }
 }

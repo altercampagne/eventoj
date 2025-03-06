@@ -32,15 +32,13 @@ class ProfileUpdateFormTypeTest extends KernelTestCase
 
     public function testWithValidData(): void
     {
-        $faker = \Faker\Factory::create('fr_FR');
-
         $this->form->submit([
             'diet' => 'vegetarian',
             'glutenIntolerant' => false,
             'lactoseIntolerant' => false,
             'dietDetails' => null,
             'hasDrivingLicence' => true,
-            'biography' => 'I\'m only an humble test user.',
+            'biography' => "I'm only an humble test user.",
         ]);
         $this->assertTrue($this->form->isValid());
     }

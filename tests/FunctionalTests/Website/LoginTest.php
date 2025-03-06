@@ -26,7 +26,7 @@ class LoginTest extends WebTestCase
         ]);
 
         $this->assertResponseRedirects();
-        $response = $client->followRedirect();
+        $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_homepage');
         $this->assertSelectorExists('#connected-as');

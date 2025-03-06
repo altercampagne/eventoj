@@ -7,11 +7,15 @@ namespace App\Service\Bill;
 final readonly class Price
 {
     public int $minimumAmount;
+
     public int $breakEvenAmount;
+
     public int $supportAmount;
 
     public int $minimumAmountPerDay;
+
     public int $breakEvenAmountPerDay;
+
     public int $supportAmountPerDay;
 
     private function __construct(

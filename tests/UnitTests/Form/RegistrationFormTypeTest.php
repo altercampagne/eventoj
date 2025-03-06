@@ -52,7 +52,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         $form->submit($data);
 
         $this->assertFormInvalid($form, [
-            'zipCode' => 'Ce code postal n\'est pas valide.',
+            'zipCode' => "Ce code postal n'est pas valide.",
         ]);
     }
 

@@ -49,7 +49,7 @@ class GeocodeAlternativeCommand extends Command
         if (null !== $slug = $input->getArgument('slug')) {
             if (null === $alternative = $this->em->getRepository(Alternative::class)->findOneBySlug($slug)) {
                 /* @phpstan-ignore-next-line */
-                throw new \InvalidArgumentException("Alternative with slug $slug not found!");
+                throw new \InvalidArgumentException("Alternative with slug {$slug} not found!");
             }
 
             if ($alternative->getAddress()->isGeocoded() && !$force) {
@@ -60,14 +60,11 @@ class GeocodeAlternativeCommand extends Command
 
             if ($input->hasParameterOption(['--async'], true)) {
                 $this->bus->dispatch(new GeocodeAlternativeAddressMessage($alternative->getId()));
-
                 $io->success('Alternative address will be geocoded.');
+            } elseif ($this->addressGeocoder->geocode($alternative)) {
+                $io->success('Alternative address have been successfully geocoded.');
             } else {
-                if ($this->addressGeocoder->geocode($alternative)) {
-                    $io->success('Alternative address have been successfully geocoded.');
-                } else {
-                    $io->warning('Alternative address not found by geocoder! :/');
-                }
+                $io->warning('Alternative address not found by geocoder! :/');
             }
 
             return Command::SUCCESS;

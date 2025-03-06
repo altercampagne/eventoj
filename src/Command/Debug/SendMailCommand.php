@@ -57,10 +57,10 @@ class SendMailCommand extends Command
             'password_reset' => $this->sendPasswordReset(),
             'event_reminder' => $this->sendEventReminder(),
             null => $this->sendAllMails(),
-            default => throw new \InvalidArgumentException("Unknown mail \"$email\"."),
+            default => throw new \InvalidArgumentException("Unknown mail \"{$email}\"."),
         };
 
-        $io->success(null !== $email ? "Mail \"$email\" sent!" : 'Mails sent!');
+        $io->success(null !== $email ? "Mail \"{$email}\" sent!" : 'Mails sent!');
 
         return Command::SUCCESS;
     }
@@ -91,6 +91,7 @@ class SendMailCommand extends Command
         foreach ($passwordResetRequests as $request) {
             $this->em->remove($request);
         }
+
         $this->em->flush();
 
         $resetToken = $this->resetPasswordHelper->generateResetToken($user);

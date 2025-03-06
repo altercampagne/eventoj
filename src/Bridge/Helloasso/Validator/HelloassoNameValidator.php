@@ -25,6 +25,7 @@ class HelloassoNameValidator extends ConstraintValidator
         if (null === $value || '' === $value) {
             return;
         }
+
         if (!\is_string($value)) {
             return;
         }

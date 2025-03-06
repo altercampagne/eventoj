@@ -73,9 +73,11 @@ final class MealAggregator
         if ($person->isLactoseIntolerant()) {
             ++$overview[$stageName]['meals'][$meal->value]['lactoseIntolerant'];
         }
+
         if ($person->isGlutenIntolerant()) {
             ++$overview[$stageName]['meals'][$meal->value]['glutenIntolerant'];
         }
+
         if (null !== $details = $person->getDietDetails()) {
             $overview[$stageName]['meals'][$meal->value]['dietDetails'][$person->getPublicName()] = $details;
         }

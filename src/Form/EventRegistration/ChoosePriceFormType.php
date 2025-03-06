@@ -40,7 +40,7 @@ class ChoosePriceFormType extends AbstractType
                 'scale' => 0,
                 'constraints' => [
                     new Assert\NotBlank(
-                        message: 'L\'acceptation de la charte n\'est pas optionnelle !',
+                        message: "L'acceptation de la charte n'est pas optionnelle !",
                     ),
                     new Assert\GreaterThanOrEqual(
                         value: $minimumPrice,
@@ -54,7 +54,7 @@ class ChoosePriceFormType extends AbstractType
                 'label' => false,
                 'constraints' => [
                     new Assert\IsTrue(
-                        message: 'L\'acceptation de la charte n\'est pas optionnelle !',
+                        message: "L'acceptation de la charte n'est pas optionnelle !",
                     ),
                 ],
             ])

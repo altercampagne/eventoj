@@ -58,7 +58,7 @@ class ReminderCommand extends Command
             }
         }
 
-        $io->success("$sentMail reminder emails have been sent!");
+        $io->success("{$sentMail} reminder emails have been sent!");
 
         return Command::SUCCESS;
     }
@@ -76,7 +76,7 @@ class ReminderCommand extends Command
             ->innerJoin('sr.registration', 'r')
             ->andWhere('s.date = :start_date')
             ->andWhere('r.status = :status')
-            ->setParameter('start_date', new \DateTimeImmutable("+$days days"))
+            ->setParameter('start_date', new \DateTimeImmutable("+{$days} days"))
             ->setParameter('status', RegistrationStatus::CONFIRMED)
         ;
 

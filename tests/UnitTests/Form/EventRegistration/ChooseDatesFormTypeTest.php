@@ -26,8 +26,11 @@ class ChooseDatesFormTypeTest extends KernelTestCase
     use FormAssertionsTrait;
 
     private Event $event;
+
     private User $user;
+
     private Registration $registration;
+
     /** @var FormInterface<EventRegistrationDTO> */
     private FormInterface $form;
 
@@ -81,6 +84,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
         for ($i = 0; $i < $this->event->getAdultsCapacity() + 2; ++$i) {
             $companions[] = CompanionFactory::new()->children()->create(['user' => $this->user])->_real();
         }
+
         $this->registration->setCompanions(new ArrayCollection($companions));
 
         $this->form->submit([
@@ -103,6 +107,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
         for ($i = 0; $i < $this->event->getAdultsCapacity() + 2; ++$i) {
             $companions[] = CompanionFactory::new()->adult()->create(['user' => $this->user])->_real();
         }
+
         $this->registration->setCompanions(new ArrayCollection($companions));
 
         $this->form->submit([

@@ -20,12 +20,16 @@ class EventRegistrationDTO
 
     #[Assert\NotBlank(groups: ['choose_dates'])]
     public ?Stage $stageStart = null;
+
     #[Assert\NotBlank(groups: ['choose_dates'])]
     public Meal $firstMeal = Meal::DINNER;
+
     #[Assert\NotBlank(groups: ['choose_dates'])]
     public ?Stage $stageEnd = null;
+
     #[Assert\NotBlank(groups: ['choose_dates'])]
     public Meal $lastMeal = Meal::BREAKFAST;
+
     #[Assert\NotNull(groups: ['choose_dates'])]
     public int $neededBike = 0;
 
@@ -49,6 +53,7 @@ class EventRegistrationDTO
             if (null === $stageStart = $registration->getEvent()->getNextComingStage()) {
                 throw new \RuntimeException('Cannot register to an event without coming stages');
             }
+
             $this->stageStart = $stageStart;
 
             $endDate = $stageStart->getDate()->modify('+4 days');
@@ -141,6 +146,7 @@ class EventRegistrationDTO
                 ->atPath('stageStart')
                 ->addViolation();
         }
+
         if ($this->stageEnd->getDate() < $now) {
             $context->buildViolation('Cette date de départ est dans le passé.')
                 ->atPath('stageEnd')

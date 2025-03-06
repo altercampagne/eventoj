@@ -29,7 +29,7 @@ class ListController extends AbstractController
     {
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
             new QueryAdapter($this->getQueryBuilder()),
-            (int) $request->query->getInt('page', 1),
+            $request->query->getInt('page', 1),
             25
         );
 

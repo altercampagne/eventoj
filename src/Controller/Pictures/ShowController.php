@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Pictures;
 
 use App\Entity\Event;
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,9 +22,6 @@ class ShowController extends AbstractController
 
     public function __invoke(): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $qb = $this->em->createQueryBuilder();
         $qb
             ->select('e, s, p')

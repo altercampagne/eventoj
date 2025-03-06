@@ -30,7 +30,7 @@ class PahekoSyncPaymentsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('id', InputArgument::OPTIONAL, 'The id of the payment to sync. If null, all payments will be sync\'ed.')
+            ->addArgument('id', InputArgument::OPTIONAL, "The id of the payment to sync. If null, all payments will be sync'ed.")
         ;
     }
 

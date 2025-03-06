@@ -19,9 +19,6 @@ class QuestionFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var Question $question */
-        $question = $options['data'];
-
         $builder
             ->add('category', EnumType::class, [
                 'class' => QuestionCategory::class,

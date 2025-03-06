@@ -47,6 +47,7 @@ class RegisterChoosePriceController extends AbstractController
         if (null === $registration = $this->em->getRepository(Registration::class)->findOngoingRegistrationForEventAndUser($event, $user)) {
             return $this->redirectToRoute('event_register', ['slug' => $event->getSlug()]);
         }
+
         if (!$registration->isWaitingPayment()) {
             $this->addFlash('warning', 'Cette inscription ne peut pas être réglée. Ne le serait-elle pas déjà ?');
 

@@ -24,6 +24,7 @@ final class RegistrationFactory extends PersistentProxyObjectFactory
         if (null !== $firstStage && null === $lastStage) {
             throw new \InvalidArgumentException('Cannot set $firstStage without $lastStage');
         }
+
         if (null === $firstStage && null !== $lastStage) {
             throw new \InvalidArgumentException('Cannot set $lastStage without $firstStage');
         }

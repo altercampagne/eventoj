@@ -27,9 +27,9 @@ class AlternativeFormType extends AbstractType
 
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom de l\'alternative',
+                'label' => "Nom de l'alternative",
                 'attr' => [
-                    'placeholder' => 'Nom de l\'alternative',
+                    'placeholder' => "Nom de l'alternative",
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
@@ -46,9 +46,9 @@ class AlternativeFormType extends AbstractType
                 ],
             ])
             ->add('description', TrixType::class, [
-                'label' => 'Description de l\'alternative',
+                'label' => "Description de l'alternative",
                 'attr' => [
-                    'placeholder' => 'Description de l\'alternative',
+                    'placeholder' => "Description de l'alternative",
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
