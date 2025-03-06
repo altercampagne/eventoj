@@ -49,7 +49,7 @@ class GeocodeUserCommand extends Command
         if (null !== $email = $input->getArgument('email')) {
             if (null === $user = $this->em->getRepository(User::class)->findOneByEmail($email)) {
                 /* @phpstan-ignore-next-line */
-                throw new \InvalidArgumentException("User with email $email not found!");
+                throw new \InvalidArgumentException("User with email {$email} not found!");
             }
 
             if ($user->getAddress()->isGeocoded() && !$force) {
@@ -60,14 +60,11 @@ class GeocodeUserCommand extends Command
 
             if ($input->hasParameterOption(['--async'], true)) {
                 $this->bus->dispatch(new GeocodeUserAddressMessage($user->getId()));
-
                 $io->success('User address will be geocoded.');
+            } elseif ($this->addressGeocoder->geocode($user)) {
+                $io->success('User address have been successfully geocoded.');
             } else {
-                if ($this->addressGeocoder->geocode($user)) {
-                    $io->success('User address have been successfully geocoded.');
-                } else {
-                    $io->warning('User address not found by geocoder! :/');
-                }
+                $io->warning('User address not found by geocoder! :/');
             }
 
             return Command::SUCCESS;

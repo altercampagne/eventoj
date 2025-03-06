@@ -19,6 +19,7 @@ final class UploadedImage
     public string $size = 'md';
 
     public ?int $width = null;
+
     public ?int $height = null;
 
     public function __construct(

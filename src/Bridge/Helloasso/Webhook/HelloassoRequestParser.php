@@ -47,8 +47,8 @@ final class HelloassoRequestParser extends AbstractRequestParser
         }
 
         return new RemoteEvent(
-            mb_strtolower((string) $payload->getString('eventType')),
-            mb_strtolower((string) $payload->getString('eventType')).'.'.md5($request->getContent()),
+            mb_strtolower($payload->getString('eventType')),
+            mb_strtolower($payload->getString('eventType')).'.'.md5($request->getContent()),
             $payload->all(),
         );
     }

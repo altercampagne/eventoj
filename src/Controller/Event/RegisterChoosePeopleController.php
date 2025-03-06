@@ -36,11 +36,13 @@ class RegisterChoosePeopleController extends AbstractController
         if (!$event->isBookable()) {
             throw $this->createNotFoundException();
         }
+
         if ($event->isFull()) {
             $this->addFlash('warning', 'Cet évènement est complet, les inscriptions sont fermées !');
 
             return $this->redirectToRoute('event_show', ['slug' => $event->getSlug()]);
         }
+
         if (!$this->isGranted('ROLE_USER')) {
             $this->saveTargetPath($request->getSession(), 'main', $this->generateUrl('event_register', ['slug' => $event->getSlug()]));
 
@@ -53,7 +55,7 @@ class RegisterChoosePeopleController extends AbstractController
         if (null === $user->getDiet()) {
             $this->saveTargetPath($request->getSession(), 'main', $this->generateUrl('event_register', ['slug' => $event->getSlug()]));
 
-            $this->addFlash('warning', 'Merci de remplir ton profil avant de pouvoir t\'inscrire !');
+            $this->addFlash('warning', "Merci de remplir ton profil avant de pouvoir t'inscrire !");
 
             return $this->redirectToRoute('profile_update_profile');
         }

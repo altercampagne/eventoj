@@ -88,7 +88,7 @@ final readonly class UserSynchronizer
             $pahekoUsers = $this->pahekoClient->getUsersFromCategory((string) $category['id']);
             $nbPahekoUsers = \count($pahekoUsers);
 
-            $this->logger->debug("Searching for {$user->getEmail()} in $nbPahekoUsers users from category {$category['name']}...");
+            $this->logger->debug("Searching for {$user->getEmail()} in {$nbPahekoUsers} users from category {$category['name']}...");
 
             foreach ($pahekoUsers as $pahekoUser) {
                 if (mb_strtolower((string) $pahekoUser['email']) === mb_strtolower($user->getEmail())) {
@@ -113,7 +113,7 @@ final readonly class UserSynchronizer
 
         $addressLines = $address->getAddressLine1();
         if (null !== $line2 = $address->getAddressLine2()) {
-            $addressLines .= "\n$line2";
+            $addressLines .= "\n{$line2}";
         }
 
         return [

@@ -60,8 +60,8 @@ final class EventFactory extends PersistentProxyObjectFactory
                     for ($i = 1; $i <= $count; ++$i) {
                         yield [
                             'event' => $event,
-                            'name' => "Day #$i",
-                            'description' => "Jour #$i",
+                            'name' => "Day #{$i}",
+                            'description' => "Jour #{$i}",
                             'date' => $date,
                         ];
 

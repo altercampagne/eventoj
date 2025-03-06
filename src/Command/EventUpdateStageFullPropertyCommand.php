@@ -37,6 +37,7 @@ class EventUpdateStageFullPropertyCommand extends Command
 
             $this->em->persist($event);
         }
+
         $this->em->flush();
 
         $io->success('All events have been updated!');

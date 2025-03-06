@@ -178,7 +178,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
      */
     public function getUserIdentifier(): string
     {
-        if ('' === $identifier = (string) $this->email) {
+        if ('' === $identifier = $this->email) {
             throw new \RuntimeException('Found a user with an empty email!');
         }
 
@@ -209,7 +209,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
     public function removeRole(string $role): self
     {
         if (\in_array($role, $this->roles)) {
-            unset($this->roles[array_search($role, $this->roles)]);
+            unset($this->roles[array_search($role, $this->roles, true)]);
         }
 
         return $this;

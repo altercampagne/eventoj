@@ -20,14 +20,14 @@ trait FormAssertionsTrait
         $this->assertTrue($form->isSynchronized(), 'Form is not synchronized!');
         $this->assertFalse($form->isValid(), 'Form is valid!');
 
-        if (0 === \count($expectedErrors)) {
+        if ([] === $expectedErrors) {
             return;
         }
 
         $errors = $this->getFlattenErrors($form);
 
         foreach ($expectedErrors as $field => $expectedErrorsForField) {
-            $this->assertTrue(\array_key_exists($field, $errors), "No error found for field $field. Existing errors : ".print_r($errors, true));
+            $this->assertTrue(\array_key_exists($field, $errors), "No error found for field {$field}. Existing errors : ".print_r($errors, true));
             $expectedErrorsForField = (array) $expectedErrorsForField;
 
             $this->assertSame($expectedErrorsForField, $errors[$field]);

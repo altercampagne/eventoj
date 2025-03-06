@@ -62,7 +62,7 @@ class UserFixtures extends Fixture
         $membership = MembershipFactory::createOne(['user' => $admin]);
         MembershipFactory::createOne(['user' => $admin, 'startAt' => $membership->getStartAt()->modify('-1 year')]);
 
-        $admin = UserFactory::createOne([
+        UserFactory::createOne([
             'email' => 'change-my-password@test-only.user',
         ])->_real();
     }

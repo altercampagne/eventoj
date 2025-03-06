@@ -56,9 +56,9 @@ class ContactDetailsUpdateFormType extends AbstractType
             ])
             ->add('publicName', TextType::class, [
                 'required' => false,
-                'label' => 'Ton nom d\'affichage',
+                'label' => "Ton nom d'affichage",
                 'attr' => [
-                    'placeholder' => 'Ton nom d\'affichage',
+                    'placeholder' => "Ton nom d'affichage",
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',

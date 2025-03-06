@@ -40,9 +40,11 @@ class MagicSearchController extends AbstractController
         if (1 === \count($result->users)) {
             return $this->redirectToRoute('admin_user_show', ['id' => (string) $result->users[0]->getId()]);
         }
+
         if (1 === \count($result->companions)) {
             return $this->redirectToRoute('admin_user_show', ['id' => (string) $result->companions[0]->getUser()->getId()]);
         }
+
         if (1 === \count($result->events)) {
             return $this->redirectToRoute('admin_event_show', ['slug' => (string) $result->events[0]->getSlug()]);
         }

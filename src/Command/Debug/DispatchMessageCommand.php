@@ -50,10 +50,10 @@ class DispatchMessageCommand extends Command
         match ($message) {
             'paheko_payment_sync' => $this->dispatchPahekoPaymentSync(),
             null => $this->dispatchAllMessages(),
-            default => throw new \InvalidArgumentException("Unknown message \"$message\"."),
+            default => throw new \InvalidArgumentException("Unknown message \"{$message}\"."),
         };
 
-        $io->success(null !== $message ? "Message  \"$message\" dispatched!" : 'Messages dispatched!');
+        $io->success(null !== $message ? "Message  \"{$message}\" dispatched!" : 'Messages dispatched!');
 
         return Command::SUCCESS;
     }

@@ -10,7 +10,9 @@ use App\Entity\Stage;
 final readonly class StageAvailability
 {
     public MealAvailability $breakfast;
+
     public MealAvailability $lunch;
+
     public MealAvailability $dinner;
 
     public function __construct(

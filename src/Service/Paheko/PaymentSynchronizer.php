@@ -51,6 +51,7 @@ final readonly class PaymentSynchronizer
         if (!$payment->isApproved() && !$payment->isRefunded()) {
             return false;
         }
+
         if (0 === $payment->getAmount()) {
             return false;
         }
@@ -92,6 +93,7 @@ final readonly class PaymentSynchronizer
 
             throw $e;
         }
+
         /* @phpstan-ignore-next-line */
         $id = (string) $pahekoPayment['id'];
 
@@ -171,7 +173,7 @@ final readonly class PaymentSynchronizer
             ];
         }
 
-        if (0 === \count($lines)) {
+        if ([] === $lines) {
             throw new \RuntimeException('Given payment contains no registration nor membership...');
         }
 
@@ -188,7 +190,7 @@ final readonly class PaymentSynchronizer
             'type' => 'ADVANCED',
             'lines' => $lines,
             'linked_users' => [$payment->getPayer()->getPahekoId()],
-            'notes' => "Paiement visible ici : $paymentAdminUrl",
+            'notes' => "Paiement visible ici : {$paymentAdminUrl}",
             'reference' => (string) $payment->getId(),
         ];
     }
@@ -260,7 +262,7 @@ final readonly class PaymentSynchronizer
             'type' => 'ADVANCED',
             'lines' => $lines,
             'linked_users' => [$payment->getPayer()->getPahekoId()],
-            'notes' => "Paiement visible ici : $paymentAdminUrl",
+            'notes' => "Paiement visible ici : {$paymentAdminUrl}",
             'reference' => (string) $payment->getId(),
             'linked_transactions' => [$payment->getPahekoPaymentId()],
         ];
@@ -279,7 +281,7 @@ final readonly class PaymentSynchronizer
         $yearId = 2;
 
         while (true) {
-            if ($date < new \DateTimeImmutable("$year-10-01")) {
+            if ($date < new \DateTimeImmutable("{$year}-10-01")) {
                 return $yearId;
             }
 

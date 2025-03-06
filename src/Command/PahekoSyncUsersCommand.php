@@ -30,7 +30,7 @@ class PahekoSyncUsersCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('email', InputArgument::OPTIONAL, 'The email of the user to sync. If null, all users will be sync\'ed.')
+            ->addArgument('email', InputArgument::OPTIONAL, "The email of the user to sync. If null, all users will be sync'ed.")
         ;
     }
 
@@ -42,7 +42,7 @@ class PahekoSyncUsersCommand extends Command
         if (null !== $email = $input->getArgument('email')) {
             if (null === $user = $this->em->getRepository(User::class)->findOneByEmail($email)) {
                 /* @phpstan-ignore-next-line */
-                throw new \InvalidArgumentException("User with email $email not found!");
+                throw new \InvalidArgumentException("User with email {$email} not found!");
             }
 
             $this->userSynchronizer->sync($user);

@@ -70,6 +70,7 @@ class SyncWithHelloassoController extends AbstractController
             if (PaymentState::Refunded === $payment->getState()) {
                 return true;
             }
+
             if (PaymentState::Refunding === $payment->getState()) {
                 return true;
             }

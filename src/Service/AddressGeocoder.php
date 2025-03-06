@@ -28,6 +28,7 @@ final readonly class AddressGeocoder
         if ('test' === $this->environment) {
             return true;
         }
+
         $address = $entity->getAddress();
 
         $query = GeocodeQuery::create((string) $address)->withLocale('fr');

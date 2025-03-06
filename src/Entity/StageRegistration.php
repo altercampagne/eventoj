@@ -52,6 +52,7 @@ class StageRegistration
         if ($this->presentForBreakfast()) {
             return Meal::BREAKFAST;
         }
+
         if ($this->presentForLunch()) {
             return Meal::LUNCH;
         }
@@ -64,6 +65,7 @@ class StageRegistration
         if ($this->presentForDinner()) {
             return Meal::DINNER;
         }
+
         if ($this->presentForLunch()) {
             return Meal::LUNCH;
         }

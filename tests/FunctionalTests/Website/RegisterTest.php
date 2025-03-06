@@ -26,7 +26,7 @@ class RegisterTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('event_registration_need_account');
 
-        $client->clickLink('S\'inscrire');
+        $client->clickLink("S'inscrire");
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('register');
 
@@ -34,7 +34,7 @@ class RegisterTest extends WebTestCase
 
         $registrationEmail = $faker->email();
 
-        $client->submitForm('Je m\'inscris', [
+        $client->submitForm("Je m'inscris", [
             'registration_form[firstName]' => $faker->firstName(),
             'registration_form[lastName]' => $faker->lastName(),
             'registration_form[birthDate]' => (new \DateTimeImmutable('-20 years'))->format('Y-m-d'),
@@ -66,7 +66,7 @@ class RegisterTest extends WebTestCase
             'profile_update_form[glutenIntolerant]' => false,
             'profile_update_form[lactoseIntolerant]' => false,
             'profile_update_form[dietDetails]' => null,
-            'profile_update_form[biography]' => 'I\'m only an humble test user.',
+            'profile_update_form[biography]' => "I'm only an humble test user.",
         ]);
 
         $this->assertResponseRedirects();

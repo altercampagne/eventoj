@@ -27,7 +27,7 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
     public function updateUser(string $pahekoId, array $data): array
     {
         /* @phpstan-ignore return.type */
-        return $this->request('POST', "user/$pahekoId", [
+        return $this->request('POST', "user/{$pahekoId}", [
             'body' => $data,
         ]);
     }
@@ -41,7 +41,7 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
     public function getUsersFromCategory(string $categoryId): array
     {
         /* @phpstan-ignore-next-line */
-        return $this->request('POST', "user/category/$categoryId.json");
+        return $this->request('POST', "user/category/{$categoryId}.json");
     }
 
     public function createPayment(array $data): array
@@ -55,7 +55,7 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
     public function updatePayment(string $pahekoId, array $data): array
     {
         /* @phpstan-ignore return.type */
-        return $this->request('POST', "accounting/transaction/$pahekoId", [
+        return $this->request('POST', "accounting/transaction/{$pahekoId}", [
             'body' => $data,
         ]);
     }

@@ -11,7 +11,9 @@ use App\Entity\Stage;
 final class MealAvailability
 {
     public ItemAvailability $adults;
+
     public ItemAvailability $children;
+
     public ItemAvailability $bikes;
 
     public function __construct(
@@ -28,13 +30,11 @@ final class MealAvailability
         if ($registration->countPeople() - $registration->countChildren() > $this->adults->availability) {
             return false;
         }
+
         if ($registration->countChildren() > 0 && $registration->countChildren() > $this->children->availability) {
             return false;
         }
-        if ($registration->getNeededBike() > 0 && $registration->getNeededBike() > $this->bikes->availability) {
-            return false;
-        }
 
-        return true;
+        return !($registration->getNeededBike() > 0 && $registration->getNeededBike() > $this->bikes->availability);
     }
 }

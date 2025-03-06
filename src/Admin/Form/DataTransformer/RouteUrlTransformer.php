@@ -49,7 +49,7 @@ class RouteUrlTransformer implements DataTransformerInterface
         }
 
         if (!preg_match('#^<iframe.*src="([^ "]*)".*></iframe>#', $value, $matches)) {
-            throw new TransformationFailedException("Unable to extract URL from $value");
+            throw new TransformationFailedException("Unable to extract URL from {$value}");
         }
 
         // Wall this method again in order to clean URL if needed

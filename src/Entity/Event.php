@@ -112,11 +112,11 @@ class Event
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 10, enumType: Meal::class)]
-    private Meal $firstMealOfFirstDay;
+    private Meal $firstMealOfFirstDay = Meal::LUNCH;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 10, enumType: Meal::class)]
-    private Meal $lastMealOfLastDay;
+    private Meal $lastMealOfLastDay = Meal::LUNCH;
 
     #[Assert\Url(requireTld: true)]
     #[ORM\Column(nullable: true)]
@@ -147,8 +147,6 @@ class Event
     {
         $this->id = new UuidV4();
         $this->type = $type;
-        $this->firstMealOfFirstDay = Meal::LUNCH;
-        $this->lastMealOfLastDay = Meal::LUNCH;
         $this->createdAt = new \DateTimeImmutable();
         $this->stages = new ArrayCollection();
         $this->registrations = new ArrayCollection();
@@ -569,6 +567,7 @@ class Event
         if (false === $index = $this->stages->indexOf($stage)) {
             throw new \LogicException('Given stage does not belong to this event!');
         }
+
         $index = (int) $index;
 
         return $this->stages->get(++$index);

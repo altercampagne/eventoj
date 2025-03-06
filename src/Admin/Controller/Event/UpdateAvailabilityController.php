@@ -33,6 +33,7 @@ class UpdateAvailabilityController extends AbstractController
             $stage->updateIsFullProperty();
             $this->em->persist($stage);
         }
+
         foreach ($event->getRegistrations() as $registration) {
             $registration->computeChildren();
             $this->em->persist($registration);

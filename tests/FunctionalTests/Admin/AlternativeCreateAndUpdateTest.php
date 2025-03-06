@@ -48,11 +48,11 @@ class AlternativeCreateAndUpdateTest extends WebTestCase
         $this->assertRouteSame('admin_alternative_show');
         $this->assertSelectorTextContains('.alert-success', 'L\'alternative a bien été créée ! 🥳');
 
-        $client->clickLink('Modifier l\'alternative');
+        $client->clickLink("Modifier l'alternative");
         $this->assertResponseIsSuccessful();
 
         $client->submitForm('Modifier', [
-            'alternative_form[name]' => 'Nouveau nom d\'alternative',
+            'alternative_form[name]' => "Nouveau nom d'alternative",
         ]);
 
         $this->assertSelectorNotExists('.invalid-feedback', 'Form contains errors');

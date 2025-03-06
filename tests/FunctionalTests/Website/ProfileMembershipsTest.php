@@ -28,6 +28,7 @@ class ProfileMembershipsTest extends WebTestCase
         if (5 > (int) date('m')) {
             --$year;
         }
+
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Tes adhésions');
         $this->assertSelectorTextContains('.bg-success-subtle', \sprintf('Adhésion du 1 mai %d au 30 avril %d', $year, $year + 1));
@@ -45,14 +46,14 @@ class ProfileMembershipsTest extends WebTestCase
         $client->request('GET', '/me');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('.alert-danger', 'Tu n\'es actuellement pas membre de l\'association.');
+        $this->assertSelectorTextContains('.alert-danger', "Tu n'es actuellement pas membre de l'association.");
 
         $client->clickLink('Gérer les adhésions');
 
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_memberships');
         $this->assertSelectorTextContains('h1', 'Tes adhésions');
-        $this->assertSelectorTextContains('.alert-danger', 'Tu n\'es actuellement pas membre de l\'association.');
+        $this->assertSelectorTextContains('.alert-danger', "Tu n'es actuellement pas membre de l'association.");
 
         $client->submitForm('Adhérer à l\'association');
 

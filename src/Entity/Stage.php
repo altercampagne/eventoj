@@ -38,7 +38,7 @@ class Stage
     #[ORM\Column(type: 'string', length: 7, enumType: StageType::class, options: [
         'comment' => 'Type of this stage (before, after, classic).',
     ])]
-    private StageType $type;
+    private StageType $type = StageType::CLASSIC;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private \DateTimeImmutable $date;
@@ -102,7 +102,6 @@ class Stage
     {
         $this->id = new UuidV4();
         $this->event = $event;
-        $this->type = StageType::CLASSIC;
         $this->createdAt = new \DateTimeImmutable();
         $this->alternatives = new ArrayCollection();
         $this->stagesRegistrations = new ArrayCollection();

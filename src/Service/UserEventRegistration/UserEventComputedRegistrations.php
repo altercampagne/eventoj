@@ -32,18 +32,18 @@ final readonly class UserEventComputedRegistrations
 
     public function hasRegistrationForStage(Stage $stage): bool
     {
-        return 0 < \count($this->filterStagesRegistrations($stage));
+        return [] !== $this->filterStagesRegistrations($stage);
     }
 
     public function hasRegistrationForStageAndMeal(Stage $stage, Meal $meal): bool
     {
-        return 0 < \count($this->filterStagesRegistrations($stage, $meal));
+        return [] !== $this->filterStagesRegistrations($stage, $meal);
     }
 
     public function hasRegistrationForAllMealsOfStage(Stage $stage): bool
     {
         foreach (Meal::cases() as $meal) {
-            if (0 === \count($this->filterStagesRegistrations($stage, $meal))) {
+            if ([] === $this->filterStagesRegistrations($stage, $meal)) {
                 return false;
             }
         }

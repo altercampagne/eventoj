@@ -57,7 +57,8 @@ class RegisterChooseDatesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $bookedStages = $eventRegistrationDTO->getBookedStages();
             $stagesRegistrations = [];
-            for ($i = 0; $i < \count($bookedStages); ++$i) {
+            $counter = \count($bookedStages);
+            for ($i = 0; $i < $counter; ++$i) {
                 $stageRegistration = new StageRegistration(stage: $bookedStages[$i], registration: $registration);
 
                 if (0 === $i) {
@@ -69,6 +70,7 @@ class RegisterChooseDatesController extends AbstractController
                             $stageRegistration->setPresentForBreakfast(false);
                     }
                 }
+
                 if ($i === \count($bookedStages) - 1) {
                     switch ($eventRegistrationDTO->lastMeal) {
                         case Meal::BREAKFAST:

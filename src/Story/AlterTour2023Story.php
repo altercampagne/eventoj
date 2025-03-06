@@ -33,6 +33,7 @@ final class AlterTour2023Story extends Story
         foreach ($rawAlternatives as $alternative) {
             $this->em->persist($alternative);
         }
+
         $this->em->flush();
         foreach ($rawAlternatives as $alternative) {
             $alternatives[$alternative->getSlug()] = $alternative;
@@ -267,22 +268,22 @@ final class AlterTour2023Story extends Story
             'alternatives' => ['echel', 'ferme-aymonin'],
         ];
         yield [
-            'name' => 'Ferme Aymonin -> Eco\'lette',
+            'name' => "Ferme Aymonin -> Eco'lette",
             'description' => 'A COMPLETER',
             'alternatives' => ['ferme-aymonin', 'ecolette'],
         ];
         yield [
-            'name' => 'Eco\'lette',
+            'name' => "Eco'lette",
             'description' => 'A COMPLETER',
             'alternatives' => ['ecolette'],
         ];
         yield [
-            'name' => 'Eco\'lette',
+            'name' => "Eco'lette",
             'description' => 'A COMPLETER',
             'alternatives' => ['ecolette'],
         ];
         yield [
-            'name' => 'Eco\'lette -> Revis',
+            'name' => "Eco'lette -> Revis",
             'description' => 'A COMPLETER',
             'alternatives' => ['ecolette', 'revis'],
         ];

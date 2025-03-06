@@ -18,7 +18,7 @@ class DispatchMessageCommandTest extends KernelTestCase
     public function testExecute(): void
     {
         $application = new Application(self::bootKernel());
-        $payment = PaymentFactory::new()->approved()->create(['registration' => RegistrationFactory::new()->confirmed()->create()]);
+        PaymentFactory::new()->approved()->create(['registration' => RegistrationFactory::new()->confirmed()->create()]);
 
         $command = $application->find('eventoj:debug:dispatch-message');
         $commandTester = new CommandTester($command);

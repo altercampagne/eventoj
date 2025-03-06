@@ -23,6 +23,7 @@ class ChoosePeopleFormTypeTest extends KernelTestCase
     use FormAssertionsTrait;
 
     private User $user;
+
     /** @var FormInterface<EventRegistrationDTO> */
     private FormInterface $form;
 

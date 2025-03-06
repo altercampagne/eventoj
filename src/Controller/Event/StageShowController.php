@@ -23,6 +23,7 @@ class StageShowController extends AbstractController
         if (!$event->isPublished()) {
             throw $this->createNotFoundException();
         }
+
         if ($event !== $stage->getEvent()) {
             throw $this->createNotFoundException();
         }

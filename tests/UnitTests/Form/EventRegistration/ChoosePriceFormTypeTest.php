@@ -45,7 +45,7 @@ class ChoosePriceFormTypeTest extends KernelTestCase
 
         $this->assertFormInvalid($this->form, [
             'price' => "Le prix minimum est de 250\u{a0}€.",
-            'acceptCharter' => 'L\'acceptation de la charte n\'est pas optionnelle !',
+            'acceptCharter' => "L'acceptation de la charte n'est pas optionnelle !",
         ]);
     }
 }
