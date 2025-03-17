@@ -2787,16 +2787,16 @@
         },
         {
             "name": "martin-georgiev/postgresql-for-doctrine",
-            "version": "v2.8.0",
+            "version": "v2.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/martin-georgiev/postgresql-for-doctrine.git",
-                "reference": "ff1528b6a2c86b97ce17d02e66f498fe742c95c6"
+                "reference": "6c2532e249c494d2b4b347dcf19d8c6beaea23c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martin-georgiev/postgresql-for-doctrine/zipball/ff1528b6a2c86b97ce17d02e66f498fe742c95c6",
-                "reference": "ff1528b6a2c86b97ce17d02e66f498fe742c95c6",
+                "url": "https://api.github.com/repos/martin-georgiev/postgresql-for-doctrine/zipball/6c2532e249c494d2b4b347dcf19d8c6beaea23c3",
+                "reference": "6c2532e249c494d2b4b347dcf19d8c6beaea23c3",
                 "shasum": ""
             },
             "require": {
@@ -2807,15 +2807,16 @@
                 "php": "^8.1"
             },
             "require-dev": {
+                "deptrac/deptrac": "^3.0",
                 "doctrine/orm": "~2.14||~3.0",
-                "ekino/phpstan-banned-code": "^1.0",
-                "friendsofphp/php-cs-fixer": "^3.65.0",
-                "php-coveralls/php-coveralls": "^2.7.0",
-                "phpstan/phpstan": "^1.12.13",
-                "phpstan/phpstan-phpunit": "^1.4.2",
-                "phpunit/phpunit": "^10.5.39",
-                "qossmic/deptrac": "^2.0.4",
-                "rector/rector": "^1.2.10",
+                "ekino/phpstan-banned-code": "^3.0",
+                "friendsofphp/php-cs-fixer": "^3.72.0",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-doctrine": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpunit/phpunit": "^10.5.45",
+                "rector/rector": "^2.0",
                 "symfony/cache": "^6.4||^7.0"
             },
             "suggest": {
@@ -2854,15 +2855,19 @@
             ],
             "support": {
                 "issues": "https://github.com/martin-georgiev/postgresql-for-doctrine/issues",
-                "source": "https://github.com/martin-georgiev/postgresql-for-doctrine/tree/v2.8.0"
+                "source": "https://github.com/martin-georgiev/postgresql-for-doctrine/tree/v2.10.1"
             },
             "funding": [
+                {
+                    "url": "https://github.com/sponsors/martin-georgiev",
+                    "type": "custom"
+                },
                 {
                     "url": "https://github.com/martin-georgiev",
                     "type": "github"
                 }
             ],
-            "time": "2024-12-19T09:31:01+00:00"
+            "time": "2025-03-15T00:27:47+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -14012,6 +14017,6 @@
         "ext-iconv": "*",
         "ext-xsl": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
