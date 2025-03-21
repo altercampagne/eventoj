@@ -55,4 +55,5 @@ enum Permission: string
     case USER_VIEW = 'user.view';
     case USER_MANAGEMENT = 'user.management';
     case USER_VERIFY_EMAIL = 'user.verify_email';
+    case USER_MEMBERSHIP_CREATE = 'user.membership_create'; // Used to offer a membership to a user (free or linked to a cash payment)
 }

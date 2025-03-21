@@ -35,9 +35,14 @@
                                 <twig:Admin:Diet person="{{ user }}" />
                             </div>
                         </li>
-                        {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_MANAGEMENT').value, user) %}
-                            <li class="list-group-item">
-                                <b>Gestion des permissions :</b>
+                    </ul>
+                {% endblock %}
+
+                {% block footer %}
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_MANAGEMENT').value, user) %}
+                        <div class="row p-2">
+                            <div class="col d-grid gap-2">
+                                <b class="text-center">Gestion des permissions</b>
 
                                 <twig:ButtonPost
                                     url="{{ user.isAdmin ? path('admin_user_unpromote_admin', {id: user.id}) : path('admin_user_promote_admin', {id: user.id}) }}"
@@ -62,12 +67,33 @@
                                 >
                                     {{ user.isStatsViewer ? 'Retirer' : 'Donner' }} les droits de voir les stats
                                 </twig:ButtonPost>
-                            </li>
-                        {% endif %}
-                    </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_MEMBERSHIP_CREATE').value, user) %}
+                        <div class="row p-2">
+                            <div class="col d-grid gap-2">
+                                <b class="text-center">Autres actions</b>
+                                <twig:ButtonPostWithConfirmation
+                                    url="{{ path('admin_user_membership_create', {id: user.id}) }}"
+                                    buttonLabel="{{ user.isMember ? 'Prolonger l\'adhésion' : 'Créer une adhésion' }}"
+                                    buttonClass="btn btn-warning"
+                                    modalTitle="Confirmation de la modification liée à l'adhésion"
+                                    modalButtonClass="btn btn-warning"
+                                    modalButtonLabel="Confirmer la {{ user.isMember ? 'prolongation' : 'création' }} de l'adhésion"
+                                >
+                                    <div class="alert alert-danger">Cette action est <b>IRRÉVERSIBLE</b>.</div>
+                                    {% if user.isMember %}
+                                        <p>Tu es sur le point de prolonger l'adhésion de <b>{{ user.fullname }}</b>. Cette dernière sera <u>prolongée d'un an</u>.</p>
+                                    {% else %}
+                                        <p>Tu es sur le point de créer une adhésion pour <b>{{ user.fullname }}</b>. Cette dernière sera <u>valable jusqu'au prochain 31 mai</u>.</p>
+                                    {% endif %}
+                                    <p>💡 Cette action est utile soit pour offrir une adhésion à un membre, soit pour enregistrer une adhésion qui a été encaissée <u>en espèces</u>.</p>
+                                </twig:ButtonPostWithConfirmation>
+                            </div>
+                        </div>
+                    {% endif %}
                 {% endblock %}
-
-                {% block footer '' %}
 
             {% endembed %}
 

@@ -29,8 +29,8 @@ class Membership
     private readonly ?Companion $companion;
 
     #[ORM\ManyToOne(targetEntity: Payment::class, inversedBy: 'memberships')]
-    #[ORM\JoinColumn(name: 'payment_id', referencedColumnName: 'id', nullable: false)]
-    private readonly Payment $payment;
+    #[ORM\JoinColumn(name: 'payment_id', referencedColumnName: 'id', nullable: true)]
+    private readonly ?Payment $payment;
 
     #[ORM\Column(type: Types::INTEGER, options: [
         'comment' => 'The price of this membership',
@@ -54,7 +54,7 @@ class Membership
     private ?\DateTimeImmutable $canceledAt = null;
 
     private function __construct(
-        Payment $payment,
+        ?Payment $payment = null,
         ?User $user = null,
         ?Companion $companion = null,
         ?\DateTimeImmutable $startAt = null,
@@ -63,7 +63,7 @@ class Membership
             throw new \LogicException('Membership must be attached to a user or a companion.');
         }
 
-        if (!$payment->isApproved()) {
+        if (null !== $payment && !$payment->isApproved()) {
             throw new \LogicException('Given payment must be approved.');
         }
 
@@ -86,7 +86,7 @@ class Membership
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    public static function createForUser(User $user, Payment $payment, ?\DateTimeImmutable $startAt = null): self
+    public static function createForUser(User $user, ?Payment $payment = null, ?\DateTimeImmutable $startAt = null): self
     {
         $membership = new self($payment, user: $user, startAt: $startAt);
         $user->addMembership($membership);
@@ -159,7 +159,7 @@ class Membership
         return $this->user ?? $this->companion;
     }
 
-    public function getPayment(): Payment
+    public function getPayment(): ?Payment
     {
         return $this->payment;
     }
