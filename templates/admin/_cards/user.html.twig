@@ -41,11 +41,13 @@
             {% endif %}
             <li class="list-group-item">
                 {% set membership = user.latestMembership %}
-                <i class="fa-solid fa-ticket-simple fa-fw me-1 {{ membership is not null and membership.isValid ? 'text-success' : 'text-danger' }}"></i>
-                {% if membership is not null and membership.isValid %}
+                <i class="fa-solid fa-ticket-simple fa-fw me-1 {{ user.isMember ? 'text-success' : membership is not null and membership.isInFuture ? 'text-warning' : 'text-danger' }}"></i>
+                {% if user.isMember %}
                     Adhésion valide jusqu'au <b>{{ membership.endAt|format_date }}</b>
+                {% elseif membership is not null and membership.isInFuture %}
+                    Adhésion valide à partir du <b>{{ membership.startAt|format_date }}</b>
                 {% else %}
-                    Pas d'adhésion en cours
+                    Pas d'adhésion trouvée
                 {% endif %}
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">

@@ -31,7 +31,7 @@ class ProfileMembershipsTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Tes adhésions');
-        $this->assertSelectorTextContains('.bg-success-subtle', \sprintf('Adhésion du 1 mai %d au 30 avril %d', $year, $year + 1));
+        $this->assertSelectorTextContains('.bg-success-subtle', \sprintf('Adhésion du 1 juin %d au 31 mai %d', $year, $year + 1));
         $this->assertSelectorTextContains('.bg-success', 'En cours');
     }
 
