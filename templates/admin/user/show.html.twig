@@ -39,41 +39,9 @@
                 {% endblock %}
 
                 {% block footer %}
-                    {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_MANAGEMENT').value, user) %}
-                        <div class="row p-2">
-                            <div class="col d-grid gap-2">
-                                <b class="text-center">Gestion des permissions</b>
-
-                                <twig:ButtonPost
-                                    url="{{ user.isAdmin ? path('admin_user_unpromote_admin', {id: user.id}) : path('admin_user_promote_admin', {id: user.id}) }}"
-                                    tooltip="{{ user.isAdmin ? 'Retirer' : 'Ajouter' }} les droits d'admin à {{ user.fullname }}"
-                                    btnClass="btn {{ user.isAdmin ? 'btn-danger' : 'btn-outline-danger' }}"
-                                >
-                                    {{ user.isAdmin ? 'Retirer' : 'Passer' }} admin
-                                </twig:ButtonPost>
-
-                                <twig:ButtonPost
-                                    url="{{ path(user.isInscriptionsManager ? 'admin_user_unpromote_inscriptions_manager' : 'admin_user_promote_inscriptions_manager', {id: user.id}) }}"
-                                    tooltip="{{ user.isInscriptionsManager ? 'Retirer' : 'Ajouter' }} les droits de gestionnaire des inscriptions à {{ user.fullname }}"
-                                    btnClass="btn {{ user.isInscriptionsManager ? 'btn-warning' : 'btn-outline-warning' }}"
-                                >
-                                    {{ user.isInscriptionsManager ? 'Retirer' : 'Passer' }} gestionnaire inscriptions
-                                </twig:ButtonPost>
-
-                                <twig:ButtonPost
-                                    url="{{ path(user.isStatsViewer ? 'admin_user_unpromote_stats_viewer' : 'admin_user_promote_stats_viewer', {id: user.id}) }}"
-                                    tooltip="{{ user.isStatsViewer ? 'Retirer' : 'Ajouter' }} les droits de gestionnaire des inscriptions à {{ user.fullname }}"
-                                    btnClass="btn {{ user.isStatsViewer ? 'btn-warning' : 'btn-outline-warning' }}"
-                                >
-                                    {{ user.isStatsViewer ? 'Retirer' : 'Donner' }} les droits de voir les stats
-                                </twig:ButtonPost>
-                            </div>
-                        </div>
-                    {% endif %}
                     {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_MEMBERSHIP_CREATE').value, user) %}
                         <div class="row p-2">
                             <div class="col d-grid gap-2">
-                                <b class="text-center">Autres actions</b>
                                 <twig:ButtonPostWithConfirmation
                                     url="{{ path('admin_user_membership_create', {id: user.id}) }}"
                                     buttonLabel="{{ user.isMember ? 'Prolonger l\'adhésion' : 'Créer une adhésion' }}"
@@ -96,6 +64,44 @@
                 {% endblock %}
 
             {% endembed %}
+
+            {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_MANAGEMENT').value, user) %}
+                <div class="bg-light mt-2 border border-danger-subtle border-4">
+                    <p class="bg-danger-subtle border-bottom border-danger-subtle border-4 text-center text-danger text-uppercase fw-bold mb-0 p-1">
+                        ⚠️  Gestion des permissions ⚠️
+                    </p>
+
+                    <div class="row p-2">
+                        <div class="col d-grid gap-2">
+                            <twig:ButtonPost
+                                url="{{ user.isAdmin ? path('admin_user_unpromote_admin', {id: user.id}) : path('admin_user_promote_admin', {id: user.id}) }}"
+                                tooltip="{{ user.isAdmin ? 'Retirer' : 'Ajouter' }} les droits d'admin à {{ user.fullname }}"
+                                btnClass="btn {{ user.isAdmin ? 'btn-danger' : 'btn-outline-danger' }}"
+                                >
+                                {{ user.isAdmin ? 'Retirer' : 'Passer' }} admin
+                            </twig:ButtonPost>
+
+                            {% if not user.isAdmin %}
+                                <twig:ButtonPost
+                                url="{{ path(user.isInscriptionsManager ? 'admin_user_unpromote_inscriptions_manager' : 'admin_user_promote_inscriptions_manager', {id: user.id}) }}"
+                                tooltip="{{ user.isInscriptionsManager ? 'Retirer' : 'Ajouter' }} les droits de gestionnaire des inscriptions à {{ user.fullname }}"
+                                btnClass="btn {{ user.isInscriptionsManager ? 'btn-warning' : 'btn-outline-warning' }}"
+                                >
+                                {{ user.isInscriptionsManager ? 'Retirer' : 'Passer' }} gestionnaire inscriptions
+                                </twig:ButtonPost>
+
+                                <twig:ButtonPost
+                                url="{{ path(user.isStatsViewer ? 'admin_user_unpromote_stats_viewer' : 'admin_user_promote_stats_viewer', {id: user.id}) }}"
+                                tooltip="{{ user.isStatsViewer ? 'Retirer' : 'Ajouter' }} les droits de gestionnaire des inscriptions à {{ user.fullname }}"
+                                btnClass="btn {{ user.isStatsViewer ? 'btn-warning' : 'btn-outline-warning' }}"
+                                >
+                                {{ user.isStatsViewer ? 'Retirer' : 'Donner' }} les droits de voir les stats
+                                </twig:ButtonPost>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+        {% endif %}
 
             <div class="p-2 text-secondary">
                 <small>
