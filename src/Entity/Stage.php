@@ -51,9 +51,8 @@ class Stage
     #[Gedmo\Slug(fields: ['name'])]
     private ?string $slug = null;
 
-    #[Assert\NotBlank(message: 'La description ne doit pas être vide.')]
-    #[ORM\Column(type: 'text')]
-    private string $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $description = null;
 
     #[ORM\Column(type: 'string', length: 6, nullable: true, enumType: StageDifficulty::class, options: [
         'comment' => 'Difficulty of this stage (easy, medium, hard).',
@@ -288,12 +287,12 @@ class Stage
         return $this->slug;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
