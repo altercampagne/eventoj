@@ -33,6 +33,7 @@
                                 COMPLET
                             </span>
                         {% endif %}
+
                         {% set problems = [] %}
                         {% if stage.alternatives|length == 0 %}
                             {% set problems = problems|merge(['Aucune alternative définie']) %}
@@ -40,6 +41,17 @@
                         {% if stage.preparers|length == 0 %}
                             {% set problems = problems|merge(['Préparateurices d\'étapes manquant·es']) %}
                         {% endif %}
+                        {% if stage.description|length < 50 %}
+                            {% set problems = problems|merge(['Description trop courte (< 50 caractères)']) %}
+                        {% endif %}
+                        {% for alternative in stage.alternatives %}
+                            {% if alternative.stations|length == 0 %}
+                                {% set problems = problems|merge(['Pas de gare définie pour l\'alternative ' ~ alternative.name]) %}
+                            {% endif %}
+                            {% if alternative.categories|length == 0 %}
+                                {% set problems = problems|merge(['Pas de catégorie définie pour l\'alternative ' ~ alternative.name]) %}
+                            {% endif %}
+                        {% endfor %}
 
                         {% if problems|length > 0 %}
                             {% set title = 'Informations manquantes :' %}
