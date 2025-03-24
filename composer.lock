@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63a78cb00d7eecf3c6d3071b9402dd57",
+    "content-hash": "4ea1e3c446aa52bf69bae555929aaa4a",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2106,16 +2106,16 @@
         },
         {
             "name": "geocoder-php/photon-provider",
-            "version": "0.8.0",
+            "version": "0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geocoder-php/photon-provider.git",
-                "reference": "4ad49f766774797e97ebbfc66aad90bb5d5a18f6"
+                "reference": "4475d3dbad224f2ddcf0738e86104cdd4a94a3ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/photon-provider/zipball/4ad49f766774797e97ebbfc66aad90bb5d5a18f6",
-                "reference": "4ad49f766774797e97ebbfc66aad90bb5d5a18f6",
+                "url": "https://api.github.com/repos/geocoder-php/photon-provider/zipball/4475d3dbad224f2ddcf0738e86104cdd4a94a3ae",
+                "reference": "4475d3dbad224f2ddcf0738e86104cdd4a94a3ae",
                 "shasum": ""
             },
             "require": {
@@ -2152,9 +2152,9 @@
             "description": "Geocoder Photon adapter",
             "homepage": "http://geocoder-php.org/Geocoder/",
             "support": {
-                "source": "https://github.com/geocoder-php/photon-provider/tree/0.8.0"
+                "source": "https://github.com/geocoder-php/photon-provider/tree/0.10.0"
             },
-            "time": "2025-02-16T10:51:21+00:00"
+            "time": "2025-03-23T13:40:53+00:00"
         },
         {
             "name": "geocoder-php/plugin",
@@ -14018,6 +14018,6 @@
         "ext-iconv": "*",
         "ext-xsl": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
