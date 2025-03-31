@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Entity\Document;
+namespace App\Tests\UnitTests\Entity\Document;
 
 use App\Entity\Document\Dimensions;
 use PHPUnit\Framework\TestCase;
