@@ -3,6 +3,8 @@
 {% set title = 'Inscription de ' ~ registration.user.fullname ~ ' à ' ~ registration.event.name %}
 
 {% block main %}
+    {% set isPast = (registration.stagesRegistrations|first).stage.date <= date() %}
+
     <div class="row">
         <div class="col-8">
             {% if registration.isConfirmed %}
@@ -52,6 +54,7 @@
                         url="{{ path('admin_registration_confirmation_email_send', {id: registration.id}) }}"
                         tooltip="Renvoyer le mail de confirmation"
                         btnClass="btn btn-info"
+                        enabled="{{ not isPast }}"
                     >
                         Renvoyer le mail de confirmation
                     </twig:ButtonPost>
@@ -62,6 +65,7 @@
                         url="{{ path('admin_registration_bike_add', {id: registration.id}) }}"
                         tooltip="Ajouter un vélo de prêt à cette réservation"
                         btnClass="btn btn-warning"
+                        enabled="{{ not isPast }}"
                     >
                         Ajouter un vélo de prêt
                     </twig:ButtonPost>
@@ -72,6 +76,7 @@
                         url="{{ path('admin_registration_bike_delete', {id: registration.id}) }}"
                         tooltip="Supprimer un vélo de prêt de cette réservation"
                         btnClass="btn btn-warning"
+                        enabled="{{ not isPast }}"
                     >
                         Supprimer un vélo de prêt
                     </twig:ButtonPost>
