@@ -63,9 +63,9 @@
                         >
                             Cette action est <b>IRRÉVERSIBLE</b>.<br /><br />
                             {% if registration.approvedPayment.withInstalments %}
-                                Tu seras remboursé de l'intégralité des paiements déjà effectués, excepté le montant des adhésions et l'éventuel don à Helloasso.
+                                Tu seras remboursé de l'intégralité des paiements déjà effectués.
                             {% else %}
-                                Tu seras remboursé de l'intégralité de ton paiement, excepté le montant des adhésions et l'éventuel don à Helloasso, soit un montant de <b>{{ registration.approvedPayment.registrationOnlyAmount|format_price }}</b>.
+                                Tu seras remboursé de l'intégralité de ton paiement, soit un montant de <b>{{ registration.approvedPayment.registrationOnlyAmount|format_price }}</b>.
                             {% endif %}
                         </twig:ButtonPostWithConfirmation>
                         <small class="text-center text-secondary">
