@@ -10,14 +10,11 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\Attribute\When;
 
 #[AsCommand(
     name: 'eventoj:debug:helloasso:payment',
     description: 'Show Payment details retrieved from helloasso',
 )]
-#[When(env: 'dev')]
-#[When(env: 'test')]
 class HelloassoPaymentCommand extends Command
 {
     public function __construct(
