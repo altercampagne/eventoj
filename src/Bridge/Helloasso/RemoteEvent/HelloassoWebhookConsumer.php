@@ -66,6 +66,6 @@ final readonly class HelloassoWebhookConsumer implements ConsumerInterface
             return;
         }
 
-        $this->paymentRefundHandler->fullRefund($payment);
+        $this->paymentRefundHandler->refund($payment);
     }
 }

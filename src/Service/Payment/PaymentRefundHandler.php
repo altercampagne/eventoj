@@ -7,56 +7,58 @@ namespace App\Service\Payment;
 use App\Entity\Payment;
 use App\Service\Paheko\PaymentSynchronizer;
 use Doctrine\ORM\EntityManagerInterface;
+use Helloasso\Enums\PaymentState;
+use Helloasso\HelloassoClient;
+use Helloasso\Models\Statistics\OrderPayment;
+use Psr\Log\LoggerInterface;
 
 final readonly class PaymentRefundHandler
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
-        private readonly PaymentSynchronizer $paymentSynchronizer,
+        private HelloassoClient $helloassoClient,
+        private readonly PaymentSynchronizer $pahekoPaymentSynchronizer,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
-    public function fullRefund(Payment $payment): void
+    public function refund(Payment $payment): void
     {
-        if (null !== $registration = $payment->getRegistration()) {
-            if (!$registration->isCanceled()) {
-                $registration->cancel();
-                $this->em->persist($registration);
-            }
+        $checkoutIntent = $this->helloassoClient->checkout->retrieve((int) $payment->getHelloassoCheckoutIntentId());
+        if (null === $order = $checkoutIntent->getOrder()) {
+            $this->logger->debug('Found a payment which is validated in DB but which do not have an order on Helloasso!', [
+                'payment' => $payment,
+            ]);
+
+            throw new \RuntimeException('Given payment does not have an order associated on HelloAsso.');
         }
 
-        foreach ($payment->getMemberships() as $membership) {
-            if ($membership->isCanceled()) {
-                continue;
-            }
+        $refundablePayments = array_filter($order->getPayments(), static fn (OrderPayment $orderPayment): bool => PaymentState::Authorized === $orderPayment->getState());
 
-            $membership->cancel();
-            $this->em->persist($membership);
+        if ([] !== $refundablePayments) {
+            foreach ($refundablePayments as $refundablePayment) {
+                $this->helloassoClient->payment->refund($refundablePayment->getId(), [
+                    'comment' => "Remboursement automatique suite à l'annulation de sa participation depuis le site inscriptions par {$payment->getPayer()->getFullName()}.",
+                    'cancelOrder' => 'true', // Mandatory to avoid any future payment
+                ]);
+            }
+        } else {
+            $this->logger->info('No refundable payment found on HelloAsso when refunding a DB payment.', [
+                'payment' => $payment,
+                'checkout_intent_id' => $checkoutIntent->getId(),
+            ]);
         }
 
         $payment->refund();
-
         $this->em->persist($payment);
-        $this->em->flush();
 
-        $this->paymentSynchronizer->sync($payment);
-    }
-
-    public function refundRegistrationOnly(Payment $payment): void
-    {
-        if (null === $registration = $payment->getRegistration()) {
-            throw new \RuntimeException('Cannot partially refund a payment without registration.');
+        if (null !== $registration = $payment->getRegistration()) {
+            $registration->cancel();
+            $this->em->persist($registration);
         }
 
-        $amountToRefund = $payment->getRegistrationOnlyAmount();
-
-        $payment->refund($amountToRefund);
-        $registration->cancel();
-
-        $this->em->persist($payment);
-        $this->em->persist($registration);
         $this->em->flush();
 
-        $this->paymentSynchronizer->sync($payment);
+        $this->pahekoPaymentSynchronizer->sync($payment);
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ea1e3c446aa52bf69bae555929aaa4a",
+    "content-hash": "e1f6d1f8395f1894e39c8aa432a834e5",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1614,16 +1614,16 @@
         },
         {
             "name": "doskyft/helloasso-php",
-            "version": "dev-main",
+            "version": "dev-allow-order-cancel",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Doskyft/helloasso-php.git",
-                "reference": "ce29585f63d0458e026aeec96d85be1963f0462b"
+                "url": "https://github.com/altercampagne/helloasso-php.git",
+                "reference": "19e148e044a244bcb0495760af9fceb3d753cfc8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Doskyft/helloasso-php/zipball/ce29585f63d0458e026aeec96d85be1963f0462b",
-                "reference": "ce29585f63d0458e026aeec96d85be1963f0462b",
+                "url": "https://api.github.com/repos/altercampagne/helloasso-php/zipball/19e148e044a244bcb0495760af9fceb3d753cfc8",
+                "reference": "19e148e044a244bcb0495760af9fceb3d753cfc8",
                 "shasum": ""
             },
             "require": {
@@ -1639,14 +1639,17 @@
             "require-dev": {
                 "phpunit/phpunit": "^10.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "Helloasso\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Helloasso\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -1663,10 +1666,9 @@
                 "organization"
             ],
             "support": {
-                "issues": "https://github.com/Doskyft/helloasso-php/issues",
-                "source": "https://github.com/Doskyft/helloasso-php/tree/v1.2.0"
+                "source": "https://github.com/altercampagne/helloasso-php/tree/allow-order-cancel"
             },
-            "time": "2025-03-18T08:30:48+00:00"
+            "time": "2025-03-30T19:03:52+00:00"
         },
         {
             "name": "dunglas/doctrine-json-odm",

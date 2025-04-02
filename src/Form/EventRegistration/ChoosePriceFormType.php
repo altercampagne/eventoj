@@ -8,6 +8,7 @@ use App\Twig\Runtime\PriceExtensionRuntime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -56,6 +57,18 @@ class ChoosePriceFormType extends AbstractType
                     new Assert\IsTrue(
                         message: "L'acceptation de la charte n'est pas optionnelle !",
                     ),
+                ],
+            ])
+            ->add('pay', SubmitType::class, [
+                'label' => 'Régler via Helloasso',
+                'attr' => [
+                    'class' => 'btn-lg btn-primary',
+                ],
+            ])
+            ->add('payWithInstalments', SubmitType::class, [
+                'label' => 'Régler en 3 fois sans frais',
+                'attr' => [
+                    'class' => 'btn-sm btn-secondary',
                 ],
             ])
         ;

@@ -246,7 +246,7 @@ final readonly class PaymentSynchronizer
             }
         }
 
-        if (0 < $payment->getMembershipsAmount() && $payment->isFullyRefunded()) {
+        if (0 < $payment->getMembershipsAmount()) {
             $label = 1 < \count($payment->getMemberships()) ? 'Adhésions' : 'Adhésion';
 
             $lines[] = [

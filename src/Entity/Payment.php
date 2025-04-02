@@ -44,11 +44,6 @@ class Payment
     ])]
     private readonly int $amount;
 
-    #[ORM\Column(type: Types::INTEGER, nullable: true, options: [
-        'comment' => 'The refunded amount for this payment',
-    ])]
-    private ?int $refundedAmount = null;
-
     #[ORM\Column(type: Types::STRING, nullable: true, options: [
         'comment' => 'The checkout intent ID provided by Helloasso',
     ])]
@@ -82,12 +77,16 @@ class Payment
     #[ORM\OneToMany(targetEntity: Membership::class, mappedBy: 'payment', cascade: ['persist'])]
     private Collection $memberships;
 
-    public function __construct(User $payer, int $amount, ?Registration $registration = null)
+    #[ORM\Column]
+    private readonly int $instalments;
+
+    public function __construct(User $payer, int $amount, ?Registration $registration = null, int $instalments = 1)
     {
         $this->id = new UuidV4();
         $this->payer = $payer;
         $this->amount = $amount;
         $this->registration = $registration;
+        $this->instalments = $instalments;
         $this->createdAt = new \DateTimeImmutable();
         $this->memberships = new ArrayCollection();
 
@@ -140,15 +139,9 @@ class Payment
         return PaymentStatus::REFUNDED === $this->status;
     }
 
-    public function isFullyRefunded(): bool
-    {
-        return $this->isRefunded() && $this->refundedAmount === $this->amount;
-    }
-
-    public function refund(?int $refundedAmount = null): void
+    public function refund(): void
     {
         $this->status = PaymentStatus::REFUNDED;
-        $this->refundedAmount = $refundedAmount ?? $this->getAmount();
         $this->refundedAt = new \DateTimeImmutable();
     }
 
@@ -211,11 +204,6 @@ class Payment
         return $amount;
     }
 
-    public function getRefundedAmount(): ?int
-    {
-        return $this->refundedAmount;
-    }
-
     public function getHelloassoCheckoutIntentId(): ?string
     {
         return $this->helloassoCheckoutIntentId;
@@ -250,6 +238,16 @@ class Payment
         $this->pahekoRefundId = $pahekoRefundId;
 
         return $this;
+    }
+
+    public function withInstalments(): bool
+    {
+        return $this->instalments > 1;
+    }
+
+    public function getInstalments(): int
+    {
+        return $this->instalments;
     }
 
     public function getApprovedAt(): ?\DateTimeImmutable

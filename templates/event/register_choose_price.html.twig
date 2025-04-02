@@ -98,7 +98,10 @@
                 </ul>
 
                 <twig:EventRegistration:Buttons step="choose_people">
-                    Régler via Helloasso
+                    <twig:block name="button">
+                        {{ form_widget(form.pay) }}
+                        {{ form_widget(form.payWithInstalments) }}
+                    </twig:block>
                 </twig:EventRegistration:Buttons>
 
                 {{ form_end(form) }}
