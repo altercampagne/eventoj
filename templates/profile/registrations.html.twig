@@ -34,9 +34,14 @@
             {% endif %}
             <p class="card-text">
                 {% if registration.approvedPayment is not null %}
-                    <b>Paiement</b> de <b>{{ registration.approvedPayment.amount|format_price }}</b> réglé le <b>{{ registration.approvedPayment.approvedAt|format_date('short') }}</b>.
-                    {% if registration.approvedPayment.refunded %}
-                        <br /><b>Remboursement</b> de <b>{{ registration.approvedPayment.refundedAmount|format_price }}</b> fait le <b>{{ registration.approvedPayment.refundedAt|format_date('short') }}</b>.
+                    {% set payment = registration.approvedPayment %}
+                    {% if payment.withInstalments %}
+                        <b>Paiement</b> en {{ payment.instalments }} fois sans frais de <b>{{ payment.amount|format_price }}</b> initié le <b>{{ payment.approvedAt|format_date('short') }}</b>.
+                    {% else %}
+                        <b>Paiement</b> de <b>{{ payment.amount|format_price }}</b> réglé le <b>{{ payment.approvedAt|format_date('short') }}</b>.
+                    {% endif %}
+                    {% if payment.refunded %}
+                        <br /><b>Remboursement</b> fait le <b>{{ payment.refundedAt|format_date('short') }}</b>.
                     {% endif %}
                 {% else %}
                     <div class="alert alert-danger">
@@ -57,7 +62,11 @@
                             modalButtonLabel="Confirmer l'annulation de mon inscription"
                         >
                             Cette action est <b>IRRÉVERSIBLE</b>.<br /><br />
-                            Tu seras remboursé de l'intégralité de ton paiement, excepté le montant des adhésions et l'éventuel don à Helloasso, soit un montant de <b>{{ registration.approvedPayment.registrationOnlyAmount|format_price }}</b>.
+                            {% if registration.approvedPayment.withInstalments %}
+                                Tu seras remboursé de l'intégralité des paiements déjà effectués, excepté le montant des adhésions et l'éventuel don à Helloasso.
+                            {% else %}
+                                Tu seras remboursé de l'intégralité de ton paiement, excepté le montant des adhésions et l'éventuel don à Helloasso, soit un montant de <b>{{ registration.approvedPayment.registrationOnlyAmount|format_price }}</b>.
+                            {% endif %}
                         </twig:ButtonPostWithConfirmation>
                         <small class="text-center text-secondary">
                             (disponible jusqu'au {{ registration.cancelationDate|format_date('long') }})

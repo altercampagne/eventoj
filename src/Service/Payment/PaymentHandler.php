@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Payment;
 
 use App\Entity\Payment;
+use App\Service\Payment\Instalment\TermsCalculator;
 use Doctrine\ORM\EntityManagerInterface;
 use Helloasso\HelloassoClient;
 use Helloasso\Models\Carts\CheckoutIntentResponse;
@@ -20,11 +21,12 @@ final readonly class PaymentHandler
         private EntityManagerInterface $em,
         private UrlGeneratorInterface $urlGenerator,
         private PaymentSuccessfulHandler $paymentSuccessfulHandler,
+        private TermsCalculator $termsCalculator,
     ) {
     }
 
     /**
-     * @return string The redirect URL provided by HelloAsso
+     * @return string The redirect URL provided by Helloasso
      */
     public function initiatePayment(Payment $payment): string
     {
@@ -40,7 +42,7 @@ final readonly class PaymentHandler
 
         $payer = $payment->getPayer();
 
-        $initCheckoutResponse = $this->helloassoClient->checkout->create((new InitCheckoutBody())
+        $initCheckoutBody = (new InitCheckoutBody())
             ->setTotalAmount($payment->getAmount())
             ->setInitialAmount($payment->getAmount())
             ->setItemName($this->getHelloassoItemName($payment))
@@ -60,7 +62,13 @@ final readonly class PaymentHandler
             ->setMetadata([
                 'payment' => (string) $payment->getId(),
             ])
-        );
+        ;
+
+        if ($payment->withInstalments()) {
+            $this->termsCalculator->updateCheckoutBody($payment, $initCheckoutBody);
+        }
+
+        $initCheckoutResponse = $this->helloassoClient->checkout->create($initCheckoutBody);
 
         $payment->setHelloassoCheckoutIntentId((string) $initCheckoutResponse->getId());
 

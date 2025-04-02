@@ -17,6 +17,13 @@ final class PaymentFactory extends PersistentProxyObjectFactory
         return Payment::class;
     }
 
+    public function withInstalments(int $instalments = 3): self
+    {
+        return $this->with([
+            'instalments' => 3,
+        ]);
+    }
+
     public function approved(): self
     {
         return $this

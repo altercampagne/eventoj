@@ -50,7 +50,7 @@ class SyncWithHelloassoController extends AbstractController
                 return $this->return('success', 'Le paiement est remboursé chez Helloasso et chez nous !', $payment);
             }
 
-            $this->paymentRefundHandler->fullRefund($payment);
+            $this->paymentRefundHandler->refund($payment);
 
             return $this->return('warning', 'Le paiement était remboursé chez Helloasso mais pas chez nous. C\'est maintenant corrigé !', $payment);
         }

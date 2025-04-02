@@ -52,7 +52,7 @@ class RegisterChoosePriceController extends AbstractController
             $this->addFlash('warning', 'Cette inscription ne peut pas être réglée. Ne le serait-elle pas déjà ?');
 
             $this->logger->warning('Trying to pay for a registration which is not in waiting payment!', [
-                'registration_id' => (string) $registration->getId(),
+                'registration' => $registration,
             ]);
 
             return $this->redirectToRoute('homepage');
@@ -79,6 +79,8 @@ class RegisterChoosePriceController extends AbstractController
                 payer: $payer,
                 amount: $price,
                 registration: $registration,
+                /* @phpstan-ignore method.notFound */
+                instalments: $form->get('payWithInstalments')->isClicked() ? 3 : 1,
             );
 
             $redirectUrl = $this->paymentHandler->initiatePayment($payment);

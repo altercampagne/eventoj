@@ -14,8 +14,8 @@ class PriceExtensionRuntime implements RuntimeExtensionInterface
     ) {
     }
 
-    public function formatPrice(int $amount): string
+    public function formatPrice(int|float $amount): string
     {
-        return $this->priceFormatter->format($amount);
+        return $this->priceFormatter->format((int) round($amount, 0));
     }
 }

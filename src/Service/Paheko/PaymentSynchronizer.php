@@ -30,6 +30,8 @@ final readonly class PaymentSynchronizer
         private string $pahekoHelloassoAccountCode,
         #[Autowire(env: 'PAHEKO_MEMBERSHIPS_PROJECT_ID')]
         private int $pahekoMembershipsProjectId,
+        #[Autowire(param: 'kernel.environment')]
+        private string $environment,
     ) {
     }
 
@@ -39,10 +41,24 @@ final readonly class PaymentSynchronizer
             return;
         }
 
-        $this->userSynchronizer->sync($payment->getPayer());
-        $this->syncPayment($payment);
-        if ($payment->isRefunded()) {
-            $this->syncRefund($payment);
+        try {
+            $this->userSynchronizer->sync($payment->getPayer());
+            $this->syncPayment($payment);
+            if ($payment->isRefunded()) {
+                $this->syncRefund($payment);
+            }
+        } catch (\Exception $e) {
+            // In dev env we silently ignore this error
+            if ('dev' === $this->environment) {
+                $this->logger->warning("En error occurred when synchronising a payment. This error have been ignored in dev env but it won't be in production.", [
+                    'payment' => $payment,
+                    'exception' => $e,
+                ]);
+
+                return;
+            }
+
+            throw $e;
         }
     }
 
@@ -230,7 +246,7 @@ final readonly class PaymentSynchronizer
             }
         }
 
-        if (0 < $payment->getMembershipsAmount() && $payment->isFullyRefunded()) {
+        if (0 < $payment->getMembershipsAmount()) {
             $label = 1 < \count($payment->getMemberships()) ? 'Adhésions' : 'Adhésion';
 
             $lines[] = [

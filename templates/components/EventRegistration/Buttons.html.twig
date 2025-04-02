@@ -1,7 +1,9 @@
 <div class="d-grid gap-2 mt-4">
-    <button type="submit" class="btn btn-lg btn-primary">
-        {% block content 'Étape suivante' %}
-    </button>
+    {% block button %}
+        <button type="submit" class="btn btn-lg btn-primary">
+            {% block content 'Étape suivante' %}
+        </button>
+    {% endblock %}
 </div>
 <div class="d-grid gap-2 mt-3">
     <a href="{{ path('homepage') }}" class="btn btn-link">
