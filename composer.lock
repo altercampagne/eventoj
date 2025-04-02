@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1f6d1f8395f1894e39c8aa432a834e5",
+    "content-hash": "4972c5f5244cd3cc12d5fc6400f40f16",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2698,16 +2698,16 @@
         },
         {
             "name": "martin-georgiev/postgresql-for-doctrine",
-            "version": "v2.10.3",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/martin-georgiev/postgresql-for-doctrine.git",
-                "reference": "6332bc6372ce64d10e139af9e20b92c67a57fa33"
+                "reference": "291f7b7b058a444a597b72f530ff8bab0c8640c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martin-georgiev/postgresql-for-doctrine/zipball/6332bc6372ce64d10e139af9e20b92c67a57fa33",
-                "reference": "6332bc6372ce64d10e139af9e20b92c67a57fa33",
+                "url": "https://api.github.com/repos/martin-georgiev/postgresql-for-doctrine/zipball/291f7b7b058a444a597b72f530ff8bab0c8640c5",
+                "reference": "291f7b7b058a444a597b72f530ff8bab0c8640c5",
                 "shasum": ""
             },
             "require": {
@@ -2766,7 +2766,7 @@
             ],
             "support": {
                 "issues": "https://github.com/martin-georgiev/postgresql-for-doctrine/issues",
-                "source": "https://github.com/martin-georgiev/postgresql-for-doctrine/tree/v2.10.3"
+                "source": "https://github.com/martin-georgiev/postgresql-for-doctrine/tree/v3.0.0"
             },
             "funding": [
                 {
@@ -2778,7 +2778,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-24T22:44:34+00:00"
+            "time": "2025-03-30T16:29:22+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -14004,6 +14004,6 @@
         "ext-iconv": "*",
         "ext-xsl": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

@@ -19,7 +19,7 @@
         "doskyft/helloasso-php": "dev-allow-order-cancel",
         "dunglas/doctrine-json-odm": "^1.4",
         "geocoder-php/photon-provider": "^0.10.0",
-        "martin-georgiev/postgresql-for-doctrine": "^2.1",
+        "martin-georgiev/postgresql-for-doctrine": "^3.0",
         "odolbeau/phone-number-bundle": "^4.0",
         "pagerfanta/doctrine-orm-adapter": "^4.5",
         "pagerfanta/twig": "^4.5",
