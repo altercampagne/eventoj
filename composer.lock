@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.342.16",
+            "version": "3.342.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "c7db59f47523f66205b4c429a69b6baf947d3f78"
+                "reference": "b2eb01f8dc4015f50095fcdf2ac99e3342a63dc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/c7db59f47523f66205b4c429a69b6baf947d3f78",
-                "reference": "c7db59f47523f66205b4c429a69b6baf947d3f78",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b2eb01f8dc4015f50095fcdf2ac99e3342a63dc0",
+                "reference": "b2eb01f8dc4015f50095fcdf2ac99e3342a63dc0",
                 "shasum": ""
             },
             "require": {
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.16"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.19"
             },
-            "time": "2025-03-28T18:09:10+00:00"
+            "time": "2025-04-02T18:16:12+00:00"
         },
         {
             "name": "babdev/pagerfanta-bundle",
@@ -12029,16 +12029,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "12.1.0",
+            "version": "12.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "d331a5ced3d9a2b917baa9841b2211e72f9e780d"
+                "reference": "0ce76cf0940abbc31525420b7b8d174656c6675d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/d331a5ced3d9a2b917baa9841b2211e72f9e780d",
-                "reference": "d331a5ced3d9a2b917baa9841b2211e72f9e780d",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/0ce76cf0940abbc31525420b7b8d174656c6675d",
+                "reference": "0ce76cf0940abbc31525420b7b8d174656c6675d",
                 "shasum": ""
             },
             "require": {
@@ -12094,7 +12094,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/12.1.0"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/12.1.1"
             },
             "funding": [
                 {
@@ -12102,7 +12102,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-17T13:56:07+00:00"
+            "time": "2025-04-03T03:41:27+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
