@@ -34,6 +34,10 @@ final class RouteUrlTransformerTest extends TestCase
             'https://www.openrunner.com/embed/5279777969664a517173474f626d6a37785375456d726372554e433665793458674d6478775a4a677942303d3a3ad843b0c76c11cb4474191d65fe1a9a90?unit=metric',
         ];
 
+        yield 'Valid Komoot URL for tour is transformed in embedded' => [
+            'https://www.komoot.com/fr-fr/tour/1271165736',
+            'https://www.komoot.com/fr-fr/tour/1271165736/embed?profile=1',
+        ];
         yield 'Valid Komoot URL is not transformed' => [
             'https://www.komoot.com/fr-fr/tour/1271165736/embed?profile=1&share_token=aQSp6fFyamvUyEqyFxgHC9Xe64Zdn93E27r0kSWgft7F4R8pSE',
             'https://www.komoot.com/fr-fr/tour/1271165736/embed?profile=1&share_token=aQSp6fFyamvUyEqyFxgHC9Xe64Zdn93E27r0kSWgft7F4R8pSE',

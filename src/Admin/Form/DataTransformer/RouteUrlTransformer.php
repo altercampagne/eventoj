@@ -48,6 +48,10 @@ class RouteUrlTransformer implements DataTransformerInterface
             return $value;
         }
 
+        if (preg_match('#^https://www.komoot.com/.*/tour/.*$#', $value)) {
+            return $value.'/embed?profile=1';
+        }
+
         if (!preg_match('#^<iframe.*src="([^ "]*)".*></iframe>#', $value, $matches)) {
             throw new TransformationFailedException("Unable to extract URL from {$value}");
         }
