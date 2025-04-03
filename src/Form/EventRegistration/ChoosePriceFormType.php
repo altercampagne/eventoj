@@ -66,7 +66,7 @@ class ChoosePriceFormType extends AbstractType
                 ],
             ])
             ->add('payWithInstalments', SubmitType::class, [
-                'label' => 'Régler en 3 fois sans frais via HelloAsso',
+                'label' => 'Régler en 3 fois via HelloAsso',
                 'attr' => [
                     'class' => 'btn-sm btn-secondary',
                 ],
