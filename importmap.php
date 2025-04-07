@@ -26,13 +26,13 @@ return [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
     'bootstrap' => [
-        'version' => '5.3.3',
+        'version' => '5.3.5',
     ],
     '@popperjs/core' => [
         'version' => '2.11.8',
     ],
     'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.3',
+        'version' => '5.3.5',
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free' => [
