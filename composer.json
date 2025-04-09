@@ -16,7 +16,7 @@
         "doctrine/doctrine-bundle": "^2.10",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^3.3",
-        "doskyft/helloasso-php": "dev-allow-order-cancel",
+        "doskyft/helloasso-php": "dev-main",
         "dunglas/doctrine-json-odm": "^1.4",
         "geocoder-php/photon-provider": "^0.10.0",
         "martin-georgiev/postgresql-for-doctrine": "^3.0",
@@ -134,11 +134,5 @@
         "symfony/stopwatch": "7.2.*",
         "symfony/web-profiler-bundle": "7.2.*",
         "zenstruck/foundry": "^2.3"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/altercampagne/helloasso-php"
-        }
-    ]
+    }
 }
