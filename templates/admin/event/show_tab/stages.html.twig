@@ -60,7 +60,7 @@
                             {% endfor %}
                             <i class="fa-solid fa-info-circle text-danger" data-bs-toggle="tooltip" title="{{ title }}" data-bs-html="true"></i>
                         {% endif %}
-                        {% if stage.routeUrl is null %}
+                        {% if not stage.isBefore and not stage.isAfter and stage.routeUrl is null %}
                             <i class="fa-solid fa-circle-question text-warning" data-bs-toggle="tooltip" title="Pas d'itinéraire renseigné pour ce trajet." data-bs-html="true"></i>
                         {% endif %}
                     </td>
