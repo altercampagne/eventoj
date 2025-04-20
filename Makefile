@@ -87,6 +87,9 @@ assets-build: ## Build assets (SASS)
 	@$(DOCKER_COMPOSE) run --rm php bin/console sass:build
 
 ##@ Quality commands
+.PHONY: quality-enforce
+quality-enforce: rector-fix cs-fix phpstan db-reset-test test ## Run Rector, PHP-CS-fixer, PHPStan & tests
+
 .PHONY: test
 test: ## Run all tests
 	@$(DOCKER_COMPOSE) run --rm php rm -f var/cache/tiime_tested_routes_checker_bundle_route_storage
