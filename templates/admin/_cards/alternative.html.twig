@@ -39,10 +39,17 @@
                     <twig:Admin:ButtonCopyWithQuotedContent value="{{ alternative.slug }}" tooltip="Copier le slug" />
                 </li>
             {% endif %}
-            <li class="list-group-item bg-light">
+            <li class="list-group-item">
                 <i class="fa-solid fa-layer-group me-2" data-bs-toggle="tooltip" title="Catégories de cette alternative"></i>
                 {% for category in alternative.categories %}
                     <twig:Alternative:Category category="{{ category }}" />
+                {% else %}
+                    <i class="text-muted">pas de catégorie renseignée</i>
+                    {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}
+                        <a href="{{ path('admin_alternative_update', {slug: alternative.slug}) }}" class="text-sm">
+                            <i>(renseigner une catégorie)</i>
+                        </a>
+                    {% endif %}
                 {% endfor %}
             </li>
             <li class="list-group-item">
