@@ -29,6 +29,13 @@
             </span>
         </div>
 
+        {% if stage.isOver %}
+            <div class="alert alert-warning">
+                <b>Il s'agit d'une étape passée !</b><br />
+                Tous les détails restent accessibles pour assouvir ta curiosité mais il n'est bien sûr plus possible de prendre des places. :)
+            </div>
+        {% endif %}
+
         <div class="row mt-5">
             <div class="col-12 col-md-7">
                 <div class="text-center mb-3">
