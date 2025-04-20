@@ -41,7 +41,7 @@
                         {% if stage.preparers|length == 0 %}
                             {% set problems = problems|merge(['Préparateurices d\'étapes manquant·es']) %}
                         {% endif %}
-                        {% if stage.description|length < 50 %}
+                        {% if not stage.isBefore and not stage.isAfter and stage.description|length < 50 %}
                             {% set problems = problems|merge(['Description trop courte (< 50 caractères)']) %}
                         {% endif %}
                         {% for alternative in stage.alternatives %}
