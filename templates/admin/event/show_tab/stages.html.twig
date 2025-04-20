@@ -95,6 +95,9 @@
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %}
                             <twig:Admin:IconView url="{{ path('admin_stage_show', {slug: stage.slug}) }}" />
                         {% endif %}
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_UPDATE').value, stage) %}
+                            <twig:Admin:IconEdit url="{{ path('admin_stage_update', {slug: stage.slug}) }}" />
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

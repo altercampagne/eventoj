@@ -15,6 +15,7 @@
                 <th scope="col">Catégorie</th>
                 <th scope="col">Question</th>
                 <th scope="col">Answer</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,9 @@
                     <td>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::QUESTION_VIEW').value, question) %}
                             <twig:Admin:IconView url="{{ path('admin_question_show', {slug: question.slug}) }}" />
+                        {% endif %}
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::QUESTION_UPDATE').value, question) %}
+                            <twig:Admin:IconEdit url="{{ path('admin_question_update', {slug: question.slug}) }}" />
                         {% endif %}
                     </td>
                 </tr>
