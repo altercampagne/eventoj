@@ -41,7 +41,7 @@
                         {% if stage.preparers|length == 0 %}
                             {% set problems = problems|merge(['Préparateurices d\'étapes manquant·es']) %}
                         {% endif %}
-                        {% if stage.description|length < 50 %}
+                        {% if not stage.isBefore and not stage.isAfter and stage.description|length < 50 %}
                             {% set problems = problems|merge(['Description trop courte (< 50 caractères)']) %}
                         {% endif %}
                         {% for alternative in stage.alternatives %}
@@ -60,7 +60,7 @@
                             {% endfor %}
                             <i class="fa-solid fa-info-circle text-danger" data-bs-toggle="tooltip" title="{{ title }}" data-bs-html="true"></i>
                         {% endif %}
-                        {% if stage.routeUrl is null %}
+                        {% if not stage.isBefore and not stage.isAfter and stage.routeUrl is null %}
                             <i class="fa-solid fa-circle-question text-warning" data-bs-toggle="tooltip" title="Pas d'itinéraire renseigné pour ce trajet." data-bs-html="true"></i>
                         {% endif %}
                     </td>
@@ -94,6 +94,9 @@
                     <td>
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_VIEW').value, stage) %}
                             <twig:Admin:IconView url="{{ path('admin_stage_show', {slug: stage.slug}) }}" />
+                        {% endif %}
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::STAGE_UPDATE').value, stage) %}
+                            <twig:Admin:IconEdit url="{{ path('admin_stage_update', {slug: stage.slug}) }}" />
                         {% endif %}
                     </td>
                 </tr>

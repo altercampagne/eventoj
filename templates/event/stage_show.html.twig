@@ -29,6 +29,13 @@
             </span>
         </div>
 
+        {% if stage.isOver %}
+            <div class="alert alert-warning">
+                <b>Il s'agit d'une étape passée !</b><br />
+                Tous les détails restent accessibles pour assouvir ta curiosité mais il n'est bien sûr plus possible de prendre des places. :)
+            </div>
+        {% endif %}
+
         <div class="row mt-5">
             <div class="col-12 col-md-7">
                 <div class="text-center mb-3">
@@ -37,19 +44,34 @@
 
                 {% if stage.isBefore %}
                     <div class="alert bg-info-subtle">
-                        Le before c'est toutes les petites mains qui s'affairent aux derniers préparatifs pour que tous les rouages du Tour soient bien huilés.<br />
-                        Elles vont remplir l'Iveco de victuailles, sciure, papier toilette. Elles vont faire les dernières réparation vélo, elles vont tout bien ranger/étiqueter pour qu'on puisse trouver ce qu'on cherche quand on le cherche. Elles vont imprimer les cartes et fiches étape pour nos guides et conducteurices. Et bien plus encore !<br />
-                        C'est l'occasion de rentrer dans les coulisses du Tour et de voir arriver petit à petit toustes les nouvelleaux !
+                        <p>
+                            Le <b>BEFORE</b> c'est toutes les petites mains qui s'affairent aux derniers préparatifs pour que tous les rouages du Tour soient bien huilés.
+                        </p>
+
+                        <p>
+                            Elles vont remplir l'Iveco de victuailles, sciure, papier toilette et tant d'autres choses utiles. Elles vont faire les dernières réparation vélo, elles vont tout bien ranger/étiqueter pour qu'on puisse trouver ce qu'on cherche quand on le cherche. Elles vont imprimer les cartes et fiches étape pour nos guides et conducteurices. Et bien plus encore !
+                        </p>
+                        <p>
+                            C'est l'occasion de rentrer dans les coulisses du Tour et de voir arriver petit à petit toustes les nouvelleaux !
+                        </p>
+                        <p>
+                            <u>À noter :</u> Puisqu'il ne s'agit pas réellement d'une étape du tour et que ton aide sera toujours la bienvenue, tu peux venir <b>gratuitement</b> !
+                        </p>
                     </div>
                 {% elseif stage.isAfter %}
                     <div class="alert bg-info-subtle">
-                        L'After, c'est l'occasion de rester un jour de plus pour nous aider à faire l'état des lieux de notre équipement et a ranger les véhicules avant l'hivernage.
+                        <p>
+                            L'After, c'est l'occasion de rester un jour de plus pour nous aider à faire l'état des lieux de notre équipement et a ranger les véhicules avant l'hivernage.
+                        </p>
+                        <p>
+                            <u>À noter :</u> Puisqu'il ne s'agit pas réellement d'une étape du tour et que ton aide sera toujours la bienvenue, tu peux venir <b>gratuitement</b> !
+                        </p>
+                    </div>
+                {% else %}
+                    <div class="bg-white p-3 rounded border border-secondary-outline">
+                        {{ stage.description|raw }}
                     </div>
                 {% endif %}
-
-                <div class="bg-white p-3 rounded border border-secondary-outline">
-                    {{ stage.description|raw }}
-                </div>
 
                 {% if stage.routeUrl is not null %}
                     <div class="text-center my-3">

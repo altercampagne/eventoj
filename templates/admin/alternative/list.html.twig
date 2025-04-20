@@ -82,6 +82,9 @@
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_VIEW').value, alternative) %}
                             <twig:Admin:IconView url="{{ path('admin_alternative_show', {slug: alternative.slug}) }}" />
                         {% endif %}
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::ALTERNATIVE_UPDATE').value, alternative) %}
+                            <twig:Admin:IconEdit url="{{ path('admin_alternative_update', {slug: alternative.slug}) }}" />
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
