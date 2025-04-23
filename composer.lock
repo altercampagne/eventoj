@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.342.30",
+            "version": "3.342.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "eaa4f64784fdf8e66b511df18de43c43fbeb4f63"
+                "reference": "ddd3747bd08f04159aec5d102a60c7d29906ee0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/eaa4f64784fdf8e66b511df18de43c43fbeb4f63",
-                "reference": "eaa4f64784fdf8e66b511df18de43c43fbeb4f63",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ddd3747bd08f04159aec5d102a60c7d29906ee0b",
+                "reference": "ddd3747bd08f04159aec5d102a60c7d29906ee0b",
                 "shasum": ""
             },
             "require": {
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.30"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.33"
             },
-            "time": "2025-04-18T18:05:51+00:00"
+            "time": "2025-04-23T18:07:32+00:00"
         },
         {
             "name": "babdev/pagerfanta-bundle",
@@ -1621,12 +1621,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Doskyft/helloasso-php.git",
-                "reference": "16619683e271081466f3acb0eb874fd746ed2378"
+                "reference": "7364cc015d13a4fe28d3dd798c0d8b51de01ea07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Doskyft/helloasso-php/zipball/16619683e271081466f3acb0eb874fd746ed2378",
-                "reference": "16619683e271081466f3acb0eb874fd746ed2378",
+                "url": "https://api.github.com/repos/Doskyft/helloasso-php/zipball/7364cc015d13a4fe28d3dd798c0d8b51de01ea07",
+                "reference": "7364cc015d13a4fe28d3dd798c0d8b51de01ea07",
                 "shasum": ""
             },
             "require": {
@@ -1669,7 +1669,7 @@
                 "issues": "https://github.com/Doskyft/helloasso-php/issues",
                 "source": "https://github.com/Doskyft/helloasso-php/tree/main"
             },
-            "time": "2025-04-09T07:45:44+00:00"
+            "time": "2025-04-22T08:58:49+00:00"
         },
         {
             "name": "dunglas/doctrine-json-odm",
@@ -12351,16 +12351,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "12.1.2",
+            "version": "12.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "6f2775cc4b7b19ba5a411c188e855eb0cc78a711"
+                "reference": "72ca50e817dd7d65356c16772c30f06c01a6fae2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6f2775cc4b7b19ba5a411c188e855eb0cc78a711",
-                "reference": "6f2775cc4b7b19ba5a411c188e855eb0cc78a711",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/72ca50e817dd7d65356c16772c30f06c01a6fae2",
+                "reference": "72ca50e817dd7d65356c16772c30f06c01a6fae2",
                 "shasum": ""
             },
             "require": {
@@ -12428,7 +12428,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.1.2"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.1.3"
             },
             "funding": [
                 {
@@ -12440,11 +12440,19 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/phpunit/phpunit",
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-04-08T08:05:27+00:00"
+            "time": "2025-04-22T06:11:09+00:00"
         },
         {
             "name": "sebastian/cli-parser",
