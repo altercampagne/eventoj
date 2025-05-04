@@ -18,14 +18,14 @@ class ProfileMembershipsTest extends WebTestCase
         $client = static::createClient();
 
         $user = UserFactory::createOne()->_real();
-        MembershipFactory::createOne(['user' => $user]);
+        $membership = MembershipFactory::createOne(['user' => $user]);
 
         $client->loginUser($user);
 
         $client->request('GET', '/me/memberships');
 
         $year = (int) date('Y');
-        if (5 > (int) date('m')) {
+        if (6 > (int) date('m')) {
             --$year;
         }
 
