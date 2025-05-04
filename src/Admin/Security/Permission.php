@@ -34,6 +34,7 @@ enum Permission: string
     case PAYMENT_VIEW = 'payment.view';
     case PAYMENT_SYNC_WITH_HELLOASSO = 'payment.sync_with_helloasso';
     case PAYMENT_SYNC_WITH_PAHEKO = 'payment.sync_with_paheko';
+    case PAYMENT_REFUND = 'payment.refund';
 
     case QUESTION_LIST = 'question.list';
     case QUESTION_VIEW = 'question.view';

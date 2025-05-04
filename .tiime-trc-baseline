@@ -21,6 +21,7 @@ admin_event_update_availability
 magic_search
 admin_membership_list
 admin_payment_list
+admin_payment_refund
 admin_payment_show
 admin_payment_sync_with_helloasso
 admin_payment_sync_with_paheko

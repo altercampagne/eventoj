@@ -70,26 +70,39 @@
 
                 {% block footer %}
                     <div class="row p-2">
+                        <div class="col d-grid gap-2">
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_SYNC_WITH_HELLOASSO').value, payment) and payment.helloassoCheckoutIntentId is not null %}
-                            <div class="col d-grid gap-2">
                                 <twig:ButtonPost
                                     url="{{ path('admin_payment_sync_with_helloasso', {id: payment.id}) }}"
                                     label="Synchroniser le paiement avec Helloasso"
                                     tooltip="Permet de s'assurer que le paiement a bien le même status chez nous que chez Helloasso"
                                     btnClass="btn btn-warning btn-fill"
                                 />
-                            </div>
                         {% endif %}
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_SYNC_WITH_PAHEKO').value, payment) %}
-                            <div class="col d-grid gap-2">
                                 <twig:ButtonPost
                                     url="{{ path('admin_payment_sync_with_paheko', {id: payment.id}) }}"
                                     label="Synchroniser le paiement avec Paheko"
                                     tooltip="Permet de s'assurer que le paiement est bien sycnhronisé chez Paheko"
                                     btnClass="btn btn-warning"
                                 />
-                            </div>
                         {% endif %}
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_REFUND').value, payment) and payment.isApproved %}
+                                <twig:ButtonPostWithConfirmation
+                                    url="{{ path('admin_payment_refund', {id: payment.id}) }}"
+                                    buttonLabel="Rembourser le paiement et annuler inscriptions & adhésions"
+                                    buttonClass="btn btn-danger btn-fill"
+                                    modalTitle="Confirmation du remboursement du paiement effectué par {{ payment.payer.fullName }}"
+                                    modalButtonClass="btn btn-danger"
+                                    modalButtonLabel="Confirmer le remboursement intégral du paiement"
+                                >
+                                    <div class="alert alert-danger">Cette action est <b>IRRÉVERSIBLE</b>.</div>
+                                    <p>Tu es sur le point de procéder au remboursement du paiement de <b>{{ payment.amount|format_price }}</b> effectué par <b>{{ payment.payer.fullName }}</b>.</p>
+                                    <p>Le remboursement de ce paiement donnera lieu à <b>l'annulation de toutes les inscriptions et adhésions</b> qui y sont attachées.</p>
+                                    <p>Au risque d'insister : cette action est <b><u>totalement irréversible</u></b>.</p>
+                                </twig:ButtonPostWithConfirmation>
+                        {% endif %}
+                            </div>
                     </div>
                 {% endblock %}
             {% endembed %}
