@@ -68,7 +68,7 @@ class Membership
         }
 
         if (null === $startAt) {
-            $startAt = new \DateTimeImmutable('first day of june');
+            $startAt = new \DateTimeImmutable('first day of july');
             if ($startAt > new \DateTimeImmutable()) {
                 $startAt = $startAt->modify('-1 year');
             }
