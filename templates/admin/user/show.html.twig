@@ -149,8 +149,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for registration in user.registrations %}
-                                    <tr>
+                                {% for registration in user.registrations|reverse %}
+                                    <tr{% if registration.isThisYear %} class="table-active"{% endif %}>
                                         <td>
                                             {{ registration.event.name }}
                                         </td>
@@ -281,8 +281,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for payment in user.payments %}
-                                    <tr>
+                                {% for payment in user.payments|reverse %}
+                                    <tr{% if payment.isThisYear %} class="table-active"{% endif %}>
                                         <td>
                                             {{ payment.amount|format_price }}
                                         </td>

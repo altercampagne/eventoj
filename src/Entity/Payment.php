@@ -95,6 +95,11 @@ class Payment
         }
     }
 
+    public function isThisYear(): bool
+    {
+        return $this->getCreatedAt()->format('y') === date('y');
+    }
+
     /**
      * The given approval date must be the date of the order in helloasso.
      */

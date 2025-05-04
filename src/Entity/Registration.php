@@ -269,6 +269,11 @@ class Registration
         return $stageRegistration->getStage()->getDate();
     }
 
+    public function isThisYear(): bool
+    {
+        return $this->getCreatedAt()->format('y') === date('y');
+    }
+
     /**
      * If the first day is a free day, the first meal of the first paying day
      * must be the breakfast.
