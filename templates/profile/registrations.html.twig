@@ -65,7 +65,7 @@
                             {% if registration.approvedPayment.withInstalments %}
                                 Tu seras remboursé de l'intégralité des paiements déjà effectués.
                             {% else %}
-                                Tu seras remboursé de l'intégralité de ton paiement, soit un montant de <b>{{ registration.approvedPayment.registrationOnlyAmount|format_price }}</b>.
+                                Tu seras remboursé de l'intégralité de ton paiement.
                             {% endif %}
                         </twig:ButtonPostWithConfirmation>
                         <small class="text-center text-secondary">
