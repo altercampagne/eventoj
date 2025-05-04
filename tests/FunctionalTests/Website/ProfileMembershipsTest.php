@@ -18,7 +18,7 @@ class ProfileMembershipsTest extends WebTestCase
         $client = static::createClient();
 
         $user = UserFactory::createOne()->_real();
-        $membership = MembershipFactory::createOne(['user' => $user]);
+        MembershipFactory::createOne(['user' => $user]);
 
         $client->loginUser($user);
 
