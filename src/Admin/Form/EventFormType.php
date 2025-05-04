@@ -65,6 +65,10 @@ class EventFormType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
+                'help' => "⚠️  Une fois que l'évènement a été ouvert, il n'est plus possible de modifier cette date !",
+                'help_attr' => [
+                    'class' => 'text-warning-emphasis',
+                ],
                 'disabled' => $event->isBookable(),
             ])
             ->add('adultsCapacity', IntegerType::class, [
