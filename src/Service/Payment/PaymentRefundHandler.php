@@ -57,6 +57,11 @@ final readonly class PaymentRefundHandler
             $this->em->persist($registration);
         }
 
+        foreach ($payment->getMemberships() as $membership) {
+            $membership->cancel();
+            $this->em->persist($membership);
+        }
+
         $this->em->flush();
 
         $this->pahekoPaymentSynchronizer->sync($payment);
