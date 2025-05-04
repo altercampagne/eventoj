@@ -75,6 +75,7 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
                 'request_uri' => $uri,
                 'response_code' => $e->getResponse()->getStatusCode(),
                 'response_content' => $e->getResponse()->getContent(false),
+                'exception' => $e,
             ]);
 
             throw $e;
