@@ -374,4 +374,30 @@ class Stage
     {
         return $this->stagesRegistrations->filter(static fn (StageRegistration $stageRegistration): bool => $stageRegistration->getRegistration()->isConfirmed());
     }
+
+    /**
+     * @return Station[]
+     */
+    public function getStations(): array
+    {
+        $stations = [];
+
+        foreach ($this->alternatives as $alternative) {
+            foreach ($alternative->getStations() as $station) {
+                if (!\array_key_exists($station->name, $stations)) {
+                    $stations[$station->name] = $station;
+
+                    continue;
+                }
+
+                if ($stations[$station->name]->distance > $station->distance) {
+                    $stations[$station->name] = $station;
+                }
+            }
+        }
+
+        usort($stations, static fn (Station $stationA, Station $stationB): int => $stationA->distance - $stationB->distance);
+
+        return $stations;
+    }
 }

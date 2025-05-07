@@ -228,6 +228,8 @@ class Alternative implements LocatedEntityInterface
             $clonedStations[] = clone $station;
         }
 
+        usort($clonedStations, static fn (Station $stationA, Station $stationB): int => $stationA->distance - $stationB->distance);
+
         $this->stations = $clonedStations;
 
         return $this;

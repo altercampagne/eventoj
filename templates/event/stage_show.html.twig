@@ -113,6 +113,23 @@
                     </div>
                 {% endif %}
 
+                {% if stage.stations|length > 0 %}
+                    <div class="text-center my-3 mt-4">
+                        <h2>Les gares à proximité des alternatives</h2>
+                    </div>
+
+                    <div class="row">
+                        {% for station in stage.stations %}
+                            <div class="col-12 col-sm-6">
+                                <div class="bg-white p-3 rounded border border-secondary-outline mt-2">
+                                    <i class="fa-solid fa-{{ station.type }} fa-fw me-2" data-bs-toggle="tooltip" title="Gare de {{ station.type }}"></i>
+                                    {{ station.name }} <span class="text-secondary">({{ station.distance }} km{% if station.distance > 1 %}s{% endif %})</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
                 <div class="d-grid gap-2 mt-3">
                     {% if stage.event.isBookable and not stage.event.isFull %}
                         <a href="{{ path('event_register', {slug: stage.event.slug}) }}" class="btn btn-primary btn-lg">
