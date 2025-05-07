@@ -24,7 +24,7 @@ final readonly class PaymentSuccessfulHandler
 
     public function onPaymentSuccess(Payment $payment, OrderDetail $order): void
     {
-        $payment->approve(\DateTimeImmutable::createFromMutable($order->getDate()));
+        $payment->approve((string) $order->getId(), \DateTimeImmutable::createFromMutable($order->getDate()));
         $this->em->persist($payment);
 
         $memberships = $this->membershipCreator->createMembershipsFromPayment($payment);
