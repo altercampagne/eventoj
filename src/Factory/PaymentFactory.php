@@ -28,7 +28,10 @@ final class PaymentFactory extends PersistentProxyObjectFactory
     {
         return $this
             ->afterInstantiate(static function (Payment $payment): void {
-                $payment->approve(new \DateTimeImmutable());
+                $payment->approve(
+                    (string) self::faker()->randomNumber(7, strict: true),
+                    new \DateTimeImmutable()
+                );
             })
         ;
     }

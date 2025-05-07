@@ -30,11 +30,17 @@
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between">
                             <div>
-                                <i class="fa-solid fa-handshake-angle me-1"></i> Helloasso ID :
+                                <i class="fa-solid fa-handshake-angle me-1"></i> [HELLOASSO] CheckoutIntent ID :
                                 {% if payment.helloassoCheckoutIntentId is null %}
                                     -
                                 {% else %}
                                     <twig:Admin:ButtonCopyWithQuotedContent value="{{ payment.helloassoCheckoutIntentId }}" tooltip="Copier l'ID" />
+                                {% endif %}
+                                | Order ID :
+                                {% if payment.helloassoOrderId is null %}
+                                    -
+                                {% else %}
+                                    <twig:Admin:ButtonCopyWithQuotedContent value="{{ payment.helloassoOrderId }}" tooltip="Copier l'ID" />
                                 {% endif %}
                             </div>
                             {% if checkoutIntent is not null and checkoutIntent.order is not null %}
@@ -50,10 +56,10 @@
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) and checkoutIntent is not null %}
                             <li class="list-group-item bg-light d-flex justify-content-between">
                                 <div>
-                                    {% if checkoutIntent.order is null %}
-                                        Pas d'order dans le checkoutIntent, le paiement n'est donc pas validé.
+                                    {% if payment.helloassoOrderId is null %}
+                                        Pas d'order dans le paiement, il n'est donc pas validé.
                                     {% else %}
-                                        Order <twig:Admin:ButtonCopyWithQuotedContent value="{{ checkoutIntent.order.id }}" tooltip="Copier l'ID de l'Order Helloasso" /> contient {{ checkoutIntent.order.payments|length }} paiement{{ checkoutIntent.order.payments|length > 1 ? 's' }} :
+                                        Liste des paiements dans Helloasso :
                                         <ul>
                                             {% for helloassoPayment in checkoutIntent.order.payments %}
                                                 <li>

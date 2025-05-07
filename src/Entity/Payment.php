@@ -49,6 +49,11 @@ class Payment
     ])]
     private ?string $helloassoCheckoutIntentId = null;
 
+    #[ORM\Column(type: Types::STRING, nullable: true, options: [
+        'comment' => 'The order ID provided by Helloasso when a checkout is successful',
+    ])]
+    private ?string $helloassoOrderId = null;
+
     #[ORM\Column(unique: true, nullable: true)]
     private ?string $pahekoPaymentId = null;
 
@@ -103,8 +108,9 @@ class Payment
     /**
      * The given approval date must be the date of the order in helloasso.
      */
-    public function approve(\DateTimeImmutable $approvedAt): void
+    public function approve(string $helloassoOrderId, \DateTimeImmutable $approvedAt): void
     {
+        $this->helloassoOrderId = $helloassoOrderId;
         $this->status = PaymentStatus::APPROVED;
         $this->approvedAt = $approvedAt;
     }
@@ -217,6 +223,18 @@ class Payment
     public function setHelloassoCheckoutIntentId(string $helloassoCheckoutIntentId): self
     {
         $this->helloassoCheckoutIntentId = $helloassoCheckoutIntentId;
+
+        return $this;
+    }
+
+    public function getHelloassoOrderId(): ?string
+    {
+        return $this->helloassoOrderId;
+    }
+
+    public function setHelloassoOrderId(string $helloassoOrderId): self
+    {
+        $this->helloassoOrderId = $helloassoOrderId;
 
         return $this;
     }

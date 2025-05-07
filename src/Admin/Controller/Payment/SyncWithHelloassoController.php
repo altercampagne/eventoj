@@ -41,7 +41,9 @@ class SyncWithHelloassoController extends AbstractController
             return $this->return('warning', 'Aucun paiement trouvé chez Helloasso, paiement en erreur ?', $payment);
         }
 
+        $payment->setHelloassoOrderId((string) $order->getId());
         $payment->setApprovedAt(\DateTimeImmutable::createFromMutable($order->getDate()));
+
         $this->em->persist($payment);
         $this->em->flush();
 
