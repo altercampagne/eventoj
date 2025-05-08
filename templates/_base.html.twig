@@ -27,14 +27,19 @@
                                 </li>
                                 {% if app.user.registrations|filter(r => r.isConfirmed)|length > 0 %}
                                     <li class="nav-item">
-                                        <a class="nav-link" {% if current_route starts with 'pictures' %} aria-current="page"{% endif %} href="{{ path('pictures_show') }}">Les photos</a>
+                                        <a class="nav-link" {% if current_route starts with 'pictures' %} aria-current="page"{% endif %} href="{{ path('pictures_show') }}">Photos</a>
                                     </li>
                                 {% endif %}
                             {% endif %}
                             <li class="nav-item">
                                 <a class="nav-link" {% if current_route == 'faq' %} aria-current="page"{% endif %} href="{{ path('faq') }}">
-                                    <span class="d-md-none d-lg-block">Foire aux questions</span>
-                                    <span class="d-none d-md-block d-lg-none">FAQ</span>
+                                    <span>FAQ</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://www.altercampagne.net/">
+                                    <span class="d-md-none d-lg-block">Découvrir l'AlterTour</span>
+                                    <span class="d-none d-md-block d-lg-none">Découvrir l'AT</span>
                                 </a>
                             </li>
                         </ul>
