@@ -51,6 +51,7 @@ class PrepaVoter extends Voter
 
         return \in_array($permission, [
             Permission::ADMIN_ACCESS,
+            Permission::IMAGE_DOWNLOAD_ORIGINAL,
 
             Permission::ALTERNATIVE_LIST,
             Permission::ALTERNATIVE_VIEW,
