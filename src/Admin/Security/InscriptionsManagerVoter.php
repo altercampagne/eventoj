@@ -42,6 +42,7 @@ class InscriptionsManagerVoter extends Voter
 
         return \in_array($permission, [
             Permission::ADMIN_ACCESS,
+            Permission::IMAGE_DOWNLOAD_ORIGINAL,
 
             Permission::EVENT_LIST,
             Permission::EVENT_VIEW_REGISTRATIONS,

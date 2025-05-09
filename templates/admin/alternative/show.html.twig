@@ -7,9 +7,14 @@
         <div class="col-12 col-md-4 text-center">
             <div class="row row-cols-2">
                 {% for picture in alternative.pictures %}
-                    <a href="{{ uploaded_image_url(picture) }}" class="btn btn-link text-secondary mb-3">
-                        <twig:UploadedImage file="{{ picture }}" alt="{{ alternative.name }}" class="img-fluid img-thumbnail" />
-                    </a>
+                    <div class="mb-3">
+                        <a href="{{ uploaded_image_url(picture) }}" class="btn btn-link text-secondary">
+                            <twig:UploadedImage file="{{ picture }}" alt="{{ alternative.name }}" class="img-fluid img-thumbnail mb-0 pb-0" />
+                        </a>
+                        <a href="{{ path('admin_image_download_original', {id: picture.id}) }}" class="btn btn-link mt-0 pt-0">
+                            <small>Télécharger l'image originale</small>
+                        </a>
+                    </div>
                 {% endfor %}
             </div>
 
