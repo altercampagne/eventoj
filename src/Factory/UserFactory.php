@@ -58,10 +58,14 @@ final class UserFactory extends PersistentProxyObjectFactory
      */
     protected function defaults(): array
     {
+        // Update email to add a random part & avoid errors when faker returns
+        // an email which already exists.
+        $email = str_replace('@', '-'.self::faker()->word().'@', self::faker()->email());
+
         return [
             'address' => AddressFactory::new(),
             'birthDate' => \DateTimeImmutable::createFromMutable(self::faker()->dateTimeBetween('-80 years', '-18 years')),
-            'email' => self::faker()->email(),
+            'email' => $email,
             'firstName' => self::faker()->firstName(),
             'lastName' => self::faker()->lastName(),
             'glutenIntolerant' => self::faker()->boolean(),

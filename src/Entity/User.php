@@ -526,13 +526,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
         return $this->memberships;
     }
 
+    /**
+     * Returns the latest not cancelled membership.
+     */
     public function getLatestMembership(): ?Membership
     {
-        if (false === $membership = $this->memberships->first()) {
-            return null;
+        foreach ($this->memberships as $membership) {
+            if (!$membership->isCanceled()) {
+                return $membership;
+            }
         }
 
-        return $membership;
+        return null;
     }
 
     public function addMembership(Membership $membership): void

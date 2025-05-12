@@ -4,9 +4,10 @@ doctrine:
 
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
-        #server_version: '15'
+        #server_version: '16'
 
         profiling_collect_backtrace: '%kernel.debug%'
+        use_savepoints: true
 
         types:
             bool[]: MartinGeorgiev\Doctrine\DBAL\Types\BooleanArray
@@ -38,9 +39,9 @@ doctrine:
         report_fields_where_declared: true
         validate_xml_mapping: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        identity_generation_preferences:
+            Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
-        controller_resolver:
-            auto_mapping: false
         mappings:
             App:
                 type: attribute
@@ -48,6 +49,8 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+        controller_resolver:
+            auto_mapping: false
         dql:
             string_functions:
                 # alternative implementation of ALL() and ANY() where subquery is not required, useful for arrays
