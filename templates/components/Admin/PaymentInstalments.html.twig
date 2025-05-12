@@ -1,0 +1,16 @@
+{% if payment.withInstalments %}
+    <span
+        {{
+            attributes.defaults({
+                class: 'badge bg-primary',
+            })
+            .without('data-bs-toggle')
+            .without('title')
+            .without('payment')
+        }}
+        data-bs-toggle="tooltip"
+        title="Il s'agit d'un paiement en {{ payment.instalments }} fois sans frais"
+    >
+        {{ payment.instalments }}X
+    </span>
+{% endif %}

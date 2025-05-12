@@ -38,7 +38,10 @@
                     <td>
                         {{ payment.payer.fullName }}
                     </td>
-                    <td>{{ payment.amount|format_price }}</td>
+                    <td>
+                        {{ payment.amount|format_price }}
+                        <twig:Admin:PaymentInstalments payment="{{ payment }}" class="ms-2" />
+                    </td>
                     <td>
                         <twig:Admin:PaymentStatus payment="{{ payment }}" />
                     </td>

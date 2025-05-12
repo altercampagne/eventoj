@@ -8,11 +8,7 @@
                 </div>
 
                 <div>
-                    {% if payment.withInstalments %}
-                        <span class="badge bg-primary" data-bs-toggle="tooltip" title="Il s'agit d'un paiement en {{ payment.instalments }} fois sans frais">
-                            {{ payment.instalments }}X
-                        </span>
-                    {% endif %}
+                    <twig:Admin:PaymentInstalments payment="{{ payment }}" />
                     <twig:Admin:PaymentStatus payment="{{ payment }}" />
                 </div>
             </div>
