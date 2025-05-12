@@ -89,3 +89,4 @@ when@prod:
                 type: stream
                 channels: [deprecation, debug]
                 path: php://stderr
+                formatter: monolog.formatter.json
