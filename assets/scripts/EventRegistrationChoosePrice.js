@@ -2,15 +2,20 @@ import { Modal } from 'bootstrap'
 
 class EventRegistrationChoosePrice {
   constructor() {
-    this.btnMinus = document.querySelector('button#btn-minus');
-    this.btnPlus = document.querySelector('button#btn-plus');
     this.priceInput = document.querySelector('#choose_price_form_price');
 
-    this.btnMinus.addEventListener('click', (event) => {
+    document.querySelector('button#btn-minus').addEventListener('click', (event) => {
       this.priceInput.value = parseInt(this.priceInput.value) - 1;
     });
-    this.btnPlus.addEventListener('click', (event) => {
+    document.querySelector('button#btn-plus').addEventListener('click', (event) => {
       this.priceInput.value = parseInt(this.priceInput.value) + 1;
+    });
+
+    // Update price when changing to minimum / breakEvent / support prices
+    document.querySelectorAll('button.btn-change-price').forEach((element) => {
+      element.addEventListener('click', (event) => {
+        this.priceInput.value = parseInt(event.target.dataset.price);
+      });
     });
   }
 }
