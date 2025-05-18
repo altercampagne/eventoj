@@ -45,7 +45,7 @@ class ResetPasswordController extends AbstractController
             $email = $form->get('email')->getData();
 
             $user = $this->em->getRepository(User::class)->findOneBy([
-                'email' => $email,
+                'email' => mb_strtolower($email),
             ]);
 
             // Do not reveal whether a user account was found or not.
