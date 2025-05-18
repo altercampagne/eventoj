@@ -80,7 +80,7 @@ final readonly class PaymentHandler
     public function getCheckoutIntent(Payment $payment): CheckoutIntentResponse
     {
         if (null === $id = $payment->getHelloassoCheckoutIntentId()) {
-            throw new \RuntimeException('Given payment does not contains an Helloasso checkout intent ID.');
+            throw new \RuntimeException("Given payment ({$payment->getId()}) does not contains an Helloasso checkout intent ID.");
         }
 
         return $this->helloassoClient->checkout->retrieve((int) $id);
