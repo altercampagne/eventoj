@@ -68,10 +68,7 @@ class Membership
         }
 
         if (null === $startAt) {
-            $startAt = new \DateTimeImmutable('first day of july');
-            if ($startAt > new \DateTimeImmutable()) {
-                $startAt = $startAt->modify('-1 year');
-            }
+            $startAt = self::getNewMembershipStartAt();
         }
 
         $endAt = $startAt->modify('+1 year -1 day');
@@ -100,6 +97,19 @@ class Membership
         $companion->addMembership($membership);
 
         return $membership;
+    }
+
+    /**
+     * Returns the next date which will be used when creating a new Membership.
+     */
+    public static function getNewMembershipStartAt(): \DateTimeImmutable
+    {
+        $startAt = new \DateTimeImmutable('first day of july');
+        if ($startAt > new \DateTimeImmutable()) {
+            $startAt = $startAt->modify('-1 year');
+        }
+
+        return $startAt;
     }
 
     public function isValid(): bool

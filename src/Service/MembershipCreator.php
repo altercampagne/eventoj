@@ -85,7 +85,7 @@ final class MembershipCreator
             throw new \LogicException('Given registration does have an end date (does not contains stage registrations?).');
         }
 
-        $comparisonDate = new \DateTimeImmutable('first day of may');
+        $comparisonDate = Membership::getNewMembershipStartAt();
         $comparisonDate = $comparisonDate->setDate((int) $registrationDate->format('Y'), (int) $comparisonDate->format('m'), (int) $comparisonDate->format('d'));
 
         if ($registrationDate > $comparisonDate) {

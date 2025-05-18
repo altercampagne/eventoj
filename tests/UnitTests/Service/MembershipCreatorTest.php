@@ -47,7 +47,7 @@ class MembershipCreatorTest extends TestCase
      */
     public static function createMembershipsFromPaymentProvider(): iterable
     {
-        yield ['2024-07-12', '2024-05-01'];
-        yield ['2024-02-12', '2023-05-01'];
+        yield ['2024-07-12', '2024-07-01'];
+        yield ['2024-02-12', '2023-07-01'];
     }
 }
