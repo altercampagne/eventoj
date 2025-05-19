@@ -99,9 +99,7 @@ class EventRegistrationDTO
         return array_uintersect(
             $this->firstMeal->getFollowingMeals(includeSelf: true),
             $this->lastMeal->getPreviousMeals(includeSelf: true),
-            static fn ($meal1, $meal2): int =>
-                /* @phpstan-ignore-next-line */
-                $meal1->compare($meal2)
+            static fn ($meal1, $meal2): int => $meal1->compare($meal2)
         );
     }
 
@@ -117,9 +115,7 @@ class EventRegistrationDTO
         return array_uintersect(
             $this->firstMeal->getFollowingMeals(includeSelf: true),
             $this->lastMeal->getPreviousMeals(includeSelf: true),
-            static fn ($meal1, $meal2): int =>
-                /* @phpstan-ignore-next-line */
-                $meal1->compare($meal2)
+            static fn ($meal1, $meal2): int => $meal1->compare($meal2)
         );
     }
 

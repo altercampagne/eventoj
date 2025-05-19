@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.343.9",
+            "version": "3.343.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "6ca5eb1c60b879cf516e5fadefec87afc6219e74"
+                "reference": "eb50d111a09ef39675358e74801260ac129ee346"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/6ca5eb1c60b879cf516e5fadefec87afc6219e74",
-                "reference": "6ca5eb1c60b879cf516e5fadefec87afc6219e74",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/eb50d111a09ef39675358e74801260ac129ee346",
+                "reference": "eb50d111a09ef39675358e74801260ac129ee346",
                 "shasum": ""
             },
             "require": {
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.343.9"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.343.13"
             },
-            "time": "2025-05-12T18:11:31+00:00"
+            "time": "2025-05-16T18:24:39+00:00"
         },
         {
             "name": "babdev/pagerfanta-bundle",
@@ -2068,24 +2068,24 @@
         },
         {
             "name": "geocoder-php/plugin",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geocoder-php/plugin.git",
-                "reference": "ecda7277f9c3742cd6cf4eeea01b69065a8c2d28"
+                "reference": "0b2ba7536a32f8281222fe8a4e2330ba9547e4df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/plugin/zipball/ecda7277f9c3742cd6cf4eeea01b69065a8c2d28",
-                "reference": "ecda7277f9c3742cd6cf4eeea01b69065a8c2d28",
+                "url": "https://api.github.com/repos/geocoder-php/plugin/zipball/0b2ba7536a32f8281222fe8a4e2330ba9547e4df",
+                "reference": "0b2ba7536a32f8281222fe8a4e2330ba9547e4df",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0",
+                "php": "^8.0",
                 "php-http/promise": "^1.0",
                 "psr/log": "^1.0|^2.0|^3.0",
                 "psr/simple-cache": "^1.0|^2.0|^3.0",
-                "willdurand/geocoder": "^4.0"
+                "willdurand/geocoder": "^4.0|^5.0"
             },
             "require-dev": {
                 "cache/void-adapter": "^1.0",
@@ -2121,9 +2121,9 @@
                 "geocoder plugin"
             ],
             "support": {
-                "source": "https://github.com/geocoder-php/plugin/tree/1.5.0"
+                "source": "https://github.com/geocoder-php/plugin/tree/1.6.0"
             },
-            "time": "2022-07-30T13:42:14+00:00"
+            "time": "2025-05-17T08:52:11+00:00"
         },
         {
             "name": "giggsey/libphonenumber-for-php",
@@ -9154,16 +9154,16 @@
         },
         {
             "name": "symfony/stimulus-bundle",
-            "version": "v2.24.0",
+            "version": "v2.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stimulus-bundle.git",
-                "reference": "e09840304467cda3324cc116c7f4ee23c8ff227c"
+                "reference": "9954aeb3c807578cc8f3c2ffc31556ba21dda804"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/e09840304467cda3324cc116c7f4ee23c8ff227c",
-                "reference": "e09840304467cda3324cc116c7f4ee23c8ff227c",
+                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/9954aeb3c807578cc8f3c2ffc31556ba21dda804",
+                "reference": "9954aeb3c807578cc8f3c2ffc31556ba21dda804",
                 "shasum": ""
             },
             "require": {
@@ -9203,7 +9203,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.24.0"
+                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.25.1"
             },
             "funding": [
                 {
@@ -9219,7 +9219,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-09T21:10:04+00:00"
+            "time": "2025-05-19T07:20:25+00:00"
         },
         {
             "name": "symfony/stopwatch",
@@ -9888,16 +9888,16 @@
         },
         {
             "name": "symfony/ux-autocomplete",
-            "version": "v2.24.0",
+            "version": "v2.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-autocomplete.git",
-                "reference": "27379e70b6dc6079b0cef1c559217ba06a75f1a5"
+                "reference": "62f11dd9fd70bdc22c04db9530819471a5aca349"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-autocomplete/zipball/27379e70b6dc6079b0cef1c559217ba06a75f1a5",
-                "reference": "27379e70b6dc6079b0cef1c559217ba06a75f1a5",
+                "url": "https://api.github.com/repos/symfony/ux-autocomplete/zipball/62f11dd9fd70bdc22c04db9530819471a5aca349",
+                "reference": "62f11dd9fd70bdc22c04db9530819471a5aca349",
                 "shasum": ""
             },
             "require": {
@@ -9958,7 +9958,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-autocomplete/tree/v2.24.0"
+                "source": "https://github.com/symfony/ux-autocomplete/tree/v2.25.1"
             },
             "funding": [
                 {
@@ -9974,20 +9974,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-17T21:06:48+00:00"
+            "time": "2025-05-19T07:20:25+00:00"
         },
         {
             "name": "symfony/ux-twig-component",
-            "version": "v2.24.0",
+            "version": "v2.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-twig-component.git",
-                "reference": "48a46e4c6215d41cc97ba8dff0cff21ea9b255a8"
+                "reference": "b5d4e77db69315aeb18d2238e0e7c943d340ce76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-twig-component/zipball/48a46e4c6215d41cc97ba8dff0cff21ea9b255a8",
-                "reference": "48a46e4c6215d41cc97ba8dff0cff21ea9b255a8",
+                "url": "https://api.github.com/repos/symfony/ux-twig-component/zipball/b5d4e77db69315aeb18d2238e0e7c943d340ce76",
+                "reference": "b5d4e77db69315aeb18d2238e0e7c943d340ce76",
                 "shasum": ""
             },
             "require": {
@@ -9996,7 +9996,7 @@
                 "symfony/deprecation-contracts": "^2.2|^3.0",
                 "symfony/event-dispatcher": "^5.4|^6.0|^7.0",
                 "symfony/property-access": "^5.4|^6.0|^7.0",
-                "twig/twig": "^3.8"
+                "twig/twig": "^3.10.3"
             },
             "conflict": {
                 "symfony/config": "<5.4.0"
@@ -10041,7 +10041,7 @@
                 "twig"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-twig-component/tree/v2.24.0"
+                "source": "https://github.com/symfony/ux-twig-component/tree/v2.25.1"
             },
             "funding": [
                 {
@@ -10057,7 +10057,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-21T20:14:36+00:00"
+            "time": "2025-05-19T11:23:13+00:00"
         },
         {
             "name": "symfony/validator",
@@ -11322,25 +11322,25 @@
         },
         {
             "name": "willdurand/geocoder",
-            "version": "4.6.0",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geocoder-php/php-common.git",
-                "reference": "be3d9ed0fddf8c698ee079d8a07ae9520b4a49a1"
+                "reference": "a749e00819d2929bd0ec40fb79853956332970ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/php-common/zipball/be3d9ed0fddf8c698ee079d8a07ae9520b4a49a1",
-                "reference": "be3d9ed0fddf8c698ee079d8a07ae9520b4a49a1",
+                "url": "https://api.github.com/repos/geocoder-php/php-common/zipball/a749e00819d2929bd0ec40fb79853956332970ba",
+                "reference": "a749e00819d2929bd0ec40fb79853956332970ba",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0"
+                "php": ">=8.2"
             },
             "require-dev": {
                 "nyholm/nsa": "^1.1",
                 "phpunit/phpunit": "^9.5",
-                "symfony/stopwatch": "~2.5"
+                "symfony/stopwatch": "~2.5 || ~5.0"
             },
             "suggest": {
                 "symfony/stopwatch": "If you want to use the TimedGeocoder"
@@ -11348,7 +11348,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.1-dev"
+                    "dev-master": "5.1-dev"
                 }
             },
             "autoload": {
@@ -11378,9 +11378,9 @@
                 "geoip"
             ],
             "support": {
-                "source": "https://github.com/geocoder-php/php-common/tree/4.6.0"
+                "source": "https://github.com/geocoder-php/php-common/tree/5.0.0"
             },
-            "time": "2022-07-30T11:09:43+00:00"
+            "time": "2025-01-01T15:52:42+00:00"
         },
         {
             "name": "willdurand/geocoder-bundle",
