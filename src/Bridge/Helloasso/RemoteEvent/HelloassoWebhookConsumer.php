@@ -46,25 +46,28 @@ final readonly class HelloassoWebhookConsumer implements ConsumerInterface
 
         $state = $helloassoPayment->getState();
         if (PaymentState::Refunding !== $state && PaymentState::Refunded !== $state) {
-            $stateAsString = $helloassoPayment->getState()->value;
-            $this->logger->info("Payment {$helloassoPayment->getId()} has state \"{$stateAsString}\".");
+            $this->logger->info("Payment {$helloassoPayment->getId()} has state \"{$helloassoPayment->getState()->value}\". Only refunded payments are handled by the webhook consumer.");
 
             return;
         }
 
-        if (null === $payment = $this->em->getRepository(Payment::class)->findOneByHelloassoCheckoutIntentId($helloassoPayment->getId())) {
+        if (null === $payment = $this->em->getRepository(Payment::class)->findOneByHelloassoOrderId($helloassoPayment->getOrder()->getId())) {
             // In staging, we receive webhooks when a payment is made on a local environment.
             if ($this->staging) {
                 return;
             }
 
-            throw new \RuntimeException("Unable to find a payment with helloasso ID \"{$helloassoPayment->getId()}\"");
+            throw new \RuntimeException("Unable to find a payment with helloasso Order ID \"{$helloassoPayment->getOrder()->getId()}\"");
         }
 
-        // This can happen if the payment have been manually sync'ed from the admin.
+        // This is the expected behaviour (as payments are refunded by the admin).
         if ($payment->isRefunded()) {
             return;
         }
+
+        $this->logger->warning('A payment have been refunded from the helloasso admin! Doing the refund in the app too.', [
+            'payment' => $payment,
+        ]);
 
         $this->paymentRefundHandler->refund($payment);
     }
