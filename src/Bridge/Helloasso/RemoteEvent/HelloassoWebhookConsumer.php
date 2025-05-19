@@ -24,7 +24,7 @@ final readonly class HelloassoWebhookConsumer implements ConsumerInterface
         private HelloassoClient $helloassoClient,
         private EntityManagerInterface $em,
         private PaymentRefundHandler $paymentRefundHandler,
-        private LoggerInterface $debugLogger,
+        private LoggerInterface $logger,
         #[Autowire(env: 'bool:STAGING')]
         private bool $staging,
     ) {
@@ -36,7 +36,7 @@ final readonly class HelloassoWebhookConsumer implements ConsumerInterface
         $helloassoEvent = $this->helloassoClient->decodeEvent($eventAsString);
 
         if (Event::EVENT_TYPE_PAYMENT !== $helloassoEvent->getEventType()) {
-            $this->debugLogger->info("Given event type is \"{$helloassoEvent->getEventType()}\".");
+            $this->logger->info("Given event type is \"{$helloassoEvent->getEventType()}\".");
 
             return;
         }
@@ -47,7 +47,7 @@ final readonly class HelloassoWebhookConsumer implements ConsumerInterface
         $state = $helloassoPayment->getState();
         if (PaymentState::Refunding !== $state && PaymentState::Refunded !== $state) {
             $stateAsString = $helloassoPayment->getState()->value;
-            $this->debugLogger->info("Payment {$helloassoPayment->getId()} has state \"{$stateAsString}\".");
+            $this->logger->info("Payment {$helloassoPayment->getId()} has state \"{$stateAsString}\".");
 
             return;
         }

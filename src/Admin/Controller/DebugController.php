@@ -16,13 +16,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class DebugController extends AbstractController
 {
     public function __construct(
-        private readonly LoggerInterface $debugLogger,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
     public function __invoke(?string $slug = null): Response
     {
-        $this->debugLogger->debug('This is a debug test from debug controller', [
+        $this->logger->debug('This is a debug test from debug controller', [
             'user' => $this->getUser(),
         ]);
 

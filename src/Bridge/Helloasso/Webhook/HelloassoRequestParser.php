@@ -19,7 +19,7 @@ use Symfony\Component\Webhook\Exception\RejectWebhookException;
 final class HelloassoRequestParser extends AbstractRequestParser
 {
     public function __construct(
-        private readonly LoggerInterface $debugLogger,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -38,7 +38,7 @@ final class HelloassoRequestParser extends AbstractRequestParser
     {
         $payload = $request->getPayload();
 
-        $this->debugLogger->debug('Received webhook from Helloasso!', [
+        $this->logger->debug('Received webhook from Helloasso!', [
             'payload' => $payload->all(),
         ]);
 
