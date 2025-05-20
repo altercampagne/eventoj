@@ -8,6 +8,7 @@ use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\When;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 #[When(env: 'prod')]
 final readonly class SentryContextListener
@@ -17,15 +18,17 @@ final readonly class SentryContextListener
     ) {
     }
 
-    #[AsEventListener]
+    #[AsEventListener(event: RequestEvent::class)]
     public function onRequestEvent(): void
     {
         if (null === $user = $this->security->getUser()) {
             return;
         }
+
         if (!$user instanceof User) {
             return;
         }
+
         \Sentry\configureScope(static function (\Sentry\State\Scope $scope) use ($user): void {
             $scope->setUser([
                 'id' => (string) $user->getId(),
