@@ -39,9 +39,9 @@
                 {% endblock %}
 
                 {% block footer %}
-                    {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_MEMBERSHIP_CREATE').value, user) %}
-                        <div class="row p-2">
-                            <div class="col d-grid gap-2">
+                    <div class="row p-2">
+                        <div class="col d-grid gap-2">
+                            {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_MEMBERSHIP_CREATE').value, user) %}
                                 <twig:ButtonPostWithConfirmation
                                     url="{{ path('admin_user_membership_create', {id: user.id}) }}"
                                     buttonLabel="{{ user.isMember ? 'Prolonger l\'adhésion' : 'Créer une adhésion' }}"
@@ -58,9 +58,17 @@
                                     {% endif %}
                                     <p>💡 Cette action est utile soit pour offrir une adhésion à un membre, soit pour enregistrer une adhésion qui a été encaissée <u>en espèces</u>.</p>
                                 </twig:ButtonPostWithConfirmation>
-                            </div>
+                            {% endif %}
+                            {% if is_granted(constant('App\\Admin\\Security\\Permission::USER_SYNC_WITH_PAHEKO').value, user) %}
+                                <twig:ButtonPost
+                                    url="{{ path('admin_user_sync_with_paheko', {id: user.id}) }}"
+                                    btnClass="btn btn-warning"
+                                >
+                                    Synchroniser avec Paheko
+                                </twig:ButtonPost>
+                            {% endif %}
                         </div>
-                    {% endif %}
+                    </div>
                 {% endblock %}
 
             {% endembed %}
