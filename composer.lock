@@ -2698,16 +2698,16 @@
         },
         {
             "name": "martin-georgiev/postgresql-for-doctrine",
-            "version": "v3.1.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/martin-georgiev/postgresql-for-doctrine.git",
-                "reference": "bb6a6b69073db09c5ab2b48f85008e5185bb9d32"
+                "reference": "0c04de2a092371775fab0094940508d6bbd3eee7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martin-georgiev/postgresql-for-doctrine/zipball/bb6a6b69073db09c5ab2b48f85008e5185bb9d32",
-                "reference": "bb6a6b69073db09c5ab2b48f85008e5185bb9d32",
+                "url": "https://api.github.com/repos/martin-georgiev/postgresql-for-doctrine/zipball/0c04de2a092371775fab0094940508d6bbd3eee7",
+                "reference": "0c04de2a092371775fab0094940508d6bbd3eee7",
                 "shasum": ""
             },
             "require": {
@@ -2722,12 +2722,12 @@
                 "doctrine/orm": "~2.14||~3.0",
                 "ekino/phpstan-banned-code": "^3.0",
                 "friendsofphp/php-cs-fixer": "^3.75.0",
-                "phpstan/phpstan": "^2.1.13",
-                "phpstan/phpstan-deprecation-rules": "^2.0.2",
-                "phpstan/phpstan-doctrine": "^2.0.2",
+                "phpstan/phpstan": "^2.1.15",
+                "phpstan/phpstan-deprecation-rules": "^2.0.3",
+                "phpstan/phpstan-doctrine": "^2.0.3",
                 "phpstan/phpstan-phpunit": "^2.0.6",
-                "phpunit/phpunit": "^10.5.45",
-                "rector/rector": "^2.0.14",
+                "phpunit/phpunit": "^10.5.46",
+                "rector/rector": "^2.0.16",
                 "symfony/cache": "^6.4||^7.0"
             },
             "suggest": {
@@ -2766,7 +2766,7 @@
             ],
             "support": {
                 "issues": "https://github.com/martin-georgiev/postgresql-for-doctrine/issues",
-                "source": "https://github.com/martin-georgiev/postgresql-for-doctrine/tree/v3.1.0"
+                "source": "https://github.com/martin-georgiev/postgresql-for-doctrine/tree/v3.2.1"
             },
             "funding": [
                 {
@@ -2778,7 +2778,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-03T09:36:23+00:00"
+            "time": "2025-05-24T22:26:38+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -14031,6 +14031,6 @@
         "ext-iconv": "*",
         "ext-xsl": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
