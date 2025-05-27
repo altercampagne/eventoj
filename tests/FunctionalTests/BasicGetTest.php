@@ -73,7 +73,7 @@ class BasicGetTest extends WebTestCase
         $this->assertResponseStatusCodeSame(302);
 
         // Check with a user
-        $user = UserFactory::new()->create()->_real();
+        $user = UserFactory::new()->create();
         $client->loginUser($user);
 
         $this->checkPage($client, $url, $expectedTitle, $expectedH1);
@@ -85,7 +85,7 @@ class BasicGetTest extends WebTestCase
     public function testAdminPages(string $url, string $expectedTitle): void
     {
         $client = static::createClient();
-        $user = UserFactory::new()->admin()->create()->_real();
+        $user = UserFactory::new()->admin()->create();
         $client->loginUser($user);
 
         $this->checkPage($client, $url, 'Admin - '.$expectedTitle, $expectedTitle);

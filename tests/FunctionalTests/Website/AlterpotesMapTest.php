@@ -17,7 +17,7 @@ class AlterpotesMapTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = UserFactory::createOne()->_real();
+        $user = UserFactory::createOne();
 
         $client->loginUser($user);
 
@@ -34,7 +34,7 @@ class AlterpotesMapTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = UserFactory::createOne()->_real();
+        $user = UserFactory::createOne();
         MembershipFactory::createOne(['user' => $user]);
 
         $client->loginUser($user);

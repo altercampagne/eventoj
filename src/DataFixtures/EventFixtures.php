@@ -23,10 +23,10 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
         $event = EventFactory::new()->AT()->published()->withRandomStages('first day of July', 31)->create([
             'name' => 'AT presque complet',
             'description' => 'Voilà un AT dans le futur et dont les réservations sont ouvertes mais presque pleines ! 🥳',
-        ])->_real();
+        ]);
 
         foreach ($this->getStaysConfiguration() as $stay) {
-            $user = $stay['children'] ?? false ? UserFactory::new()->children()->create()->_real() : UserFactory::createOne()->_real();
+            $user = $stay['children'] ?? false ? UserFactory::new()->children()->create() : UserFactory::createOne();
 
             RegistrationFactory::new()->confirmed()->withStagesRegistrations($stay['start'] - 1, $stay['end'])->create([
                 'user' => $user,

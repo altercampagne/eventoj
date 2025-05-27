@@ -6,12 +6,12 @@ namespace App\Factory;
 
 use App\Entity\Companion;
 use App\Entity\Diet;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Companion>
+ * @extends PersistentObjectFactory<Companion>
  */
-final class CompanionFactory extends PersistentProxyObjectFactory
+final class CompanionFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {

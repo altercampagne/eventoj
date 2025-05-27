@@ -29,11 +29,11 @@ class ChoosePeopleFormTypeTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        $user = UserFactory::createOne()->_real();
+        $user = UserFactory::createOne();
         CompanionFactory::new()->children()->create(['user' => $user]);
         CompanionFactory::new()->adult()->create(['user' => $user]);
 
-        $registration = RegistrationFactory::createOne(['user' => $user])->_real();
+        $registration = RegistrationFactory::createOne(['user' => $user]);
         $this->user = $user;
 
         /** @var FormFactoryInterface $formFactory */

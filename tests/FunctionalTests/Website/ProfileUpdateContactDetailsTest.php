@@ -18,7 +18,7 @@ class ProfileUpdateContactDetailsTest extends WebTestCase
 
         $client = static::createClient();
 
-        $user = UserFactory::createOne()->_real();
+        $user = UserFactory::createOne();
 
         $client->loginUser($user);
 
@@ -55,7 +55,7 @@ class ProfileUpdateContactDetailsTest extends WebTestCase
         $faker = \Faker\Factory::create('fr_FR');
 
         $client = static::createClient();
-        $client->loginUser(UserFactory::createOne()->_real());
+        $client->loginUser(UserFactory::createOne());
 
         $client->request('GET', '/me/details');
 

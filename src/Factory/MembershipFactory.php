@@ -6,12 +6,12 @@ namespace App\Factory;
 
 use App\Entity\Membership;
 use Zenstruck\Foundry\Object\Instantiator;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Membership>
+ * @extends PersistentObjectFactory<Membership>
  */
-final class MembershipFactory extends PersistentProxyObjectFactory
+final class MembershipFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {

@@ -17,7 +17,7 @@ class ProfileUpdateProfileTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = UserFactory::createOne(['diet' => Diet::VEGETARIAN])->_real();
+        $user = UserFactory::createOne(['diet' => Diet::VEGETARIAN]);
 
         $client->loginUser($user);
 

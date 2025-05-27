@@ -16,9 +16,9 @@ class UserShowTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = UserFactory::new()->create()->_real();
+        $user = UserFactory::new()->create();
 
-        $client->loginUser(UserFactory::new()->admin()->create()->_real());
+        $client->loginUser(UserFactory::new()->admin()->create());
 
         $client->request('GET', '/_admin/users/'.$user->getId());
 
@@ -40,9 +40,9 @@ class UserShowTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = UserFactory::new()->create()->_real();
+        $user = UserFactory::new()->create();
 
-        $client->loginUser(UserFactory::new()->admin()->create()->_real());
+        $client->loginUser(UserFactory::new()->admin()->create());
 
         $client->request('GET', '/_admin/users/'.$user->getId());
 

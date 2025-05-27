@@ -18,7 +18,7 @@ class UserFixtures extends Fixture
             'email' => 'admin@altercampagne.net',
             'firstName' => 'John',
             'lastName' => 'Doe',
-        ])->_real();
+        ]);
 
         CompanionFactory::createOne([
             'user' => $admin,
@@ -64,6 +64,6 @@ class UserFixtures extends Fixture
 
         UserFactory::createOne([
             'email' => 'change-my-password@test-only.user',
-        ])->_real();
+        ]);
     }
 }

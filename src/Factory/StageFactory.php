@@ -6,12 +6,12 @@ namespace App\Factory;
 
 use App\Entity\Stage;
 use App\Entity\StageType;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Stage>
+ * @extends PersistentObjectFactory<Stage>
  */
-final class StageFactory extends PersistentProxyObjectFactory
+final class StageFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {
