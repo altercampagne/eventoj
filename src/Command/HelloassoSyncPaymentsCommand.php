@@ -59,7 +59,7 @@ class HelloassoSyncPaymentsCommand extends Command
             try {
                 $syncReport = $this->paymentSynchronizer->sync($payment);
             } catch (\Exception $e) {
-                $io->error("An error occurred when syncing payment with Helloasso : {$e->getMessage()}.");
+                $io->error("An error occurred when syncing payment {$payment->getId()} with Helloasso : {$e->getMessage()}.");
             }
 
             $io->progressAdvance();
