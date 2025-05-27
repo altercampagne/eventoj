@@ -17,8 +17,8 @@ class StageCreateAndUpdateTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = UserFactory::new()->admin()->create()->_real();
-        $event = EventFactory::createOne()->_real();
+        $user = UserFactory::new()->admin()->create();
+        $event = EventFactory::createOne();
 
         $client->loginUser($user);
 

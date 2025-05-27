@@ -36,8 +36,8 @@ class ChooseDatesFormTypeTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        $this->user = UserFactory::createOne()->_real();
-        $this->event = EventFactory::new()->published()->withRandomStages()->create()->_real();
+        $this->user = UserFactory::createOne();
+        $this->event = EventFactory::new()->published()->withRandomStages()->create();
 
         $this->registration = new Registration($this->user, $this->event);
 
@@ -82,7 +82,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
     {
         $companions = [];
         for ($i = 0; $i < $this->event->getAdultsCapacity() + 2; ++$i) {
-            $companions[] = CompanionFactory::new()->children()->create(['user' => $this->user])->_real();
+            $companions[] = CompanionFactory::new()->children()->create(['user' => $this->user]);
         }
 
         $this->registration->setCompanions(new ArrayCollection($companions));
@@ -105,7 +105,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
     {
         $companions = [];
         for ($i = 0; $i < $this->event->getAdultsCapacity() + 2; ++$i) {
-            $companions[] = CompanionFactory::new()->adult()->create(['user' => $this->user])->_real();
+            $companions[] = CompanionFactory::new()->adult()->create(['user' => $this->user]);
         }
 
         $this->registration->setCompanions(new ArrayCollection($companions));

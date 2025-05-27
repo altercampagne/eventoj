@@ -7,12 +7,12 @@ namespace App\Factory;
 use App\Entity\Event;
 use App\Entity\Meal;
 use Zenstruck\Foundry\Object\Instantiator;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Event>
+ * @extends PersistentObjectFactory<Event>
  */
-final class EventFactory extends PersistentProxyObjectFactory
+final class EventFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services

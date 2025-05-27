@@ -17,7 +17,7 @@ class AlternativeCreateAndUpdateTest extends WebTestCase
         $faker = \Faker\Factory::create('fr_FR');
         $client = static::createClient();
 
-        $user = UserFactory::new()->admin()->create()->_real();
+        $user = UserFactory::new()->admin()->create();
 
         $client->loginUser($user);
 

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Factory;
 
 use App\Entity\Payment;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Payment>
+ * @extends PersistentObjectFactory<Payment>
  */
-final class PaymentFactory extends PersistentProxyObjectFactory
+final class PaymentFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {

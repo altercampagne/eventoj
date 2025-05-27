@@ -7,12 +7,12 @@ namespace App\Factory;
 use App\Entity\Question;
 use App\Entity\QuestionCategory;
 use Zenstruck\Foundry\Object\Instantiator;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Question>
+ * @extends PersistentObjectFactory<Question>
  */
-final class QuestionFactory extends PersistentProxyObjectFactory
+final class QuestionFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {

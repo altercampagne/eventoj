@@ -16,7 +16,7 @@ class QuestionCRUDTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = UserFactory::new()->admin()->create()->_real();
+        $user = UserFactory::new()->admin()->create();
 
         $client->loginUser($user);
 

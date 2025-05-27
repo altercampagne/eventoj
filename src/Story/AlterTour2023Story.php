@@ -48,7 +48,7 @@ final class AlterTour2023Story extends Story
                 Ce sera la 16e édition ! 🥳</div>
                 END,
             'pahekoProjectId' => 1,
-        ])->_real();
+        ]);
 
         StageFactory::createSequence(function () use ($event, $alternatives): iterable {
             $startDate = new \DateTime('2023-07-09');
@@ -70,12 +70,12 @@ final class AlterTour2023Story extends Story
         });
 
         for ($i = 0; $i < 100; ++$i) {
-            $user = UserFactory::createOne()->_real();
+            $user = UserFactory::createOne();
 
             $registration = RegistrationFactory::new()->withStagesRegistrations()->create([
                 'user' => $user,
                 'event' => $event,
-            ])->_real();
+            ]);
 
             // 2 chances out of 3 to have a confirmed reservation
             if (0 < random_int(1, 3) % 3) {
@@ -95,7 +95,7 @@ final class AlterTour2023Story extends Story
             $registration = RegistrationFactory::new()->confirmed()->withStagesRegistrations()->create([
                 'user' => $user,
                 'event' => $event,
-            ])->_real();
+            ]);
 
             MembershipFactory::createOne([
                 'user' => $user,

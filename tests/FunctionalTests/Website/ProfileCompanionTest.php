@@ -18,7 +18,7 @@ class ProfileCompanionTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = UserFactory::createOne()->_real();
+        $user = UserFactory::createOne();
 
         $client->loginUser($user);
 
@@ -81,8 +81,8 @@ class ProfileCompanionTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $user = UserFactory::createOne(['diet' => Diet::VEGETARIAN])->_real();
-        $event = EventFactory::new()->published()->withRandomStages()->create()->_real();
+        $user = UserFactory::createOne(['diet' => Diet::VEGETARIAN]);
+        $event = EventFactory::new()->published()->withRandomStages()->create();
         $client->loginUser($user);
 
         $client->request('GET', "/event/{$event->getSlug()}/register");

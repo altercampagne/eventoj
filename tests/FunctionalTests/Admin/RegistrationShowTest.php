@@ -19,7 +19,7 @@ class RegistrationShowTest extends WebTestCase
 
         $registration = RegistrationFactory::new()->confirmed()->create();
 
-        $client->loginUser(UserFactory::new()->admin()->create()->_real());
+        $client->loginUser(UserFactory::new()->admin()->create());
 
         $client->request('GET', "/_admin/registrations/{$registration->getId()}");
 

@@ -6,12 +6,12 @@ namespace App\Factory;
 
 use App\Entity\Document\UploadedImage;
 use App\Entity\Document\UploadedImageType;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<UploadedImage>
+ * @extends PersistentObjectFactory<UploadedImage>
  */
-final class UploadedImageFactory extends PersistentProxyObjectFactory
+final class UploadedImageFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {

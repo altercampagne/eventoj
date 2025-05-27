@@ -7,12 +7,12 @@ namespace App\Factory;
 use App\Entity\Registration;
 use App\Entity\Stage;
 use App\Entity\StageRegistration;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Registration>
+ * @extends PersistentObjectFactory<Registration>
  */
-final class RegistrationFactory extends PersistentProxyObjectFactory
+final class RegistrationFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {
