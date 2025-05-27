@@ -56,7 +56,12 @@ class HelloassoSyncPaymentsCommand extends Command
         $io->progressStart(\count($payments));
 
         foreach ($payments as $payment) {
-            $this->paymentSynchronizer->sync($payment);
+            try {
+                $syncReport = $this->paymentSynchronizer->sync($payment);
+            } catch (\Exception $e) {
+                $io->error("An error occurred when syncing payment with Helloasso : {$e->getMessage()}.");
+            }
+
             $io->progressAdvance();
         }
 
