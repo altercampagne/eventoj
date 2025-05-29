@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Paheko;
 
 use App\Entity\User;
+use App\Service\Paheko\Client\Exception\AdminMemberNotEditableException;
 use App\Service\Paheko\Client\PahekoClientInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
@@ -63,21 +64,12 @@ final readonly class UserSynchronizer
 
         try {
             $this->pahekoClient->updateUser($pahekoId, $this->getUserData($user));
-        } catch (ClientException $e) {
-            if (403 === $e->getCode()) {
-                $this->logger->info("Failed to update user {$user->getId()}", [
-                    'user' => $user,
-                ]);
-
-                // It looks like event with a token with admin privileges it's
-                // not possible to modify a member which have access to the
-                // configuration.
-                // As it's not possible to do anyhting against this, we
-                // silently ignore this "error".
-                return;
-            }
-
-            throw $e;
+        } catch (AdminMemberNotEditableException) {
+            // It looks like event with a token with admin privileges it's
+            // not possible to modify a member which have access to the
+            // configuration.
+            // As it's not possible to do anyhting against this, we
+            // silently ignore this "error".
         }
     }
 

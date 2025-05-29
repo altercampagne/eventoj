@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Paheko\Client;
 
-use Psr\Log\LoggerInterface;
+use App\Service\Paheko\Client\Exception\AdminMemberNotEditableException;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -12,7 +12,6 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
 {
     public function __construct(
         private HttpClientInterface $pahekoClient,
-        private LoggerInterface $logger,
     ) {
     }
 
@@ -67,17 +66,16 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
      */
     private function request(string $method, string $uri, array $options = []): array
     {
+        $response = $this->pahekoClient->request($method, $uri, $options);
+
         try {
-            return $this->pahekoClient->request($method, $uri, $options)->toArray();
+            return $response->toArray();
         } catch (HttpExceptionInterface $e) {
-            $this->logger->error('Error when calling Paheko API.', [
-                'request_method' => $method,
-                'request_uri' => $uri,
-                'response_code' => $e->getResponse()->getStatusCode(),
-                'response_content' => $e->getResponse()->getContent(false),
-                'options' => $options,
-                'exception' => $e,
-            ]);
+            $error = $e->getResponse()->toArray(false)['error'] ?? null;
+
+            if (403 === $e->getResponse()->getStatusCode() && 'Seul un membre administrateur peut modifier un autre membre administrateur.' === $error) {
+                throw new AdminMemberNotEditableException($error, previous: $e);
+            }
 
             throw $e;
         }
