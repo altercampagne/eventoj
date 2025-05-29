@@ -7,6 +7,7 @@ namespace App\Factory;
 use App\Entity\Registration;
 use App\Entity\Stage;
 use App\Entity\StageRegistration;
+use Zenstruck\Foundry\LazyValue;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
@@ -66,7 +67,7 @@ final class RegistrationFactory extends PersistentObjectFactory
     protected function defaults(): array
     {
         return [
-            'event' => EventFactory::new()->published()->withRandomStages(),
+            'event' => LazyValue::new(fn (): EventFactory => EventFactory::new()->published()->withRandomStages()),
             'user' => UserFactory::new(),
         ];
     }
