@@ -42,11 +42,12 @@ final readonly class UserSynchronizer
             // same (same email & fullname) or a 400 when the email is already
             // used.
             if (null === $id = $this->findExistingUserId($user)) {
-                $this->logger->error('Conflict when creating user but no siblings user found', [
+                $this->logger->error('Conflict when creating user but no user found with the same email.', [
+                    'exception' => $e,
                     'user' => $user,
                 ]);
 
-                throw new \RuntimeException('Conflict when creating user but no siblings user found...', 0, $e);
+                return;
             }
         }
 
