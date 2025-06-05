@@ -4,23 +4,15 @@ declare(strict_types=1);
 
 namespace App\Twig\Extension;
 
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Twig\Attribute\AsTwigFunction;
 
 /**
  * @see https://github.com/twigphp/Twig/issues/3681#issuecomment-1162728959
  */
-class EnumExtension extends AbstractExtension
+class EnumExtension
 {
-    #[\Override]
-    public function getFunctions(): array
-    {
-        return [
-            new TwigFunction('enum', [$this, 'createProxy']),
-        ];
-    }
-
-    public function createProxy(string $enumFQN): object
+    #[AsTwigFunction('enum')]
+    public function enum(string $enumFQN): object
     {
         return new class($enumFQN) {
             public function __construct(private readonly string $enum)
