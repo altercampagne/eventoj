@@ -9,9 +9,9 @@ use App\Entity\PaymentStatus;
 use App\Entity\RegistrationStatus;
 use App\Message\PahekoPaymentSync;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\Argument;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -24,35 +24,26 @@ use Symfony\Component\Messenger\MessageBusInterface;
 )]
 #[When(env: 'dev')]
 #[When(env: 'test')]
-class DispatchMessageCommand extends Command
+class DispatchMessageCommand
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly MessageBusInterface $bus,
     ) {
-        parent::__construct();
     }
 
-    protected function configure(): void
-    {
-        $this
-            ->addArgument('message', InputArgument::OPTIONAL, 'The message to dispatch. If null, all messages will be dispatched.')
-        ;
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
-        /** @var ?string $message */
-        $message = $input->getArgument('message');
-
+    public function __invoke(
+        InputInterface $input,
+        OutputInterface $output,
+        #[Argument(description: 'The message to dispatch. If null, all messages will be dispatched.')]
+        ?string $message = null,
+    ): int {
         $io = new SymfonyStyle($input, $output);
-
         match ($message) {
             'paheko_payment_sync' => $this->dispatchPahekoPaymentSync(),
             null => $this->dispatchAllMessages(),
             default => throw new \InvalidArgumentException("Unknown message \"{$message}\"."),
         };
-
         $io->success(null !== $message ? "Message  \"{$message}\" dispatched!" : 'Messages dispatched!');
 
         return Command::SUCCESS;

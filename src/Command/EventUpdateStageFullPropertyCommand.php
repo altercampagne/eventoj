@@ -16,16 +16,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'eventoj:event:update-stage-full-property',
     description: 'Update the "is_full" property for all stages',
 )]
-class EventUpdateStageFullPropertyCommand extends Command
+class EventUpdateStageFullPropertyCommand
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
     ) {
-        parent::__construct();
     }
 
-    #[\Override]
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function __invoke(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
