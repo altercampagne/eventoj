@@ -29,9 +29,7 @@ class ResetPasswordRequestFormType extends AbstractType
                     'class' => 'form-floating mb-3',
                 ],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter your email',
-                    ]),
+                    new NotBlank(message: 'Please enter your email'),
                 ],
             ])
         ;

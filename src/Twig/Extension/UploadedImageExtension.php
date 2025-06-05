@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace App\Twig\Extension;
 
-use App\Twig\Runtime\UploadedImageExtensionRuntime;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use App\Entity\Document\AbstractUploadedImage;
+use App\Service\UploadedImageUrlGenerator;
+use Twig\Attribute\AsTwigFunction;
 
-class UploadedImageExtension extends AbstractExtension
+class UploadedImageExtension
 {
-    #[\Override]
-    public function getFunctions(): array
+    public function __construct(
+        private readonly UploadedImageUrlGenerator $uploadedImageUrlGenerator,
+    ) {
+    }
+
+    /**
+     * @param "sm"|"small"|"md"|"medium"|"lg"|"large" $size
+     */
+    #[AsTwigFunction('uploaded_image_url')]
+    public function getImageUrl(?AbstractUploadedImage $file, string $size = 'md'): string
     {
-        return [
-            new TwigFunction('uploaded_image_url', [UploadedImageExtensionRuntime::class, 'getImageUrl']),
-        ];
+        return $this->uploadedImageUrlGenerator->getImageUrl($file, $size);
     }
 }

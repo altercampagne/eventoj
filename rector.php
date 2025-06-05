@@ -23,6 +23,7 @@ return RectorConfig::configure()
         __DIR__.'/tests',
     ])
     ->withPhpSets()
+    ->withComposerBased(twig: true, doctrine: true, phpunit: true, symfony: true)
     ->withTypeCoverageLevel(count(TypeDeclarationLevel::RULES))
     ->withDeadCodeLevel(count(DeadCodeLevel::RULES))
     ->withCodeQualityLevel(count(CodeQualityLevel::RULES))

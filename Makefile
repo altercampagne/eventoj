@@ -87,8 +87,9 @@ assets-build: ## Build assets (SASS)
 	@$(DOCKER_COMPOSE) run --rm php bin/console sass:build
 
 ##@ Quality commands
-.PHONY: quality-enforce
-quality-enforce: rector-fix cs-fix phpstan db-reset-test test ## Run Rector, PHP-CS-fixer, PHPStan & tests
+.PHONY: sanitize-and-check
+sanitize-and-check: rector-fix cs-fix phpstan db-reset-test test ## Run Rector, PHP-CS-fixer, PHPStan & tests
+	@$(DOCKER_COMPOSE) run --rm php bin/console doctrine:schema:validate
 
 .PHONY: test
 test: ## Run all tests

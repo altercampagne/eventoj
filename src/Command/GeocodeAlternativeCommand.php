@@ -8,11 +8,11 @@ use App\Entity\Alternative;
 use App\Message\GeocodeAlternativeAddressMessage;
 use App\Service\AddressGeocoder;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\Argument;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Attribute\Option;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -21,34 +21,28 @@ use Symfony\Component\Messenger\MessageBusInterface;
     name: 'eventoj:geocode:alternatives',
     description: 'Geocode the address associated to alternatives.',
 )]
-class GeocodeAlternativeCommand extends Command
+class GeocodeAlternativeCommand
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly MessageBusInterface $bus,
         private readonly AddressGeocoder $addressGeocoder,
     ) {
-        parent::__construct();
     }
 
-    protected function configure(): void
-    {
-        $this
-            ->addArgument('slug', InputArgument::OPTIONAL, 'Geocode only this given alternative.')
-            ->addOption('async', null, InputOption::VALUE_NEGATABLE, 'Do geocoding in async or not. Default false for 1 alternative, true for all alternatives.')
-            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force geocoding, even if coordinates are already filled.')
-        ;
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
+    public function __invoke(
+        InputInterface $input,
+        OutputInterface $output,
+        #[Argument(description: 'Geocode only this given alternative.')]
+        ?string $slug = null,
+        #[Option(description: 'Do geocoding in async or not. Always false for 1 alternative, default true for all alternatives.')]
+        bool $async = true,
+        #[Option(description: 'Force geocoding, even if coordinates are already filled.')]
+        bool $force = false,
+    ): int {
         $io = new SymfonyStyle($input, $output);
-
-        $force = (bool) $input->getOption('force');
-
-        if (null !== $slug = $input->getArgument('slug')) {
+        if (null !== $slug) {
             if (null === $alternative = $this->em->getRepository(Alternative::class)->findOneBySlug($slug)) {
-                /* @phpstan-ignore-next-line */
                 throw new \InvalidArgumentException("Alternative with slug {$slug} not found!");
             }
 
@@ -58,10 +52,7 @@ class GeocodeAlternativeCommand extends Command
                 return Command::SUCCESS;
             }
 
-            if ($input->hasParameterOption(['--async'], true)) {
-                $this->bus->dispatch(new GeocodeAlternativeAddressMessage($alternative->getId()));
-                $io->success('Alternative address will be geocoded.');
-            } elseif ($this->addressGeocoder->geocode($alternative)) {
+            if ($this->addressGeocoder->geocode($alternative)) {
                 $io->success('Alternative address have been successfully geocoded.');
             } else {
                 $io->warning('Alternative address not found by geocoder! :/');

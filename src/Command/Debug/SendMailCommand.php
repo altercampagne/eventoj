@@ -11,9 +11,9 @@ use App\Entity\Registration;
 use App\Entity\ResetPasswordRequest;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\Argument;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -26,7 +26,7 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 )]
 #[When(env: 'dev')]
 #[When(env: 'test')]
-class SendMailCommand extends Command
+class SendMailCommand
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
@@ -35,23 +35,15 @@ class SendMailCommand extends Command
         private readonly PasswordResetSender $passwordResetSender,
         private readonly EventReminderSender $eventReminderSender,
     ) {
-        parent::__construct();
     }
 
-    protected function configure(): void
-    {
-        $this
-            ->addArgument('email', InputArgument::OPTIONAL, 'The email to send. If null, all mails will be sent.')
-        ;
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
-        /** @var ?string $email */
-        $email = $input->getArgument('email');
-
+    public function __invoke(
+        InputInterface $input,
+        OutputInterface $output,
+        #[Argument(description: 'The email to send. If null, all mails will be sent.')]
+        ?string $email,
+    ): int {
         $io = new SymfonyStyle($input, $output);
-
         match ($email) {
             'email_confirmation' => $this->sendEmailConfirmation(),
             'password_reset' => $this->sendPasswordReset(),
@@ -59,7 +51,6 @@ class SendMailCommand extends Command
             null => $this->sendAllMails(),
             default => throw new \InvalidArgumentException("Unknown mail \"{$email}\"."),
         };
-
         $io->success(null !== $email ? "Mail \"{$email}\" sent!" : 'Mails sent!');
 
         return Command::SUCCESS;
