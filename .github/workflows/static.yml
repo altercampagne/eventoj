@@ -59,6 +59,11 @@ jobs:
         with:
           php-version: 8.3
 
+      - name: Download dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: "--optimize-autoloader"
+
       - name: Install rector
         uses: ramsey/composer-install@v3
         with:
