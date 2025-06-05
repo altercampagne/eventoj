@@ -25,7 +25,7 @@ class ProfileMembershipsTest extends WebTestCase
         $client->request('GET', '/me/memberships');
 
         $year = (int) date('Y');
-        if (6 > (int) date('m')) {
+        if (7 > (int) date('m')) {
             --$year;
         }
 
