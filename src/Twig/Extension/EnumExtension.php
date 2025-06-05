@@ -14,8 +14,8 @@ class EnumExtension
     #[AsTwigFunction('enum')]
     public function enum(string $enumFQN): object
     {
-        return new class($enumFQN) {
-            public function __construct(private readonly string $enum)
+        return new readonly class($enumFQN) {
+            public function __construct(private string $enum)
             {
                 if (!enum_exists($this->enum)) {
                     throw new \InvalidArgumentException("$this->enum is not an Enum type and cannot be used in this function");
