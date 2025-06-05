@@ -196,14 +196,15 @@
         ]
     },
     "symfony/framework-bundle": {
-        "version": "7.2",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "7.2",
-            "ref": "87bcf6f7c55201f345d8895deda46d2adbdbaa89"
+            "version": "7.3",
+            "ref": "5a1497d539f691b96afd45ae397ce5fe30beb4b9"
         },
         "files": [
+            ".editorconfig",
             "config/packages/cache.yaml",
             "config/packages/framework.yaml",
             "config/preload.php",
@@ -340,12 +341,12 @@
         ]
     },
     "symfony/translation": {
-        "version": "7.2",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "6.3",
-            "ref": "e28e27f53663cc34f0be2837aba18e3a1bef8e7b"
+            "ref": "620a1b84865ceb2ba304c8f8bf2a185fbf32a843"
         },
         "files": [
             "config/packages/translation.yaml",
@@ -411,12 +412,12 @@
         ]
     },
     "symfony/web-profiler-bundle": {
-        "version": "7.2",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "6.1",
-            "ref": "8b51135b84f4266e3b4c8a6dc23c9d1e32e543b7"
+            "version": "7.3",
+            "ref": "5b2b543e13942495c0003f67780cb4448af9e606"
         },
         "files": [
             "config/packages/web_profiler.yaml",
@@ -424,12 +425,12 @@
         ]
     },
     "symfony/webhook": {
-        "version": "7.0",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "6.3",
-            "ref": "0bc853a74c98e448116ba53e118a7b6b3cdf9a03"
+            "version": "7.3",
+            "ref": "b70844963dc84e9a99b94ae552efe691d74b087f"
         },
         "files": [
             "config/routes/webhook.yaml"
