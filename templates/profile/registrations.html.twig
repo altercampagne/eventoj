@@ -13,10 +13,10 @@
         <div class="card-body">
             <p class="card-text">
                 <b>Arrivée</b> prévue le <b>{{ registration.stageRegistrationStart.stage.date|format_date('full') }}</b>
-                pour le {{ registration.stageRegistrationStart.firstMeal|trans|lower }}
+                pour le {{ registration.firstMeal|trans|lower }}
                 .<br />
                 <b>Départ</b> prévu le <b>{{ registration.stageRegistrationEnd.stage.date|format_date('full') }}</b>
-                après le {{ registration.stageRegistrationEnd.lastMeal|trans|lower }}
+                après le {{ registration.lastMeal|trans|lower }}
                 .
             </p>
             {% if registration.neededBike > 0 %}

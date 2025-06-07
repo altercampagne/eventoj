@@ -293,7 +293,7 @@ class Registration
      */
     public function getLastMeal(): Meal
     {
-        if (null === $lastStageRegistration = $this->getStageRegistrationStart()) {
+        if (null === $lastStageRegistration = $this->getStageRegistrationEnd()) {
             throw new \LogicException('No stage registration found for given registration');
         }
 
