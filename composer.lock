@@ -9906,16 +9906,16 @@
         },
         {
             "name": "symfony/ux-autocomplete",
-            "version": "v2.25.2",
+            "version": "v2.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-autocomplete.git",
-                "reference": "e78d586a4e5100bfed49e05edc844f238928e06d"
+                "reference": "3b7c77b3f50a934ca123c6cdbc413d1017a403ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-autocomplete/zipball/e78d586a4e5100bfed49e05edc844f238928e06d",
-                "reference": "e78d586a4e5100bfed49e05edc844f238928e06d",
+                "url": "https://api.github.com/repos/symfony/ux-autocomplete/zipball/3b7c77b3f50a934ca123c6cdbc413d1017a403ef",
+                "reference": "3b7c77b3f50a934ca123c6cdbc413d1017a403ef",
                 "shasum": ""
             },
             "require": {
@@ -9976,7 +9976,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-autocomplete/tree/v2.25.2"
+                "source": "https://github.com/symfony/ux-autocomplete/tree/v2.26.1"
             },
             "funding": [
                 {
@@ -9992,7 +9992,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-05-19T11:54:27+00:00"
+            "time": "2025-06-05T17:25:17+00:00"
         },
         {
             "name": "symfony/ux-twig-component",
@@ -14064,6 +14064,6 @@
         "ext-iconv": "*",
         "ext-xsl": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
