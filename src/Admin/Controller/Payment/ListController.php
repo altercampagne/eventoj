@@ -56,6 +56,11 @@ class ListController extends AbstractController
                 ->andWhere('p.status = :status')
                 ->setParameter('status', $status)
             ;
+        } else {
+            $qb
+                ->andWhere('p.status != :status')
+                ->setParameter('status', PaymentStatus::EXPIRED)
+            ;
         }
 
         return $qb;

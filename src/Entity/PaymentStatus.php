@@ -13,6 +13,7 @@ enum PaymentStatus: string implements TranslatableInterface
     case APPROVED = 'approved';
     case FAILED = 'failed';
     case REFUNDED = 'refunded';
+    case EXPIRED = 'expired';
 
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
@@ -21,6 +22,7 @@ enum PaymentStatus: string implements TranslatableInterface
             self::APPROVED => 'Approuvé',
             self::FAILED => 'Échoué',
             self::REFUNDED => 'Remboursé',
+            self::EXPIRED => 'Expiré',
         };
     }
 }

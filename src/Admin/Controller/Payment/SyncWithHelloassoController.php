@@ -26,7 +26,7 @@ class SyncWithHelloassoController extends AbstractController
     {
         $syncReport = $this->paymentSynchronizer->sync($payment);
 
-        $level = $syncReport->nothingHasBeenDone() ? 'success' : ($syncReport->isWarning() ? 'info' : 'warning');
+        $level = $syncReport->nothingHasBeenDone() ? 'success' : ($syncReport->isWarning() ? 'danger' : 'warning');
 
         $this->addFlash($level, $syncReport->message);
 
