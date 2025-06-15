@@ -28,12 +28,25 @@ final readonly class PaymentSynchronizer
     public function sync(Payment $payment): PaymentSyncReport
     {
         if (null === $id = $payment->getHelloassoCheckoutIntentId()) {
-            return PaymentSyncReport::warning('Given payment does not contains an Helloasso checkout intent ID.');
+            return PaymentSyncReport::nothingDone('Given payment does not contains an Helloasso checkout intent ID.');
         }
 
         $checkoutIntent = $this->helloassoClient->checkout->retrieve((int) $id);
         if (null === $order = $checkoutIntent->getOrder()) {
-            return PaymentSyncReport::warning('Aucun paiement trouvé chez Helloasso, paiement en erreur ?');
+            if ($payment->isExpired()) {
+                return PaymentSyncReport::nothingDone("Pas d'order chez Helloasso mais c'est normal pour un paiement expiré.");
+            }
+
+            if ($payment->isPending()) {
+                $payment->expire();
+
+                $this->em->persist($payment);
+                $this->em->flush();
+
+                return PaymentSyncReport::expired("L'order associé n'existe plus côté HelloAsso, le paiement a été marqué comme expiré.");
+            }
+
+            return PaymentSyncReport::warning("Aucun order trouvé chez Helloasso et ce n'était pas prévu, merci de contacter Babounet !");
         }
 
         $payment->setHelloassoOrderId((string) $order->getId());

@@ -76,6 +76,9 @@ class Payment
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $expiredAt = null;
+
     /**
      * @var Collection<int, Membership>
      */
@@ -150,10 +153,21 @@ class Payment
         return PaymentStatus::REFUNDED === $this->status;
     }
 
+    public function isExpired(): bool
+    {
+        return PaymentStatus::EXPIRED === $this->status;
+    }
+
     public function refund(): void
     {
         $this->status = PaymentStatus::REFUNDED;
         $this->refundedAt = new \DateTimeImmutable();
+    }
+
+    public function expire(): void
+    {
+        $this->status = PaymentStatus::EXPIRED;
+        $this->expiredAt = new \DateTimeImmutable();
     }
 
     public function getMembershipsAmount(): int
@@ -296,6 +310,11 @@ class Payment
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function getExpiredAt(): ?\DateTimeImmutable
+    {
+        return $this->expiredAt;
     }
 
     /**

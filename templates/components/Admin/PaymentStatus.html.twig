@@ -4,6 +4,8 @@
     <span class="badge text-bg-warning"><i class="fa-regular fa-clock me-1"></i> {{ payment.status|trans }}</span>
 {% elseif payment.isRefunded %}
     <span class="badge text-bg-secondary"><i class="fa-solid fa-arrow-up-from-bracket me-1"></i> {{ payment.status|trans }}</span>
+{% elseif payment.isExpired %}
+    <span class="badge text-bg-light"><i class="fa-regular fa-clock me-1"></i> {{ payment.status|trans }}</span>
 {% else %}
     <span class="badge text-bg-danger"><i class="fa-regular fa-clock me-1"></i> {{ payment.status|trans }}</span>
 {% endif %}

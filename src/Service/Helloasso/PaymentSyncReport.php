@@ -12,6 +12,8 @@ final readonly class PaymentSyncReport
 
     private const string STATUS_UPDATED = 'updated';
 
+    private const string STATUS_EXPIRED = 'expired';
+
     private function __construct(
         private readonly string $status,
         public readonly string $message,
@@ -33,9 +35,19 @@ final readonly class PaymentSyncReport
         return new self(self::STATUS_UPDATED, $message);
     }
 
+    public static function expired(string $message): self
+    {
+        return new self(self::STATUS_EXPIRED, $message);
+    }
+
     public function hasBeenUpdated(): bool
     {
         return self::STATUS_UPDATED === $this->status;
+    }
+
+    public function hasBeenExpired(): bool
+    {
+        return self::STATUS_EXPIRED === $this->status;
     }
 
     public function isWarning(): bool
