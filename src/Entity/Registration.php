@@ -135,7 +135,7 @@ class Registration
     public function confirm(): void
     {
         if (RegistrationStatus::WAITING_PAYMENT !== $this->status) {
-            throw new \LogicException('Cannot confirm this registration because not in waiting_payment status.');
+            throw new \LogicException("Cannot confirm a registration in {$this->status->value} status.");
         }
 
         $this->status = RegistrationStatus::CONFIRMED;
