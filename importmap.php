@@ -26,13 +26,13 @@ return [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
     'bootstrap' => [
-        'version' => '5.3.6',
+        'version' => '5.3.7',
     ],
     '@popperjs/core' => [
         'version' => '2.11.8',
     ],
     'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.6',
+        'version' => '5.3.7',
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free' => [
@@ -84,24 +84,24 @@ return [
         'type' => 'css',
     ],
     'lightgallery' => [
-        'version' => '2.8.3',
+        'version' => '2.9.0-beta.1',
     ],
     'lightgallery/plugins/thumbnail' => [
-        'version' => '2.8.3',
+        'version' => '2.9.0-beta.1',
     ],
     'lightgallery/plugins/zoom' => [
-        'version' => '2.8.3',
+        'version' => '2.9.0-beta.1',
     ],
     'lightgallery/css/lightgallery.css' => [
-        'version' => '2.8.3',
+        'version' => '2.9.0-beta.1',
         'type' => 'css',
     ],
     'lightgallery/css/lg-zoom.css' => [
-        'version' => '2.8.3',
+        'version' => '2.9.0-beta.1',
         'type' => 'css',
     ],
     'lightgallery/css/lg-thumbnail.css' => [
-        'version' => '2.8.3',
+        'version' => '2.9.0-beta.1',
         'type' => 'css',
     ],
     'dropzone' => [
