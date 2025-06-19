@@ -2,17 +2,6 @@
 
 {% set title = event.name ~ ': calculateur de nourriture' %}
 
-{% macro item_availability(availability, icon, legend) %}
-    {% set color = availability.percent >= 100 ? 'danger' : availability.percent > 50 ? 'warning' : 'success' %}
-
-    <div data-bs-toggle="tooltip" data-bs-title="{{ legend }}">
-        <span class="badge text-bg-{{ color }} ms-2">
-            <i class="fa-solid fa-{{ icon }}"></i>
-            {{ availability.booked }} / {{ availability.max }}
-        </span>
-    </div>
-{% endmacro %}
-
 {% block main %}
     <table class="table table-hover food-calculator">
         <thead>
@@ -30,7 +19,7 @@
                     {% for stage in event.stages %}
                         <td{% if app.user.isPrepaForStage(stage) %} class="table-primary border"{% endif %} data-meal="{{ meal.value }}">
                             {% if stage.includesMeal(meal) %}
-                                {{ stage.availability.get(meal).peopleCount }}
+                                {{ stage.availability(withPreparers: true).get(meal).peopleCount }}
                             {% endif %}
                         </td>
                     {% endfor %}
@@ -38,8 +27,11 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="d-flex justify-content-end">
+        <p class="text-secondary">Les prépas sont prix en compte dans les quantités</p>
+    </div>
 
-    <div class="container mt-5 d-none" id="recap-container">
+    <div class="container mt-3 d-none" id="recap-container">
         <div class="d-flex justify-content-between align-items-center">
             <h4>🧾 Récapitulatif des commandes</h4>
             <a

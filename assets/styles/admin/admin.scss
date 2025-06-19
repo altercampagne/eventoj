@@ -56,4 +56,7 @@ q {
 th.vertical-header {
   writing-mode: vertical-rl;
   transform: rotate(200deg);
+  text-align: center;
+  vertical-align: middle;
+  background: transparent;
 }
