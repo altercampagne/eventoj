@@ -27,6 +27,7 @@ class FoodCalculator {
     let totalBread = 0;
     let totalCheese = 0;
     let totalVeggies = 0;
+    let totalFruits = 0;
 
     for (const { meal, quantity } of meals) {
       switch (meal) {
@@ -38,6 +39,7 @@ class FoodCalculator {
           totalBread += quantity * 40;
           totalCheese += quantity * 40;
           totalVeggies += quantity * 250;
+          totalFruits += quantity * 125;
           break;
       }
     }
@@ -46,6 +48,7 @@ class FoodCalculator {
     document.getElementById('qty-bread').textContent = `${Math.round(totalBread / 1000, 2)} kg`;
     document.getElementById('qty-cheese').textContent = `${Math.round(totalCheese / 1000, 2)} kg`;
     document.getElementById('qty-veggies').textContent = `${Math.round(totalVeggies / 1000, 2)} kg`;
+    document.getElementById('qty-fruits').textContent = `${Math.round(totalFruits / 1000, 2)} kg`;
   }
 
   reset() {
