@@ -202,9 +202,9 @@ class Stage
         return $this->date < new \DateTimeImmutable();
     }
 
-    public function getAvailability(): StageAvailability
+    public function getAvailability(bool $withPreparers = false): StageAvailability
     {
-        return new StageAvailability($this);
+        return new StageAvailability($this, $withPreparers);
     }
 
     public function isToday(): bool

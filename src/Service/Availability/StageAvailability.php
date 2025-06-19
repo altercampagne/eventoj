@@ -17,10 +17,11 @@ final readonly class StageAvailability
 
     public function __construct(
         private Stage $stage,
+        bool $withPreparers = false,
     ) {
-        $this->breakfast = new MealAvailability($stage, Meal::BREAKFAST);
-        $this->lunch = new MealAvailability($stage, Meal::LUNCH);
-        $this->dinner = new MealAvailability($stage, Meal::DINNER);
+        $this->breakfast = new MealAvailability($stage, Meal::BREAKFAST, $withPreparers);
+        $this->lunch = new MealAvailability($stage, Meal::LUNCH, $withPreparers);
+        $this->dinner = new MealAvailability($stage, Meal::DINNER, $withPreparers);
 
         foreach ($stage->getConfirmedStagesRegistrations() as $stageRegistration) {
             $registration = $stageRegistration->getRegistration();

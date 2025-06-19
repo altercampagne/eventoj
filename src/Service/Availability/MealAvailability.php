@@ -19,8 +19,20 @@ final class MealAvailability
     public function __construct(
         public readonly Stage $stage,
         public readonly Meal $meal,
+        public readonly bool $withPreparers,
     ) {
-        $this->adults = new ItemAvailability($stage, $meal, $stage->getEvent()->getAdultsCapacity());
+        // If we have to count preparers (ie: for food calculator), we increase
+        // both the item max seats & decrease availability.
+        $adultsCapacity = $stage->getEvent()->getAdultsCapacity();
+        if ($withPreparers) {
+            $adultsCapacity += \count($stage->getPreparers());
+        }
+
+        $this->adults = new ItemAvailability($stage, $meal, $adultsCapacity);
+        if ($withPreparers) {
+            $this->adults->availability -= \count($stage->getPreparers());
+        }
+
         $this->children = new ItemAvailability($stage, $meal, $stage->getEvent()->getChildrenCapacity());
         $this->bikes = new ItemAvailability($stage, $meal, $stage->getEvent()->getBikesAvailable());
     }
