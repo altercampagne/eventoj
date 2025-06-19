@@ -1,0 +1,76 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = event.name ~ ': calculateur de nourriture' %}
+
+{% macro item_availability(availability, icon, legend) %}
+    {% set color = availability.percent >= 100 ? 'danger' : availability.percent > 50 ? 'warning' : 'success' %}
+
+    <div data-bs-toggle="tooltip" data-bs-title="{{ legend }}">
+        <span class="badge text-bg-{{ color }} ms-2">
+            <i class="fa-solid fa-{{ icon }}"></i>
+            {{ availability.booked }} / {{ availability.max }}
+        </span>
+    </div>
+{% endmacro %}
+
+{% block main %}
+    <table class="table table-hover food-calculator">
+        <thead>
+            <tr>
+                <th></th>
+                {% for stage in event.stages %}
+                    <th class="vertical-header" scope="col">{{ stage.date|format_date(pattern: 'd MMMM') }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for meal in enum_cases('App\\Entity\\Meal') %}
+                <tr>
+                    <td>{{ meal|trans }}</td>
+                    {% for stage in event.stages %}
+                        <td{% if app.user.isPrepaForStage(stage) %} class="table-primary border"{% endif %} data-meal="{{ meal.value }}">
+                            {% if stage.includesMeal(meal) %}
+                                {{ stage.availability.get(meal).peopleCount }}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="container mt-5 d-none" id="recap-container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4>🧾 Récapitulatif des commandes</h4>
+            <a
+                href="https://documentation.altercampagne.ovh/books/4-organisation-des-tours/page/les-quantites-pour-les-repas"
+                class="btn btn-success mb-2"
+            >
+                Voir la doc
+            </a>
+        </div>
+
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Quantité à commander</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pain 🥖</td>
+                    <td id="qty-bread">–</td>
+                </tr>
+                <tr>
+                    <td>Fromage 🧀</td>
+                    <td id="qty-cheese">–</td>
+                </tr>
+                <tr>
+                    <td>Légumes 🥕</td>
+                    <td id="qty-veggies">–</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

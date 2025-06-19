@@ -37,4 +37,9 @@ final class MealAvailability
 
         return !($registration->getNeededBike() > 0 && $registration->getNeededBike() > $this->bikes->availability);
     }
+
+    public function getPeopleCount(): int
+    {
+        return $this->adults->getBooked() + $this->children->getBooked();
+    }
 }

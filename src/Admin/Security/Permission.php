@@ -28,6 +28,7 @@ enum Permission: string
     case EVENT_PUBLISH = 'event.publish';
     case EVENT_UPDATE_AVAILABILITY = 'event.event_update_availability';
     case EVENT_EXPORT_EMAILS = 'event.export_emails';
+    case EVENT_FOOD_CALCULATOR = 'event.food_calculator';
 
     case MEMBERSHIP_LIST = 'membership.list';
 
