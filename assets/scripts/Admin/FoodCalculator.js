@@ -45,10 +45,10 @@ class FoodCalculator {
     }
 
     document.getElementById('recap-container').classList.remove('d-none');
-    document.getElementById('qty-bread').textContent = `${Math.round(totalBread / 1000, 2)} kg`;
-    document.getElementById('qty-cheese').textContent = `${Math.round(totalCheese / 1000, 2)} kg`;
-    document.getElementById('qty-veggies').textContent = `${Math.round(totalVeggies / 1000, 2)} kg`;
-    document.getElementById('qty-fruits').textContent = `${Math.round(totalFruits / 1000, 2)} kg`;
+    document.getElementById('qty-bread').textContent = `${this.round(totalBread / 1000)} kg`;
+    document.getElementById('qty-cheese').textContent = `${this.round(totalCheese / 1000)} kg`;
+    document.getElementById('qty-veggies').textContent = `${this.round(totalVeggies / 1000)} kg`;
+    document.getElementById('qty-fruits').textContent = `${this.round(totalFruits / 1000)} kg`;
   }
 
   reset() {
@@ -89,6 +89,10 @@ class FoodCalculator {
     const row = [...cell.parentNode.parentNode.children].indexOf(cell.parentNode);
     const col = [...cell.parentNode.children].indexOf(cell);
     return { row, col };
+  }
+
+  round(num) {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   }
 }
 
