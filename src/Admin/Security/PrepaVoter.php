@@ -64,6 +64,7 @@ class PrepaVoter extends Voter
             Permission::EVENT_VIEW_STAGES,
             Permission::EVENT_VIEW_FILLING,
             Permission::EVENT_VIEW_MEALS,
+            Permission::EVENT_FOOD_CALCULATOR,
 
             Permission::STAGE_VIEW,
         ]);

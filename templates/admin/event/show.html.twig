@@ -46,6 +46,14 @@
 
                 {% block footer %}
                     <div class="d-grid gap-2 p-2">
+                        {% if event.isPublished %}
+                            {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_FOOD_CALCULATOR').value, event) %}
+                                <a href="{{ path('admin_event_food_calculator', {slug: event.slug}) }}" class="btn btn-outline-success">Calculateur de nourriture</a>
+                            {% endif %}
+
+                            <hr class="mt-1 mb-1" />
+                        {% endif %}
+
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_UPDATE').value, event) %}
                             <a href="{{ path('admin_event_update', {slug: event.slug}) }}" class="btn btn-outline-primary">Modifier l'évènement</a>
                         {% endif %}

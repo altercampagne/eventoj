@@ -56,6 +56,15 @@ final readonly class StageAvailability
         return [$this->breakfast, $this->lunch, $this->dinner];
     }
 
+    public function get(Meal $meal): MealAvailability
+    {
+        return match ($meal) {
+            Meal::BREAKFAST => $this->breakfast,
+            Meal::LUNCH => $this->lunch,
+            Meal::DINNER => $this->dinner,
+        };
+    }
+
     public function hasAvailability(): bool
     {
         foreach ($this->getMealAvailabilities() as $mealAvailability) {

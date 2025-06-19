@@ -51,6 +51,7 @@ class InscriptionsManagerVoter extends Voter
             Permission::EVENT_VIEW_FILLING,
             Permission::EVENT_VIEW_MEALS,
             Permission::EVENT_VIEW_ARRIVALS,
+            Permission::EVENT_FOOD_CALCULATOR,
 
             Permission::MEMBERSHIP_LIST,
 
