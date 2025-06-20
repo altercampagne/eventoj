@@ -32,7 +32,7 @@ class FoodCalculator {
     for (const { meal, quantity } of meals) {
       switch (meal) {
         case 'breakfast':
-          totalBread += quantity * 80;
+          totalBread += quantity * 100;
           break;
         case 'lunch':
         case 'dinner':
