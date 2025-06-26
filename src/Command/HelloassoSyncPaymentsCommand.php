@@ -25,12 +25,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
         are in sync with Helloasso. It's very useful if the callback have not
         been called when a payment have been successfully made on Helloasso.
 
-        <info>php %command.full_name% --from "-1hour"</info>
+        <info>php %command.full_name% --from="-1hour"</info>
 
         In september, in order to make one big sync of all payments made during
         the summer:
 
-        <info>php %command.full_name% --from "-6months"</info>
+        <info>php %command.full_name% --from="-6months"</info>
 
         It's also possible to sync only 1 payment using the <info>--id</info>
         option:
@@ -75,9 +75,14 @@ class HelloassoSyncPaymentsCommand
             ->orderBy('p.createdAt', 'ASC')
         ;
         if (null !== $from) {
+            $dateFrom = new \DateTimeImmutable($from);
+            if ($dateFrom > new \DateTimeImmutable()) {
+                throw new \LogicException('From date cannot be in the future!');
+            }
+
             $qb
                 ->andWhere('p.createdAt >= :from')
-                ->setParameter('from', new \DateTimeImmutable($from))
+                ->setParameter('from', $dateFrom)
             ;
         }
 
