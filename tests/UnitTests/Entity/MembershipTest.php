@@ -21,13 +21,14 @@ class MembershipTest extends TestCase
         $payment = new Payment($user, 20000, new Registration($user, Event::AT()));
         $payment->approve('45345698', new \DateTimeImmutable());
 
-        $membership = Membership::createForUser($user, $payment, new \DateTimeImmutable('2024-05-01'));
+        $membership = Membership::createForUser($user, $payment, startAt: new \DateTimeImmutable('2024-05-01'));
 
-        $this->assertFalse($membership->isValidAt(new \DateTimeImmutable('2024-04-30')));
+        self::assertFalse($membership->isValidAt(new \DateTimeImmutable('2024-04-30')));
 
-        $this->assertTrue($membership->isValidAt(new \DateTimeImmutable('2024-05-01')));
-        $this->assertTrue($membership->isValidAt(new \DateTimeImmutable('2024-12-12')));
+        self::assertTrue($membership->isValidAt(new \DateTimeImmutable('2024-05-01')));
+        self::assertTrue($membership->isValidAt(new \DateTimeImmutable('2024-12-12')));
+        self::assertTrue($membership->isValidAt(new \DateTimeImmutable('2025-04-30 23:59:58')));
 
-        $this->assertFalse($membership->isValidAt(new \DateTimeImmutable('2025-05-01')));
+        self::assertFalse($membership->isValidAt(new \DateTimeImmutable('2025-05-01')));
     }
 }
