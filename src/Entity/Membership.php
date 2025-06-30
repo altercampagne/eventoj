@@ -72,6 +72,7 @@ class Membership
         }
 
         $endAt = $startAt->modify('+1 year -1 day');
+        $endAt = $endAt->setTime(23, 59, 59);
 
         $this->id = new UuidV4();
         $this->payment = $payment;
@@ -186,7 +187,7 @@ class Membership
 
     public function getEndAt(): \DateTimeImmutable
     {
-        return $this->endAt;
+        return $this->endAt->setTime(0, 0, 0);
     }
 
     public function getCreatedAt(): \DateTimeImmutable
