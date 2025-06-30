@@ -172,8 +172,8 @@ class Registration
 
     public function cancel(): void
     {
-        if (!$this->canBeCanceled()) {
-            throw new \LogicException('Cannot cancel this registration.');
+        if ($this->isCanceled()) {
+            throw new \LogicException("Cannot cancel registration {$this->getId()} (already canceled).");
         }
 
         $this->status = RegistrationStatus::CANCELED;
