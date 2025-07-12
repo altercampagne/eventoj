@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Paheko\Client;
 
 use App\Service\Paheko\Client\Exception\AdminMemberNotEditableException;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -70,7 +71,7 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
 
         try {
             return $response->toArray();
-        } catch (HttpExceptionInterface $e) {
+        } catch (HttpExceptionInterface|ClientExceptionInterface $e) {
             $error = $e->getResponse()->toArray(false)['error'] ?? null;
 
             if (403 === $e->getResponse()->getStatusCode() && 'Seul un membre administrateur peut modifier un autre membre administrateur.' === $error) {
