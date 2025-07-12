@@ -1,3 +1,19 @@
+{#
+USAGE example
+
+<twig:ButtonPostWithConfirmation
+    url="{{ path('admin_user_membership_create', {id: user.id}) }}"
+    buttonLabel="Button label"
+    btnClass="btn btn-warning"
+    modalTitle="Confirmation de la modification liée à l'adhésion"
+    modalButtonClass="btn btn-warning"
+    modalButtonLabel="Confirmer la {{ user.isMember ? 'prolongation' : 'création' }} de l'adhésion"
+>
+    <div class="alert alert-danger">Cette action est <b>IRRÉVERSIBLE</b>.</div>
+    <p>Modal content to adapt</p>
+</twig:ButtonPostWithConfirmation>
+#}
+
 {% set btnClass = btnClass|default('btn btn-outline-danger') %}
 {% if disabled|default(false) %}
     {% set btnClass = btnClass ~ ' disabled' %}
