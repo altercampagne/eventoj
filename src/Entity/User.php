@@ -268,7 +268,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
             }
         }
 
-        return false;
+        return \in_array($this, $event->getPreparers());
     }
 
     /**
