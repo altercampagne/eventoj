@@ -1,10 +1,10 @@
-{% set buttonClass = buttonClass|default('btn btn-outline-danger') %}
+{% set btnClass = btnClass|default('btn btn-outline-danger') %}
 {% if disabled|default(false) %}
-    {% set buttonClass = buttonClass ~ ' disabled' %}
+    {% set btnClass = btnClass ~ ' disabled' %}
 {% endif %}
 
 {% set id = id|default(url|slug) %}
-<button type="button" class="{{ buttonClass }}" data-bs-toggle="modal" data-bs-target="#post-{{ id }}" id="button-{{ id }}">
+<button type="button" class="{{ btnClass }}" data-bs-toggle="modal" data-bs-target="#post-{{ id }}" id="button-{{ id }}">
     {{ buttonLabel|default('Supprimer')|raw }}
 </button>
 
