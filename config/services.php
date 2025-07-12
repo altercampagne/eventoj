@@ -44,12 +44,15 @@ return function (ContainerConfigurator $container): void {
 
     $services->set(S3Client::class)
         ->arg('$args', [
-            'endpoint' => '%env(resolve:S3_ENDPOINT)%',
-            'region' => '%env(resolve:S3_REGION)%',
+            'endpoint' => env('S3_ENDPOINT'),
+            'region' => env('S3_REGION'),
             'credentials' => [
-                'key' => '%env(resolve:S3_KEY)%',
-                'secret' => '%env(resolve:S3_SECRET)%',
-                'region' => 'fr-par',
+                'key' => env('S3_KEY'),
+                'secret' => env('S3_SECRET'),
+            ],
+            'use_path_style_endpoint' => env('bool:S3_USE_PATH_STYLE_ENDPOINT'),
+            'http' => [
+                'verify' => !env('bool:APP_DEBUG'),
             ],
         ])
     ;
