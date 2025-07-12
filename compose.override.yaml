@@ -15,3 +15,21 @@ services:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
 ###< symfony/mailer ###
+
+  localstack:
+    image: localstack/localstack
+    environment:
+      services: s3
+    ports:
+      - 4566:4566
+    volumes:
+      - ./.docker/localstack/init/ready.d:/etc/localstack/init/ready.d
+
+  php:
+    extra_hosts:
+      - "localstack.eventoj.local:host-gateway"
+
+  nginx:
+    volumes:
+      - ./.docker/nginx/localstack.conf:/etc/nginx/conf.d/localstack.conf
+    command: [nginx-debug, '-g', 'daemon off;']

@@ -18,10 +18,25 @@ jobs:
         # Set health checks to wait until postgres has started
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
+      localstack:
+        image: localstack/localstack:latest
+        env:
+          SERVICES: s3
+          DATA_DIR: /tmp/localstack/data
+          DOCKER_HOST: unix:///var/run/docker.sock
+        ports:
+          - 4566:4566
+        options: --health-cmd "awslocal s3 ls" --health-interval 10s --health-timeout 5s --health-retries 5
+
     env:
       APP_ENV: test
-      APP_DEBUG: 0
+      APP_DEBUG: 1
       DATABASE_HOST: localhost
+      S3_ENDPOINT: http://localhost:4566
+      AWS_ENDPOINT_URL: http://localhost:4566
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: eu-west-1
 
     steps:
       - name: Check out repository code
@@ -46,6 +61,9 @@ jobs:
 
       - name: Create database
         run: bin/reset-db
+
+      - name: Wait for LocalStack and create S3 bucket
+        run: aws --endpoint-url=http://localhost:4566 s3 mb s3://local-bucket
 
       - name: Run PHPUnit
         run: bin/phpunit

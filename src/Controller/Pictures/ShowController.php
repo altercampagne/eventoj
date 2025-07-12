@@ -24,10 +24,10 @@ class ShowController extends AbstractController
     {
         $qb = $this->em->createQueryBuilder();
         $qb
-            ->select('e, s, p')
+            ->select('e, s, u')
             ->from(Event::class, 'e')
             ->leftJoin('e.stages', 's')
-            ->leftJoin('e.picture', 'p')
+            ->leftJoin('s.preparers', 'u')
             ->where('e.publishedAt < :now')
             ->andWhere('s.date < :now')
             ->orderBy('s.date', 'DESC')
@@ -35,7 +35,7 @@ class ShowController extends AbstractController
         ;
 
         return $this->render('pictures/show.html.twig', [
-            'events' => $qb->getQuery()->getResult(),
+            'events' => array_unique($qb->getQuery()->getResult(), \SORT_REGULAR),
         ]);
     }
 }

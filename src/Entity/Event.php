@@ -633,6 +633,19 @@ class Event
     }
 
     /**
+     * @return User[]
+     */
+    public function getPreparers(): array
+    {
+        $preparers = [];
+        foreach ($this->stages as $stages) {
+            $preparers += $stages->getPreparers()->toArray();
+        }
+
+        return $preparers;
+    }
+
+    /**
      * @return Collection<int, EventPicture>
      */
     public function getMemberUploadedPictures(): Collection

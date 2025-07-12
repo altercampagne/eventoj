@@ -31,7 +31,21 @@
                 <div class="col-12">
                     <div class="d-flex flex-wrap justify-content-center">
                         {% for picture in pictures %}
-                            <img loading="lazy" class="img-thumbnail mt-2 me-2" src="{{ uploaded_image_url(picture, 'sm') }}" style="max-height: 200px" />
+                            <div class="">
+                                <img loading="lazy" class="img-thumbnail mt-2 me-2" src="{{ uploaded_image_url(picture, 'sm') }}" style="max-height: 200px" />
+
+                                <div class="d-grid gap-2 me-2 mt-2">
+                                    <twig:ButtonPostWithConfirmation
+                                        btnClass="btn btn-warning"
+                                        buttonLabel="Supprimer"
+                                        url="{{ path('pictures_delete', {id: picture.id}) }}"
+                                        modalTitle="Confirmer la suppression de la photo"
+                                        modalButtonLabel="Supprimer la photo"
+                                    >
+                                        <p>Si tu valides, ta photo sera supprimée et ne sera plus accessible en ligne. Néanmois, tu pourras l'envoyer de nouveau si tu le souhaites.</p>
+                                    </twig:ButtonPostWithConfirmation>
+                                </div>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
