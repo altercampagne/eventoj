@@ -32,9 +32,9 @@ class ChangePasswordFormType extends AbstractType
                         new NotBlank(),
                         new Length(
                             min: 7,
-                            minMessage: 'Ton mot de passe doit faire au moins {{ limit }} caractères.',
                             // max length allowed by Symfony for security reasons
                             max: 4096,
+                            minMessage: 'Ton mot de passe doit faire au moins {{ limit }} caractères.',
                         ),
                     ],
                     'label' => 'Ton mot de passe',
