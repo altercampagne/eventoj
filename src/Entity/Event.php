@@ -639,7 +639,7 @@ class Event
     {
         $preparers = [];
         foreach ($this->stages as $stages) {
-            $preparers += $stages->getPreparers()->toArray();
+            $preparers = array_merge($preparers, $stages->getPreparers()->toArray());
         }
 
         return $preparers;
