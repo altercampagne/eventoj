@@ -20,8 +20,19 @@
         </div>
     {% endif %}
     {% if person.dietDetails is not null %}
-        <div class="badge bg-danger" data-bs-toggle="tooltip" title="{{ person.dietDetails }}">
-            ?
-        </div>
+        <br /><small>
+<b><u>Régime particulier :</u></b> <span data-test-person-id="{{ person.id }}">{{ person.dietDetails }}</span>
+        </small>
+        <twig:ButtonPostWithConfirmation
+            url="{{ path('admin_user_remove_diet_details', {id: person.id}) }}"
+            buttonLabel="Supprimer le régime particulier"
+            btnClass="btn btn-sm btn-outline-danger"
+            modalTitle="Confirmation de la suppression du régime alimentaire particulier de {{ person.fullname }}"
+            modalButtonClass="btn btn-warning"
+            modalButtonLabel="Confirmer la suppression du régime particulier"
+        >
+            <div class="alert alert-danger">Cette action est <b>IRRÉVERSIBLE</b>.</div>
+            <p>Merci de supprimer cette information uniquement si celle-ci n'est pas pertinente pour la préparation des repas.</p>
+        </twig:ButtonPostWithConfirmation>
     {% endif %}
 </div>

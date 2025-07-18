@@ -60,4 +60,5 @@ enum Permission: string
     case USER_VERIFY_EMAIL = 'user.verify_email';
     case USER_MEMBERSHIP_CREATE = 'user.membership_create'; // Used to offer a membership to a user (free or linked to a cash payment)
     case USER_SYNC_WITH_PAHEKO = 'user.sync_with_paheko';
+    case USER_REMOVE_DIET_DETAILS = 'user.remove_diet_details';
 }
