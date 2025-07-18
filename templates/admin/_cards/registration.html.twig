@@ -63,7 +63,7 @@
             {% endif %}
             {% if departureDate is defined %}
                 <li class="list-group-item">
-                    <i class="fa-solid fa-plane-departure fa-fw me-1"></i> Départ prévu le {{ departureDate }} ({{ registration.stageRegistrationEnd.stage.name }}) pour le {{ registration.stageRegistrationEnd.lastMeal|trans|lower }}
+                    <i class="fa-solid fa-plane-departure fa-fw me-1"></i> Départ prévu le {{ departureDate }} ({{ registration.stageRegistrationEnd.stage.name }}) après le {{ registration.stageRegistrationEnd.lastMeal|trans|lower }}
                 </li>
             {% endif %}
         </ul>
