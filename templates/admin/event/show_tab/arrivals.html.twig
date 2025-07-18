@@ -40,22 +40,43 @@
 {% endmacro %}
 
 {% block tab_content %}
+    <p>
+        <span class="bg-success-subtle p-2">En vert</span> les personnes qui nous rejoignent,
+        <span class="bg-danger-subtle p-2">en rouge</span> les personnes qui nous quittent et
+        <span class="bg-info-subtle p-2">en bleu</span> les personnes qui prolongent leur passage sur le tour.
+    </p>
     {% for stage in event.stages %}
-        {% set arrivals = event.confirmedRegistrations|filter(r => r.stageRegistrationStart.stage == stage) %}
-        {% set departures = event.confirmedRegistrations|filter(r => r.stageRegistrationEnd.stage == stage) %}
+        {% if not showPastStages and stage.date < date('-1 day') %}
+            {% if loop.first %}
+                <div class="d-grid gap-2 mb-3">
+                    <a href="{{ path('admin_event_show_arrivals', {slug: event.slug, showPastStages: true}) }}" class="btn btn-outline-secondary">
+                        Voir les arrivées & départs des étapes passées
+                    </a>
+                </div>
+            {% endif %}
+        {% else %}
+            {% set arrivals = event.confirmedRegistrations|filter(r => r.stageRegistrationStart.stage == stage) %}
+            {% set departures = event.confirmedRegistrations|filter(r => r.stageRegistrationEnd.stage == stage) %}
 
-        <div class="card mb-3">
-            <div class="card-header">
-                {{ stage.date|format_date }} - {{ stage.name }}
+            <div class="card mb-3">
+                <div class="card-header">
+                    {{ stage.date|format_date }} - {{ stage.name }}
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item list-group-item-success">
+                        {{ _self.list_registrations(arrivals|filter(a => a.user not in departures|map(d => d.user)), 'Aucune arrivée ce jour') }}
+                    </li>
+                    <li class="list-group-item list-group-item-danger">
+                        {{ _self.list_registrations(departures|filter(d => d.user not in arrivals|map(a => a.user)), 'Aucun départ ce jour') }}
+                    </li>
+                    {% set peopleStaying = arrivals|filter(a => a.user in departures|map(d => d.user)) %}
+                    {% if peopleStaying|length > 0 %}
+                        <li class="list-group-item list-group-item-info">
+                            {{ _self.list_registrations(peopleStaying) }}
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item list-group-item-success">
-                    {{ _self.list_registrations(arrivals, 'Aucune arrivée ce jour') }}
-                </li>
-                <li class="list-group-item list-group-item-danger">
-                    {{ _self.list_registrations(departures, 'Aucun départ ce jour') }}
-                </li>
-            </ul>
-        </div>
+        {% endif %}
     {% endfor %}
 {% endblock %}
