@@ -54,4 +54,14 @@ class EventPicture extends AbstractUploadedImage
     {
         return $this->event;
     }
+
+    public function existsOnRemoteStorage(): void
+    {
+        $this->existsOnRemoteStorageAt = new \DateTimeImmutable();
+    }
+
+    public function existenceHaveBeenCheched(): bool
+    {
+        return null !== $this->existsOnRemoteStorageAt;
+    }
 }

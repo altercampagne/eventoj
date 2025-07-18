@@ -24,7 +24,7 @@
 
                 <div class="lightgallery">
                     <div class="d-flex flex-wrap justify-content-center">
-                        {% for picture in event.memberUploadedPictures %}
+                        {% for picture in event.memberUploadedPictures|filter(p => p.existenceHaveBeenCheched) %}
                             <div class="pe-1 ps-0 pb-1 mb-n3">
                                 <a
                                     class="gallery-item"

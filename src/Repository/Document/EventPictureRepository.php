@@ -27,4 +27,24 @@ class EventPictureRepository extends ServiceEntityRepository
     {
         return $this->findBy(['user' => $user, 'event' => $event], ['createdAt' => 'ASC']);
     }
+
+    /**
+     * Returns all event pictures which must be checked.
+     * This means: all recently uploaded pictures not already checked on remote
+     * storage. Very recent pictures are not returned cause they might be
+     * currently uploading.
+     *
+     * @return EventPicture[]
+     */
+    public function findToCheck(): array
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb
+            ->where('e.existsOnRemoteStorageAt is null')
+            ->andWhere('e.createdAt < :created_before_date')
+            ->setParameter('created_before_date', new \DateTimeImmutable('-30 minutes'))
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

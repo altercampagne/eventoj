@@ -15,10 +15,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'eventoj:event-picture:delete-if-missing',
-    description: 'Delete event picture which does not exists on remote storage.',
+    name: 'eventoj:event-picture:check-existence',
+    description: 'Check if event pictures exists on remote storage.',
 )]
-final readonly class EventPictureDeleteIfMissingCommand
+final readonly class EventPictureCheckExistenceCommand
 {
     public function __construct(
         private EntityManagerInterface $em,
@@ -41,13 +41,23 @@ final readonly class EventPictureDeleteIfMissingCommand
 
             $eventPictures = $this->em->getRepository(EventPicture::class)->findAll();
         } else {
-            $eventPictures = $this->em->getRepository(EventPicture::class)->findBy(['existsOnRemoteStorageAt' => null]);
+            $eventPictures = $this->em->getRepository(EventPicture::class)->findToCheck();
         }
 
-        $io->progressStart(\count($eventPictures));
+        $count = \count($eventPictures);
+        if (0 === $count) {
+            $io->success('All existing pictures have already been checked.');
+
+            return Command::SUCCESS;
+        }
+
+        $io->progressStart($count);
         foreach ($eventPictures as $eventPicture) {
             if (!$this->imageStorageManipulator->exists($eventPicture)) {
                 $this->em->remove($eventPicture);
+            } else {
+                $eventPicture->existsOnRemoteStorage();
+                $this->em->persist($eventPicture);
             }
 
             $io->progressAdvance();
@@ -57,7 +67,7 @@ final readonly class EventPictureDeleteIfMissingCommand
 
         $this->em->flush();
 
-        $io->success('All unexisting pictures have been removed.');
+        $io->success('All new pictures have been checked.');
 
         return Command::SUCCESS;
     }
