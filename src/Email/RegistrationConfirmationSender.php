@@ -6,8 +6,8 @@ namespace App\Email;
 
 use App\Entity\Registration;
 use App\Repository\QuestionRepository;
+use App\Service\Media\UploadedImageUrlGenerator;
 use App\Service\PriceFormatter;
-use App\Service\UploadedImageUrlGenerator;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;

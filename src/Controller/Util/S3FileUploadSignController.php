@@ -10,7 +10,7 @@ use App\Entity\Document\UploadedImage;
 use App\Entity\Document\UploadedImageType;
 use App\Entity\Event;
 use App\Entity\User;
-use App\Service\UploadedImageUrlGenerator;
+use App\Service\Media\UploadedImageUrlGenerator;
 use Aws\S3\S3Client;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;

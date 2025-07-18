@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Twig\Extension;
 
 use App\Entity\Document\AbstractUploadedImage;
-use App\Service\UploadedImageUrlGenerator;
+use App\Service\Media\UploadedImageUrlGenerator;
 use Twig\Attribute\AsTwigFunction;
 
 class UploadedImageExtension

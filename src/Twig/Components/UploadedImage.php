@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Twig\Components;
 
 use App\Entity\Document\AbstractUploadedImage;
-use App\Service\UploadedImageUrlGenerator;
+use App\Service\Media\UploadedImageUrlGenerator;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
