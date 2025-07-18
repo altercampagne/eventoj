@@ -41,7 +41,7 @@ final readonly class EventPictureCheckExistenceCommand
 
             $eventPictures = $this->em->getRepository(EventPicture::class)->findAll();
         } else {
-            $eventPictures = $this->em->getRepository(EventPicture::class)->findToCheck();
+            $eventPictures = $this->em->getRepository(EventPicture::class)->findBy(['existsOnRemoteStorageAt' => null]);
         }
 
         $count = \count($eventPictures);
@@ -54,6 +54,12 @@ final readonly class EventPictureCheckExistenceCommand
         $io->progressStart($count);
         foreach ($eventPictures as $eventPicture) {
             if (!$this->imageStorageManipulator->exists($eventPicture)) {
+                // If the picture have been recently created, it might by still
+                // uploading so we don't delete it immediately.
+                if ($eventPicture->getCreatedAt() > new \DateTimeImmutable('-30 minutes')) {
+                    continue;
+                }
+
                 $this->em->remove($eventPicture);
             } else {
                 $eventPicture->existsOnRemoteStorage();
