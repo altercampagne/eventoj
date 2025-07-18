@@ -6,7 +6,7 @@ namespace App\Admin\Form;
 
 use App\Entity\Document\UploadedImage;
 use App\Entity\Document\UploadedImageType as UploadedImageTypeEnum;
-use App\Service\UploadedImageUrlGenerator;
+use App\Service\Media\UploadedImageUrlGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;

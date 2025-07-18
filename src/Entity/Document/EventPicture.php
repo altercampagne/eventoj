@@ -24,6 +24,13 @@ class EventPicture extends AbstractUploadedImage
     #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id', nullable: false)]
     private readonly Event $event;
 
+    /*
+     * This field is used to check if the picture exists on the remove storage.
+     * If it does not, the entry is removed, otherwise we store the "last seen date".
+     */
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $existsOnRemoteStorageAt = null;
+
     public function __construct(
         User $user,
         Event $event,
