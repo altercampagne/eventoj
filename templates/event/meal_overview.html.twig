@@ -17,7 +17,6 @@
                 if(!window.location.hash) {
                     window.location = "{{ path('event_meal_overview', {slug: event.slug}) }}#{{ today }}";
                 }
-
             })();
         </script>
     {% endif %}
@@ -65,6 +64,9 @@
                                                 <ul class="list-unstyled">
                                                     {% if meal.vegan > 0 %}
                                                         <li>{{ meal.vegan }} vegan{% if meal.vegan > 1 %}s{% endif %}</li>
+                                                    {% endif %}
+                                                    {% if meal.lactoseAndGlutenIntolerant > 0 %}
+                                                        <li>{{ meal.lactoseAndGlutenIntolerant }} intolérant·e{% if meal.lactoseAndGlutenIntolerant > 1 %}s{% endif %} au lactose ET au gluten</li>
                                                     {% endif %}
                                                     {% if meal.lactoseIntolerant > 0 %}
                                                         <li>{{ meal.lactoseIntolerant }} intolérant·e{% if meal.lactoseIntolerant > 1 %}s{% endif %} au lactose</li>

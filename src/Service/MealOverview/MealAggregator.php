@@ -33,6 +33,7 @@ final class MealAggregator
                     Diet::VEGAN->value => 0,
                     'lactoseIntolerant' => 0,
                     'glutenIntolerant' => 0,
+                    'lactoseAndGlutenIntolerant' => 0,
                     'dietDetails' => [],
                 ];
             }
@@ -70,12 +71,16 @@ final class MealAggregator
 
         ++$overview[$stageName]['meals'][$meal->value][$person->getDiet()->value];
 
-        if ($person->isLactoseIntolerant()) {
-            ++$overview[$stageName]['meals'][$meal->value]['lactoseIntolerant'];
-        }
+        if ($person->isLactoseIntolerant() && $person->isGlutenIntolerant()) {
+            ++$overview[$stageName]['meals'][$meal->value]['lactoseAndGlutenIntolerant'];
+        } else {
+            if ($person->isLactoseIntolerant()) {
+                ++$overview[$stageName]['meals'][$meal->value]['lactoseIntolerant'];
+            }
 
-        if ($person->isGlutenIntolerant()) {
-            ++$overview[$stageName]['meals'][$meal->value]['glutenIntolerant'];
+            if ($person->isGlutenIntolerant()) {
+                ++$overview[$stageName]['meals'][$meal->value]['glutenIntolerant'];
+            }
         }
 
         if (null !== $details = $person->getDietDetails()) {
