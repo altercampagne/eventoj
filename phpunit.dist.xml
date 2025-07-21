@@ -7,6 +7,8 @@
          colors="true"
          failOnNotice="true"
          failOnWarning="true"
+         failOnPhpunitDeprecation="true"
+         displayDetailsOnPhpunitDeprecations="true"
          bootstrap="tests/bootstrap.php"
          cacheDirectory=".phpunit.cache"
 >
@@ -23,7 +25,11 @@
         </testsuite>
     </testsuites>
 
-    <source restrictNotices="true" restrictWarnings="true">
+    <source
+        ignoreIndirectDeprecations="true"
+        restrictNotices="true"
+        restrictWarnings="true"
+    >
         <include>
             <directory>src</directory>
         </include>
