@@ -58,6 +58,16 @@ class RegisterChoosePriceController extends AbstractController
             return $this->redirectToRoute('homepage');
         }
 
+        if (0 === $registration->getStagesRegistrations()->count()) {
+            $this->addFlash('warning', 'Les dates choisies ne sont pas valides');
+
+            $this->logger->warning('Trying to pay for a registration which which does not contains any stage!', [
+                'registration' => $registration,
+            ]);
+
+            return $this->redirectToRoute('event_register_choose_dates', ['slug' => $event->getSlug()]);
+        }
+
         $bill = $this->billCreator->create($registration);
 
         $form = $this->createForm(ChoosePriceFormType::class, ['price' => $bill->getBreakEvenPrice()], [
