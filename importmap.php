@@ -36,14 +36,14 @@ return [
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free' => [
-        'version' => '6.7.2',
+        'version' => '7.0.0',
     ],
     '@fortawesome/fontawesome-free/css/all.css' => [
-        'version' => '6.7.2',
+        'version' => '7.0.0',
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free/css/fontawesome.min.css' => [
-        'version' => '6.7.2',
+        'version' => '7.0.0',
         'type' => 'css',
     ],
     'trix' => [
