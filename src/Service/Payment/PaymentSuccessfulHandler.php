@@ -10,6 +10,7 @@ use App\Message\PahekoPaymentSync;
 use App\Service\MembershipCreator;
 use Doctrine\ORM\EntityManagerInterface;
 use Helloasso\Models\Statistics\OrderDetail;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final readonly class PaymentSuccessfulHandler
@@ -19,11 +20,20 @@ final readonly class PaymentSuccessfulHandler
         private MembershipCreator $membershipCreator,
         private MessageBusInterface $bus,
         private RegistrationConfirmationSender $registrationConfirmationSender,
+        private LoggerInterface $logger,
     ) {
     }
 
     public function onPaymentSuccess(Payment $payment, OrderDetail $order): void
     {
+        if ($payment->isApproved()) {
+            $this->logger->notice('Given payment is already approved, nothing to do! 👌', [
+                'payment' => $payment,
+            ]);
+
+            return;
+        }
+
         $payment->approve((string) $order->getId(), \DateTimeImmutable::createFromMutable($order->getDate()));
         $this->em->persist($payment);
 
