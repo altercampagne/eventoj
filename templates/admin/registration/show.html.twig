@@ -44,7 +44,13 @@
             <div class="p-2 text-secondary">
                 <small>
                     Créée le <b>{{ registration.createdAt|format_datetime('long', 'short') }}</b>.<br />
-                    Dernière mise à jour le <b>{{ registration.updatedAt|format_datetime('long', 'short') }}</b>.
+                    {% if not registration.isWaitingPayment %}
+                        ✔️ Confirmée le <b>{{ registration.confirmedAt|format_datetime('long', 'short') }}</b>.<br />
+                    {% endif %}
+                    {% if registration.isCanceled %}
+                        ❌ Annulée le <b>{{ registration.canceledAt|format_datetime('long', 'short') }}</b>.<br />
+                    {% endif %}
+                    Dernière mise à jour le {{ registration.updatedAt|format_datetime('long', 'short') }}.
                 </small>
             </div>
 
