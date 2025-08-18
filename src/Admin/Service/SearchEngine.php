@@ -15,8 +15,8 @@ use Symfony\Bundle\SecurityBundle\Security;
 final readonly class SearchEngine
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly Security $security,
+        private EntityManagerInterface $em,
+        private Security $security,
     ) {
     }
 

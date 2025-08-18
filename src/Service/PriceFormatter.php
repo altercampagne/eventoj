@@ -9,7 +9,7 @@ use Twig\Extra\Intl\IntlExtension;
 final readonly class PriceFormatter
 {
     public function __construct(
-        private readonly IntlExtension $intlExtension,
+        private IntlExtension $intlExtension,
     ) {
     }
 

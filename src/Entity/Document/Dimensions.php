@@ -13,8 +13,8 @@ namespace App\Entity\Document;
 final readonly class Dimensions
 {
     public function __construct(
-        private readonly ?int $originalWidth = null,
-        private readonly ?int $originalHeight = null,
+        private ?int $originalWidth = null,
+        private ?int $originalHeight = null,
     ) {
     }
 

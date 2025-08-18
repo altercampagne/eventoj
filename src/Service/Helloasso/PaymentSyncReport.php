@@ -15,8 +15,8 @@ final readonly class PaymentSyncReport
     private const string STATUS_EXPIRED = 'expired';
 
     private function __construct(
-        private readonly string $status,
-        public readonly string $message,
+        private string $status,
+        public string $message,
     ) {
     }
 

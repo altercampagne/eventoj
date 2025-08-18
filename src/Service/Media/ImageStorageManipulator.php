@@ -12,9 +12,9 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 final readonly class ImageStorageManipulator
 {
     public function __construct(
-        private readonly S3Client $s3Client,
+        private S3Client $s3Client,
         #[Autowire(env: 'S3_BUCKET_NAME')]
-        private readonly string $bucketName,
+        private string $bucketName,
     ) {
     }
 

@@ -16,7 +16,7 @@ final readonly class UserEventComputedRegistrations
     /**
      * @var StageRegistration[]
      */
-    private readonly array $stagesRegistrations;
+    private array $stagesRegistrations;
 
     public function __construct(User $user, Event $event)
     {

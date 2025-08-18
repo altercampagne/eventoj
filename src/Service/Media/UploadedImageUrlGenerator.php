@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 final readonly class UploadedImageUrlGenerator
 {
     public function __construct(
-        private readonly ImageStorageManipulator $imageStorageManipulator,
+        private ImageStorageManipulator $imageStorageManipulator,
         #[Autowire(param: 'kernel.environment')]
         private string $environment,
         #[Autowire(env: 'CLOUDIMG_TOKEN')]

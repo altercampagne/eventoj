@@ -15,10 +15,10 @@ use Psr\Log\LoggerInterface;
 final readonly class PaymentRefundHandler
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
+        private EntityManagerInterface $em,
         private HelloassoClient $helloassoClient,
-        private readonly PaymentSynchronizer $pahekoPaymentSynchronizer,
-        private readonly LoggerInterface $logger,
+        private PaymentSynchronizer $pahekoPaymentSynchronizer,
+        private LoggerInterface $logger,
     ) {
     }
 

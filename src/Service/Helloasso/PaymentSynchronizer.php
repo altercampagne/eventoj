@@ -15,10 +15,10 @@ use Helloasso\Models\Statistics\OrderDetail;
 final readonly class PaymentSynchronizer
 {
     public function __construct(
-        private readonly HelloassoClient $helloassoClient,
-        private readonly PaymentHandler $paymentHandler,
-        private readonly PaymentRefundHandler $paymentRefundHandler,
-        private readonly EntityManagerInterface $em,
+        private HelloassoClient $helloassoClient,
+        private PaymentHandler $paymentHandler,
+        private PaymentRefundHandler $paymentRefundHandler,
+        private EntityManagerInterface $em,
     ) {
     }
 

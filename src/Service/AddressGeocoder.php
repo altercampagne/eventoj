@@ -16,10 +16,10 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 final readonly class AddressGeocoder
 {
     public function __construct(
-        private readonly Provider $photonGeocoder,
-        private readonly EntityManagerInterface $em,
+        private Provider $photonGeocoder,
+        private EntityManagerInterface $em,
         #[Autowire(param: 'kernel.environment')]
-        private readonly string $environment,
+        private string $environment,
     ) {
     }
 
