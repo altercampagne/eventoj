@@ -91,6 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
     ])]
     private bool $lactoseIntolerant = false;
 
+    #[Assert\Length(groups: ['profile_update'], max: 255)]
     #[ORM\Column(type: 'string', nullable: true, options: [
         'comment' => 'Free field to provide more information about user diet.',
     ])]

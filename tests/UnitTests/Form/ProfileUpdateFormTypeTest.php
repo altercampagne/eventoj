@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
-class ProfileUpdateFormTypeTest extends KernelTestCase
+final class ProfileUpdateFormTypeTest extends KernelTestCase
 {
     use FormAssertionsTrait;
 
@@ -43,12 +43,15 @@ class ProfileUpdateFormTypeTest extends KernelTestCase
         $this->assertTrue($this->form->isValid());
     }
 
-    public function testWithInvalidDates(): void
+    public function testWithInvalidData(): void
     {
-        $this->form->submit([]);
+        $this->form->submit([
+            'dietDetails' => 'This is a value which is waaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay too long regarding the field data type in database.',
+        ]);
 
         $this->assertFormInvalid($this->form, [
             'diet' => 'Le régime alimentaire est obligatoire.',
+            'dietDetails' => 'Cette chaîne est trop longue. Elle doit avoir au maximum 255 caractères.',
         ]);
     }
 }
