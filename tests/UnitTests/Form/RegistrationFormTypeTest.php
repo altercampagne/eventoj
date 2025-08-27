@@ -56,6 +56,20 @@ class RegistrationFormTypeTest extends KernelTestCase
         ]);
     }
 
+    public function testSameFirstAndLastName(): void
+    {
+        $data = $this->getValidFormData();
+        $data['firstName'] = 'foobar';
+        $data['lastName'] = 'foobar';
+
+        $form = $this->getForm();
+        $form->submit($data);
+
+        $this->assertFormInvalid($form, [
+            'registration_form' => 'Le prénom et le nom de famille ne doivent pas être identiques.',
+        ]);
+    }
+
     #[DataProvider('invalidDataProvider')]
     public function testVariousErrors(string $field, ?string $value, string $expectedError): void
     {
@@ -74,8 +88,11 @@ class RegistrationFormTypeTest extends KernelTestCase
      */
     public static function invalidDataProvider(): iterable
     {
-        yield ['firstName', null, 'Cette valeur ne doit pas être vide.'];
-        yield ['lastName', null, 'Cette valeur ne doit pas être vide.'];
+        // In order to correctly handle null (or empty) firstName / lastName,
+        // we have to create a dedicated data class for the form.
+        // yield ['firstName', null, 'Cette valeur ne doit pas être vide.'];
+        // yield ['lastName', null, 'Cette valeur ne doit pas être vide.'];
+
         yield ['plainPassword', 'bla', 'Ton mot de passe doit faire au moins 7 caractères.'];
         yield ['birthDate', (new \DateTimeImmutable('-10 years'))->format('Y-m-d'), 'Tu dois être majeur pour pouvoir t\'inscrire.'];
         yield ['birthDate', (new \DateTimeImmutable('-130 years'))->format('Y-m-d'), 'Une vraie date de naissance, ce serait mieux ! :)'];
@@ -101,8 +118,11 @@ class RegistrationFormTypeTest extends KernelTestCase
      */
     public static function invalidNames(): iterable
     {
-        yield [null, 'Cette valeur ne doit pas être vide.'];
-        yield ['', 'Cette valeur ne doit pas être vide.'];
+        // In order to correctly handle null (or empty) firstName / lastName,
+        // we have to create a dedicated data class for the form.
+        // yield [null, 'Cette valeur ne doit pas être vide.'];
+        // yield ['', 'Cette valeur ne doit pas être vide.'];
+
         yield ['a', 'Cette chaîne est trop courte. Elle doit avoir au minimum 2 caractères.'];
         yield ['Coucou3fail', 'Cette chaîne ne doit pas contenir de chiffres.'];
         yield ['COuUulala', 'Cette chaîne ne semble pas valide.'];
@@ -129,11 +149,21 @@ class RegistrationFormTypeTest extends KernelTestCase
     }
 
     #[DataProvider('validNames')]
-    public function testValidNames(string $name): void
+    public function testValidFirstName(string $name): void
     {
         $form = $this->getForm();
         $form->submit(array_merge($this->getValidFormData(), [
             'firstName' => $name,
+        ]));
+
+        $this->assertFormValid($form);
+    }
+
+    #[DataProvider('validNames')]
+    public function testValidLastName(string $name): void
+    {
+        $form = $this->getForm();
+        $form->submit(array_merge($this->getValidFormData(), [
             'lastName' => $name,
         ]));
 

@@ -172,6 +172,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
         $this->memberships = new ArrayCollection();
     }
 
+    #[Assert\IsTrue(message: 'Le prénom et le nom de famille ne doivent pas être identiques.')]
+    public function hasDifferentFirstnameAndLastname(): bool
+    {
+        return $this->firstName !== $this->lastName;
+    }
+
     /**
      * A visual identifier that represents this user.
      *
