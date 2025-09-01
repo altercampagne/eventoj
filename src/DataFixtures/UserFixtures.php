@@ -65,5 +65,9 @@ class UserFixtures extends Fixture
         UserFactory::createOne([
             'email' => 'change-my-password@test-only.user',
         ]);
+
+        UserFactory::new()->roles(['ROLE_ALTERNATIVE_EDITOR'])->verifiedEmail()->create([
+            'email' => 'alternative-editor@altercampagne.net',
+        ]);
     }
 }
