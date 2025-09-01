@@ -242,6 +242,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
         return $this->getPreparedStages()->contains($stage);
     }
 
+    public function isAlternativeEditor(): bool
+    {
+        return \in_array('ROLE_ALTERNATIVE_EDITOR', $this->roles);
+    }
+
     public function isInscriptionsManager(): bool
     {
         return \in_array('ROLE_INSCRIPTIONS', $this->roles);

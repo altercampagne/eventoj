@@ -105,6 +105,14 @@
                                 >
                                 {{ user.isStatsViewer ? 'Retirer' : 'Donner' }} les droits de voir les stats
                                 </twig:ButtonPost>
+
+                                <twig:ButtonPost
+                                url="{{ path(user.isAlternativeEditor ? 'admin_user_unpromote_alternative_editor' : 'admin_user_promote_alternative_editor', {id: user.id}) }}"
+                                tooltip="{{ user.isAlternativeEditor ? 'Retirer' : 'Ajouter' }} les droits pour gérer les alternatives à {{ user.fullname }}"
+                                btnClass="btn {{ user.isAlternativeEditor ? 'btn-warning' : 'btn-outline-warning' }}"
+                                >
+                                {{ user.isAlternativeEditor ? 'Retirer' : 'Donner' }} les droits pour gérer les alternatives
+                                </twig:ButtonPost>
                             {% endif %}
                         </div>
                     </div>

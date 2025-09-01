@@ -19,6 +19,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/users/{id}/unpromote_admin', name: 'admin_user_unpromote_admin', requirements: ['id' => Requirement::UUID_V4], defaults: ['role' => 'ROLE_ADMIN'], methods: 'POST')]
 #[Route('/users/{id}/unpromote_inscriptions_manager', name: 'admin_user_unpromote_inscriptions_manager', requirements: ['id' => Requirement::UUID_V4], defaults: ['role' => 'ROLE_INSCRIPTIONS'], methods: 'POST')]
 #[Route('/users/{id}/unpromote_stats_viewer', name: 'admin_user_unpromote_stats_viewer', requirements: ['id' => Requirement::UUID_V4], defaults: ['role' => 'ROLE_STATS'], methods: 'POST')]
+#[Route('/users/{id}/unpromote_alternative_editor', name: 'admin_user_unpromote_alternative_editor', requirements: ['id' => Requirement::UUID_V4], defaults: ['role' => 'ROLE_ALTERNATIVE_EDITOR'], methods: 'POST')]
 class UnpromoteController extends AbstractController
 {
     use RedirectorTrait;
