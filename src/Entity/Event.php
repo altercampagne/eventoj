@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
@@ -29,7 +29,7 @@ class Event
      */
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private UuidV4 $id;
+    private Uuid $id;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 3, enumType: EventType::class, options: [
@@ -145,7 +145,7 @@ class Event
 
     private function __construct(EventType $type)
     {
-        $this->id = new UuidV4();
+        $this->id = Uuid::v7();
         $this->type = $type;
         $this->createdAt = new \DateTimeImmutable();
         $this->stages = new ArrayCollection();
@@ -346,7 +346,7 @@ class Event
         return !$this->isFinished();
     }
 
-    public function getId(): UuidV4
+    public function getId(): Uuid
     {
         return $this->id;
     }

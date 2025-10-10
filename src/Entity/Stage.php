@@ -12,7 +12,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: StageRepository::class)]
@@ -29,7 +29,7 @@ class Stage
      */
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private UuidV4 $id;
+    private Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'stages')]
     #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id', nullable: false)]
@@ -99,7 +99,7 @@ class Stage
 
     public function __construct(Event $event)
     {
-        $this->id = new UuidV4();
+        $this->id = Uuid::v7();
         $this->event = $event;
         $this->createdAt = new \DateTimeImmutable();
         $this->alternatives = new ArrayCollection();
@@ -212,7 +212,7 @@ class Stage
         return $this->date->format('Y-m-d') === (new \DateTimeImmutable())->format('Y-m-d');
     }
 
-    public function getId(): UuidV4
+    public function getId(): Uuid
     {
         return $this->id;
     }

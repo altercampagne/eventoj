@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`payment`')]
@@ -24,7 +24,7 @@ class Payment
      */
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private UuidV4 $id;
+    private Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'payments')]
     #[ORM\JoinColumn(name: 'payer_id', referencedColumnName: 'id', nullable: false)]
@@ -90,7 +90,7 @@ class Payment
 
     public function __construct(User $payer, int $amount, ?Registration $registration = null, int $instalments = 1)
     {
-        $this->id = new UuidV4();
+        $this->id = Uuid::v7();
         $this->payer = $payer;
         $this->amount = $amount;
         $this->registration = $registration;
@@ -194,7 +194,7 @@ class Payment
         return $this->amount - $this->getMembershipsAmount();
     }
 
-    public function getId(): UuidV4
+    public function getId(): Uuid
     {
         return $this->id;
     }

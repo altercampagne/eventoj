@@ -17,7 +17,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
 #[Route('/me/companions/create/{backToEvent}', name: 'profile_companion_create')]
-#[Route('/me/companions/{id}/{backToEvent}', name: 'profile_companion_update', requirements: ['id' => Requirement::UUID_V4])]
+#[Route('/me/companions/{id}/{backToEvent}', name: 'profile_companion_update', requirements: ['id' => Requirement::UUID])]
 class CompanionCreateOrUpdateController extends AbstractController
 {
     public function __construct(

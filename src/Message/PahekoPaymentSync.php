@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Message;
 
-use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Uid\Uuid;
 
 final readonly class PahekoPaymentSync
 {
     public function __construct(
-        private UuidV4 $id,
+        private Uuid $id,
     ) {
     }
 
-    public function getPaymentId(): UuidV4
+    public function getPaymentId(): Uuid
     {
         return $this->id;
     }

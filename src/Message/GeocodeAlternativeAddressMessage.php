@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Message;
 
-use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Uid\Uuid;
 
 final readonly class GeocodeAlternativeAddressMessage
 {
     public function __construct(
-        private UuidV4 $id,
+        private Uuid $id,
     ) {
     }
 
-    public function getAlternativeId(): UuidV4
+    public function getAlternativeId(): Uuid
     {
         return $this->id;
     }

@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::REGISTRATION_CONFIRMATION_EMAIL_SEND->value, 'registration')]
-#[Route('/registrations/{id}/confirmation_email_send', name: 'admin_registration_confirmation_email_send', requirements: ['id' => Requirement::UUID_V4], methods: 'POST')]
+#[Route('/registrations/{id}/confirmation_email_send', name: 'admin_registration_confirmation_email_send', requirements: ['id' => Requirement::UUID], methods: 'POST')]
 final class ConfirmationEmailSendController extends AbstractController
 {
     public function __construct(

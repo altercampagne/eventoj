@@ -7,7 +7,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`membership`')]
@@ -18,7 +18,7 @@ class Membership
 
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private readonly UuidV4 $id;
+    private readonly Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'memberships')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: true)]
@@ -74,7 +74,7 @@ class Membership
         $endAt = $startAt->modify('+1 year -1 day');
         $endAt = $endAt->setTime(23, 59, 59);
 
-        $this->id = new UuidV4();
+        $this->id = Uuid::v7();
         $this->payment = $payment;
         $this->user = $user;
         $this->companion = $companion;
@@ -149,7 +149,7 @@ class Membership
         return $this;
     }
 
-    public function getId(): UuidV4
+    public function getId(): Uuid
     {
         return $this->id;
     }
