@@ -120,17 +120,17 @@ final class AlterTour2023Story extends Story
         yield [
             'name' => 'De Montluçon à Hérisson',
             'description' => 'De Montluçon à Hérisson pour rendre visite à Josselin & Lisa.',
-            'alternatives' => ['le-champ-des-possibles', 'les-champs-de-lile'],
+            'alternatives' => ['le-champ-des-possibles', 'les-champs-de-l-ile'],
         ];
         yield [
             'name' => 'Journée chantiers à Hérisson',
             'description' => 'On file un coup de main à Josselin & Lisa !',
-            'alternatives' => ['les-champs-de-lile'],
+            'alternatives' => ['les-champs-de-l-ile'],
         ];
         yield [
             'name' => 'De Hérisson à Tortezais',
             'description' => 'On va rendre visite à Jean-Louis Gaby',
-            'alternatives' => ['les-champs-de-lile', 'solaire-2000'],
+            'alternatives' => ['les-champs-de-l-ile', 'solaire-2000'],
         ];
         yield [
             'name' => 'De Tortezais au manois de la Beaume',
@@ -200,12 +200,12 @@ final class AlterTour2023Story extends Story
         yield [
             'name' => 'Les jardins bénéfiques -> Eden Broc',
             'description' => 'A COMPLETER',
-            'alternatives' => ['les-jardins-benefiques', 'leden-broc'],
+            'alternatives' => ['les-jardins-benefiques', 'l-eden-broc'],
         ];
         yield [
             'name' => 'Eden Broc -> Viticulteur Delorme',
             'description' => 'A COMPLETER',
-            'alternatives' => ['leden-broc', 'benoit-delorme'],
+            'alternatives' => ['l-eden-broc', 'benoit-delorme'],
         ];
         yield [
             'name' => 'Viticulteur Delorme -> Ecolieu du portail',
@@ -270,22 +270,22 @@ final class AlterTour2023Story extends Story
         yield [
             'name' => "Ferme Aymonin -> Eco'lette",
             'description' => 'A COMPLETER',
-            'alternatives' => ['ferme-aymonin', 'ecolette'],
+            'alternatives' => ['ferme-aymonin', 'eco-lette'],
         ];
         yield [
             'name' => "Eco'lette",
             'description' => 'A COMPLETER',
-            'alternatives' => ['ecolette'],
+            'alternatives' => ['eco-lette'],
         ];
         yield [
             'name' => "Eco'lette",
             'description' => 'A COMPLETER',
-            'alternatives' => ['ecolette'],
+            'alternatives' => ['eco-lette'],
         ];
         yield [
             'name' => "Eco'lette -> Revis",
             'description' => 'A COMPLETER',
-            'alternatives' => ['ecolette', 'revis'],
+            'alternatives' => ['eco-lette', 'revis'],
         ];
         yield [
             'name' => 'Revis',
@@ -300,12 +300,12 @@ final class AlterTour2023Story extends Story
         yield [
             'name' => 'Sous la côte / Ferme d\'Uzelle',
             'description' => 'A COMPLETER',
-            'alternatives' => ['sous-la-cote', 'ferme-duzelle'],
+            'alternatives' => ['sous-la-cote', 'ferme-d-uzelle'],
         ];
         yield [
             'name' => 'Sous la côte / Ferme d\'Uzelle',
             'description' => 'A COMPLETER',
-            'alternatives' => ['sous-la-cote', 'ferme-duzelle'],
+            'alternatives' => ['sous-la-cote', 'ferme-d-uzelle'],
         ];
         yield [
             'name' => 'Sous la côte -> Jardin des potes en ciel',

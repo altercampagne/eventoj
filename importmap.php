@@ -36,14 +36,14 @@ return [
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free' => [
-        'version' => '7.0.0',
+        'version' => '7.1.0',
     ],
     '@fortawesome/fontawesome-free/css/all.css' => [
-        'version' => '7.0.0',
+        'version' => '7.1.0',
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free/css/fontawesome.min.css' => [
-        'version' => '7.0.0',
+        'version' => '7.1.0',
         'type' => 'css',
     ],
     'trix' => [
@@ -84,24 +84,24 @@ return [
         'type' => 'css',
     ],
     'lightgallery' => [
-        'version' => '2.9.0-beta.1',
+        'version' => '2.9.0',
     ],
     'lightgallery/plugins/thumbnail' => [
-        'version' => '2.9.0-beta.1',
+        'version' => '2.9.0',
     ],
     'lightgallery/plugins/zoom' => [
-        'version' => '2.9.0-beta.1',
+        'version' => '2.9.0',
     ],
     'lightgallery/css/lightgallery.css' => [
-        'version' => '2.9.0-beta.1',
+        'version' => '2.9.0',
         'type' => 'css',
     ],
     'lightgallery/css/lg-zoom.css' => [
-        'version' => '2.9.0-beta.1',
+        'version' => '2.9.0',
         'type' => 'css',
     ],
     'lightgallery/css/lg-thumbnail.css' => [
-        'version' => '2.9.0-beta.1',
+        'version' => '2.9.0',
         'type' => 'css',
     ],
     'dropzone' => [

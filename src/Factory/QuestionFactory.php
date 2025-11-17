@@ -42,7 +42,7 @@ final class QuestionFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this
-            ->instantiateWith(Instantiator::withConstructor()->alwaysForce('locked'))
+            ->instantiateWith(Instantiator::withConstructor()->alwaysForce('locked', 'slug'))
         ;
     }
 }

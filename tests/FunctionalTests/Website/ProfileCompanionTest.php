@@ -74,7 +74,7 @@ class ProfileCompanionTest extends WebTestCase
         $this->assertRouteSame('profile_companions');
         $this->assertSelectorTextContains('.alert-success', 'Companion ForTests a bien été modifié·e !');
         $this->assertSelectorTextContains('.card-body', 'contact@yopmail.com');
-        $this->assertSelectorTextContains('.card-body', '+33 6 06 06 06 06');
+        $this->assertSelectorTextContains('.card-body', '+33606060606');
     }
 
     public function testCreateAndUpdateFromEventRegisterGoesBackToEvent(): void
