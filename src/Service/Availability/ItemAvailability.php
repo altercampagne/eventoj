@@ -41,7 +41,7 @@ final class ItemAvailability
 
     public function isFull(): bool
     {
-        return (float) 0 == $this->getPercent();
+        return (float) 0 === $this->getPercent();
     }
 
     public function getBooked(): int

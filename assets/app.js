@@ -1,3 +1,4 @@
+import './bootstrap.js';
 import { Tooltip } from 'bootstrap'
 import '@fortawesome/fontawesome-free'
 import '@fortawesome/fontawesome-free/css/all.css'

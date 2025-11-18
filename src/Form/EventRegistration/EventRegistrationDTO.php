@@ -42,7 +42,7 @@ class EventRegistrationDTO
     {
         $this->registration = $registration;
 
-        if (0 == \count($registration->getEvent()->getStages())) {
+        if (0 === \count($registration->getEvent()->getStages())) {
             throw new \RuntimeException('Cannot register to an event without stages.');
         }
 

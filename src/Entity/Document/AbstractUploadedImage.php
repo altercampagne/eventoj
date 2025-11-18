@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Entity\Document;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\MappedSuperclass]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
@@ -18,7 +18,7 @@ abstract class AbstractUploadedImage implements \Stringable
      */
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private UuidV4 $id;
+    private Uuid $id;
 
     #[ORM\Column(options: [
         'comment' => 'This is the path on ObjectStorage.',
@@ -49,7 +49,7 @@ abstract class AbstractUploadedImage implements \Stringable
         ?int $width = null,
         ?int $height = null,
     ) {
-        $this->id = new UuidV4();
+        $this->id = Uuid::v7();
         $this->path = $path;
         $this->width = $width;
         $this->height = $height;
@@ -62,7 +62,7 @@ abstract class AbstractUploadedImage implements \Stringable
         return (string) $this->id;
     }
 
-    public function getId(): UuidV4
+    public function getId(): Uuid
     {
         return $this->id;
     }

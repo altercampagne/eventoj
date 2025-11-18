@@ -37,6 +37,8 @@ class PasswordResetTest extends WebTestCase
             'reset_password_request_form[email]' => $email,
         ]);
 
+        $this->assertResponseRedirects();
+
         $this->assertQueuedEmailCount(1);
 
         /** @var TemplatedEmail $sentEmail */

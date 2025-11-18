@@ -107,7 +107,7 @@ phpstan-generate-baseline: tools/phpstan/vendor ## Run PHPStan to generate the b
 .PHONY: cs-lint
 cs-lint: tools/php-cs-fixer/vendor tools/twig-cs-fixer/vendor ## Lint all files
 	@$(DOCKER_COMPOSE) run --rm php bin/console lint:twig templates/
-	@$(DOCKER_COMPOSE) run --rm php bin/console lint:yaml config/
+	@$(DOCKER_COMPOSE) run --rm php bin/console lint:yaml config/ .github/
 	@$(DOCKER_COMPOSE) run --rm php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
 	@$(DOCKER_COMPOSE) run --rm php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer lint
 

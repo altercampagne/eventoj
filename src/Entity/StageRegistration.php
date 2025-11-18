@@ -6,7 +6,7 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\UuidV4;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`stages_registrations`')]
@@ -15,7 +15,7 @@ class StageRegistration
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private readonly UuidV4 $id;
+    private readonly Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: Stage::class, inversedBy: 'stagesRegistrations')]
     #[ORM\JoinColumn(name: 'stage_id', referencedColumnName: 'id', nullable: false)]
@@ -42,7 +42,7 @@ class StageRegistration
 
     public function __construct(Stage $stage, Registration $registration)
     {
-        $this->id = new UuidV4();
+        $this->id = Uuid::v7();
         $this->stage = $stage;
         $this->registration = $registration;
     }
@@ -82,7 +82,7 @@ class StageRegistration
         };
     }
 
-    public function getId(): UuidV4
+    public function getId(): Uuid
     {
         return $this->id;
     }

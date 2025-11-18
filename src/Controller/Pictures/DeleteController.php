@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-#[Route('/pictures/{id}/delete', name: 'pictures_delete', requirements: ['id' => Requirement::UUID_V4], methods: 'POST')]
+#[Route('/pictures/{id}/delete', name: 'pictures_delete', requirements: ['id' => Requirement::UUID], methods: 'POST')]
 class DeleteController extends AbstractController
 {
     public function __construct(

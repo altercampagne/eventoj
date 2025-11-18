@@ -21,7 +21,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  * to "offer" a membership to someone or to create a membership paid by cash.
  */
 #[IsGranted(Permission::USER_MEMBERSHIP_CREATE->value, 'user')]
-#[Route('/users/{id}/membership_create', name: 'admin_user_membership_create', requirements: ['id' => Requirement::UUID_V4], methods: 'POST')]
+#[Route('/users/{id}/membership_create', name: 'admin_user_membership_create', requirements: ['id' => Requirement::UUID], methods: 'POST')]
 class MembershipCreateController extends AbstractController
 {
     use RedirectorTrait;

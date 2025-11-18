@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::USER_SYNC_WITH_PAHEKO->value, 'user')]
-#[Route('/users/{id}/sync_with_paheko', name: 'admin_user_sync_with_paheko', requirements: ['id' => Requirement::UUID_V4], methods: 'POST')]
+#[Route('/users/{id}/sync_with_paheko', name: 'admin_user_sync_with_paheko', requirements: ['id' => Requirement::UUID], methods: 'POST')]
 class SyncWithPahekoController extends AbstractController
 {
     use RedirectorTrait;

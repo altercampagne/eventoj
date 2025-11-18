@@ -13,7 +13,7 @@
         "aws/aws-sdk-php": "^3.299",
         "babdev/pagerfanta-bundle": "^4.4",
         "barbieswimcrew/zip-code-validator": "^3.1",
-        "doctrine/doctrine-bundle": "^2.10",
+        "doctrine/doctrine-bundle": "^3.0",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^3.3",
         "doskyft/helloasso-php": "dev-main",
@@ -124,6 +124,7 @@
         }
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^8.4",
         "doctrine/doctrine-fixtures-bundle": "^4.0",
         "fakerphp/faker": "^1.23",
         "phpunit/phpunit": "^12.0",
