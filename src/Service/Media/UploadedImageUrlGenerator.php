@@ -14,10 +14,8 @@ final readonly class UploadedImageUrlGenerator
         private ImageStorageManipulator $imageStorageManipulator,
         #[Autowire(param: 'kernel.environment')]
         private string $environment,
-        #[Autowire(env: 'CLOUDIMG_TOKEN')]
-        private string $cloudimgToken,
-        #[Autowire(env: 'CLOUDIMG_ALIAS')]
-        private string $cloudimgAlias,
+        #[Autowire(env: 'IMAGEKIT_DOMAIN')]
+        private string $imageKitDomain,
     ) {
     }
 
@@ -31,7 +29,7 @@ final readonly class UploadedImageUrlGenerator
         }
 
         if ('dev' === $this->environment) {
-            // In dev environment, we don't use cloudimg but directly the remote storage.
+            // In dev environment, we don't use imagekit but directly the remote storage.
             try {
                 return $this->imageStorageManipulator->getPath($file);
             } catch (\Exception) {
@@ -39,13 +37,11 @@ final readonly class UploadedImageUrlGenerator
             }
         }
 
-        $path = "https://{$this->cloudimgToken}.cloudimg.io/{$this->cloudimgAlias}/{$file->getPath()}";
         $dimensions = $file->getDimensions();
+        $width ??= $dimensions->getWidth($size);
+        $height ??= $dimensions->getHeight($size);
 
-        return $path.'?'.http_build_query([
-            'width' => $width ?? $dimensions->getWidth($size),
-            'height' => $height ?? $dimensions->getHeight($size),
-        ]);
+        return "{$this->imageKitDomain}/{$file->getPath()}?tr=w-{$width},h-{$height}";
     }
 
     /**
