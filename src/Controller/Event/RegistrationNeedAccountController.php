@@ -8,7 +8,7 @@ use App\Entity\Event;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/event/registration_need_account/{slug}', name: 'event_registration_need_account')]
 class RegistrationNeedAccountController extends AbstractController
