@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::ALTERNATIVE_DELETE->value, 'alternative')]
-#[Route('/alternatives/{slug}/delete', name: 'admin_alternative_delete', methods: 'POST')]
+#[Route('/_admin/alternatives/{slug}/delete', name: 'admin_alternative_delete', methods: 'POST')]
 class DeleteController extends AbstractController
 {
     public function __construct(

@@ -23,3 +23,11 @@ framework:
             App\Message\PahekoPaymentSync: async
             App\Message\GeocodeUserAddressMessage: async
             App\Message\GeocodeAlternativeAddressMessage: async
+
+when@test:
+   framework:
+       messenger:
+           transports:
+               # replace with your transport name here (e.g., my_transport: 'in-memory://')
+               # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
+               async: 'sync://'

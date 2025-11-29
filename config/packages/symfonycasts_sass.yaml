@@ -1,4 +1,4 @@
 symfonycasts_sass:
     root_sass:
-        - '%kernel.project_dir%/assets/styles/app.scss'
-        - '%kernel.project_dir%/assets/styles/admin/admin.scss'
+        - 'assets/styles/app.scss'
+        - 'assets/styles/admin/admin.scss'

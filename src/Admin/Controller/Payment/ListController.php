@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Requirement\EnumRequirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::PAYMENT_LIST->value)]
-#[Route('/payments/{status}', name: 'admin_payment_list', requirements: ['status' => new EnumRequirement(PaymentStatus::class)])]
+#[Route('/_admin/payments/{status}', name: 'admin_payment_list', requirements: ['status' => new EnumRequirement(PaymentStatus::class)])]
 class ListController extends AbstractController
 {
     public function __construct(

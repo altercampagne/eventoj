@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::USER_REMOVE_DIET_DETAILS->value)]
-#[Route('/users/{id}/remove_diet_details', name: 'admin_user_remove_diet_details', requirements: ['id' => Requirement::UUID], methods: 'POST')]
+#[Route('/_admin/users/{id}/remove_diet_details', name: 'admin_user_remove_diet_details', requirements: ['id' => Requirement::UUID], methods: 'POST')]
 class RemoveDietDetailsController extends AbstractController
 {
     use RedirectorTrait;

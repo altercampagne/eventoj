@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::PAYMENT_REFUND->value, 'payment')]
-#[Route('/payments/{id}/refund', name: 'admin_payment_refund', requirements: ['id' => Requirement::UUID], methods: 'POST')]
+#[Route('/_admin/payments/{id}/refund', name: 'admin_payment_refund', requirements: ['id' => Requirement::UUID], methods: 'POST')]
 class RefundController extends AbstractController
 {
     public function __construct(

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::QUESTION_VIEW->value, 'question')]
-#[Route('/questions/{slug}', name: 'admin_question_show')]
+#[Route('/_admin/questions/{slug}', name: 'admin_question_show')]
 class ShowController extends AbstractController
 {
     public function __invoke(

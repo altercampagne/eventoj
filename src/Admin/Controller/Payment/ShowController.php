@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::PAYMENT_VIEW->value, 'payment')]
-#[Route('/payments/{id}', name: 'admin_payment_show', requirements: ['id' => Requirement::UUID])]
+#[Route('/_admin/payments/{id}', name: 'admin_payment_show', requirements: ['id' => Requirement::UUID])]
 class ShowController extends AbstractController
 {
     public function __construct(

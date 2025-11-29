@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::REGISTRATION_LIST->value)]
-#[Route('/registrations', name: 'admin_registration_list')]
+#[Route('/_admin/registrations', name: 'admin_registration_list')]
 class ListController extends AbstractController
 {
     public function __construct(

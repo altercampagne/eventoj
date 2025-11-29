@@ -24,14 +24,14 @@ final class CreateOrUpdateController extends AbstractController
     }
 
     #[IsGranted(Permission::EVENT_CREATE->value)]
-    #[Route('/events/create/{type}', name: 'admin_event_create')]
+    #[Route('/_admin/events/create/{type}', name: 'admin_event_create')]
     public function create(Request $request, EventType $type): Response
     {
         return $this->update($request, Event::createFromType($type), true);
     }
 
     #[IsGranted(Permission::EVENT_UPDATE->value, 'event')]
-    #[Route('/events/{slug}/update', name: 'admin_event_update')]
+    #[Route('/_admin/events/{slug}/update', name: 'admin_event_update')]
     public function update(
         Request $request,
         #[MapEntity(mapping: ['slug' => 'slug'])]

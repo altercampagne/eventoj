@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::USER_VERIFY_EMAIL->value, 'user')]
-#[Route('/users/{id}/verify_email', name: 'admin_user_verify_email', requirements: ['id' => Requirement::UUID], methods: 'POST')]
+#[Route('/_admin/users/{id}/verify_email', name: 'admin_user_verify_email', requirements: ['id' => Requirement::UUID], methods: 'POST')]
 class VerifyEmailController extends AbstractController
 {
     use RedirectorTrait;

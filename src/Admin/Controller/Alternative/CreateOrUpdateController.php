@@ -26,14 +26,14 @@ final class CreateOrUpdateController extends AbstractController
     }
 
     #[IsGranted(Permission::ALTERNATIVE_CREATE->value)]
-    #[Route('/alternatives/create', name: 'admin_alternative_create')]
+    #[Route('/_admin/alternatives/create', name: 'admin_alternative_create')]
     public function create(Request $request): Response
     {
         return $this->update($request, new Alternative(), true);
     }
 
     #[IsGranted(Permission::ALTERNATIVE_UPDATE->value, 'alternative')]
-    #[Route('/alternatives/{slug}/update/{backToAlternative}', name: 'admin_alternative_update')]
+    #[Route('/_admin/alternatives/{slug}/update/{backToAlternative}', name: 'admin_alternative_update')]
     public function update(
         Request $request,
         #[MapEntity(mapping: ['slug' => 'slug'])]

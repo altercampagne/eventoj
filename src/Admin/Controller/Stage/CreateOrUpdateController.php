@@ -24,7 +24,7 @@ final class CreateOrUpdateController extends AbstractController
     }
 
     #[IsGranted(Permission::STAGE_CREATE->value)]
-    #[Route('/stages/create/{slug}', name: 'admin_stage_create')]
+    #[Route('/_admin/stages/create/{slug}', name: 'admin_stage_create')]
     public function create(
         Request $request,
         #[MapEntity(mapping: ['slug' => 'slug'])]
@@ -39,7 +39,7 @@ final class CreateOrUpdateController extends AbstractController
     }
 
     #[IsGranted(Permission::STAGE_UPDATE->value, 'stage')]
-    #[Route('/stages/{slug}/update/{backToStage}', name: 'admin_stage_update')]
+    #[Route('/_admin/stages/{slug}/update/{backToStage}', name: 'admin_stage_update')]
     public function update(
         Request $request,
         #[MapEntity(mapping: ['slug' => 'slug'])]

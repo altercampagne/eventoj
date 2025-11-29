@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::EVENT_VIEW_REGISTRATIONS->value, 'event')]
-#[Route('/events/{slug}/registrations', name: 'admin_event_show_registrations')]
+#[Route('/_admin/events/{slug}/registrations', name: 'admin_event_show_registrations')]
 class ShowTabRegistrationsController extends AbstractController
 {
     public function __invoke(

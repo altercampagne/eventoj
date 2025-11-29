@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::ADMIN_ACCESS->value)]
-#[Route('/', name: 'admin')]
+#[Route('/_admin/', name: 'admin')]
 class DashboardController extends AbstractController
 {
     public function __construct(

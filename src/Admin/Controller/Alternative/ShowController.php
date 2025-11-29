@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::ALTERNATIVE_VIEW->value, 'alternative')]
-#[Route('/alternatives/{slug}', name: 'admin_alternative_show')]
+#[Route('/_admin/alternatives/{slug}', name: 'admin_alternative_show')]
 class ShowController extends AbstractController
 {
     public function __invoke(

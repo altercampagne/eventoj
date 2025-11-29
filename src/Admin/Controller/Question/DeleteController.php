@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::QUESTION_DELETE->value, 'question')]
-#[Route('/questions/{slug}/delete', name: 'admin_question_delete', methods: 'POST')]
+#[Route('/_admin/questions/{slug}/delete', name: 'admin_question_delete', methods: 'POST')]
 class DeleteController extends AbstractController
 {
     public function __construct(

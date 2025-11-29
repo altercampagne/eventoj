@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::STAGE_VIEW->value, 'stage')]
-#[Route('/stages/{slug}', name: 'admin_stage_show')]
+#[Route('/_admin/stages/{slug}', name: 'admin_stage_show')]
 class ShowController extends AbstractController
 {
     public function __invoke(

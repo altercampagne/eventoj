@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::EVENT_VIEW_FILLING->value, 'event')]
-#[Route('/events/{slug}/filling', name: 'admin_event_show_filling')]
+#[Route('/_admin/events/{slug}/filling', name: 'admin_event_show_filling')]
 class ShowTabFillingController extends AbstractController
 {
     public function __invoke(

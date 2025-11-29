@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::DEBUG->value)]
-#[Route('/debug', name: 'admin_debug')]
+#[Route('/_admin/debug', name: 'admin_debug')]
 class DebugController extends AbstractController
 {
     public function __construct(

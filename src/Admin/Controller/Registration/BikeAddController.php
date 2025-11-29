@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::REGISTRATION_BIKE_ADD->value, 'registration')]
-#[Route('/registrations/{id}/bike_add', name: 'admin_registration_bike_add', requirements: ['id' => Requirement::UUID], methods: 'POST')]
+#[Route('/_admin/registrations/{id}/bike_add', name: 'admin_registration_bike_add', requirements: ['id' => Requirement::UUID], methods: 'POST')]
 class BikeAddController extends AbstractController
 {
     public function __construct(

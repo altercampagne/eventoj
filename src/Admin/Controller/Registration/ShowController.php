@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::REGISTRATION_VIEW->value, 'registration')]
-#[Route('/registrations/{id}', name: 'admin_registration_show', requirements: ['id' => Requirement::UUID])]
+#[Route('/_admin/registrations/{id}', name: 'admin_registration_show', requirements: ['id' => Requirement::UUID])]
 class ShowController extends AbstractController
 {
     public function __invoke(Registration $registration): Response

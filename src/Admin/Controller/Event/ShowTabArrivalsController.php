@@ -16,7 +16,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 // @TODO: This controller is absolutely not optimized (too many DB queries, 1
 // per registration!). This is OK for now but should be improved.
 #[IsGranted(Permission::EVENT_VIEW_ARRIVALS->value, 'event')]
-#[Route('/events/{slug}/arrivals', name: 'admin_event_show_arrivals')]
+#[Route('/_admin/events/{slug}/arrivals', name: 'admin_event_show_arrivals')]
 class ShowTabArrivalsController extends AbstractController
 {
     public function __invoke(
