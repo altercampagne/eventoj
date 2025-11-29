@@ -9,7 +9,7 @@ use App\Service\MealOverview\MealAggregator;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/event/{slug}/meals', name: 'event_meal_overview')]
 class MealOverviewController extends AbstractController

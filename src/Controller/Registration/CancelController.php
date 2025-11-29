@@ -9,7 +9,7 @@ use App\Service\Payment\PaymentRefundHandler;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/registration/{id}/cancel', name: 'registration_cancel', methods: 'POST')]
 class CancelController extends AbstractController

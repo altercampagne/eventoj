@@ -8,7 +8,7 @@ use App\Entity\Alternative;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/alternatives', name: 'alternative_map')]
 class MapController extends AbstractController
