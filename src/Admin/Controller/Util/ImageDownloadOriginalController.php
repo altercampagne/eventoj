@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::IMAGE_DOWNLOAD_ORIGINAL->value)]
-#[Route('/image/{id}/Download', name: 'admin_image_download_original')]
+#[Route('/_admin/image/{id}/Download', name: 'admin_image_download_original')]
 class ImageDownloadOriginalController extends AbstractController
 {
     public function __construct(

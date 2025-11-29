@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::EVENT_UPDATE_AVAILABILITY->value, 'event')]
-#[Route('/events/{slug}/update_availability', name: 'admin_event_update_availability')]
+#[Route('/_admin/events/{slug}/update_availability', name: 'admin_event_update_availability')]
 class UpdateAvailabilityController extends AbstractController
 {
     use RedirectorTrait;

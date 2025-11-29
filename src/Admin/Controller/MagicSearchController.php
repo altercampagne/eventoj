@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::ADMIN_ACCESS->value)]
-#[Route('/search', name: 'magic_search')]
+#[Route('/_admin/search', name: 'magic_search')]
 class MagicSearchController extends AbstractController
 {
     public function __construct(

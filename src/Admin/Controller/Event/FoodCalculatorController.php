@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::EVENT_FOOD_CALCULATOR->value, 'event')]
-#[Route('/events/{slug}/food-calculator', name: 'admin_event_food_calculator')]
+#[Route('/_admin/events/{slug}/food-calculator', name: 'admin_event_food_calculator')]
 class FoodCalculatorController extends AbstractController
 {
     public function __invoke(

@@ -1,4 +1,4 @@
-import './bootstrap.js';
+import './stimulus_bootstrap.js';
 import { Tooltip, Modal } from 'bootstrap'
 import '@fortawesome/fontawesome-free'
 import '@fortawesome/fontawesome-free/css/all.css'

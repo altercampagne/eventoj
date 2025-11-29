@@ -23,14 +23,14 @@ final class CreateOrUpdateController extends AbstractController
     }
 
     #[IsGranted(Permission::QUESTION_CREATE->value)]
-    #[Route('/questions/create', name: 'admin_question_create')]
+    #[Route('/_admin/questions/create', name: 'admin_question_create')]
     public function create(Request $request): Response
     {
         return $this->update($request, new Question(), true);
     }
 
     #[IsGranted(Permission::QUESTION_UPDATE->value, 'question')]
-    #[Route('/questions/{slug}/update', name: 'admin_question_update')]
+    #[Route('/_admin/questions/{slug}/update', name: 'admin_question_update')]
     public function update(
         Request $request,
         #[MapEntity(mapping: ['slug' => 'slug'])]

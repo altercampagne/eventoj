@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::EVENT_PUBLISH->value, 'event')]
-#[Route('/events/{slug}/publish', name: 'admin_event_publish')]
+#[Route('/_admin/events/{slug}/publish', name: 'admin_event_publish')]
 class PublishController extends AbstractController
 {
     use RedirectorTrait;

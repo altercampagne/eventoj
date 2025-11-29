@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::PAYMENT_SYNC_WITH_HELLOASSO->value, 'payment')]
-#[Route('/payments/{id}/sync_with_helloasso', name: 'admin_payment_sync_with_helloasso', requirements: ['id' => Requirement::UUID], methods: 'POST')]
+#[Route('/_admin/payments/{id}/sync_with_helloasso', name: 'admin_payment_sync_with_helloasso', requirements: ['id' => Requirement::UUID], methods: 'POST')]
 class SyncWithHelloassoController extends AbstractController
 {
     public function __construct(

@@ -27,3 +27,7 @@
 /tools/*/vendor
 /.phpstan-cache
 /.twig-cs-fixer.cache
+
+###> symfonycasts/sass-bundle ###
+/public/assets/
+###< symfonycasts/sass-bundle ###

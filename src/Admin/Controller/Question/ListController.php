@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted(Permission::QUESTION_LIST->value)]
-#[Route('/questions', name: 'admin_question_list')]
+#[Route('/_admin/questions', name: 'admin_question_list')]
 class ListController extends AbstractController
 {
     public function __construct(
