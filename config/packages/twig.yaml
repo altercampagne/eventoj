@@ -11,7 +11,6 @@ twig:
     globals:
         pahekoBaseUri: '%env(PAHEKO_BASE_URI)%'
         helloassoUrl: '%env(HELLOASSO_URL)%'
-        associationPhoneNumber: '%env(ASSOCIATION_PHONE_NUMBER)%'
         komootUser: '%env(KOMOOT_USER)%'
         komootPassword: '%env(KOMOOT_PASSWORD)%'
         openrunnerUser: '%env(OPENRUNNER_USER)%'

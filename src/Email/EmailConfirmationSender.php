@@ -33,10 +33,8 @@ class EmailConfirmationSender
             ->subject('Merci de confirmer ton adresse mail.')
             ->htmlTemplate('emails/email_confirmation.html.twig')
             ->context([
-                'user' => $user,
-                'signedUrl' => $signatureComponents->getSignedUrl(),
-                'expiresAtMessageKey' => $signatureComponents->getExpirationMessageKey(),
-                'expiresAtMessageData' => $signatureComponents->getExpirationMessageData(),
+                'member_display_name' => $user->getPublicName(),
+                'confirmation_url' => $signatureComponents->getSignedUrl(),
             ])
         ;
 

@@ -1,53 +1,172 @@
-{% apply inky_to_html|inline_css(source('@styles/foundation-emails.css'))|inline_css %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="preload"
+      as="image"
+      href="https://inscriptions.altercampagne.net/logo-vert.png" />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta
+      name="format-detection"
+      content="telephone=no,address=no,email=no,date=no,url=no" />
+    <meta name="color-scheme" content="light" />
+    <meta name="supported-color-schemes" content="light" />
     <style>
-        body, html, .body {
-            background: #f3f3f3 !important;
-        }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        mso-font-alt: 'sans-serif';
+        src: url(https://rsms.me/inter/font-files/Inter-Regular.woff2?v=3.19) format('woff2');
+      }
 
-        .container.header, .container.footer {
-            background: #f3f3f3;
-        }
+      * {
+        font-family: 'Inter', sans-serif;
+      }
     </style>
-
-    <spacer size="16"></spacer>
-
-    <container class="header">
-        <row>
-            <columns>
-                <h1 class="text-center">Bienvenue à toi {{ user.fullName }} !</h1>
-            </columns>
-        </row>
-    </container>
-
-    <container>
-        <row>
-            <columns>
-
-                <spacer size="32"></spacer>
-
-                <h4>Dernier étape avant de pouvoir réserver ta place : confirmer ton adresse email.</h4>
-
-                <spacer size="32"></spacer>
-
-                <button class="large expand" href="{{ signedUrl|raw }}">Confirmer mon adresse mail.</button>
-
-                <p class="text-center small">Le lien expire dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.</p>
-            </columns>
-        </row>
-
-        <spacer size="16"></spacer>
-    </container>
-
-    <container class="header">
-        <row>
-            <columns>
-                <center>
-                    <menu>
-                        <item href="https://www.altercampagne.net/">Site web</item>
-                        <item href="{{ url('homepage') }}">Réservation</item>
-                    </menu>
-                </center>
-            </columns>
-        </row>
-    </container>
-{% endapply %}
+    <style>
+      blockquote,h1,h2,h3,img,li,ol,p,ul{margin-top:0;margin-bottom:0}@media only screen and (max-width:425px){.tab-row-full{width:100%!important}.tab-col-full{display:block!important;width:100%!important}.tab-pad{padding:0!important}}
+    </style>
+  </head>
+  <body style="background-color:#ffffff">
+    <!--$-->
+    <table
+      border="0"
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      role="presentation"
+      align="center">
+      <tbody>
+        <tr>
+          <td
+            style="margin:0px;background-color:#ffffff;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px">
+            <div
+              style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0"
+              data-skip-in-text="true">
+              Bienvenue @member_display_name ! Tu es à un p&#x27;tit clic de
+              valider ton adresse mail. 😊
+              <div>
+                 ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿
+              </div>
+            </div>
+            <table
+              align="center"
+              width="100%"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              style="max-width:600px;width:100%;margin-left:auto;margin-right:auto;border-style:solid;background-color:#ffffff;min-width:300px;padding-top:8px;padding-right:8px;padding-bottom:8px;padding-left:8px;border-radius:0px;border-width:0px;border-color:transparent">
+              <tbody>
+                <tr style="width:100%">
+                  <td>
+                    <table
+                      align="center"
+                      width="100%"
+                      border="0"
+                      cellpadding="0"
+                      cellspacing="0"
+                      role="presentation"
+                      style="margin-top:0px;margin-bottom:0px">
+                      <tbody style="width:100%">
+                        <tr style="width:100%">
+                          <td align="center" data-id="__react-email-column">
+                            <a
+                              href="https://inscriptions.altercampagne.net/"
+                              rel="noopener noreferrer"
+                              style="display:block;max-width:100%;text-decoration:none"
+                              target="_blank"
+                              ><img
+                                title="Image"
+                                alt="Image"
+                                src="https://inscriptions.altercampagne.net/logo-vert.png"
+                                style="display:block;outline:none;border:none;text-decoration:none;width:300px;height:60px;max-width:100%;border-radius:0"
+                            /></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table
+                      align="center"
+                      width="100%"
+                      border="0"
+                      cellpadding="0"
+                      cellspacing="0"
+                      role="presentation"
+                      style="max-width:37.5em;height:64px">
+                      <tbody>
+                        <tr style="width:100%">
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <h2
+                      style="margin-left:0px;margin-right:0px;margin-top:0px;margin-bottom:12px;text-align:left;color:#111827;font-size:30px;line-height:36px;font-weight:700">
+                      <strong>Bienvenue </strong>{{member_display_name}}<!-- -->
+                      !
+                    </h2>
+                    <p
+                      style="font-size:15px;line-height:26.25px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:#374151;margin:0 0 20px 0;margin-top:0;margin-right:0;margin-bottom:20px;margin-left:0">
+                      Pour qu&#x27;on s&#x27;assure que tu reçoives bien tes
+                      places une fois réservées, merci de confirmer ton adresse
+                      en cliquand sur le bouton suivant. :)
+                    </p>
+                    <table
+                      align="center"
+                      width="100%"
+                      border="0"
+                      cellpadding="0"
+                      cellspacing="0"
+                      role="presentation"
+                      style="max-width:100%;text-align:center;margin-bottom:20px">
+                      <tbody>
+                        <tr style="width:100%">
+                          <td>
+                            <a
+                              href="{{confirmation_url}}"
+                              style="line-height:100%;text-decoration:none;display:inline-block;max-width:100%;mso-padding-alt:0px;color:#ffffff;background-color:#447733;border-color:#447733;border-width:2px;border-style:solid;font-size:14px;font-weight:500;border-radius:9999px;padding:12px 32px 12px 32px;padding-top:12px;padding-right:32px;padding-bottom:12px;padding-left:32px"
+                              target="_blank"
+                              ><span
+                                ><!--[if mso]><i style="mso-font-width:400%;mso-text-raise:18" hidden>&#8202;&#8202;&#8202;&#8202;</i><![endif]--></span
+                              ><span
+                                style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px"
+                                >Confirmer ton adresse mail</span
+                              ><span
+                                ><!--[if mso]><i style="mso-font-width:400%" hidden>&#8202;&#8202;&#8202;&#8202;&#8203;</i><![endif]--></span
+                              ></a
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <hr
+                      style="width:100%;border:none;border-top:1px solid #eaeaea;margin-top:32px;margin-bottom:32px" />
+                    <p
+                      style="font-size:15px;line-height:26.25px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:#374151;margin:0 0 20px 0;margin-top:0;margin-right:0;margin-bottom:20px;margin-left:0">
+                      Une question ? N&#x27;hésite pas à
+                      <a
+                        href="https://inscriptions.altercampagne.net/faq"
+                        rel="noopener noreferrer nofollow"
+                        style="color:#111827;text-decoration-line:none;font-weight:500;text-decoration:none"
+                        target="_blank"
+                        ><span style="color:rgb(68, 119, 51)"
+                          ><u>consulter notre FAQ</u></span
+                        ></a
+                      >.
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--7--><!--/$-->
+  </body>
+</html>

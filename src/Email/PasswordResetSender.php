@@ -9,11 +9,13 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PasswordResetSender
 {
     public function __construct(
         private readonly MailerInterface $mailer,
+        private UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
@@ -25,8 +27,10 @@ class PasswordResetSender
             ->subject('Demande de réinitialisation de mot de passe')
             ->htmlTemplate('emails/reset_password.html.twig')
             ->context([
-                'user' => $user,
-                'resetToken' => $resetToken,
+                'member_display_name' => $user->getPublicName(),
+                'reset_password_url' => $this->urlGenerator->generate('reset_password', [
+                    'token' => $resetToken->getToken()
+                ], UrlGeneratorInterface::ABSOLUTE_URL),
             ])
         ;
 
