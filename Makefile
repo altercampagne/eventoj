@@ -32,6 +32,12 @@ vendors-update: ## Update all vendors
 	@$(DOCKER_COMPOSE) run --rm php composer --working-dir tools/rector up
 	@$(DOCKER_COMPOSE) run --rm php bin/console importmap:update
 
+.PHONY: deploy-production
+deploy-production: ## Deploy origin/main to production
+	git fetch
+	git push origin origin/main:production
+	@echo "\033[32mVisit \033[33mhttps://github.com/altercampagne/eventoj/deployments/production\033[32m to see the progress of the deployment.\033[0m"
+
 ##@ Docker commands
 .PHONY: build
 build: ## Build docker stack
