@@ -6,16 +6,16 @@ namespace App\Email;
 
 use App\Entity\Registration;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class EventReminderSender
 {
     public function __construct(
         private readonly MailerInterface $mailer,
-        private UrlGeneratorInterface $urlGenerator,
+        private readonly UrlGeneratorInterface $urlGenerator,
         #[Autowire(env: 'ASSOCIATION_PHONE_NUMBER')]
         private readonly string $associationPhoneNumber,
     ) {
@@ -32,7 +32,7 @@ class EventReminderSender
                 'member_display_name' => $registration->getUser()->getPublicName(),
                 'event_name' => $registration->getEvent()->getName(),
                 'event_url' => $this->urlGenerator->generate('event_show', [
-                    'slug' => $registration->getEvent()->getSlug()
+                    'slug' => $registration->getEvent()->getSlug(),
                 ], UrlGeneratorInterface::ABSOLUTE_URL),
                 'association_phone_number' => $this->associationPhoneNumber,
             ])

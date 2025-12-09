@@ -48,7 +48,7 @@ class PasswordResetTest extends WebTestCase
         $this->assertEmailAddressContains($sentEmail, 'to', $email);
 
         $crawler = new Crawler((string) $sentEmail->getHtmlBody());
-        $linkInEmail = $crawler->selectLink('Réinitialiser mon mot de passe')->link()->getUri();
+        $linkInEmail = $crawler->selectLink('Réinitialiser ton mot de passe')->link()->getUri();
 
         $this->assertResponseRedirects();
         $client->followRedirect();
