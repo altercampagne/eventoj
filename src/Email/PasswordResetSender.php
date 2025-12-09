@@ -8,14 +8,14 @@ use App\Entity\User;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 
 class PasswordResetSender
 {
     public function __construct(
         private readonly MailerInterface $mailer,
-        private UrlGeneratorInterface $urlGenerator,
+        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
@@ -29,7 +29,7 @@ class PasswordResetSender
             ->context([
                 'member_display_name' => $user->getPublicName(),
                 'reset_password_url' => $this->urlGenerator->generate('reset_password', [
-                    'token' => $resetToken->getToken()
+                    'token' => $resetToken->getToken(),
                 ], UrlGeneratorInterface::ABSOLUTE_URL),
             ])
         ;
