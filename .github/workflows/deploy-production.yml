@@ -46,7 +46,7 @@ jobs:
           TARGET: ${{ secrets.REMOTE_TARGET }}
 
       - name: Execute remote ssh commands to finalise deployment
-        uses: appleboy/ssh-action@v1.2.3
+        uses: appleboy/ssh-action@v1.2.4
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.POST_DEPLOY_REMOTE_USER }}
