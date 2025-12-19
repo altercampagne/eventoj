@@ -1,4 +1,7 @@
 {
+    "bab/tested-routes-checker-bundle": {
+        "version": "v1.0.0"
+    },
     "babdev/pagerfanta-bundle": {
         "version": "v4.4.0"
     },
@@ -470,15 +473,6 @@
     },
     "symfonycasts/verify-email-bundle": {
         "version": "v1.14.0"
-    },
-    "tiime/tested-routes-checker-bundle": {
-        "version": "1.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "2037799bfd874ffadf23aec74f7adf616ed4a0e0"
-        }
     },
     "twig/extra-bundle": {
         "version": "v3.7.1"

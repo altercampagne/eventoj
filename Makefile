@@ -99,9 +99,9 @@ sanitize-and-check: rector-fix cs-fix phpstan db-reset-test test ## Run Rector, 
 
 .PHONY: test
 test: ## Run all tests
-	@$(DOCKER_COMPOSE) run --rm php rm -f var/cache/tiime_tested_routes_checker_bundle_route_storage
+	@$(DOCKER_COMPOSE) run --rm php rm -f var/cache/bab_tested_routes_checker_bundle_route_storage
 	@$(DOCKER_COMPOSE) run --rm php bin/phpunit
-	@$(DOCKER_COMPOSE) run --rm php bin/console tiime:tested-routes-checker:check
+	@$(DOCKER_COMPOSE) run --rm php bin/console bab:tested-routes-checker:check
 
 .PHONY: phpstan
 phpstan: tools/phpstan/vendor ## Run PHPStan

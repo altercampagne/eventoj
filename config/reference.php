@@ -1704,11 +1704,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         not_valid_current_page?: "to_http_not_found"|"custom", // Default: "to_http_not_found"
  *     },
  * }
- * @psalm-type TiimeTestedRoutesCheckerConfig = array{
- *     maximum_number_of_routes_to_display?: int, // Default: 25
- *     routes_to_ignore_file?: scalar|null, // Default: "%kernel.project_dir%/.tiime-trc-baseline"
- *     route_storage_file?: scalar|null, // Default: "%kernel.project_dir%/var/cache/tiime_tested_routes_checker_bundle_route_storage"
- * }
  * @psalm-type ZenstruckFoundryConfig = array{
  *     auto_refresh_proxies?: bool|null, // Deprecated: Since 2.0 auto_refresh_proxies defaults to true and this configuration has no effect. // Whether to auto-refresh proxies by default (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#auto-refresh) // Default: null
  *     enable_auto_refresh_with_lazy_objects?: bool|null, // Enable auto-refresh using PHP 8.4 lazy objects (cannot be enabled if PHP < 8.4). // Default: null
@@ -1758,6 +1753,11 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     enable_static_query_cache?: bool, // Default: true
  *     connection_keys?: list<mixed>,
  * }
+ * @psalm-type BabTestedRoutesCheckerConfig = array{
+ *     maximum_number_of_routes_to_display?: int, // Default: 25
+ *     routes_to_ignore_file?: scalar|null, // Default: "%kernel.project_dir%/.bab-trc-baseline"
+ *     route_storage_file?: scalar|null, // Default: "%kernel.project_dir%/var/cache/bab_tested_routes_checker_bundle_route_storage"
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1803,8 +1803,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         dunglas_doctrine_json_odm?: DunglasDoctrineJsonOdmConfig,
  *         bazinga_geocoder?: BazingaGeocoderConfig,
  *         babdev_pagerfanta?: BabdevPagerfantaConfig,
- *         tiime_tested_routes_checker?: TiimeTestedRoutesCheckerConfig,
  *         zenstruck_foundry?: ZenstruckFoundryConfig,
+ *         bab_tested_routes_checker?: BabTestedRoutesCheckerConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1851,9 +1851,9 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         dunglas_doctrine_json_odm?: DunglasDoctrineJsonOdmConfig,
  *         bazinga_geocoder?: BazingaGeocoderConfig,
  *         babdev_pagerfanta?: BabdevPagerfantaConfig,
- *         tiime_tested_routes_checker?: TiimeTestedRoutesCheckerConfig,
  *         zenstruck_foundry?: ZenstruckFoundryConfig,
  *         dama_doctrine_test?: DamaDoctrineTestConfig,
+ *         bab_tested_routes_checker?: BabTestedRoutesCheckerConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
