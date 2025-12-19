@@ -63,7 +63,6 @@
         "symfonycasts/reset-password-bundle": "^1.20",
         "symfonycasts/sass-bundle": "^0.8",
         "symfonycasts/verify-email-bundle": "^1.14",
-        "tiime/tested-routes-checker-bundle": "^2.0",
         "twbs/bootstrap": "^5.3",
         "twig/cssinliner-extra": "^3.7",
         "twig/extra-bundle": "^3.8",
@@ -124,6 +123,7 @@
         }
     },
     "require-dev": {
+        "bab/tested-routes-checker-bundle": "^1.0",
         "dama/doctrine-test-bundle": "^8.4",
         "doctrine/doctrine-fixtures-bundle": "^4.0",
         "fakerphp/faker": "^1.23",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "20b1174a5b7195c6a15ce74aa9e51ca5",
+    "content-hash": "c07e8e8d4b1667d445aff1139dab488b",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -11023,49 +11023,6 @@
             "time": "2025-11-29T11:53:37+00:00"
         },
         {
-            "name": "tiime/tested-routes-checker-bundle",
-            "version": "v2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Tiime-Software/TestedRoutesCheckerBundle.git",
-                "reference": "78e5bd6f7f1972f4daa5f14cd1bd5bed4eaec213"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Tiime-Software/TestedRoutesCheckerBundle/zipball/78e5bd6f7f1972f4daa5f14cd1bd5bed4eaec213",
-                "reference": "78e5bd6f7f1972f4daa5f14cd1bd5bed4eaec213",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/config": "^6.4|^7.0",
-                "symfony/console": "^6.4|^7.0",
-                "symfony/dependency-injection": "^6.4|^7.0",
-                "symfony/http-kernel": "^6.4|^7.0",
-                "symfony/routing": "^6.4|^7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.6",
-                "symfony/framework-bundle": "^6.4|^7.0",
-                "symfony/phpunit-bridge": "^7.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Tiime\\TestedRoutesCheckerBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A bundle to ensure all routes of a Symfony application have been tested",
-            "support": {
-                "issues": "https://github.com/Tiime-Software/TestedRoutesCheckerBundle/issues",
-                "source": "https://github.com/Tiime-Software/TestedRoutesCheckerBundle/tree/v2.1.0"
-            },
-            "time": "2025-10-06T13:17:55+00:00"
-        },
-        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "v2.3.0",
             "source": {
@@ -11825,6 +11782,50 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "bab/tested-routes-checker-bundle",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/odolbeau/TestedRoutesCheckerBundle.git",
+                "reference": "0cee36ec0e0973c64d4766480c86d51ee177ecb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/odolbeau/TestedRoutesCheckerBundle/zipball/0cee36ec0e0973c64d4766480c86d51ee177ecb3",
+                "reference": "0cee36ec0e0973c64d4766480c86d51ee177ecb3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.3",
+                "symfony/config": "^6.4|^7.3|^8.0",
+                "symfony/console": "^6.4|^7.3|^8.0",
+                "symfony/dependency-injection": "^6.4|^7.3|^8.0",
+                "symfony/http-kernel": "^6.4|^7.3|^8.0",
+                "symfony/routing": "^6.4|^7.3|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6",
+                "symfony/framework-bundle": "^6.4|^7.3|^8.0",
+                "symfony/phpunit-bridge": "^8.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Bab\\TestedRoutesCheckerBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A bundle to ensure all routes of a Symfony application have been tested",
+            "support": {
+                "issues": "https://github.com/odolbeau/TestedRoutesCheckerBundle/issues",
+                "source": "https://github.com/odolbeau/TestedRoutesCheckerBundle/tree/v1.0.0"
+            },
+            "time": "2025-12-19T19:02:26+00:00"
+        },
         {
             "name": "dama/doctrine-test-bundle",
             "version": "v8.4.1",
