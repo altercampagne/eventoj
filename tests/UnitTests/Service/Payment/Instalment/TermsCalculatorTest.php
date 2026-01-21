@@ -17,7 +17,7 @@ class TermsCalculatorTest extends TestCase
 
     public function testCalculateWithBasicParameters(): void
     {
-        $instalments = (new TermsCalculator())->calculate(1000, 3, firstPaymentDate: new \DateTimeImmutable('2023-05-05'));
+        $instalments = new TermsCalculator()->calculate(1000, 3, firstPaymentDate: new \DateTimeImmutable('2023-05-05'));
 
         self::assertEquals([
             new Instalment(new \DateTimeImmutable('2023-05-05'), 334),
@@ -28,7 +28,7 @@ class TermsCalculatorTest extends TestCase
 
     public function testCalculateWithDateAfter27(): void
     {
-        $instalments = (new TermsCalculator())->calculate(1000, 3, firstPaymentDate: new \DateTimeImmutable('2023-05-30'));
+        $instalments = new TermsCalculator()->calculate(1000, 3, firstPaymentDate: new \DateTimeImmutable('2023-05-30'));
 
         self::assertEquals([
             new Instalment(new \DateTimeImmutable('2023-05-30'), 334),
@@ -43,7 +43,7 @@ class TermsCalculatorTest extends TestCase
 
         $payment = PaymentFactory::new()->withInstalments()->create(['amount' => 1000]);
 
-        (new TermsCalculator())->updateCheckoutBody($payment, $initCheckoutBody, new \DateTimeImmutable('2023-05-30'));
+        new TermsCalculator()->updateCheckoutBody($payment, $initCheckoutBody, new \DateTimeImmutable('2023-05-30'));
 
         self::assertSame(334, $initCheckoutBody->getInitialAmount());
         self::assertCount(2, $initCheckoutBody->getTerms());

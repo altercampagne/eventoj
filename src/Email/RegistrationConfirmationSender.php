@@ -41,7 +41,7 @@ final readonly class RegistrationConfirmationSender
 
         $dateFormatter = new \IntlDateFormatter('fr_FR', dateType: \IntlDateFormatter::LONG, timeType: \IntlDateFormatter::NONE);
 
-        $email = (new TemplatedEmail())
+        $email = new TemplatedEmail()
             ->from(new Address('contact@altercampagne.net', 'Altercampagne'))
             ->to(new Address($user->getEmail(), $user->getFullName()))
             ->subject('Ton inscription est validée ! 🥳')

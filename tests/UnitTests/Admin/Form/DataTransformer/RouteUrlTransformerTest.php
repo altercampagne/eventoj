@@ -13,7 +13,7 @@ final class RouteUrlTransformerTest extends TestCase
     #[DataProvider('validReverseTransformData')]
     public function testReverseTransform(string $input, string $expectedUrl): void
     {
-        $this->assertSame($expectedUrl, (new RouteUrlTransformer())->reverseTransform($input));
+        $this->assertSame($expectedUrl, new RouteUrlTransformer()->reverseTransform($input));
     }
 
     /**

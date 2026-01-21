@@ -33,7 +33,7 @@ class MembershipCreatorTest extends TestCase
         $payment = new Payment($user, 20000, $registration);
         $payment->approve('98623986752', new \DateTimeImmutable());
 
-        $memberships = (new MembershipCreator())->createMembershipsFromPayment($payment);
+        $memberships = new MembershipCreator()->createMembershipsFromPayment($payment);
 
         $this->assertCount(1, $memberships);
 

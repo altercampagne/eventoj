@@ -42,7 +42,7 @@ final readonly class PaymentHandler
 
         $payer = $payment->getPayer();
 
-        $initCheckoutBody = (new InitCheckoutBody())
+        $initCheckoutBody = new InitCheckoutBody()
             ->setTotalAmount($payment->getAmount())
             ->setInitialAmount($payment->getAmount())
             ->setItemName($this->getHelloassoItemName($payment))
@@ -50,7 +50,7 @@ final readonly class PaymentHandler
             ->setErrorUrl($this->urlGenerator->generate('payment_callback_error', ['id' => (string) $payment->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
             ->setReturnUrl($returnUrl)
             ->setPayer(
-                (new CheckoutPayer())
+                new CheckoutPayer()
                     ->setFirstName($payer->getFirstName())
                     ->setLastName($payer->getLastName())
                     ->setEmail($payer->getEmail())

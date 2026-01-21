@@ -18,9 +18,9 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-#[Route('/payment/{id}/post_payment/back', name: 'payment_callback_back', defaults: ['type' => 'back'], requirements: ['id' => Requirement::UUID])]
-#[Route('/payment/{id}/post_payment/error', name: 'payment_callback_error', defaults: ['type' => 'error'], requirements: ['id' => Requirement::UUID])]
-#[Route('/payment/{id}/post_payment/return', name: 'payment_callback_return', defaults: ['type' => 'return'], requirements: ['id' => Requirement::UUID])]
+#[Route('/payment/{id}/post_payment/back', name: 'payment_callback_back', requirements: ['id' => Requirement::UUID], defaults: ['type' => 'back'])]
+#[Route('/payment/{id}/post_payment/error', name: 'payment_callback_error', requirements: ['id' => Requirement::UUID], defaults: ['type' => 'error'])]
+#[Route('/payment/{id}/post_payment/return', name: 'payment_callback_return', requirements: ['id' => Requirement::UUID], defaults: ['type' => 'return'])]
 class PaymentCallbackController extends AbstractController
 {
     public function __construct(

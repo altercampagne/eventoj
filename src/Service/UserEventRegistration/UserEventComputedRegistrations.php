@@ -42,13 +42,7 @@ final readonly class UserEventComputedRegistrations
 
     public function hasRegistrationForAllMealsOfStage(Stage $stage): bool
     {
-        foreach (Meal::cases() as $meal) {
-            if ([] === $this->filterStagesRegistrations($stage, $meal)) {
-                return false;
-            }
-        }
-
-        return true;
+        return array_all(Meal::cases(), fn (?Meal $meal): bool => [] !== $this->filterStagesRegistrations($stage, $meal));
     }
 
     /**

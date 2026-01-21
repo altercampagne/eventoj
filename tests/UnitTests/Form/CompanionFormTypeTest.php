@@ -35,7 +35,7 @@ class CompanionFormTypeTest extends KernelTestCase
         $this->form->submit([
             'firstName' => $faker->firstName(),
             'lastName' => $faker->lastName(),
-            'birthDate' => (new \DateTimeImmutable('-20 years'))->format('Y-m-d'),
+            'birthDate' => new \DateTimeImmutable('-20 years')->format('Y-m-d'),
             'email' => $faker->email(),
             'phoneNumber' => '0606060606',
             'diet' => 'vegetarian',
@@ -48,7 +48,7 @@ class CompanionFormTypeTest extends KernelTestCase
         $this->form->submit([
             'firstName' => 'test',
             'lastName' => 'youhou',
-            'birthDate' => (new \DateTimeImmutable('+20 years'))->format('Y-m-d'),
+            'birthDate' => new \DateTimeImmutable('+20 years')->format('Y-m-d'),
             'email' => 'lalala',
             'phoneNumber' => '0606',
             'diet' => 'fail',

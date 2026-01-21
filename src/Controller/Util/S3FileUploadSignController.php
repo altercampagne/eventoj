@@ -17,7 +17,6 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -45,7 +44,7 @@ final class S3FileUploadSignController extends AbstractController
         S3FileUploadSignInput $input,
         UploadedImageType $type,
         string $prefix,
-    ): Response {
+    ): \Symfony\Component\HttpFoundation\JsonResponse {
         $randomPart = substr(bin2hex(random_bytes(5)), 0, 6);
 
         $uploadedImage = new UploadedImage($type, "{$type->value}/{$prefix}-{$randomPart}.{$input->getExt()}", $input->filename);
@@ -60,7 +59,7 @@ final class S3FileUploadSignController extends AbstractController
         S3FileUploadSignInput $input,
         #[MapEntity(mapping: ['event_slug' => 'slug'])]
         Event $event,
-    ): Response {
+    ): \Symfony\Component\HttpFoundation\JsonResponse {
         /** @var User $user */
         $user = $this->getUser();
 
@@ -74,7 +73,7 @@ final class S3FileUploadSignController extends AbstractController
     private function sign(
         AbstractUploadedImage $document,
         S3FileUploadSignInput $input,
-    ): Response {
+    ): \Symfony\Component\HttpFoundation\JsonResponse {
         $document
             ->setSize($input->size)
             ->setMimeType($input->type)
