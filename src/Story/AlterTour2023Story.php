@@ -36,6 +36,7 @@ final class AlterTour2023Story extends Story
 
         $this->em->flush();
         foreach ($rawAlternatives as $alternative) {
+            \assert(null !== $alternative->getSlug());
             $alternatives[$alternative->getSlug()] = $alternative;
         }
 

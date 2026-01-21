@@ -21,7 +21,7 @@ class PasswordResetSender
 
     public function send(User $user, ResetPasswordToken $resetToken): void
     {
-        $email = (new TemplatedEmail())
+        $email = new TemplatedEmail()
             ->from(new Address('contact@altercampagne.net', 'Altercampagne'))
             ->to(new Address($user->getEmail(), $user->getFullName()))
             ->subject('Demande de réinitialisation de mot de passe')

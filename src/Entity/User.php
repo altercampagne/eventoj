@@ -75,8 +75,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $biography = null;
 
-    #[Assert\NotBlank(groups: ['profile_update'], message: 'Le régime alimentaire est obligatoire.')]
-    #[ORM\Column(type: 'string', enumType: Diet::class, nullable: true, options: [
+    #[Assert\NotBlank(message: 'Le régime alimentaire est obligatoire.', groups: ['profile_update'])]
+    #[ORM\Column(type: 'string', nullable: true, enumType: Diet::class, options: [
         'comment' => 'Diet of the user (omnivore, vegetarien, vegan)',
     ])]
     private ?Diet $diet = null;
@@ -91,7 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
     ])]
     private bool $lactoseIntolerant = false;
 
-    #[Assert\Length(groups: ['profile_update'], max: 255)]
+    #[Assert\Length(max: 255, groups: ['profile_update'])]
     #[ORM\Column(type: 'string', nullable: true, options: [
         'comment' => 'Free field to provide more information about user diet.',
     ])]

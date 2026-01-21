@@ -47,10 +47,10 @@ return [
         'type' => 'css',
     ],
     'trix' => [
-        'version' => '2.1.15',
+        'version' => '2.1.16',
     ],
     'trix/dist/trix.min.css' => [
-        'version' => '2.1.15',
+        'version' => '2.1.16',
         'type' => 'css',
     ],
     '@hotwired/stimulus' => [

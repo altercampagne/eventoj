@@ -8,7 +8,6 @@ use App\Admin\Security\Permission;
 use App\Email\RegistrationConfirmationSender;
 use App\Entity\Registration;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -22,7 +21,7 @@ final class ConfirmationEmailSendController extends AbstractController
     ) {
     }
 
-    public function __invoke(Registration $registration): Response
+    public function __invoke(Registration $registration): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         if (!$registration->isConfirmed()) {
             $this->addFlash('danger', "L'inscription n'est pas confirmée, le mail n'a pas été envoyé.");

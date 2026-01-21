@@ -94,8 +94,8 @@ class RegistrationFormTypeTest extends KernelTestCase
         // yield ['lastName', null, 'Cette valeur ne doit pas être vide.'];
 
         yield ['plainPassword', 'bla', 'Ton mot de passe doit faire au moins 7 caractères.'];
-        yield ['birthDate', (new \DateTimeImmutable('-10 years'))->format('Y-m-d'), 'Tu dois être majeur pour pouvoir t\'inscrire.'];
-        yield ['birthDate', (new \DateTimeImmutable('-130 years'))->format('Y-m-d'), 'Une vraie date de naissance, ce serait mieux ! :)'];
+        yield ['birthDate', new \DateTimeImmutable('-10 years')->format('Y-m-d'), 'Tu dois être majeur pour pouvoir t\'inscrire.'];
+        yield ['birthDate', new \DateTimeImmutable('-130 years')->format('Y-m-d'), 'Une vraie date de naissance, ce serait mieux ! :)'];
     }
 
     #[DataProvider('invalidNames')]
@@ -194,7 +194,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         return [
             'firstName' => $faker->firstName(),
             'lastName' => $faker->lastName(),
-            'birthDate' => (new \DateTimeImmutable('-20 years'))->format('Y-m-d'),
+            'birthDate' => new \DateTimeImmutable('-20 years')->format('Y-m-d'),
             'email' => $faker->email(),
             'phoneNumber' => '0606060606',
             'address' => [

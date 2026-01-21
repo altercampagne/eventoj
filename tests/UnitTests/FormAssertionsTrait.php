@@ -57,7 +57,11 @@ trait FormAssertionsTrait
     {
         $errors = [];
         foreach ($form->getErrors(true) as $error) {
-            $errors[$error->getOrigin()?->getName()][] = $error->getMessage();
+            if (null === $name = $error->getOrigin()?->getName()) {
+                continue;
+            }
+
+            $errors[$name][] = $error->getMessage();
         }
 
         return $errors;

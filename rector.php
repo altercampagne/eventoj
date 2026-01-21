@@ -12,7 +12,6 @@ use Rector\Config\Level\DeadCodeLevel;
 use Rector\Config\Level\TypeDeclarationLevel;
 use Rector\Config\RectorConfig;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
-use Rector\Php81\Rector\Array_\FirstClassCallableRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 
 return RectorConfig::configure()
@@ -32,11 +31,6 @@ return RectorConfig::configure()
         // This rule systematically move "huge" block of code inside the
         // constructor. I found this less readable for entities.
         ClassPropertyAssignToConstructorPromotionRector::class,
-
-        // This replace arrays like "[$this, 'aMethod']" by the direct call
-        // "$this->aMethod()" which is problematic (ie: in config or Twig
-        // extensions)
-        FirstClassCallableRector::class,
 
         // Cause "$e" is acceptable
         CatchExceptionNameMatchingTypeRector::class,

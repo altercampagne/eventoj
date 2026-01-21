@@ -27,7 +27,7 @@ class EmailConfirmationSender
             ['id' => (string) $user->getId()]
         );
 
-        $email = (new TemplatedEmail())
+        $email = new TemplatedEmail()
             ->from(new Address('contact@altercampagne.net', 'Altercampagne'))
             ->to(new Address($user->getEmail(), $user->getFullName()))
             ->subject('Merci de confirmer ton adresse mail.')

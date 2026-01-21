@@ -23,7 +23,7 @@ class EventReminderSender
 
     public function send(Registration $registration): void
     {
-        $email = (new TemplatedEmail())
+        $email = new TemplatedEmail()
             ->from(new Address('contact@altercampagne.net', 'Altercampagne'))
             ->to(new Address($registration->getUser()->getEmail(), $registration->getUser()->getFullName()))
             ->subject('C\'est bientôt l\'heure du départ ! 🥳🚲')
