@@ -12,7 +12,7 @@ use Aws\S3\S3Client;
 use Helloasso\HelloassoClient;
 use Helloasso\HelloassoClientFactory;
 
-return function (ContainerConfigurator $container): void {
+return static function (ContainerConfigurator $container): void {
     $container->parameters()
         ->set('paheko.client.strategy.default', 'http')
         ->set('paheko.client.strategy', '%env(default:paheko.client.strategy.default:PAHEKO_STRATEGY)%')

@@ -56,7 +56,7 @@ class StationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Station::class,
-            'empty_data' => function (FormInterface $form): Station {
+            'empty_data' => static function (FormInterface $form): Station {
                 /** @var string $type */
                 $type = $form->get('type')->getData();
                 /** @var string $name */

@@ -88,9 +88,9 @@ final readonly class UserSynchronizer
                     $this->logger->debug("Matchin user found (Paheko ID is {$pahekoUser['numero']})");
 
                     return (string) $pahekoUser['numero'];
-                } else {
-                    $this->logger->debug("Paheko email \"{$pahekoUser['email']} is not matching {$user->getEmail()}");
                 }
+
+                $this->logger->debug("Paheko email \"{$pahekoUser['email']} is not matching {$user->getEmail()}");
             }
         }
 

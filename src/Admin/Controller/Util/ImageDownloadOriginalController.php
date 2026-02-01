@@ -32,7 +32,7 @@ class ImageDownloadOriginalController extends AbstractController
     {
         $url = $this->s3Endpoint.'/'.$this->s3BucketName.'/'.$image->getPath();
 
-        $response = new StreamedResponse(function () use ($url): void {
+        $response = new StreamedResponse(static function () use ($url): void {
             if (false === $stream = fopen($url, 'r')) {
                 throw new \RuntimeException('Unable to open remote file.');
             }
