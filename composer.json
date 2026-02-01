@@ -49,7 +49,7 @@
         "symfony/runtime": "*",
         "symfony/security-bundle": "*",
         "symfony/serializer": "*",
-        "symfony/stimulus-bundle": "^2.15",
+        "symfony/stimulus-bundle": "^2.32",
         "symfony/string": "*",
         "symfony/translation": "*",
         "symfony/twig-bundle": "*",
