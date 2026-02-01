@@ -1,6 +1,12 @@
 {
     "bab/tested-routes-checker-bundle": {
-        "version": "v1.0.0"
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "ce7a2e9e267d87d9b3c223ea037155f5ffb2a92b"
+        }
     },
     "babdev/pagerfanta-bundle": {
         "version": "v4.4.0"
