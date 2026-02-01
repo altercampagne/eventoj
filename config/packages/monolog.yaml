@@ -4,7 +4,7 @@ monolog:
 
 services:
     Monolog\Processor\PsrLogMessageProcessor:
-        tags: { name: monolog.processor, handler: sentry }
+        tags: { name: monolog.processor, handler: sentry_logs }
     Monolog\Processor\IntrospectionProcessor:
         tags: { name: monolog.processor }
     Symfony\Bridge\Monolog\Processor\WebProcessor:
