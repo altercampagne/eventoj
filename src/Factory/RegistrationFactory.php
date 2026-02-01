@@ -45,7 +45,7 @@ final class RegistrationFactory extends PersistentObjectFactory
                 }
             }
 
-            $stagesRegistrations = array_map(fn (Stage $stage): StageRegistration => new StageRegistration(stage: $stage, registration: $registration), $stages);
+            $stagesRegistrations = array_map(static fn (Stage $stage): StageRegistration => new StageRegistration(stage: $stage, registration: $registration), $stages);
 
             $registration
                 ->setStagesRegistrations($stagesRegistrations)
@@ -67,7 +67,7 @@ final class RegistrationFactory extends PersistentObjectFactory
     protected function defaults(): array
     {
         return [
-            'event' => LazyValue::new(fn (): EventFactory => EventFactory::new()->published()->withRandomStages()),
+            'event' => LazyValue::new(static fn (): EventFactory => EventFactory::new()->published()->withRandomStages()),
             'user' => UserFactory::new(),
         ];
     }
@@ -76,7 +76,7 @@ final class RegistrationFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this
-            ->afterInstantiate(function (Registration $registration, array $attributes): void {
+            ->afterInstantiate(static function (Registration $registration, array $attributes): void {
                 if ($registration->getEvent()->isAT()) {
                     /** @var int $neededBiked */
                     $neededBiked = $attributes['neededBike'] ?? self::faker()->numberBetween(0, 2);

@@ -20,7 +20,7 @@ final readonly class UserEventComputedRegistrations
 
     public function __construct(User $user, Event $event)
     {
-        $registrations = $user->getRegistrations()->filter(fn (Registration $registration): bool => $registration->getEvent() === $event && $registration->isConfirmed());
+        $registrations = $user->getRegistrations()->filter(static fn (Registration $registration): bool => $registration->getEvent() === $event && $registration->isConfirmed());
 
         $stagesRegistrations = [];
         foreach ($registrations as $registration) {
