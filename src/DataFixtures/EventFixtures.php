@@ -65,6 +65,12 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
                 'bikesAvailable' => 0,
             ]),
         ]);
+
+        // A coming AT not yet published
+        EventFactory::new()->AT()->withRandomStages()->create([
+            'name' => 'AT (draft)',
+            'description' => 'Voilà un AT dans le futur qui n\'est pas encore publié.',
+        ]);
     }
 
     public function getDependencies(): array
