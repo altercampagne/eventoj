@@ -1,34 +1,34 @@
 when@prod:
-    sentry:
-        dsn: '%env(SENTRY_DSN)%'
-        # this hooks into critical paths of the framework (and vendors) to perform
-        # automatic instrumentation (there might be some performance penalty)
-        # https://docs.sentry.io/platforms/php/guides/symfony/performance/instrumentation/automatic-instrumentation/
-        tracing:
-            enabled: false
+  sentry:
+    dsn: '%env(SENTRY_DSN)%'
 
-        options:
-            attach_stacktrace: true
-            environment: '%env(SENTRY_ENVIRONMENT)%'
-            # Add request headers, cookies, IP address and the authenticated user
-            # see https://docs.sentry.io/platforms/php/data-management/data-collected/ for more info
-            send_default_pii: true
-            ignore_exceptions:
-              - Symfony\Component\ErrorHandler\Error\FatalError
-              - Symfony\Component\Debug\Exception\FatalErrorException
-              - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-              - Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
-              - Symfony\Component\Console\Exception\CommandNotFoundException
+    options:
+      # Add request headers, cookies, IP address and the authenticated user
+      # see https://docs.sentry.io/platforms/php/data-management/data-collected/ for more info
+      # send_default_pii: true
+      ignore_exceptions:
+        - Symfony\Component\ErrorHandler\Error\FatalError
+        - Symfony\Component\Debug\Exception\FatalErrorException
+        - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+        - Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+        - Symfony\Component\Console\Exception\CommandNotFoundException
 
-        # If you are using Monolog, you also need this additional configuration to log the errors correctly:
-        # https://docs.sentry.io/platforms/php/guides/symfony/#monolog-integration
-        register_error_listener: false
-        register_error_handler: false
+      enable_logs: true
+      attach_stacktrace: true
+      environment: '%env(SENTRY_ENVIRONMENT)%'
 
-    monolog:
-        handlers:
-            sentry:
-                type: sentry
-                level: !php/const Monolog\Logger::ERROR
-                hub_id: Sentry\State\HubInterface
-                fill_extra_context: true # Enables sending monolog context to Sentry
+    # If you are using Monolog, you also need this additional configuration to log the errors correctly:
+    # https://docs.sentry.io/platforms/php/guides/symfony/#monolog-integration
+    # register_error_listener: false
+    # register_error_handler: false
+
+  monolog:
+    handlers:
+      sentry_logs:
+        type: service
+        id: Sentry\SentryBundle\Monolog\LogsHandler
+
+  services:
+    Sentry\SentryBundle\Monolog\LogsHandler:
+      arguments:
+        - !php/const Monolog\Logger::INFO
