@@ -3,20 +3,48 @@
 {% set tab = 'registrations' %}
 
 {% block tab_content %}
-    {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_EXPORT_EMAILS').value, event) %}
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3>{{ event.confirmedRegistrations|length }} inscriptions confirmées <span class="text-secondary">({{ event.countPeople }} participant·es)</span></h3>
-            <div>
-                Copier les emails des participant·es :
-                <twig:Admin:ButtonCopy value="{{ event.registeredPeopleEmails|join(' ') }}" tooltip="Copier les adresses mails dans le presse-papier">
-                    <div class="btn btn-primary">Pour envoyer un email</div>
-                </twig:Admin:ButtonCopy>
-                <twig:Admin:ButtonCopy value="{{ event.registeredPeopleEmails|join('\n') }}" tooltip="Copier les adresses mails dans le presse-papier">
-                    <div class="btn btn-primary">Pour importer dans Brevo</div>
-                </twig:Admin:ButtonCopy>
-            </div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>{{ event.confirmedRegistrations|length }} inscriptions confirmées <span class="text-secondary">({{ event.countPeople }} participant·es)</span></h3>
+
+        <div>
+            {% if is_granted(permission.EVENT_EXPORT_EMAILS.value, event) %}
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Copier les emails des participant·es
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button
+                                class="dropdown-item"
+                                data-clipboard-text="{{ event.registeredPeopleEmails|join(' ') }}"
+                                data-bs-toggle="tooltip"
+                                title="Copier les adresses mails dans le presse-papier"
+                            >
+                                Pour envoyer un email
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="dropdown-item"
+                                data-clipboard-text="{{ event.registeredPeopleEmails|join('\n') }}"
+                                data-bs-toggle="tooltip"
+                                title="Copier les adresses mails dans le presse-papier"
+                            >
+                                Pour importer dans Brevo
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if is_granted(permission.REGISTRATION_CREATE.value, event) %}
+                <a href="{{ path('admin_registration_create', {slug: event.slug}) }}" class="btn btn-warning">
+                    Créer une nouvelle inscription
+                </a>
+            {% endif %}
         </div>
-    {% endif %}
+    </div>
+
     <table class="table table-hover table-sm">
         <thead>
             <tr>

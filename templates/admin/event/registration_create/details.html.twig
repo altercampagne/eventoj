@@ -1,0 +1,92 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = 'Création d\'une nouvelle inscription' %}
+
+{% block main %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10">
+                {{ form_errors(form) }}
+
+                {{ form_start(form) }}
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-person me-2"></i> Choix des participant·es</legend>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <fieldset class="mb-3">
+                                    <legend class="col-form-label">Personne principale</legend>
+                                    <div>
+                                        {{ user.fullName }} <span class="text-secondary">({{ user.publicName }})</span>
+                                        <div class="d-grid mt-3">
+                                            <a href="{{ path('admin_registration_create', {slug: event.slug}) }}" class="btn btn-outline-secondary btn-sm">
+                                                Changer de personne
+                                            </a>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.companions) }}
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                {{ form_label(form.bikes) }}
+                            </div>
+                            <div class="col-auto">
+                                {{ form_widget(form.bikes) }}
+                                {{ form_errors(form.bikes) }}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-calendar me-2"></i> Dates de l'inscription</legend>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <fieldset class="mb-3">
+                                    <legend class="col-form-label">Départ</legend>
+                                    {{ form_row(form.start) }}
+                                    {{ form_row(form.firstMeal) }}
+                                </fieldset>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <fieldset class="mb-3">
+                                    <legend class="col-form-label">Arrivée</legend>
+                                    {{ form_row(form.end) }}
+                                    {{ form_row(form.lastMeal) }}
+                                </fieldset>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-euro me-2"></i> Prix de l'inscription</legend>
+                        <div class="row g-3 align(items-center">
+                            <div class="col-auto">
+                                {{ form_label(form.price) }}
+                            </div>
+                            <div class="col-auto">
+                                {{ form_widget(form.price) }}
+                                {{ form_errors(form.price) }}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-lg btn-primary">
+                            Créer l'inscription
+                        </button>
+                    </div>
+
+                    <div class="d-none">
+                        {{ form_rest(form) }}
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

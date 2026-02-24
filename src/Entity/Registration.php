@@ -97,7 +97,11 @@ class Registration
     #[ORM\JoinTable(name: 'registrations_companions')]
     private Collection $companions;
 
-    public function __construct(User $user, Event $event)
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'created_by', referencedColumnName: 'id', nullable: false)]
+    public readonly User $createdBy;
+
+    public function __construct(User $user, Event $event, ?User $createdBy = null)
     {
         $this->id = Uuid::v7();
         $this->user = $user;
@@ -105,6 +109,7 @@ class Registration
         $this->createdAt = new \DateTimeImmutable();
         $this->payments = new ArrayCollection();
         $this->companions = new ArrayCollection();
+        $this->createdBy = $createdBy ?? $user;
 
         if ($event->isAT()) {
             $this->stagesRegistrations = new ArrayCollection();

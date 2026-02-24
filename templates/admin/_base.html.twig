@@ -1,5 +1,7 @@
 {% extends '_skeleton.html.twig' %}
 
+{% set permission = enum('App\\Admin\\Security\\Permission') %}
+
 {% block javascripts %}
     {{ importmap('admin') }}
 {% endblock %}
