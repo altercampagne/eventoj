@@ -1,0 +1,35 @@
+{% extends 'admin/_base.html.twig' %}
+
+{% set title = 'Création d\'une nouvelle inscription' %}
+
+{% block main %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10">
+                {{ form_errors(form) }}
+
+                {{ form_start(form) }}
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-person me-2"></i> Choix d'une personne à inscrire</legend>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                {{ form_row(form.user) }}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-lg btn-primary">
+                            Continuer
+                        </button>
+                    </div>
+
+                    <div class="d-none">
+                        {{ form_rest(form) }}
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -31,7 +31,7 @@ document.getElementById('magicSearchModal').addEventListener('shown.bs.modal', (
 })
 
 // Copy button
-const clipboard = new ClipboardJS('div[data-clipboard-text]');
+const clipboard = new ClipboardJS('[data-clipboard-text]');
 clipboard.on('success', function(e) {
   Tooltip.getOrCreateInstance(e.trigger).setContent({
     '.tooltip-inner': 'Copié !'

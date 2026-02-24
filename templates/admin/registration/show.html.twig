@@ -3,12 +3,17 @@
 {% set title = 'Inscription de ' ~ registration.user.fullname ~ ' à ' ~ registration.event.name %}
 
 {% block main %}
-    {% set isPast = (registration.stagesRegistrations|first).stage.date <= date() %}
+    {% set isPast = registration.stagesRegistrations|length > 0 and (registration.stagesRegistrations|first).stage.date <= date() %}
 
     <div class="row">
         <div class="col-8">
+            {% if registration.user != registration.createdBy %}
+                <div class="alert alert-warning">
+                    <i class="fa-solid fa-triangle-exclamation me-1"></i> Cette inscription a été créée par <b>{{ registration.createdBy.publicName }}</b>.
+                </div>
+            {% endif %}
             {% if registration.isConfirmed %}
-                <div class="alert bg-success-subtle text-success">
+                <div class="alert alert-success">
                     <i class="fa-solid fa-circle-check me-1"></i> Inscription confirmée le <b>{{ registration.confirmedAt|format_datetime('long', 'short') }}</b>
                 </div>
             {% elseif registration.isWaitingPayment %}
