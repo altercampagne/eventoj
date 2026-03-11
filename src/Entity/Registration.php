@@ -469,6 +469,11 @@ class Registration
         return $this;
     }
 
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
     /**
      * @param StageRegistration[] $stagesRegistrations
      *

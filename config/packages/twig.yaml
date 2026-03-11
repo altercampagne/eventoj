@@ -16,6 +16,8 @@ twig:
         openrunnerUser: '%env(OPENRUNNER_USER)%'
         openrunnerPassword: '%env(OPENRUNNER_PASSWORD)%'
         lightGalleryLicenseKey: '%env(LIGHTGALLERY_LICENSE_KEY)%'
+        config:
+          contact_email: '%config.contact_email%'
 
 when@test:
     twig:

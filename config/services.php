@@ -14,6 +14,7 @@ use Helloasso\HelloassoClientFactory;
 
 return static function (ContainerConfigurator $container): void {
     $container->parameters()
+        ->set('config.contact_email', 'inscriptions@altertour.net')
         ->set('paheko.client.strategy.default', 'http')
         ->set('paheko.client.strategy', '%env(default:paheko.client.strategy.default:PAHEKO_STRATEGY)%')
     ;

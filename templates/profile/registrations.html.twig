@@ -44,10 +44,7 @@
                         <br /><b>Remboursement</b> fait le <b>{{ payment.refundedAt|format_date('short') }}</b>.
                     {% endif %}
                 {% else %}
-                    <div class="alert alert-danger">
-                        <b>Paiment non trouvé ! 😧</b><br />
-                        Ce n'est pas normal, <a href="{{ path('contact') }}">contacte-nous pour en discuter !</a> 🙏
-                    </div>
+                    <b>Tarif</b> de <b>{{ registration.price|format_price }}</b> <small><i>(aucune information de règlement disponible)</i></small>.
                 {% endif %}
             </p>
             {% if isComing and not registration.isCanceled %}
@@ -62,7 +59,11 @@
                             modalButtonLabel="Confirmer l'annulation de mon inscription"
                         >
                             Cette action est <b>IRRÉVERSIBLE</b>.<br /><br />
-                            {% if registration.approvedPayment.withInstalments %}
+                            {% if registration.approvedPayment is null %}
+                                <div class="alert alert-info">
+                                    Le règlement de cette inscription n'ayant pas été fait sur ce site, <b>aucune remboursement automatique n'aura lieu</b>. Contacte l'équipe en envoyant un mail à <a href="mailto:{{ config.contact_email }}">{{ config.contact_email }}</a> !
+                                </div>
+                            {% elseif registration.approvedPayment.withInstalments %}
                                 Tu seras remboursé de l'intégralité des paiements déjà effectués.
                             {% else %}
                                 Tu seras remboursé de l'intégralité de ton paiement.
