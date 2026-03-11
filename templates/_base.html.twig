@@ -153,7 +153,7 @@
                     <div class="col-lg-4 col-md-12">
                         <h3 class="footer-title">Contact</h3>
                         <p class="text-muted mb-4">Besoin d'aide ? Une question ? Nos bénévoles te répondrons dans les meilleurs délais.</p>
-                        <a href="{{ current_route == 'contact' ? 'mailto:inscriptions@altertour.net' : path('contact') }}" class="btn btn-primary btn-lg w-100 opacity-75">Nous contacter</a>
+                        <a href="{{ current_route == 'contact' ? 'mailto:' ~ config.contact_email : path('contact') }}" class="btn btn-primary btn-lg w-100 opacity-75">Nous contacter</a>
                     </div>
                 </div>
             </div>

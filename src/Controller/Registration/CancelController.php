@@ -6,6 +6,7 @@ namespace App\Controller\Registration;
 
 use App\Entity\Registration;
 use App\Service\Payment\PaymentRefundHandler;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,7 @@ class CancelController extends AbstractController
 {
     public function __construct(
         private readonly PaymentRefundHandler $paymentRefundHandler,
+        private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger,
     ) {
     }
@@ -26,12 +28,20 @@ class CancelController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if (null === $payment = $registration->getApprovedPayment()) {
+        $payment = $registration->getApprovedPayment();
+
+        if (null === $payment && null === $registration->getCreatedBy()) {
             throw new \RuntimeException('Cannot cancel a registration without an approved payment!');
         }
 
         try {
-            $this->paymentRefundHandler->refund($payment);
+            if (null !== $payment) {
+                $this->paymentRefundHandler->refund($payment);
+            } else {
+                $registration->cancel();
+                $this->em->persist($registration);
+                $this->em->flush();
+            }
 
             $this->addFlash('warning', 'Ton inscription a bien été annulée. On espère te voir à un autre évènement !');
         } catch (\Exception $e) {
