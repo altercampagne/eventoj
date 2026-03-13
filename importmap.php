@@ -36,31 +36,31 @@ return [
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free' => [
-        'version' => '7.1.0',
+        'version' => '7.2.0',
     ],
     '@fortawesome/fontawesome-free/css/all.css' => [
-        'version' => '7.1.0',
+        'version' => '7.2.0',
         'type' => 'css',
     ],
     '@fortawesome/fontawesome-free/css/fontawesome.min.css' => [
-        'version' => '7.1.0',
+        'version' => '7.2.0',
         'type' => 'css',
     ],
     'trix' => [
-        'version' => '2.1.16',
+        'version' => '2.1.17',
     ],
     'trix/dist/trix.min.css' => [
-        'version' => '2.1.16',
+        'version' => '2.1.17',
         'type' => 'css',
     ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
     'tom-select' => [
-        'version' => '2.4.3',
+        'version' => '2.5.2',
     ],
     'tom-select/dist/css/tom-select.bootstrap5.css' => [
-        'version' => '2.4.3',
+        'version' => '2.5.2',
         'type' => 'css',
     ],
     'clipboard' => [
@@ -80,7 +80,7 @@ return [
         'version' => '1.1.2',
     ],
     'tom-select/dist/css/tom-select.default.min.css' => [
-        'version' => '2.4.3',
+        'version' => '2.5.2',
         'type' => 'css',
     ],
     'lightgallery' => [
@@ -115,11 +115,11 @@ return [
         'type' => 'css',
     ],
     'tom-select/dist/css/tom-select.default.css' => [
-        'version' => '2.4.3',
+        'version' => '2.5.2',
         'type' => 'css',
     ],
     'tom-select/dist/css/tom-select.bootstrap4.css' => [
-        'version' => '2.4.3',
+        'version' => '2.5.2',
         'type' => 'css',
     ],
 ];

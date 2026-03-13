@@ -75,7 +75,7 @@ final readonly class PahekoHttpClient implements PahekoClientInterface
             $error = $e->getResponse()->toArray(false)['error'] ?? null;
 
             if (403 === $e->getResponse()->getStatusCode() && 'Seul un membre administrateur peut modifier un autre membre administrateur.' === $error) {
-                throw new AdminMemberNotEditableException($error, previous: $e);
+                throw new AdminMemberNotEditableException($error, $e->getCode(), previous: $e);
             }
 
             throw $e;
