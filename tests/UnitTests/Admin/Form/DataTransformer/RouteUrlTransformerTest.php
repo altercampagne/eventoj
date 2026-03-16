@@ -51,5 +51,16 @@ final class RouteUrlTransformerTest extends TestCase
             '<iframe width="100%" height="650" loading="lazy" src="https://www.openrunner.com/en/embed/5378616f526831747578307a7a346c31466f375537393043616b744a63712b344437326d314371317251593d3a3ac12515c0f7c4961a9d836de199539427?unit=metric" style="border: none;"></iframe>',
             'https://www.openrunner.com/embed/5378616f526831747578307a7a346c31466f375537393043616b744a63712b344437326d314371317251593d3a3ac12515c0f7c4961a9d836de199539427?unit=metric',
         ];
+
+        // Problème remonté par Mathieu en mars 2026
+        // @see https://chat.altercampagne.ovh/channel/cercle-numerique?msg=5tuxaYyu5iHaRsCMn
+        yield 'OpenRunner Enbed URL with code as query param' => [
+            'https://www.openrunner.com/embed.html?code=5677516258434f54384b52724e584d6f5144425a4b4438354c767a735767695157506874573172376839673d3a3a1fdd217a73a8e94e11bffa705aa7b7c2&lang=fr&unit=metric',
+            'https://www.openrunner.com/embed.html?code=5677516258434f54384b52724e584d6f5144425a4b4438354c767a735767695157506874573172376839673d3a3a1fdd217a73a8e94e11bffa705aa7b7c2&lang=fr&unit=metric',
+        ];
+        yield 'OpenRunner Enbed URL with code as query param & locale prefix' => [
+            'https://www.openrunner.com/en/embed.html?code=5677516258434f54384b52724e584d6f5144425a4b4438354c767a735767695157506874573172376839673d3a3a1fdd217a73a8e94e11bffa705aa7b7c2&lang=fr&unit=metric',
+            'https://www.openrunner.com/embed.html?code=5677516258434f54384b52724e584d6f5144425a4b4438354c767a735767695157506874573172376839673d3a3a1fdd217a73a8e94e11bffa705aa7b7c2&lang=fr&unit=metric',
+        ];
     }
 }

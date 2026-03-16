@@ -40,8 +40,15 @@ class RouteUrlTransformer implements DataTransformerInterface
             throw new TransformationFailedException('Expected a string.');
         }
 
-        if (preg_match('#^https://www.openrunner.com/([a-z]{2}/)?embed/.*$#', $value)) {
-            return preg_replace('#^https://www.openrunner.com/(?:[a-z]{2}/)?embed/(.*)$#', 'https://www.openrunner.com/embed/$1', $value);
+        if (preg_match('#^https://www.openrunner.com/([a-z]{2}/)?embed(.html)?(/|\?code=).*$#', $value)) {
+            // Strip locale part in URL if present
+            $normalized = preg_replace(
+                '#^https://www\.openrunner\.com/(?:[a-z]{2}/)?(embed(?:\.html)?(?:/.*|\?code=.*))$#',
+                'https://www.openrunner.com/$1',
+                $value
+            );
+
+            return $normalized ?? $value;
         }
 
         if (preg_match('#^https://www.komoot.com/.*/embed?.*share_token=.*$#', $value)) {
