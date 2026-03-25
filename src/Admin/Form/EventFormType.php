@@ -76,21 +76,18 @@ class EventFormType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'disabled' => $event->isBookable(),
             ])
             ->add('childrenCapacity', IntegerType::class, [
                 'label' => 'Jauge enfants',
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'disabled' => $event->isBookable(),
             ])
             ->add('bikesAvailable', IntegerType::class, [
                 'label' => 'Vélos de prêt',
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'disabled' => $event->isBookable(),
             ])
             ->add('pahekoProjectId', IntegerType::class, [
                 'required' => false,
