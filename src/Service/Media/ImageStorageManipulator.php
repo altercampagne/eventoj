@@ -50,22 +50,6 @@ final readonly class ImageStorageManipulator
 
     public function getPath(AbstractUploadedImage $image): string
     {
-        $object = $this->s3Client->getObject([
-            'Bucket' => $this->bucketName,
-            'Key' => $image->getPath(),
-        ]);
-
-        $metadata = $object->get('@metadata');
-
-        if (!\is_array($metadata)) {
-            throw new \RuntimeException('Retrieved remote object does not contains "@metadata" informations.');
-        }
-
-        if (!\array_key_exists('effectiveUri', $metadata)) {
-            throw new \RuntimeException('Retrieved remote object "@metadata" does not contains the "effectiveUri" key.');
-        }
-
-        /* @phpstan-ignore cast.string */
-        return (string) $metadata['effectiveUri'];
+        return (string) $this->s3Client->getObjectUrl($this->bucketName, $image->getPath());
     }
 }
