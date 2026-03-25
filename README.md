@@ -21,3 +21,8 @@ This site is autmatically generated with SchemaSpy when needed.
 ### Paheko
 
 All transactions are sync'ed with our accounting software (Paheko) which is available at the following address: http://127.0.0.1:8081
+
+## Troubleshooting
+
+Image uploading
+In order to be able to upload images on minio, visit https://minio.eventoj.local & accept the self-signed certificate

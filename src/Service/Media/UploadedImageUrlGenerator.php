@@ -30,11 +30,7 @@ final readonly class UploadedImageUrlGenerator
 
         if ('dev' === $this->environment) {
             // In dev environment, we don't use imagekit but directly the remote storage.
-            try {
-                return $this->imageStorageManipulator->getPath($file);
-            } catch (\Exception) {
-                return $this->notFoundImageUrl($size, $width, $height, 'Image\\nnon trouvée\\nsur localstack');
-            }
+            return $this->imageStorageManipulator->getPath($file);
         }
 
         $dimensions = $file->getDimensions();

@@ -18,24 +18,27 @@ jobs:
         # Set health checks to wait until postgres has started
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
-      localstack:
-        image: localstack/localstack:latest
+      minio:
+        image: minio/minio:edge-cicd
         env:
-          SERVICES: s3
-          DATA_DIR: /tmp/localstack/data
-          DOCKER_HOST: unix:///var/run/docker.sock
+          MINIO_ROOT_USER: MinIoUser
+          MINIO_ROOT_PASSWORD: ThisIsMinIoPassword
         ports:
-          - 4566:4566
-        options: --health-cmd "awslocal s3 ls" --health-interval 10s --health-timeout 5s --health-retries 5
+          - 9000:9000
+        options: >-
+          --health-cmd "curl -f http://localhost:9000/minio/health/live"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     env:
       APP_ENV: test
       APP_DEBUG: 1
       DATABASE_HOST: localhost
-      S3_ENDPOINT: http://localhost:4566
-      AWS_ENDPOINT_URL: http://localhost:4566
-      AWS_ACCESS_KEY_ID: test
-      AWS_SECRET_ACCESS_KEY: test
+      S3_ENDPOINT: http://localhost:9000
+      AWS_ENDPOINT_URL: http://localhost:900
+      AWS_ACCESS_KEY_ID: MinIoUser
+      AWS_SECRET_ACCESS_KEY: ThisIsMinIoPassword
       AWS_DEFAULT_REGION: eu-west-1
 
     steps:
@@ -62,8 +65,13 @@ jobs:
       - name: Create database
         run: bin/reset-db
 
-      - name: Wait for LocalStack and create S3 bucket
-        run: aws --endpoint-url=http://localhost:4566 s3 mb s3://local-bucket
+      - name: Create S3 bucket on MinIo
+        env:
+          AWS_ACCESS_KEY_ID: MinIoUser
+          AWS_SECRET_ACCESS_KEY: ThisIsMinIoPassword
+          AWS_DEFAULT_REGION: eu-west-1
+        run: |
+          aws --endpoint-url http://localhost:9000 s3 mb s3://local-bucket
 
       - name: Run PHPUnit
         run: bin/phpunit
