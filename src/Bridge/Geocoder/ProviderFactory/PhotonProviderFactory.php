@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class PhotonProviderFactory extends AbstractFactory
 {
     #[\Override]
-    protected static $dependencies = [
+    protected static array $dependencies = [
         ['requiredClass' => Photon::class, 'packageName' => 'geocoder-php/photon-provider'],
     ];
 
