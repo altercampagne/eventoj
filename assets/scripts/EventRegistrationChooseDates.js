@@ -6,6 +6,7 @@ class EventRegistrationChooseDates {
     this.firstMeal = document.querySelector('#choose_dates_form_firstMeal');
     this.selectEnd = document.querySelector('#choose_dates_form_stageEnd');
     this.lastMeal = document.querySelector('#choose_dates_form_lastMeal');
+    this.minMeals = parseInt(this.selectStart.closest('form').dataset.minMeals || '0');
 
     // To retrieve all available options, we need to concat / unique both
     // stageStart & stageEnd options. This is because we don't have the last
@@ -27,6 +28,7 @@ class EventRegistrationChooseDates {
         document.querySelector('#stageStartLabel').innerHTML = event.target.dataset.stageLabel;
         document.querySelector('#firstMealLabel').innerHTML = event.target.dataset.mealLabel;
 
+        this.adjustEndForMinMeals();
         this.updateSelectEnd();
       });
     });
@@ -40,10 +42,57 @@ class EventRegistrationChooseDates {
         this.lastMeal.value = event.target.dataset.meal;
         document.querySelector('#stageEndLabel').innerHTML = event.target.dataset.stageLabel;
         document.querySelector('#lastMealLabel').innerHTML = event.target.dataset.mealLabel;
+
       });
     });
 
     this.updateSelectEnd();
+  }
+
+  countMeals(startStageId, firstMeal, endStageId, lastMeal) {
+    const meals = ['breakfast', 'lunch', 'dinner'];
+    const startIdx = this.availableOptions.indexOf(startStageId);
+    const endIdx = this.availableOptions.indexOf(endStageId);
+
+    if (startIdx < 0 || endIdx < 0 || endIdx < startIdx) {
+      return 0;
+    }
+
+    const firstDayMeals = meals.slice(meals.indexOf(firstMeal));
+    const lastDayMeals = meals.slice(0, meals.indexOf(lastMeal) + 1);
+
+    if (startIdx === endIdx) {
+      return firstDayMeals.filter(m => lastDayMeals.includes(m)).length;
+    }
+
+    return firstDayMeals.length + (endIdx - startIdx - 1) * 3 + lastDayMeals.length;
+  }
+
+  adjustEndForMinMeals() {
+    if (this.minMeals <= 0) return;
+    if (this.countMeals(this.selectStart.value, this.firstMeal.value, this.selectEnd.value, this.lastMeal.value) >= this.minMeals) return;
+
+    const meals = ['breakfast', 'lunch', 'dinner'];
+    const mealLabels = { breakfast: 'Petit-déjeuner', lunch: 'Déjeuner', dinner: 'Diner' };
+    const startIdx = this.availableOptions.indexOf(this.selectStart.value);
+    const endModal = document.querySelector('div#stageEndModal');
+
+    for (let i = startIdx; i < this.availableOptions.length; i++) {
+      const stageId = this.availableOptions[i];
+      for (const meal of meals) {
+        if (this.countMeals(this.selectStart.value, this.firstMeal.value, stageId, meal) >= this.minMeals) {
+          this.selectEnd.value = stageId;
+          this.lastMeal.value = meal;
+
+          const item = endModal.querySelector(`div.accordion-item[data-stage="${stageId}"]`);
+          if (item) {
+            document.querySelector('#stageEndLabel').innerHTML = item.dataset.stageLabel;
+          }
+          document.querySelector('#lastMealLabel').innerHTML = mealLabels[meal];
+          return;
+        }
+      }
+    }
   }
 
   updateSelectEnd() {
@@ -95,6 +144,16 @@ class EventRegistrationChooseDates {
         this.disableAccordionItem(item);
 
         return;
+      }
+
+      // If there is a minimum meal to allow the registration, we disallow some buttons if needed
+      if (this.minMeals > 0 && (index == startIndex || index == startIndex+1)) {
+        item.querySelectorAll('button.choose-meal-button').forEach((button) => {
+          const meals = this.countMeals(this.selectStart.value, this.firstMeal.value, button.dataset.stage, button.dataset.meal);
+          if (meals < this.minMeals) {
+            button.classList.add('d-none');
+          }
+        });
       }
 
       // Same day !

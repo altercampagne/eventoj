@@ -51,6 +51,7 @@
                         <div
                             class="accordion-item"
                             data-stage="{{ stage.id }}"
+                            data-stage-label="{{ stage.date|format_date('long') }}"
                             data-full="{{ isStageFull }}"
                             data-booked="{{ isStageBooked }}"
                             data-fully-booked="{{ userEventComputedRegistrations.hasRegistrationForAllMealsOfStage(stage) }}"

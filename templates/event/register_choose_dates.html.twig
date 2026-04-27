@@ -19,7 +19,7 @@
                 </div>
                 {{ form_errors(form) }}
 
-                {{ form_start(form) }}
+                {{ form_start(form, {attr: {'data-min-meals': registration.event.AT ? 3 : 0}}) }}
 
                     <h3 class="fw-bold text-secondary mb-3">Date d'arrivée sur le tour</h3>
 
