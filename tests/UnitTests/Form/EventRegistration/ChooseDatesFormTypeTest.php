@@ -141,4 +141,51 @@ class ChooseDatesFormTypeTest extends KernelTestCase
             'choose_dates_form' => 'Il n\'y a pas assez de disponibilités sur la période sélectionnée.',
         ]);
     }
+
+    public function testATWithLessThan3MealsIsInvalid(): void
+    {
+        // 1 stage, DINNER→DINNER = 1 meal only
+        $this->form->submit([
+            /* @phpstan-ignore-next-line */
+            'stageStart' => (string) $this->event->getStages()[0]->getId(),
+            'firstMeal' => Meal::DINNER->value,
+            /* @phpstan-ignore-next-line */
+            'stageEnd' => (string) $this->event->getStages()[0]->getId(),
+            'lastMeal' => Meal::DINNER->value,
+        ]);
+
+        $this->assertFormInvalid($this->form, [
+            'choose_dates_form' => 'Pour participer à l\'AlterTour, ton inscription doit inclure au minimum 3 repas.',
+        ]);
+    }
+
+    public function testATWithExactly3MealsIsValid(): void
+    {
+        // 1 stage, BREAKFAST→DINNER = 3 meals
+        $this->form->submit([
+            /* @phpstan-ignore-next-line */
+            'stageStart' => (string) $this->event->getStages()[0]->getId(),
+            'firstMeal' => Meal::BREAKFAST->value,
+            /* @phpstan-ignore-next-line */
+            'stageEnd' => (string) $this->event->getStages()[0]->getId(),
+            'lastMeal' => Meal::DINNER->value,
+        ]);
+
+        $this->assertTrue($this->form->isValid());
+    }
+
+    public function testDinnerToLunchNextDayIsValid(): void
+    {
+        // 2 stages, DINNER→LUNCH = 1 + 2 = 3 meals
+        $stages = $this->event->getStages()->toArray();
+
+        $this->form->submit([
+            'stageStart' => (string) $stages[3]->getId(),
+            'firstMeal' => Meal::DINNER->value,
+            'stageEnd' => (string) $stages[4]->getId(),
+            'lastMeal' => Meal::LUNCH->value,
+        ]);
+
+        $this->assertTrue($this->form->isValid());
+    }
 }

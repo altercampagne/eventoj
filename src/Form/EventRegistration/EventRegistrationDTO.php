@@ -129,6 +129,35 @@ class EventRegistrationDTO
         }
     }
 
+    public function countMeals(): int
+    {
+        $bookedStages = $this->getBookedStages();
+        $count = \count($bookedStages);
+
+        if (1 === $count) {
+            return \count($this->getFirstDayMeals());
+        }
+
+        return \count($this->getFirstDayMeals()) + ($count - 2) * 3 + \count($this->getLastDayMeals());
+    }
+
+    #[Assert\Callback(groups: ['choose_dates'])]
+    public function validateMinimumMealsForAT(ExecutionContextInterface $context, mixed $payload): void
+    {
+        if (!$this->registration->getEvent()->isAT()) {
+            return;
+        }
+
+        if (null === $this->stageStart || null === $this->stageEnd) {
+            return;
+        }
+
+        if ($this->countMeals() < 3) {
+            $context->buildViolation('Pour participer à l\'AlterTour, ton inscription doit inclure au minimum 3 repas.')
+                ->addViolation();
+        }
+    }
+
     #[Assert\Callback(groups: ['choose_dates'])]
     public function validatePeriod(ExecutionContextInterface $context, mixed $payload): void
     {
