@@ -42,7 +42,7 @@
                     <td>{{ event.stages|length }} étapes</td>
                     <td>{{ event.createdAt|format_datetime }}</td>
                     <td>
-                        {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_VIEW_REGISTRATIONS').value, event) %}
+                        {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_VIEW_STAGES').value, event) %}
                             <twig:Admin:IconView url="{{ path('admin_event_show', {slug: event.slug}) }}" />
                         {% endif %}
                         {% if is_granted(constant('App\\Admin\\Security\\Permission::EVENT_UPDATE').value, event) %}
