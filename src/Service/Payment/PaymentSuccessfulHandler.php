@@ -44,7 +44,9 @@ final readonly class PaymentSuccessfulHandler
         }
 
         if (null !== $registration = $payment->getRegistration()) {
-            $registration->confirm();
+            if (!$registration->isConfirmed()) {
+                $registration->confirm();
+            }
 
             foreach ($registration->getStagesRegistrations() as $stageRegistration) {
                 $stage = $stageRegistration->getStage();
