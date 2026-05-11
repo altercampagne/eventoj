@@ -25,9 +25,9 @@ final readonly class PaymentRefundHandler
     ) {
     }
 
-    public function refund(Payment $payment, bool $cancelRegistrationIfExists = true): void
+    public function refund(Payment $payment, bool $cancelRegistrationIfExists = true, bool $cancelledByAdmin = false): void
     {
-        $this->refundOnHelloasso($payment);
+        $this->refundOnHelloasso($payment, $cancelledByAdmin);
 
         $payment->refund();
         $this->em->persist($payment);
@@ -49,7 +49,7 @@ final readonly class PaymentRefundHandler
         $this->pahekoPaymentSynchronizer->sync($payment);
     }
 
-    private function refundOnHelloasso(Payment $payment): void
+    private function refundOnHelloasso(Payment $payment, bool $cancelledByAdmin): void
     {
         if ('test' === $this->environment) {
             $this->logger->notice('Refund asked but in test env, we do not call Helloasso.', [
@@ -80,8 +80,12 @@ final readonly class PaymentRefundHandler
         }
 
         foreach ($refundablePayments as $refundablePayment) {
+            $comment = $cancelledByAdmin
+                ? "Remboursement automatique suite à l'annulation de la participation par un·e admin."
+                : "Remboursement automatique suite à l'annulation de la participation par la personne concernée.";
+
             $this->helloassoClient->payment->refund($refundablePayment->getId(), [
-                'comment' => "Remboursement automatique suite à l'annulation de la participation depuis le site ou l'admin.",
+                'comment' => $comment,
                 'cancelOrder' => 'true', // Mandatory to avoid any future payment
             ]);
         }

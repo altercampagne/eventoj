@@ -16,7 +16,7 @@ readonly class RegistrationCanceller
     ) {
     }
 
-    public function cancel(Registration $registration): RegistrationCancellationResult
+    public function cancel(Registration $registration, bool $cancelledByAdmin = false): RegistrationCancellationResult
     {
         if (!$registration->canBeCanceled()) {
             throw new \InvalidArgumentException('Given registration cannot be canceled');
@@ -25,7 +25,7 @@ readonly class RegistrationCanceller
         $refundedPayments = [];
         foreach ($registration->getPayments() as $payment) {
             if ($payment->isApproved()) {
-                $this->paymentRefundHandler->refund($payment, cancelRegistrationIfExists: false);
+                $this->paymentRefundHandler->refund($payment, cancelRegistrationIfExists: false, cancelledByAdmin: $cancelledByAdmin);
                 $refundedPayments[] = $payment;
             }
         }
