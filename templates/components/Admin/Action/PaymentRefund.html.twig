@@ -1,0 +1,36 @@
+{% set id = 'admin_payment_refund' %}
+
+<button type="button" class="btn btn-danger btn-fill" data-bs-toggle="modal" data-bs-target="#post-{{ id }}" id="button-{{ id }}">
+    Rembourser le paiement
+</button>
+
+<div class="modal fade" id="post-{{ id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation du remboursement du paiement effectué par {{ payment.payer.fullName }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">Cette action est <b>IRRÉVERSIBLE</b>.</div>
+                <p>Tu es sur le point de procéder au remboursement du paiement de <b>{{ payment.amount|format_price }}</b> effectué par <b>{{ payment.payer.fullName }}</b>.</p>
+                <p>Toutes les adhésions attachées à ce paiement seront annulées.</p>
+                <p>Si tu le choisis, le remboursement de ce paiement donnera lieu à <b>l'annulation de toutes les inscriptions</b> qui y sont attachées.</p>
+                <p>Au risque d'insister : cette action est <b><u>totalement irréversible</u></b>.</p>
+            </div>
+            <div class="modal-footer">
+                <twig:ButtonPost
+                    url="{{ path('admin_payment_refund', {id: payment.id, cancelRegistration: false}) }}"
+                    label="Rembourser le paiement"
+                    btnClass="btn btn-danger"
+                />
+
+                <twig:ButtonPost
+                    url="{{ path('admin_payment_refund', {id: payment.id, cancelRegistration: true}) }}"
+                    label="Rembourser le paiement ET annuler l'inscription"
+                    btnClass="btn btn-danger"
+                />
+            </div>
+        </div>
+    </div>
+</div>

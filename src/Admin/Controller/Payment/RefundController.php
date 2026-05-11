@@ -9,6 +9,7 @@ use App\Entity\Payment;
 use App\Service\Payment\PaymentRefundHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -22,15 +23,17 @@ class RefundController extends AbstractController
     ) {
     }
 
-    public function __invoke(Payment $payment): Response
-    {
+    public function __invoke(
+        Payment $payment,
+        #[MapQueryParameter] bool $cancelRegistration,
+    ): Response {
         if (!$payment->isApproved()) {
             $this->addFlash('error', 'Le paiement ne peut pas être remboursé.');
 
             return $this->redirectToRoute('admin_payment_show', ['id' => $payment->getId()]);
         }
 
-        $this->paymentRefundHandler->refund($payment, cancelledByAdmin: true);
+        $this->paymentRefundHandler->refund($payment, cancelRegistrationIfExists: $cancelRegistration, cancelledByAdmin: true);
 
         $this->addFlash('info', 'Le paiement a été remboursé avec succès !');
 
