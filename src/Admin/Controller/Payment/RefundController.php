@@ -30,7 +30,7 @@ class RefundController extends AbstractController
             return $this->redirectToRoute('admin_payment_show', ['id' => $payment->getId()]);
         }
 
-        $this->paymentRefundHandler->refund($payment);
+        $this->paymentRefundHandler->refund($payment, cancelledByAdmin: true);
 
         $this->addFlash('info', 'Le paiement a été remboursé avec succès !');
 

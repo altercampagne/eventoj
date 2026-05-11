@@ -25,7 +25,7 @@ class CancelController extends AbstractController
     public function __invoke(Registration $registration): Response
     {
         try {
-            $registrationCancellationResult = $this->registrationCanceller->cancel($registration);
+            $registrationCancellationResult = $this->registrationCanceller->cancel($registration, cancelledByAdmin: true);
         } catch (\InvalidArgumentException) {
             $this->addFlash('error', 'L\'inscription ne peut pas être annulée.');
 
