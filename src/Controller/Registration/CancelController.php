@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Registration;
 
 use App\Entity\Registration;
-use App\Service\Payment\PaymentRefundHandler;
-use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
+use App\Service\Registration\RegistrationCanceller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,43 +14,19 @@ use Symfony\Component\Routing\Attribute\Route;
 class CancelController extends AbstractController
 {
     public function __construct(
-        private readonly PaymentRefundHandler $paymentRefundHandler,
-        private readonly EntityManagerInterface $em,
-        private readonly LoggerInterface $logger,
+        private readonly RegistrationCanceller $registrationCanceller,
     ) {
     }
 
     public function __invoke(Registration $registration): Response
     {
-        if (!$registration->canBeCanceled()) {
-            throw $this->createNotFoundException();
-        }
-
-        $payment = $registration->getApprovedPayment();
-
-        if (null === $payment && null === $registration->getCreatedBy()) {
-            throw new \RuntimeException('Cannot cancel a registration without an approved payment!');
-        }
-
         try {
-            if (null !== $payment) {
-                $this->paymentRefundHandler->refund($payment);
-            } else {
-                $registration->cancel();
-                $this->em->persist($registration);
-                $this->em->flush();
-            }
-
-            $this->addFlash('warning', 'Ton inscription a bien été annulée. On espère te voir à un autre évènement !');
-        } catch (\Exception $e) {
-            $this->addFlash('danger', 'Une erreur est survenue lors de l\'annulation de ton inscription. Si le problème persiste, n\'hésite pas à nous contacter.');
-
-            $this->logger->error('An error occurred when canceling registration.', [
-                'registration' => $registration,
-                'payment' => $payment,
-                'exception' => $e,
-            ]);
+            $this->registrationCanceller->cancel($registration);
+        } catch (\InvalidArgumentException $e) {
+            throw $this->createNotFoundException(previous: $e);
         }
+
+        $this->addFlash('warning', 'Ton inscription a bien été annulée. On espère te voir à un autre évènement !');
 
         return $this->redirectToRoute('profile_registrations');
     }

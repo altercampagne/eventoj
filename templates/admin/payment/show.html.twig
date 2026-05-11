@@ -59,23 +59,23 @@
                 {% block footer %}
                     <div class="row p-2">
                         <div class="col d-grid gap-2">
-                        {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_SYNC_WITH_HELLOASSO').value, payment) and payment.helloassoCheckoutIntentId is not null %}
+                            {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_SYNC_WITH_HELLOASSO').value, payment) and payment.helloassoCheckoutIntentId is not null %}
                                 <twig:ButtonPost
                                     url="{{ path('admin_payment_sync_with_helloasso', {id: payment.id}) }}"
                                     label="Synchroniser le paiement avec Helloasso"
                                     tooltip="Permet de s'assurer que le paiement a bien le même status chez nous que chez Helloasso"
                                     btnClass="btn btn-warning btn-fill"
                                 />
-                        {% endif %}
-                        {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_SYNC_WITH_PAHEKO').value, payment) %}
+                            {% endif %}
+                            {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_SYNC_WITH_PAHEKO').value, payment) %}
                                 <twig:ButtonPost
                                     url="{{ path('admin_payment_sync_with_paheko', {id: payment.id}) }}"
                                     label="Synchroniser le paiement avec Paheko"
                                     tooltip="Permet de s'assurer que le paiement est bien sycnhronisé chez Paheko"
                                     btnClass="btn btn-warning"
                                 />
-                        {% endif %}
-                        {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_REFUND').value, payment) and payment.isApproved %}
+                            {% endif %}
+                            {% if is_granted(constant('App\\Admin\\Security\\Permission::PAYMENT_REFUND').value, payment) and payment.isApproved %}
                                 <twig:ButtonPostWithConfirmation
                                     url="{{ path('admin_payment_refund', {id: payment.id}) }}"
                                     buttonLabel="Rembourser le paiement et annuler inscriptions & adhésions"
@@ -89,8 +89,8 @@
                                     <p>Le remboursement de ce paiement donnera lieu à <b>l'annulation de toutes les inscriptions et adhésions</b> qui y sont attachées.</p>
                                     <p>Au risque d'insister : cette action est <b><u>totalement irréversible</u></b>.</p>
                                 </twig:ButtonPostWithConfirmation>
-                        {% endif %}
-                            </div>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endblock %}
             {% endembed %}
