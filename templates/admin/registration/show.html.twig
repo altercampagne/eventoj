@@ -92,6 +92,24 @@
                         Supprimer un vélo de prêt
                     </twig:ButtonPost>
                 {% endif %}
+
+                {% if is_granted(constant('App\\Admin\\Security\\Permission::REGISTRATION_CANCEL').value, registration) and registration.isConfirmed %}
+                    <twig:ButtonPostWithConfirmation
+                        url="{{ path('admin_registration_cancel', {id: registration.id}) }}"
+                        buttonLabel="Annuler cette inscription"
+                        btnClass="btn btn-danger btn-fill"
+                        modalTitle="Annulation de 'inscription de {{ registration.user.fullName }}"
+                        modalButtonClass="btn btn-danger"
+                        modalButtonLabel="Confirmer l'annulation de cette inscription"
+                    >
+                        <div class="alert alert-danger">Cette action est <b>IRRÉVERSIBLE</b>.</div>
+                        <p>Tu es sur le point de procéder à l'annulation de l'inscription de <b>{{ registration.user.fullName }}</b>.</p>
+                        {% if registration.payments|length > 0 %}
+                            <p><b>Les sommes payées seront intégralement remboursées.</b></p>
+                        {% endif %}
+                        <p>Au risque d'insister : cette action est <b><u>totalement irréversible</u></b>.</p>
+                    </twig:ButtonPostWithConfirmation>
+                {% endif %}
             </div>
 
             {% if is_granted(constant('App\\Admin\\Security\\Permission::DEBUG').value) %}
