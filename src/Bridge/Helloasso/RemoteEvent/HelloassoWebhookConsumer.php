@@ -65,7 +65,7 @@ final readonly class HelloassoWebhookConsumer implements ConsumerInterface
             return;
         }
 
-        $this->logger->warning('A payment have been refunded from the helloasso admin! Doing the refund in the app too.', [
+        $this->logger->info('A payment have been refunded from the helloasso admin! Doing the refund in the app too.', [
             'payment' => $payment,
         ]);
 
