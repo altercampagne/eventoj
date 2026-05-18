@@ -9,6 +9,7 @@ use App\Entity\Meal;
 use App\Factory\CompanionFactory;
 use App\Factory\EventFactory;
 use App\Factory\UserFactory;
+use App\Repository\RegistrationRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Zenstruck\Foundry\Test\Factories;
 
@@ -27,7 +28,8 @@ class NominalCaseTest extends WebTestCase
         $companion1 = CompanionFactory::new()->children()->create(['user' => $user]);
         $companion2 = CompanionFactory::new()->adult()->create(['user' => $user]);
 
-        $client->loginUser(UserFactory::new()->admin()->create());
+        $admin = UserFactory::new()->admin()->create();
+        $client->loginUser($admin);
 
         $crawler = $client->request('GET', "/_admin/events/{$event->getSlug()}/registration_create");
         $this->assertResponseIsSuccessful();
@@ -61,5 +63,13 @@ class NominalCaseTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $this->assertSelectorTextContains('.alert-success', "L'inscription de {$user->getPublicName()} pour l'évènement {$event->getName()} a été créée avec succès !");
+
+        /** @var RegistrationRepository */
+        $registrationRepository = $this->getContainer()->get(RegistrationRepository::class);
+        $registration = $registrationRepository->findOneBy(['user' => $user, 'event' => $event]);
+        $this->assertNotNull($registration);
+        $this->assertSame((string) $admin->getId(), (string) $registration->getCreatedBy()?->getId());
+        $this->assertSame(Meal::BREAKFAST, $registration->getFirstMeal());
+        $this->assertSame(Meal::DINNER, $registration->getLastMeal());
     }
 }
