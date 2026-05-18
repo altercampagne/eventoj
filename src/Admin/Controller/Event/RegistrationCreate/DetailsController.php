@@ -65,10 +65,10 @@ class DetailsController extends AbstractController
                         $stageRegistration->setPresentForBreakfast(false);
                     }
                 } elseif ($stage->getDate()->getTimestamp() === $dto->end->getTimestamp()) {
-                    if ($dto->firstMeal->isBreakfast()) {
+                    if ($dto->lastMeal->isBreakfast()) {
                         $stageRegistration->setPresentForLunch(false);
                         $stageRegistration->setPresentForDinner(false);
-                    } elseif ($dto->firstMeal->isLunch()) {
+                    } elseif ($dto->lastMeal->isLunch()) {
                         $stageRegistration->setPresentForDinner(false);
                     }
                 }
