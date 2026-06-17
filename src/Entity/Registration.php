@@ -159,7 +159,7 @@ class Registration
 
     public function canBeCanceled(): bool
     {
-        if (RegistrationStatus::CONFIRMED !== $this->status) {
+        if (!$this->isConfirmed()) {
             return false;
         }
 

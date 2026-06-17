@@ -27,7 +27,7 @@ class CancelController extends AbstractController
         try {
             $registrationCancellationResult = $this->registrationCanceller->cancel($registration, cancelledByAdmin: true);
         } catch (\InvalidArgumentException) {
-            $this->addFlash('error', 'L\'inscription ne peut pas être annulée.');
+            $this->addFlash('danger', 'L\'inscription ne peut pas être annulée.');
 
             return $this->redirectToRoute('admin_registration_show', ['id' => $registration->getId()]);
         }
