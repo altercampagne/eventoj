@@ -19,8 +19,14 @@
 
                         {{ form_row(form.name) }}
                         {{ form_row(form.description) }}
+                    </fieldset>
+
+                    <fieldset class="form-group border p-3 mt-3 bg-light">
+                        <legend class="w-auto px-2 pb-2"><i class="fa-solid fa-address-book me-2"></i> Informations pratiques</legend>
+
                         {{ form_row(form.openingDateForBookings) }}
                         {{ form_row(form.exchangeMarketLink) }}
+                        {{ form_row(form.phoneNumber) }}
                     </fieldset>
 
                     <fieldset class="form-group border p-3 mt-3 bg-light">
