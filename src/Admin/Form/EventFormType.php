@@ -179,6 +179,17 @@ class EventFormType extends AbstractType
                 'help' => 'Généralement un Google doc pour permettre aux personnes qui ne viennent plus d\'échanger / de revendre leurs places. Si aucun fichier n\'est renseigné, l\'évènement pourra tout de même être publié mais la bourse aux échanges ne sera pas suggérée sur le site.',
                 'default_protocol' => null,
             ])
+            ->add('phoneNumber', TextType::class, [
+                'required' => false,
+                'label' => 'Numéro de téléphone',
+                'attr' => [
+                    'placeholder' => 'Numéro de téléphone',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating mb-3',
+                ],
+                'help' => 'Si renseigné, ce numéro remplacera le numéro habituel de l\'association dans le mail de rappel envoyé aux participant·es avant le départ.',
+            ])
         ;
     }
 

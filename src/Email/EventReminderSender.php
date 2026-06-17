@@ -17,12 +17,14 @@ class EventReminderSender
         private readonly MailerInterface $mailer,
         private readonly UrlGeneratorInterface $urlGenerator,
         #[Autowire(env: 'ASSOCIATION_PHONE_NUMBER')]
-        private readonly string $associationPhoneNumber,
+        private readonly string $defaultPhoneNumber,
     ) {
     }
 
     public function send(Registration $registration): void
     {
+        $event = $registration->getEvent();
+
         $email = new TemplatedEmail()
             ->from(new Address('contact@altercampagne.net', 'Altercampagne'))
             ->to(new Address($registration->getUser()->getEmail(), $registration->getUser()->getFullName()))
@@ -30,11 +32,11 @@ class EventReminderSender
             ->htmlTemplate('emails/event_reminder.html.twig')
             ->context([
                 'member_display_name' => $registration->getUser()->getPublicName(),
-                'event_name' => $registration->getEvent()->getName(),
+                'event_name' => $event->getName(),
                 'event_url' => $this->urlGenerator->generate('event_show', [
-                    'slug' => $registration->getEvent()->getSlug(),
+                    'slug' => $event->getSlug(),
                 ], UrlGeneratorInterface::ABSOLUTE_URL),
-                'association_phone_number' => $this->associationPhoneNumber,
+                'association_phone_number' => $event->getPhoneNumber() ?? $this->defaultPhoneNumber,
             ])
         ;
 

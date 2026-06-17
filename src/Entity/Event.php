@@ -122,6 +122,9 @@ class Event
     #[ORM\Column(nullable: true)]
     private ?string $exchangeMarketLink = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $phoneNumber = null;
+
     /**
      * @var Collection<int, Stage>
      */
@@ -499,6 +502,18 @@ class Event
     public function setExchangeMarketLink(?string $exchangeMarketLink): self
     {
         $this->exchangeMarketLink = $exchangeMarketLink;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
