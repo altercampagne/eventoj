@@ -47,7 +47,7 @@ final class EventFactory extends PersistentObjectFactory
         return $this->with(['publishedAt' => $publishedAt ?? new \DateTimeImmutable()]);
     }
 
-    public function withRandomStages(string $date = 'first day of July', int $count = 31): self
+    public function withRandomStages(string $date = 'first day of +3 months', int $count = 31): self
     {
         $date = new \DateTimeImmutable($date);
         if ($date < new \DateTimeImmutable()) {
