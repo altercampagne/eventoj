@@ -35,6 +35,10 @@ class BikeAddController extends AbstractController
             $availability = new StageAvailability($stageRegistration->getStage());
 
             foreach ($availability->getMealAvailabilities() as $mealAvailability) {
+                if (!$stageRegistration->includesMeal($mealAvailability->meal)) {
+                    continue;
+                }
+
                 if ($mealAvailability->bikes->availability <= 0) {
                     $this->addFlash('danger', 'Plus de vélo disponible sur cette période.');
 
