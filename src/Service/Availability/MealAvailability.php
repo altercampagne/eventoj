@@ -16,6 +16,9 @@ final class MealAvailability
 
     public ItemAvailability $bikes;
 
+    /**
+     * We initialise this class with the "default" capacity for adults, children & bikes.
+     */
     public function __construct(
         public readonly Stage $stage,
         public readonly Meal $meal,
