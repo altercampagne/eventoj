@@ -78,10 +78,10 @@ final class RegistrationFactory extends PersistentObjectFactory
         return $this
             ->afterInstantiate(static function (Registration $registration, array $attributes): void {
                 if ($registration->getEvent()->isAT()) {
-                    /** @var int $neededBiked */
-                    $neededBiked = $attributes['neededBike'] ?? self::faker()->numberBetween(0, 2);
+                    /** @var int $neededBike */
+                    $neededBike = $attributes['neededBike'] ?? self::faker()->numberBetween(0, 2);
 
-                    $registration->setNeededBike($neededBiked);
+                    $registration->setNeededBike($neededBike);
                 }
             })
         ;

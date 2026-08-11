@@ -111,9 +111,9 @@ class Registration
         $this->companions = new ArrayCollection();
         $this->createdBy = $createdBy ?? $user;
 
-        if ($event->isAT()) {
-            $this->stagesRegistrations = new ArrayCollection();
-        } else {
+        $this->stagesRegistrations = new ArrayCollection();
+
+        if (!$event->isAT()) {
             $stagesRegistrations = [];
             $stages = $event->getStages();
             $nbStages = \count($stages);
@@ -133,7 +133,7 @@ class Registration
                 $stagesRegistrations[] = $stageRegistration;
             }
 
-            $this->stagesRegistrations = new ArrayCollection($this->orderStagesRegistrations($stagesRegistrations));
+            $this->setStagesRegistrations($stagesRegistrations);
         }
     }
 
@@ -415,7 +415,18 @@ class Registration
      */
     public function setStagesRegistrations(array $stagesRegistrations): self
     {
+        // Maintain the inverse side: remove this registration from each stage it was on.
+        foreach ($this->stagesRegistrations as $previousStageRegistration) {
+            $previousStageRegistration->getStage()->getStagesRegistrations()->removeElement($previousStageRegistration);
+        }
+
         $this->stagesRegistrations = new ArrayCollection($this->orderStagesRegistrations($stagesRegistrations));
+
+        // Maintain the inverse side: add this registration to each stage it is now on.
+        foreach ($this->stagesRegistrations as $stageRegistration) {
+            $stageRegistration->getStage()->getStagesRegistrations()->add($stageRegistration);
+        }
+
         // Number of children at the date of the first stage. That's why it can
         // change when stages change.
         $this->computeChildren();
