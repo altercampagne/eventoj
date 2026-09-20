@@ -12,6 +12,7 @@ when@prod:
         - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
         - Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
         - Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+        - Symfony\Component\Security\Core\Exception\AccessDeniedException
         - Symfony\Component\Console\Exception\CommandNotFoundException
 
       enable_logs: true
