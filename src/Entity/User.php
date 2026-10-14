@@ -283,16 +283,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
         return \in_array($this, $event->getPreparers());
     }
 
-    /**
-     * @see UserInterface
-     */
-    #[\Deprecated]
-    public function eraseCredentials(): void
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-
     public function getId(): Uuid
     {
         return $this->id;
@@ -556,5 +546,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
     public function addMembership(Membership $membership): void
     {
         $this->memberships->add($membership);
+    }
+
+    public function serialize(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

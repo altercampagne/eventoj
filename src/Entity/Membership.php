@@ -67,9 +67,7 @@ class Membership
             throw new \LogicException('Given payment must be approved.');
         }
 
-        if (null === $startAt) {
-            $startAt = self::getNewMembershipStartAt();
-        }
+        $startAt ??= self::getNewMembershipStartAt();
 
         $endAt = $startAt->modify('+1 year -1 day');
         $endAt = $endAt->setTime(23, 59, 59);
@@ -107,7 +105,7 @@ class Membership
     {
         $startAt = new \DateTimeImmutable('first day of july');
         if ($startAt > new \DateTimeImmutable()) {
-            $startAt = $startAt->modify('-1 year');
+            return $startAt->modify('-1 year');
         }
 
         return $startAt;

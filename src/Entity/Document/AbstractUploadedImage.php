@@ -35,10 +35,10 @@ abstract class AbstractUploadedImage implements \Stringable
     private ?string $mimeType = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $width = null;
+    private ?int $width;
 
     #[ORM\Column(nullable: true)]
-    private ?int $height = null;
+    private ?int $height;
 
     #[ORM\Column]
     private readonly \DateTimeImmutable $createdAt;
