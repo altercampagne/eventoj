@@ -51,7 +51,7 @@ final class ProfileUpdateFormTypeTest extends KernelTestCase
 
         $this->assertFormInvalid($this->form, [
             'diet' => 'Le régime alimentaire est obligatoire.',
-            'dietDetails' => 'Cette chaîne est trop longue. Elle doit avoir au maximum 255 caractères.',
+            'dietDetails' => 'Cette chaîne est trop longue. Elle doit contenir au maximum 255 caractères.',
         ]);
     }
 }

@@ -18,9 +18,7 @@ trait PersonTrait
 
     public function getAge(?\DateTimeInterface $atDate = null): int
     {
-        if (null === $atDate) {
-            $atDate = new \DateTimeImmutable();
-        }
+        $atDate ??= new \DateTimeImmutable();
 
         return $atDate->diff($this->birthDate)->y;
     }

@@ -32,7 +32,7 @@ return static function (ContainerConfigurator $container): void {
         ->exclude('../src/{DependencyInjection,Entity,Kernel.php}');
 
     $services->set(HelloassoClient::class)
-        ->factory([HelloassoClientFactory::class, 'create'])
+        ->factory(HelloassoClientFactory::create(...))
         ->arg('$clientId', env('HELLOASSO_CLIENT_ID'))
         ->arg('$clientSecret', env('HELLOASSO_CLIENT_SECRET'))
         ->arg('$organizationSlug', env('HELLOASSO_ORGANISATION_SLUG'))
