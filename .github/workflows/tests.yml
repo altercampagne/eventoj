@@ -18,15 +18,15 @@ jobs:
         # Set health checks to wait until postgres has started
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
-      minio:
-        image: minio/minio:edge-cicd
+      s3:
+        image: rustfs/rustfs
         env:
-          MINIO_ROOT_USER: MinIoUser
-          MINIO_ROOT_PASSWORD: ThisIsMinIoPassword
+          RUSTFS_ACCESS_KEY: S3User
+          RUSTFS_SECRET_KEY: ThisIsS3Password
         ports:
           - 9000:9000
         options: >-
-          --health-cmd "curl -f http://localhost:9000/minio/health/live"
+          --health-cmd "curl -f http://localhost:9000/health"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -37,8 +37,8 @@ jobs:
       DATABASE_HOST: localhost
       S3_ENDPOINT: http://localhost:9000
       AWS_ENDPOINT_URL: http://localhost:900
-      AWS_ACCESS_KEY_ID: MinIoUser
-      AWS_SECRET_ACCESS_KEY: ThisIsMinIoPassword
+      AWS_ACCESS_KEY_ID: S3User
+      AWS_SECRET_ACCESS_KEY: ThisIsS3Password
       AWS_DEFAULT_REGION: eu-west-1
 
     steps:
@@ -65,10 +65,10 @@ jobs:
       - name: Create database
         run: bin/reset-db
 
-      - name: Create S3 bucket on MinIo
+      - name: Create S3 bucket on RustFS
         env:
-          AWS_ACCESS_KEY_ID: MinIoUser
-          AWS_SECRET_ACCESS_KEY: ThisIsMinIoPassword
+          AWS_ACCESS_KEY_ID: S3User
+          AWS_SECRET_ACCESS_KEY: ThisIsS3Password
           AWS_DEFAULT_REGION: eu-west-1
         run: |
           aws --endpoint-url http://localhost:9000 s3 mb s3://local-bucket

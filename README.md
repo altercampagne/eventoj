@@ -25,4 +25,4 @@ All transactions are sync'ed with our accounting software (Paheko) which is avai
 ## Troubleshooting
 
 Image uploading
-In order to be able to upload images on minio, visit https://minio.eventoj.local & accept the self-signed certificate
+In order to be able to upload images on the local S3 (RustFS), visit https://s3.eventoj.local & accept the self-signed certificate

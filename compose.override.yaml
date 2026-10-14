@@ -16,39 +16,47 @@ services:
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
 ###< symfony/mailer ###
 
-  minio:
-    image: minio/minio
+  s3:
+    image: rustfs/rustfs
     environment:
-      MINIO_ROOT_USER: MinIoUser
-      MINIO_ROOT_PASSWORD: ThisIsMinIoPassword
+      RUSTFS_ACCESS_KEY: S3User
+      RUSTFS_SECRET_KEY: ThisIsS3Password
     ports:
       - 9000:9000
       - 9001:9001
-    command: server /data --console-address ":9001"
+    volumes:
+      - s3-data:/data
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
       interval: 5s
       timeout: 5s
       retries: 5
 
   # Create buckets at startup
-  minio-init:
-    image: minio/mc
+  s3-init:
+    image: amazon/aws-cli
     depends_on:
-      minio:
+      s3:
         condition: service_healthy
+    environment:
+      AWS_ACCESS_KEY_ID: S3User
+      AWS_SECRET_ACCESS_KEY: ThisIsS3Password
+      AWS_DEFAULT_REGION: eu-west-1
     entrypoint: >
       /bin/sh -c "
-        mc alias set local http://minio:9000 MinIoUser ThisIsMinIoPassword;
-        mc mb --ignore-existing local/local-bucket;
-        mc anonymous set download local/local-bucket;
+        until aws --endpoint-url http://s3:9000 s3api list-buckets >/dev/null 2>&1; do sleep 1; done;
+        aws --endpoint-url http://s3:9000 s3api head-bucket --bucket local-bucket 2>/dev/null || aws --endpoint-url http://s3:9000 s3 mb s3://local-bucket;
+        aws --endpoint-url http://s3:9000 s3api put-bucket-policy --bucket local-bucket --policy '{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":[\"*\"]},\"Action\":[\"s3:GetObject\"],\"Resource\":[\"arn:aws:s3:::local-bucket/*\"]}]}';
       "
 
   php:
     extra_hosts:
-      - "minio.eventoj.local:host-gateway"
+      - "s3.eventoj.local:host-gateway"
 
   nginx:
     volumes:
-      - ./.docker/nginx/minio.conf:/etc/nginx/conf.d/minio.conf
+      - ./.docker/nginx/s3.conf:/etc/nginx/conf.d/s3.conf
     command: [nginx-debug, '-g', 'daemon off;']
+
+volumes:
+  s3-data:

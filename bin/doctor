@@ -2,7 +2,7 @@
 
 CURDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-"$CURDIR/domain-checker" eventoj.local minio.eventoj.local
+"$CURDIR/domain-checker" eventoj.local s3.eventoj.local
 
 RETURN=$?
 
