@@ -968,7 +968,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         enabled?: bool|Param, // Default: false
  *     },
  *     html?: bool|array{
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *     },
  *     markdown?: bool|array{
  *         enabled?: bool|Param, // Default: false
@@ -1480,6 +1480,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * @psalm-type SymfonycastsSassConfig = array{
  *     root_sass?: list<scalar|Param|null>,
  *     binary?: scalar|Param|null, // The Sass binary to use // Default: null
+ *     search_for_binary?: scalar|Param|null, // Whether to search for the Sass binary in the system PATH // Default: true
  *     sass_options?: array{
  *         style?: "compressed"|"expanded"|Param, // The style of the generated CSS: compressed or expanded. // Default: "expanded"
  *         charset?: bool|Param, // Whether to include the charset declaration in the generated Sass.
@@ -1580,7 +1581,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     enable_garbage_collection?: bool|Param, // Enable/Disable automatic garbage collection. // Default: true
  * }
  * @psalm-type TwigComponentConfig = array{
- *     defaults?: array<string, Param|string|array{ // Default: ["__deprecated__use_old_naming_behavior"]
+ *     defaults?: array<string, Param|string|array{ // Default: []
  *         template_directory?: scalar|Param|null, // Default: "components"
  *         name_prefix?: scalar|Param|null, // Default: ""
  *     }>,
@@ -1589,7 +1590,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         enabled?: bool|Param, // Default: "%kernel.debug%"
  *         collect_components?: bool|Param, // Collect components instances // Default: true
  *     },
- *     controllers_json?: scalar|Param|null, // Deprecated: The "twig_component.controllers_json" config option is deprecated, and will be removed in 3.0. // Default: null
  * }
  * @psalm-type StimulusConfig = array{
  *     controller_paths?: list<scalar|Param|null>,
