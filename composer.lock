@@ -11684,16 +11684,16 @@
     "packages-dev": [
         {
             "name": "bab/tested-routes-checker-bundle",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/odolbeau/TestedRoutesCheckerBundle.git",
-                "reference": "7e2469214de4fbc7255ab20c02e8d8868f8c2a16"
+                "reference": "5e4d693b542cc33459e9ce591701efa27ac0ee31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/odolbeau/TestedRoutesCheckerBundle/zipball/7e2469214de4fbc7255ab20c02e8d8868f8c2a16",
-                "reference": "7e2469214de4fbc7255ab20c02e8d8868f8c2a16",
+                "url": "https://api.github.com/repos/odolbeau/TestedRoutesCheckerBundle/zipball/5e4d693b542cc33459e9ce591701efa27ac0ee31",
+                "reference": "5e4d693b542cc33459e9ce591701efa27ac0ee31",
                 "shasum": ""
             },
             "require": {
@@ -11722,9 +11722,9 @@
             "description": "A bundle to ensure all routes of a Symfony application have been tested",
             "support": {
                 "issues": "https://github.com/odolbeau/TestedRoutesCheckerBundle/issues",
-                "source": "https://github.com/odolbeau/TestedRoutesCheckerBundle/tree/v1.1.0"
+                "source": "https://github.com/odolbeau/TestedRoutesCheckerBundle/tree/v1.1.1"
             },
-            "time": "2026-10-04T10:45:36+00:00"
+            "time": "2026-10-20T07:59:53+00:00"
         },
         {
             "name": "dama/doctrine-test-bundle",
