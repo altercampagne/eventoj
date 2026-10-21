@@ -34,7 +34,10 @@ final readonly class PaymentRefundHandler
 
         if ($cancelRegistrationIfExists) {
             if (null !== $registration = $payment->getRegistration()) {
-                $registration->cancel();
+                if (!$registration->isCanceled()) {
+                    $registration->cancel();
+                }
+
                 $this->em->persist($registration);
             }
         }
