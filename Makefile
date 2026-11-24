@@ -99,7 +99,7 @@ sanitize-and-check: phpstan rector-fix cs-fix db-reset-test test ## Run Rector, 
 	$(DOCKER_COMPOSE) run --rm php composer dump-autoload --optimize --strict-psr --strict-ambiguous
 
 .PHONY: test
-test: ## Run all tests
+test: assets-build ## Run all tests
 	$(DOCKER_COMPOSE) run --rm php rm -f var/cache/bab_tested_routes_checker_bundle_route_storage
 	$(DOCKER_COMPOSE) run --rm php bin/phpunit
 	$(DOCKER_COMPOSE) run --rm php bin/console bab:tested-routes-checker:check
@@ -119,7 +119,7 @@ cs-lint: tools/php-cs-fixer/vendor tools/twig-cs-fixer/vendor ## Lint all files
 	$(DOCKER_COMPOSE) run --rm php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer lint
 
 .PHONY: cs-fix
-cs-fix: tools/php-cs-fixer/vendor ## Fix CS using PHP-CS
+cs-fix: tools/php-cs-fixer/vendor tools/twig-cs-fixer/vendor ## Fix CS using PHP-CS
 	$(DOCKER_COMPOSE) run --rm php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
 	$(DOCKER_COMPOSE) run --rm php tools/twig-cs-fixer/vendor/bin/twig-cs-fixer fix
 
