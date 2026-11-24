@@ -22,6 +22,10 @@ services:
   php:
     build:
       context: ./.docker/php
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+    environment:
+      HOME: /tmp
+      COMPOSER_HOME: /tmp/composer
     volumes:
       - .:/var/www
     depends_on:
@@ -30,6 +34,10 @@ services:
   sass-builder:
     build:
       context: ./.docker/php
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+    environment:
+      HOME: /tmp
+      COMPOSER_HOME: /tmp/composer
     volumes:
       - .:/var/www
     command: php bin/console sass:build --watch
