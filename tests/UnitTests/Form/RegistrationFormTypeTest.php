@@ -152,7 +152,9 @@ class RegistrationFormTypeTest extends KernelTestCase
     public function testValidFirstName(string $name): void
     {
         $form = $this->getForm();
+        // The other name is fixed: a random one could be identical to $name.
         $form->submit(array_merge($this->getValidFormData(), [
+            'lastName' => 'Foobar',
             'firstName' => $name,
         ]));
 
@@ -163,7 +165,9 @@ class RegistrationFormTypeTest extends KernelTestCase
     public function testValidLastName(string $name): void
     {
         $form = $this->getForm();
+        // The other name is fixed: a random one could be identical to $name.
         $form->submit(array_merge($this->getValidFormData(), [
+            'firstName' => 'Foobar',
             'lastName' => $name,
         ]));
 
