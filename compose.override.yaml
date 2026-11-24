@@ -41,7 +41,8 @@ services:
     environment:
       AWS_ACCESS_KEY_ID: S3User
       AWS_SECRET_ACCESS_KEY: ThisIsS3Password
-      AWS_DEFAULT_REGION: eu-west-1
+      # RustFS rejects a LocationConstraint different from its own region
+      AWS_DEFAULT_REGION: us-east-1
     entrypoint: >
       /bin/sh -c "
         until aws --endpoint-url http://s3:9000 s3api list-buckets >/dev/null 2>&1; do sleep 1; done;
