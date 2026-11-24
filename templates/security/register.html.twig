@@ -13,7 +13,7 @@
             <div class="col-12 col-md-10 col-lg-8">
                 {{ form_errors(registrationForm) }}
 
-                {{ form_start(registrationForm) }}
+                {{ form_start(registrationForm, {attr: {'data-controller': 'prevent-double-submit'}}) }}
                     <fieldset class="form-group border p-3 mt-3">
                         <legend class="w-auto px-2"><i class="fa-solid fa-id-card me-2"></i> Quelques informations te concernant</legend>
 

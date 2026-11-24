@@ -14,7 +14,7 @@
             <div class="col-12 col-sm-8 col-md-6 m-auto">
                 <h2 class="mb-3">Qui voyage ?</h2>
 
-                {{ form_start(form) }}
+                {{ form_start(form, {attr: {'data-controller': 'prevent-double-submit'}}) }}
                 <ul class="list-group">
                     <li class="list-group-item d-flex align-items-center">
                         <input class="form-check-input" type="checkbox" name="self" checked disabled />
