@@ -57,7 +57,7 @@ class UploadedImageType extends AbstractType
         $builder
             ->addModelTransformer(new CallbackTransformer(
                 static function (?UploadedImage $uploadedImage): ?string {
-                    if (null === $uploadedImage) {
+                    if (!$uploadedImage instanceof UploadedImage) {
                         return null;
                     }
 

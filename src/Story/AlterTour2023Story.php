@@ -115,7 +115,7 @@ final class AlterTour2023Story extends Story
     {
         yield [
             'name' => 'Le champ des possibles',
-            'description' => '<div>08h00 - 09h00 : Réveil, petit déjeuner<br>09h00 - 12h00 : Activités avec les accueillant·es<br>12h00 - 14h00 : Repas<br>14h00 - 16h00 : Activités libres, accueil des nouvelleaux<br>16h00 - 17h00 : Présentation de la journée du lendemain et répartition des rôles<br>17h00 - 18h00 : Temps de présentation du collectif du Champ des possibles et de l\'AlterTour<br>18h00 - 20h00 : Concert de Yves Vessiere<br>20h00 - 22h00 : Repas',
+            'description' => "<div>08h00 - 09h00 : Réveil, petit déjeuner<br>09h00 - 12h00 : Activités avec les accueillant·es<br>12h00 - 14h00 : Repas<br>14h00 - 16h00 : Activités libres, accueil des nouvelleaux<br>16h00 - 17h00 : Présentation de la journée du lendemain et répartition des rôles<br>17h00 - 18h00 : Temps de présentation du collectif du Champ des possibles et de l'AlterTour<br>18h00 - 20h00 : Concert de Yves Vessiere<br>20h00 - 22h00 : Repas",
             'alternatives' => ['le-champ-des-possibles'],
         ];
         yield [
@@ -299,12 +299,12 @@ final class AlterTour2023Story extends Story
             'alternatives' => ['revis', 'sous-la-cote'],
         ];
         yield [
-            'name' => 'Sous la côte / Ferme d\'Uzelle',
+            'name' => "Sous la côte / Ferme d'Uzelle",
             'description' => 'A COMPLETER',
             'alternatives' => ['sous-la-cote', 'ferme-d-uzelle'],
         ];
         yield [
-            'name' => 'Sous la côte / Ferme d\'Uzelle',
+            'name' => "Sous la côte / Ferme d'Uzelle",
             'description' => 'A COMPLETER',
             'alternatives' => ['sous-la-cote', 'ferme-d-uzelle'],
         ];

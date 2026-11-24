@@ -50,7 +50,7 @@ class EventRegistrationDTO
             $this->stageStart = $stageRegistration->getStage();
             $this->firstMeal = $stageRegistration->getFirstMeal();
         } else {
-            if (null === $stageStart = $registration->getEvent()->getNextComingStage()) {
+            if (!($stageStart = $registration->getEvent()->getNextComingStage()) instanceof Stage) {
                 throw new \RuntimeException('Cannot register to an event without coming stages');
             }
 
@@ -123,7 +123,7 @@ class EventRegistrationDTO
     public function validateNeededBike(ExecutionContextInterface $context, mixed $payload): void
     {
         if ($this->neededBike > \count($this->companions) + 1) {
-            $context->buildViolation('Plus d\'un vélo par personne, ça fait beaucoup ! 🤯')
+            $context->buildViolation("Plus d'un vélo par personne, ça fait beaucoup ! 🤯")
                 ->atPath('neededBike')
                 ->addViolation();
         }
@@ -148,12 +148,12 @@ class EventRegistrationDTO
             return;
         }
 
-        if (null === $this->stageStart || null === $this->stageEnd) {
+        if (!$this->stageStart instanceof Stage || !$this->stageEnd instanceof Stage) {
             return;
         }
 
         if ($this->countMeals() < 3) {
-            $context->buildViolation('Pour participer à l\'AlterTour, ton inscription doit inclure au minimum 3 repas.')
+            $context->buildViolation("Pour participer à l'AlterTour, ton inscription doit inclure au minimum 3 repas.")
                 ->addViolation();
         }
     }
@@ -161,13 +161,13 @@ class EventRegistrationDTO
     #[Assert\Callback(groups: ['choose_dates'])]
     public function validatePeriod(ExecutionContextInterface $context, mixed $payload): void
     {
-        if (null === $this->stageStart || null === $this->stageEnd) {
+        if (!$this->stageStart instanceof Stage || !$this->stageEnd instanceof Stage) {
             return;
         }
 
         $now = new \DateTimeImmutable();
         if ($this->stageStart->getDate() < $now) {
-            $context->buildViolation('Cette date d\'arrivée est dans le passé.')
+            $context->buildViolation("Cette date d'arrivée est dans le passé.")
                 ->atPath('stageStart')
                 ->addViolation();
         }
@@ -179,16 +179,16 @@ class EventRegistrationDTO
         }
 
         if ($this->stageEnd->getDate() < $this->stageStart->getDate()) {
-            $context->buildViolation('Tu ne peux pas repartir avant même d\'être arrivé.')
+            $context->buildViolation("Tu ne peux pas repartir avant même d'être arrivé.")
                 ->addViolation();
         }
 
         if ($this->stageStart === $this->stageEnd) {
             if (Meal::LUNCH === $this->firstMeal && Meal::BREAKFAST === $this->lastMeal) {
-                $context->buildViolation('Tu ne peux pas repartir avant même d\'être arrivé.')
+                $context->buildViolation("Tu ne peux pas repartir avant même d'être arrivé.")
                     ->addViolation();
             } elseif (Meal::DINNER === $this->firstMeal && Meal::DINNER !== $this->lastMeal) {
-                $context->buildViolation('Tu ne peux pas repartir avant même d\'être arrivé.')
+                $context->buildViolation("Tu ne peux pas repartir avant même d'être arrivé.")
                     ->addViolation();
             }
         }
@@ -212,7 +212,7 @@ class EventRegistrationDTO
                 }
 
                 if (!$mealAvailability->isEnoughForRegistration($this->registration)) {
-                    $context->buildViolation('Il n\'y a pas assez de disponibilités sur la période sélectionnée.')
+                    $context->buildViolation("Il n'y a pas assez de disponibilités sur la période sélectionnée.")
                             ->addViolation();
 
                     return;

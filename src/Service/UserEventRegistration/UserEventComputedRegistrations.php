@@ -56,7 +56,7 @@ final readonly class UserEventComputedRegistrations
                 continue;
             }
 
-            if (null !== $meal && !$stageRegistration->includesMeal($meal)) {
+            if ($meal instanceof Meal && !$stageRegistration->includesMeal($meal)) {
                 continue;
             }
 

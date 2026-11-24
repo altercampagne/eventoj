@@ -14,7 +14,7 @@ class LoginController extends AbstractController
 {
     public function __invoke(AuthenticationUtils $authenticationUtils): Response
     {
-        if (null !== $this->getUser()) {
+        if ($this->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             return $this->redirectToRoute('profile_homepage');
         }
 

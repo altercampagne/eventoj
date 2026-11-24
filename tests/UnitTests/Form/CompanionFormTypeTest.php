@@ -55,9 +55,9 @@ class CompanionFormTypeTest extends KernelTestCase
         ]);
 
         $this->assertFormInvalid($this->form, [
-            'firstName' => 'Cette chaîne n\'est pas autorisée.',
+            'firstName' => "Cette chaîne n'est pas autorisée.",
             'birthDate' => 'Une date de naissance dans le futur, ça ne va pas être possible !',
-            'phoneNumber' => 'Cette valeur n\'est pas un numéro de téléphone valide.',
+            'phoneNumber' => "Cette valeur n'est pas un numéro de téléphone valide.",
             'diet' => 'Le choix sélectionné est invalide.',
         ]);
     }

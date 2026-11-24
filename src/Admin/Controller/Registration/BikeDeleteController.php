@@ -25,7 +25,7 @@ class BikeDeleteController extends AbstractController
     public function __invoke(Registration $registration): Response
     {
         if ($registration->getNeededBike() <= 0) {
-            $this->addFlash('danger', 'Il n\'y a pas de vélo de prêt à supprimer pour cette inscription.');
+            $this->addFlash('danger', "Il n'y a pas de vélo de prêt à supprimer pour cette inscription.");
 
             return $this->redirectToRoute('admin_registration_show', ['id' => $registration->getId()]);
         }

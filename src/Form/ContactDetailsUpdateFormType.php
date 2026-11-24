@@ -63,7 +63,7 @@ class ContactDetailsUpdateFormType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'help' => 'C\'est le nom qui sera visible publiquement, n\'hésite pas à utiliser ton petit surnom !',
+                'help' => "C'est le nom qui sera visible publiquement, n'hésite pas à utiliser ton petit surnom !",
             ])
             ->add('birthDate', BirthdayType::class, [
                 'required' => true,

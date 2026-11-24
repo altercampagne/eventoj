@@ -23,7 +23,7 @@ class QuestionCRUDTest extends WebTestCase
         $client->request('GET', '/_admin/questions/create');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Création d\'une question');
+        $this->assertSelectorTextContains('h1', "Création d'une question");
 
         $client->submitForm('Ajouter', [
             'question_form[question]' => 'Quelle est la réponse ?',
@@ -51,7 +51,7 @@ class QuestionCRUDTest extends WebTestCase
         $this->assertRouteSame('admin_question_show');
         $this->assertSelectorTextContains('.alert-success', 'La question a bien été modifiée ! 🥳');
 
-        $client->submitForm('J\'ai bien compris et je confirme la suppression définitive', []);
+        $client->submitForm("J'ai bien compris et je confirme la suppression définitive", []);
         $this->assertResponseRedirects();
         $client->followRedirect();
         $this->assertResponseIsSuccessful();

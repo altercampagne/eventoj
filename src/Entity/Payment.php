@@ -98,7 +98,7 @@ class Payment
         $this->createdAt = new \DateTimeImmutable();
         $this->memberships = new ArrayCollection();
 
-        if (null !== $registration) {
+        if ($registration instanceof Registration) {
             $registration->addPayment($this);
         }
     }
@@ -187,7 +187,7 @@ class Payment
      */
     public function getRegistrationOnlyAmount(): int
     {
-        if (null === $this->registration) {
+        if (!$this->registration instanceof Registration) {
             return 0;
         }
 

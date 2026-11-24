@@ -52,7 +52,7 @@ class BikeAddController extends AbstractController
         $this->em->persist($registration);
         $this->em->flush();
 
-        $this->addFlash('success', 'Un vélo a été ajouté à l\'inscription.');
+        $this->addFlash('success', "Un vélo a été ajouté à l'inscription.");
 
         return $this->redirectToRoute('admin_registration_show', ['id' => $registration->getId()]);
     }

@@ -26,7 +26,7 @@ final readonly class ImageStorageManipulator
                 'Key' => $image->getPath(),
             ]);
         } catch (S3Exception $e) {
-            if (null === $previous = $e->getPrevious()) {
+            if (!($previous = $e->getPrevious()) instanceof \Throwable) {
                 throw $e;
             }
 

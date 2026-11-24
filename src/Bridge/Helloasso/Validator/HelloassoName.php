@@ -17,7 +17,7 @@ class HelloassoName extends Constraint
 
     public string $noVowelMessage = 'Cette chaîne ne semble pas valide.';
 
-    public string $forbiddenValueMessage = 'Cette chaîne n\'est pas autorisée.';
+    public string $forbiddenValueMessage = "Cette chaîne n'est pas autorisée.";
 
     public string $forbiddenSpecialCharactersMessage = 'Cette chaîne contient des caractères spéciaux non autorisés.';
 }

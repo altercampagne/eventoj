@@ -48,7 +48,7 @@ final class DetailsFormDTO
     public function validateNeededBike(ExecutionContextInterface $context): void
     {
         if ($this->bikes > \count($this->companions) + 1) {
-            $context->buildViolation('Plus d\'un vélo par personne, ça fait beaucoup ! 🤯')
+            $context->buildViolation("Plus d'un vélo par personne, ça fait beaucoup ! 🤯")
                 ->atPath('bikes')
                 ->addViolation();
         }
@@ -60,8 +60,8 @@ final class DetailsFormDTO
         $firstStage = $this->event->getFirstStage();
         $lastStage = $this->event->getLastStage();
 
-        \assert(null !== $firstStage);
-        \assert(null !== $lastStage);
+        \assert($firstStage instanceof \App\Entity\Stage);
+        \assert($lastStage instanceof \App\Entity\Stage);
 
         $eventStart = $firstStage->getDate();
         $eventEnd = $lastStage->getDate();

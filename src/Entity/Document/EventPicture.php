@@ -62,6 +62,6 @@ class EventPicture extends AbstractUploadedImage
 
     public function existenceHaveBeenCheched(): bool
     {
-        return null !== $this->existsOnRemoteStorageAt;
+        return $this->existsOnRemoteStorageAt instanceof \DateTimeImmutable;
     }
 }

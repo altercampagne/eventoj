@@ -65,7 +65,7 @@ final class MealAggregator
     private function addPersonForMeal(User|Companion $person, string $stageName, Meal $meal, array &$overview): void
     {
         ++$overview[$stageName]['meals'][$meal->value]['total'];
-        if (null === $person->getDiet()) {
+        if (!$person->getDiet() instanceof Diet) {
             return;
         }
 

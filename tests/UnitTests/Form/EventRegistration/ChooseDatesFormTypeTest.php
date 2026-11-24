@@ -74,7 +74,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
         ]);
 
         $this->assertFormInvalid($this->form, [
-            'choose_dates_form' => 'Tu ne peux pas repartir avant même d\'être arrivé.',
+            'choose_dates_form' => "Tu ne peux pas repartir avant même d'être arrivé.",
         ]);
     }
 
@@ -97,7 +97,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
         ]);
 
         $this->assertFormInvalid($this->form, [
-            'choose_dates_form' => 'Il n\'y a pas assez de disponibilités sur la période sélectionnée.',
+            'choose_dates_form' => "Il n'y a pas assez de disponibilités sur la période sélectionnée.",
         ]);
     }
 
@@ -120,7 +120,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
         ]);
 
         $this->assertFormInvalid($this->form, [
-            'choose_dates_form' => 'Il n\'y a pas assez de disponibilités sur la période sélectionnée.',
+            'choose_dates_form' => "Il n'y a pas assez de disponibilités sur la période sélectionnée.",
         ]);
     }
 
@@ -138,7 +138,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
         ]);
 
         $this->assertFormInvalid($this->form, [
-            'choose_dates_form' => 'Il n\'y a pas assez de disponibilités sur la période sélectionnée.',
+            'choose_dates_form' => "Il n'y a pas assez de disponibilités sur la période sélectionnée.",
         ]);
     }
 
@@ -155,7 +155,7 @@ class ChooseDatesFormTypeTest extends KernelTestCase
         ]);
 
         $this->assertFormInvalid($this->form, [
-            'choose_dates_form' => 'Pour participer à l\'AlterTour, ton inscription doit inclure au minimum 3 repas.',
+            'choose_dates_form' => "Pour participer à l'AlterTour, ton inscription doit inclure au minimum 3 repas.",
         ]);
     }
 

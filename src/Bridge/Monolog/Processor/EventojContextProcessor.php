@@ -17,7 +17,7 @@ final readonly class EventojContextProcessor implements ProcessorInterface
 
     public function __invoke(LogRecord $record): LogRecord
     {
-        if (null !== $user = $this->security->getUser()) {
+        if (($user = $this->security->getUser()) instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             $record->extra['current_user_identifier'] = $user->getUserIdentifier();
         }
 

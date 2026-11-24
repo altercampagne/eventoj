@@ -33,7 +33,7 @@ final readonly class PaymentRefundHandler
         $this->em->persist($payment);
 
         if ($cancelRegistrationIfExists) {
-            if (null !== $registration = $payment->getRegistration()) {
+            if (($registration = $payment->getRegistration()) instanceof \App\Entity\Registration) {
                 if (!$registration->isCanceled()) {
                     $registration->cancel();
                 }
@@ -63,7 +63,7 @@ final readonly class PaymentRefundHandler
         }
 
         $checkoutIntent = $this->helloassoClient->checkout->retrieve((int) $payment->getHelloassoCheckoutIntentId());
-        if (null === $order = $checkoutIntent->getOrder()) {
+        if (!($order = $checkoutIntent->getOrder()) instanceof \Helloasso\Models\Statistics\OrderDetail) {
             $this->logger->debug('Found a payment which is validated in DB but which do not have an order on Helloasso!', [
                 'payment' => $payment,
             ]);

@@ -43,7 +43,7 @@ final readonly class PaymentSuccessfulHandler
             $this->em->persist($membership);
         }
 
-        if (null !== $registration = $payment->getRegistration()) {
+        if (($registration = $payment->getRegistration()) instanceof \App\Entity\Registration) {
             if (!$registration->isConfirmed()) {
                 $registration->confirm();
             }

@@ -61,7 +61,7 @@ class ChoosePeopleFormTypeTest extends KernelTestCase
         ]);
 
         $this->assertFormInvalid($this->form, [
-            'neededBike' => 'Plus d\'un vélo par personne, ça fait beaucoup ! 🤯',
+            'neededBike' => "Plus d'un vélo par personne, ça fait beaucoup ! 🤯",
         ]);
     }
 }

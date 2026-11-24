@@ -94,7 +94,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         // yield ['lastName', null, 'Cette valeur ne doit pas être vide.'];
 
         yield ['plainPassword', 'bla', 'Ton mot de passe doit faire au moins 7 caractères.'];
-        yield ['birthDate', new \DateTimeImmutable('-10 years')->format('Y-m-d'), 'Tu dois être majeur pour pouvoir t\'inscrire.'];
+        yield ['birthDate', new \DateTimeImmutable('-10 years')->format('Y-m-d'), "Tu dois être majeur pour pouvoir t'inscrire."];
         yield ['birthDate', new \DateTimeImmutable('-130 years')->format('Y-m-d'), 'Une vraie date de naissance, ce serait mieux ! :)'];
     }
 
@@ -129,20 +129,20 @@ class RegistrationFormTypeTest extends KernelTestCase
         yield ['PsDVll', 'Cette chaîne ne semble pas valide.'];
 
         // Forbidden values
-        yield ['firstname', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['lastname', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['unknown', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['first_name', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['last_name', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['anonyme', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['user', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['admin', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['name', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['nom', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['prénom', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['test', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['firsTNAme', 'Cette chaîne n\'est pas autorisée.'];
-        yield ['Lastname', 'Cette chaîne n\'est pas autorisée.'];
+        yield ['firstname', "Cette chaîne n'est pas autorisée."];
+        yield ['lastname', "Cette chaîne n'est pas autorisée."];
+        yield ['unknown', "Cette chaîne n'est pas autorisée."];
+        yield ['first_name', "Cette chaîne n'est pas autorisée."];
+        yield ['last_name', "Cette chaîne n'est pas autorisée."];
+        yield ['anonyme', "Cette chaîne n'est pas autorisée."];
+        yield ['user', "Cette chaîne n'est pas autorisée."];
+        yield ['admin', "Cette chaîne n'est pas autorisée."];
+        yield ['name', "Cette chaîne n'est pas autorisée."];
+        yield ['nom', "Cette chaîne n'est pas autorisée."];
+        yield ['prénom', "Cette chaîne n'est pas autorisée."];
+        yield ['test', "Cette chaîne n'est pas autorisée."];
+        yield ['firsTNAme', "Cette chaîne n'est pas autorisée."];
+        yield ['Lastname', "Cette chaîne n'est pas autorisée."];
 
         // Valid name but not accepted by helloasso (yet!)
         yield ['last--name', 'Cette chaîne contient des caractères spéciaux non autorisés.'];
@@ -184,7 +184,7 @@ class RegistrationFormTypeTest extends KernelTestCase
         yield ['Loïc'];
         yield ['éàïöôè'];
         yield ['Pierre-Emmanuel'];
-        yield ['D\'Ouis-Pinçon'];
+        yield ["D'Ouis-Pinçon"];
         yield ['Le Roy'];
     }
 

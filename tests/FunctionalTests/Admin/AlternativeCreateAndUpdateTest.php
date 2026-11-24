@@ -24,7 +24,7 @@ class AlternativeCreateAndUpdateTest extends WebTestCase
         $crawler = $client->request('GET', '/_admin/alternatives/create');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Création d\'une alternative');
+        $this->assertSelectorTextContains('h1', "Création d'une alternative");
 
         $form = $crawler->selectButton('Ajouter')->form();
         /* @phpstan-ignore-next-line */
@@ -46,7 +46,7 @@ class AlternativeCreateAndUpdateTest extends WebTestCase
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('admin_alternative_show');
-        $this->assertSelectorTextContains('.alert-success', 'L\'alternative a bien été créée ! 🥳');
+        $this->assertSelectorTextContains('.alert-success', "L'alternative a bien été créée ! 🥳");
 
         $client->clickLink("Modifier l'alternative");
         $this->assertResponseIsSuccessful();
@@ -60,6 +60,6 @@ class AlternativeCreateAndUpdateTest extends WebTestCase
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('admin_alternative_show');
-        $this->assertSelectorTextContains('.alert-success', 'L\'alternative a bien été modifiée ! 🥳');
+        $this->assertSelectorTextContains('.alert-success', "L'alternative a bien été modifiée ! 🥳");
     }
 }

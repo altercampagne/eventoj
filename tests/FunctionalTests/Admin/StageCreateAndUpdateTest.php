@@ -25,7 +25,7 @@ class StageCreateAndUpdateTest extends WebTestCase
         $client->request('GET', '/_admin/stages/create/'.$event->getSlug());
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Création d\'une étape pour '.$event->getName());
+        $this->assertSelectorTextContains('h1', "Création d'une étape pour ".$event->getName());
 
         $client->submitForm('Ajouter', [
             'stage_form[type]' => 'before',
@@ -39,13 +39,13 @@ class StageCreateAndUpdateTest extends WebTestCase
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('admin_stage_show');
-        $this->assertSelectorTextContains('.alert-success', 'L\'étape a bien été créée ! 🥳');
+        $this->assertSelectorTextContains('.alert-success', "L'étape a bien été créée ! 🥳");
 
         $client->request('GET', '/_admin/stages/etape-de-test/update');
         $this->assertResponseIsSuccessful();
 
         $client->submitForm('Modifier', [
-            'stage_form[name]' => 'Nouveau nom d\'étape',
+            'stage_form[name]' => "Nouveau nom d'étape",
         ]);
 
         $this->assertSelectorNotExists('.invalid-feedback', 'Form contains errors');
@@ -53,6 +53,6 @@ class StageCreateAndUpdateTest extends WebTestCase
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('admin_stage_show');
-        $this->assertSelectorTextContains('.alert-success', 'L\'étape a bien été modifiée ! 🥳');
+        $this->assertSelectorTextContains('.alert-success', "L'étape a bien été modifiée ! 🥳");
     }
 }

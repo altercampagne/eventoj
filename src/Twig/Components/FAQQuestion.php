@@ -24,13 +24,13 @@ final class FAQQuestion
 
     public function getQuestion(): Question
     {
-        if (null !== $this->question) {
+        if ($this->question instanceof Question) {
             return $this->question;
         }
 
         $this->question = $this->em->getRepository(Question::class)->findOneBySlug($this->slug);
 
-        if (null === $this->question) {
+        if (!$this->question instanceof Question) {
             throw new \RuntimeException("Question {$this->slug} is not found.");
         }
 

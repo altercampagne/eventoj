@@ -55,7 +55,7 @@ class ProfileMembershipsTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Tes adhésions');
         $this->assertSelectorTextContains('.alert-danger', "Tu n'es actuellement pas membre de l'association.");
 
-        $client->submitForm('Adhérer à l\'association');
+        $client->submitForm("Adhérer à l'association");
 
         // Redirection fails because we're not in https in tests
         // $this->assertResponseRedirects();

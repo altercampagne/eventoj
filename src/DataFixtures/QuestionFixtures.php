@@ -18,13 +18,13 @@ class QuestionFixtures extends Fixture
             [
                 'category' => QuestionCategory::GLOSSARY,
                 'question' => "Qu'est-ce qu'un AlterTour ?",
-                'answer' => '<div>L\'AlterTour (ou AT) est <strong>un tour participatif à vélo à la rencontre d\'alternatives</strong>.&nbsp;</div><div><br></div><div>Il est accessible sans condition d\'âge ou de niveau sportif, <strong>deux véhicules motorisés nous secondent</strong> pour transporter le matériel logistique (nourriture, cuisine, hygiène ...), vélos et altercyclistes fatigués.&nbsp;</div><div><br>C\'est <strong>un évènement participatif</strong> car chacun·e prend part aux tâches quotidiennes, chacun·e est invité à partager ses talents et chacun·e peut donner son avis et prendre part aux décisions.</div>',
+                'answer' => "<div>L'AlterTour (ou AT) est <strong>un tour participatif à vélo à la rencontre d'alternatives</strong>.&nbsp;</div><div><br></div><div>Il est accessible sans condition d'âge ou de niveau sportif, <strong>deux véhicules motorisés nous secondent</strong> pour transporter le matériel logistique (nourriture, cuisine, hygiène ...), vélos et altercyclistes fatigués.&nbsp;</div><div><br>C'est <strong>un évènement participatif</strong> car chacun·e prend part aux tâches quotidiennes, chacun·e est invité à partager ses talents et chacun·e peut donner son avis et prendre part aux décisions.</div>",
                 'slug' => 'quest-ce-quun-altertour',
             ],
             [
                 'category' => QuestionCategory::GLOSSARY,
-                'question' => 'Qu\'est-ce qu\'une Échappé Belle ?',
-                'answer' => '<div>Une échappée belle est un évènement un peu différent de l\'AlterTour.</div>',
+                'question' => "Qu'est-ce qu'une Échappé Belle ?",
+                'answer' => "<div>Une échappée belle est un évènement un peu différent de l'AlterTour.</div>",
                 'slug' => 'quest-ce-quune-echappe-belle',
             ],
             [
@@ -35,19 +35,19 @@ class QuestionFixtures extends Fixture
             ],
             [
                 'category' => QuestionCategory::GLOSSARY,
-                'question' => 'Qu\'est-ce qu\'un BièreTour ?',
+                'question' => "Qu'est-ce qu'un BièreTour ?",
                 'answer' => '<div>Un BièreTour, ...</div>',
                 'slug' => 'quest-ce-quun-bieretour',
             ],
             [
                 'category' => QuestionCategory::PRICE,
-                'question' => 'Pourquoi adhérer à l\'association ?',
-                'answer' => '<div>Adhérer c\'est top !</div>',
+                'question' => "Pourquoi adhérer à l'association ?",
+                'answer' => "<div>Adhérer c'est top !</div>",
                 'slug' => 'pourquoi-adherer-a-lassociation',
             ],
             [
                 'category' => QuestionCategory::STAGES,
-                'question' => 'Comment est déterminée la difficulté d\'une étape ?',
+                'question' => "Comment est déterminée la difficulté d'une étape ?",
                 'answer' => '<div>Explications détaillées ici</div>',
                 'slug' => 'comment-est-determinee-la-difficulte-dune-etape',
             ],

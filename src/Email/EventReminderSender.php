@@ -28,7 +28,7 @@ class EventReminderSender
         $email = new TemplatedEmail()
             ->from(new Address('contact@altercampagne.net', 'Altercampagne'))
             ->to(new Address($registration->getUser()->getEmail(), $registration->getUser()->getFullName()))
-            ->subject('C\'est bientôt l\'heure du départ ! 🥳🚲')
+            ->subject("C'est bientôt l'heure du départ ! 🥳🚲")
             ->htmlTemplate('emails/event_reminder.html.twig')
             ->context([
                 'member_display_name' => $registration->getUser()->getPublicName(),

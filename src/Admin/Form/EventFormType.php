@@ -33,13 +33,13 @@ class EventFormType extends AbstractType
                 'type' => UploadedImageTypeEnum::EVENT,
                 'prefix' => \sprintf('%s-%s', $event->getType()->value, $event->getId()),
                 'label' => false,
-                'help' => 'Merci de choisir une image <b>carrée</b> et de dimensions respectables (600 x 600 minimum). Ce n\'est pas grave si l\'image est un peu lourde, ce sera automagiquement optimisé ! 👌',
+                'help' => "Merci de choisir une image <b>carrée</b> et de dimensions respectables (600 x 600 minimum). Ce n'est pas grave si l'image est un peu lourde, ce sera automagiquement optimisé ! 👌",
                 'help_html' => true,
             ])
             ->add('name', TextType::class, [
-                'label' => 'Nom de l\'évènement',
+                'label' => "Nom de l'évènement",
                 'attr' => [
-                    'placeholder' => 'Nom de l\'évènement',
+                    'placeholder' => "Nom de l'évènement",
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
@@ -47,15 +47,15 @@ class EventFormType extends AbstractType
                 'help' => 'Choisir quelque de simple et court type "AlterTour 2042", "Échappée Belle féministe 2031", ...',
             ])
             ->add('description', TrixType::class, [
-                'label' => 'Description de l\'évènement',
+                'label' => "Description de l'évènement",
                 'attr' => [
-                    'placeholder' => 'Description de l\'évènement',
+                    'placeholder' => "Description de l'évènement",
                     'style' => 'height: 100px',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'help' => 'Ne pas indiquer de dates ou de jauge de capacité, c\'est inutile ! :)',
+                'help' => "Ne pas indiquer de dates ou de jauge de capacité, c'est inutile ! :)",
             ])
             ->add('openingDateForBookings', DateTimeType::class, [
                 'label' => 'Ouverture des réservations',
@@ -121,13 +121,13 @@ class EventFormType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'help' => 'Si une personne reste plus que ce nombre de jours, le prix des jours suivants sera automatiquement fixé au prix d\'équilibre',
+                'help' => "Si une personne reste plus que ce nombre de jours, le prix des jours suivants sera automatiquement fixé au prix d'équilibre",
             ])
             ->add('breakEvenPricePerDay', MoneyType::class, [
                 'currency' => false,
-                'label' => 'Prix d\'équilibre',
+                'label' => "Prix d'équilibre",
                 'attr' => [
-                    'placeholder' => 'Prix d\'équilibre',
+                    'placeholder' => "Prix d'équilibre",
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
@@ -176,7 +176,7 @@ class EventFormType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'help' => 'Généralement un Google doc pour permettre aux personnes qui ne viennent plus d\'échanger / de revendre leurs places. Si aucun fichier n\'est renseigné, l\'évènement pourra tout de même être publié mais la bourse aux échanges ne sera pas suggérée sur le site.',
+                'help' => "Généralement un Google doc pour permettre aux personnes qui ne viennent plus d'échanger / de revendre leurs places. Si aucun fichier n'est renseigné, l'évènement pourra tout de même être publié mais la bourse aux échanges ne sera pas suggérée sur le site.",
                 'default_protocol' => null,
             ])
             ->add('phoneNumber', TextType::class, [
@@ -188,7 +188,7 @@ class EventFormType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'help' => 'Si renseigné, ce numéro remplacera le numéro habituel de l\'association dans le mail de rappel envoyé aux participant·es avant le départ.',
+                'help' => "Si renseigné, ce numéro remplacera le numéro habituel de l'association dans le mail de rappel envoyé aux participant·es avant le départ.",
             ])
         ;
     }

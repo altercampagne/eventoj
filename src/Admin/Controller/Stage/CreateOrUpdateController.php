@@ -31,7 +31,7 @@ final class CreateOrUpdateController extends AbstractController
         Event $event,
     ): Response {
         $stage = new Stage($event);
-        if (null !== $lastStage = $event->getLastStage()) {
+        if (($lastStage = $event->getLastStage()) instanceof Stage) {
             $stage->setDate($lastStage->getDate()->modify('+1 day'));
         }
 
@@ -59,7 +59,7 @@ final class CreateOrUpdateController extends AbstractController
             $this->em->persist($stage);
             $this->em->flush();
 
-            $this->addFlash('success', \sprintf('L\'étape a bien été %s ! 🥳', $creation ? 'créée' : 'modifiée'));
+            $this->addFlash('success', \sprintf("L'étape a bien été %s ! 🥳", $creation ? 'créée' : 'modifiée'));
 
             if ($backToStage) {
                 return $this->redirectToRoute('event_stage_show', ['event_slug' => $stage->getEvent()->getSlug(), 'stage_slug' => $stage->getSlug()]);

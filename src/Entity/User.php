@@ -58,7 +58,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Located
     private ?string $publicName = null;
 
     #[Assert\NotBlank]
-    #[Assert\LessThan('-18 years', message: 'Tu dois être majeur pour pouvoir t\'inscrire.')]
+    #[Assert\LessThan('-18 years', message: "Tu dois être majeur pour pouvoir t'inscrire.")]
     #[Assert\GreaterThan('-125 years', message: 'Une vraie date de naissance, ce serait mieux ! :)')]
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private \DateTimeImmutable $birthDate;

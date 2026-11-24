@@ -72,7 +72,7 @@ final readonly class PaymentSynchronizer
             return false;
         }
 
-        if (null === $registration = $payment->getRegistration()) {
+        if (!($registration = $payment->getRegistration()) instanceof \App\Entity\Registration) {
             return true;
         }
 
@@ -89,7 +89,7 @@ final readonly class PaymentSynchronizer
 
     private function syncPayment(Payment $payment): void
     {
-        if (null === $payment->getApprovedAt()) {
+        if (!$payment->getApprovedAt() instanceof \DateTimeImmutable) {
             return;
         }
 
@@ -143,7 +143,7 @@ final readonly class PaymentSynchronizer
     private function getPaymentData(Payment $payment): array
     {
         $lines = [];
-        if (null !== $registration = $payment->getRegistration()) {
+        if (($registration = $payment->getRegistration()) instanceof \App\Entity\Registration) {
             $event = $registration->getEvent();
             $mainLabel = "{$payment->getPayer()->getFullname()} pour {$event->getName()}";
             $label = $registration->countPeople() > 1 ? 'Inscriptions' : 'Inscription';
@@ -219,7 +219,7 @@ final readonly class PaymentSynchronizer
         $lines = [];
         $mainLabel = "Remboursement {$payment->getPayer()->getFullname()}";
 
-        if (null !== $registration = $payment->getRegistration()) {
+        if (($registration = $payment->getRegistration()) instanceof \App\Entity\Registration) {
             $event = $registration->getEvent();
 
             $mainLabel .= " pour {$event->getName()}";

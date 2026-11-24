@@ -30,7 +30,7 @@ final readonly class BillCreator
 
     public function getPriceForPerson(User|Companion $person, Registration $registration): Price
     {
-        if (null === $firstStageRegistration = $registration->getStageRegistrationStart()) {
+        if (!($firstStageRegistration = $registration->getStageRegistrationStart()) instanceof \App\Entity\StageRegistration) {
             throw new \RuntimeException('Given registration does not contains any stage!');
         }
 

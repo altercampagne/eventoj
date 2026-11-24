@@ -76,7 +76,7 @@ enum AlternativeCategory: string implements TranslatableInterface
             self::UrbanDevelopment => 'Aménagements et projets urbains',
             self::Transport => 'Modes de déplacement',
             self::ZeroWaste => 'Fabriquer, réparer, zéro déchets',
-            self::AlternativeTradingSystems => 'Systèmes d\'échange alternatifs',
+            self::AlternativeTradingSystems => "Systèmes d'échange alternatifs",
             self::EthicalInvestment => 'Finance éthique',
             self::ProducersSuppliers => 'Producteurs, fournisseurs',
             self::Shops => 'Magasins, commerces',

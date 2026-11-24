@@ -57,20 +57,20 @@ class PaymentCallbackController extends AbstractController
                 'code' => $code,
             ]);
 
-            $this->addFlash('danger', 'Le paiement a été refusé et ton inscription n\'a pas pu être validée.');
+            $this->addFlash('danger', "Le paiement a été refusé et ton inscription n'a pas pu être validée.");
 
             return $this->fail($payment);
         }
 
-        if (null === $order = $this->paymentHandler->getCheckoutIntent($payment)->getOrder()) {
-            $this->addFlash('danger', 'Impossible de vérifier que ton paiement est bien passé. Si tu es certain·e que c\'est bien le cas, contacte notre équipe avec ton nom / prénom / dates de réservation et en leur copiant ce message.');
+        if (!($order = $this->paymentHandler->getCheckoutIntent($payment)->getOrder()) instanceof \Helloasso\Models\Statistics\OrderDetail) {
+            $this->addFlash('danger', "Impossible de vérifier que ton paiement est bien passé. Si tu es certain·e que c'est bien le cas, contacte notre équipe avec ton nom / prénom / dates de réservation et en leur copiant ce message.");
 
             return $this->fail($payment);
         }
 
         $this->paymentHandler->handlePaymentSuccess($payment, $order);
 
-        if (null !== $payment->getRegistration()) {
+        if ($payment->getRegistration() instanceof \App\Entity\Registration) {
             $this->addFlash('success', 'Ta participation a bien été enregistrée ! 🥳');
 
             return $this->redirectToRoute('profile_registrations');
@@ -83,7 +83,7 @@ class PaymentCallbackController extends AbstractController
 
     private function fail(Payment $payment): RedirectResponse
     {
-        if (null === $registration = $payment->getRegistration()) {
+        if (!($registration = $payment->getRegistration()) instanceof \App\Entity\Registration) {
             return $this->redirectToRoute('profile_memberships');
         }
 
