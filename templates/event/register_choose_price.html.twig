@@ -12,7 +12,7 @@
 
         <div class="row justify-content-center">
             <div class="col-12 col-sm-8 col-md-6 m-auto">
-                {{ form_start(form) }}
+                {{ form_start(form, {attr: {'data-controller': 'prevent-double-submit'}}) }}
 
                 <div class="alert alert-secondary bg-white">
                     <h3 class="fw-bold text-secondary fs-4">Comment le prix est-il calculé ?</h3>

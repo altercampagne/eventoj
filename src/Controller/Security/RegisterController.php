@@ -8,9 +8,11 @@ use App\Email\EmailConfirmationSender;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Message\GeocodeUserAddressMessage;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -48,7 +50,18 @@ class RegisterController extends AbstractController
             $user->setPassword($this->userPasswordHasher->hashPassword($user, $plainPassword));
 
             $this->entityManager->persist($user);
-            $this->entityManager->flush();
+
+            try {
+                $this->entityManager->flush();
+            } catch (UniqueConstraintViolationException) {
+                // The UniqueEntity constraint cannot catch concurrent requests (e.g. a double submit): the database
+                // is the last line of defense.
+                $form->get('email')->addError(new FormError('Il y a déjà un compte avec cette adresse mail'));
+
+                return $this->render('security/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
 
             $this->bus->dispatch(new GeocodeUserAddressMessage($user->getId()));
 

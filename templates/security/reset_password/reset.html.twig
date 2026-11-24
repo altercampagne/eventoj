@@ -10,7 +10,7 @@
                     <h1>Mise à jour de ton mot de passe</h1>
                 </div>
 
-                {{ form_start(resetForm) }}
+                {{ form_start(resetForm, {attr: {'data-controller': 'prevent-double-submit'}}) }}
                     {{ form_row(resetForm.plainPassword) }}
 
                     <button class="w-100 btn btn-lg btn-primary" type="submit">Mettre à jour mon mot de passe</button>
