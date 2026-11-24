@@ -30,49 +30,49 @@ class StageFormType extends AbstractType
         $builder
             ->add('type', EnumType::class, [
                 'class' => StageType::class,
-                'label' => 'Type d\'étape',
+                'label' => "Type d'étape",
                 'attr' => [
-                    'placeholder' => 'Type d\'étape',
+                    'placeholder' => "Type d'étape",
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
             ])
             ->add('date', DateType::class, [
-                'label' => 'Date de l\'étape',
+                'label' => "Date de l'étape",
                 'attr' => [
-                    'placeholder' => 'Nom de l\'étape',
+                    'placeholder' => "Nom de l'étape",
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
             ])
             ->add('name', TextType::class, [
-                'label' => 'Nom de l\'étape',
+                'label' => "Nom de l'étape",
                 'attr' => [
-                    'placeholder' => 'Nom de l\'étape',
+                    'placeholder' => "Nom de l'étape",
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
             ])
             ->add('description', TrixType::class, [
-                'label' => 'Programme de l\'étape',
+                'label' => "Programme de l'étape",
                 'attr' => [
-                    'placeholder' => 'Programme de l\'étape',
+                    'placeholder' => "Programme de l'étape",
                     'style' => 'height: 200px',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'help' => 'Ne pas répéter la date ou la difficulté, ce n\'est pas nécessaire.',
+                'help' => "Ne pas répéter la date ou la difficulté, ce n'est pas nécessaire.",
             ])
             ->add('difficulty', EnumType::class, [
                 'required' => false,
                 'class' => StageDifficulty::class,
-                'label' => 'Difficulté de l\'étape',
+                'label' => "Difficulté de l'étape",
                 'attr' => [
-                    'placeholder' => 'Difficulté de l\'étape',
+                    'placeholder' => "Difficulté de l'étape",
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
@@ -80,9 +80,9 @@ class StageFormType extends AbstractType
             ])
             ->add('routeUrl', TextType::class, [
                 'required' => false,
-                'label' => 'URL de l\'itinéraire',
+                'label' => "URL de l'itinéraire",
                 'attr' => [
-                    'placeholder' => 'URL de l\'itinéraire',
+                    'placeholder' => "URL de l'itinéraire",
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',

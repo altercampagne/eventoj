@@ -220,7 +220,7 @@ class Event
     public function isFull(): bool
     {
         if (!$this->isAT()) {
-            if (null === $stage = $this->getFirstStage()) {
+            if (!($stage = $this->getFirstStage()) instanceof Stage) {
                 return false;
             }
 
@@ -322,7 +322,7 @@ class Event
 
     public function isFinished(): bool
     {
-        if (null === $stage = $this->getLastStage()) {
+        if (!($stage = $this->getLastStage()) instanceof Stage) {
             return false;
         }
 
@@ -331,7 +331,7 @@ class Event
 
     public function isPublished(): bool
     {
-        return null !== $this->publishedAt;
+        return $this->publishedAt instanceof \DateTimeImmutable;
     }
 
     public function isBookable(): bool

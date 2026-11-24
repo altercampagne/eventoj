@@ -42,9 +42,9 @@ class AddressFormType extends AbstractType
                 'constraints' => $options['address_line1_required'] ? new Assert\NotBlank() : [],
             ])
             ->add('addressLine2', TextType::class, [
-                'label' => 'Complément d\'adresse (facultatif)',
+                'label' => "Complément d'adresse (facultatif)",
                 'attr' => [
-                    'placeholder' => 'Complément d\'adresse',
+                    'placeholder' => "Complément d'adresse",
                 ],
                 'row_attr' => [
                     'class' => 'form-floating mb-3',

@@ -47,7 +47,7 @@ class UpdateContactDetailsController extends AbstractController
             if ($currentEmail !== $user->getEmail()) {
                 $this->emailConfirmationSender->send($user);
 
-                $this->addFlash('info', 'Ton adresse mail a été modifiée, merci de la valider grâce au mail qui vient de t\'être envoyé.');
+                $this->addFlash('info', "Ton adresse mail a été modifiée, merci de la valider grâce au mail qui vient de t'être envoyé.");
             } else {
                 $this->addFlash('success', 'Tes coordonnées ont bien été mises à jour !');
             }

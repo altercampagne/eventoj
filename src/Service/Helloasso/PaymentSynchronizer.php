@@ -32,7 +32,7 @@ final readonly class PaymentSynchronizer
         }
 
         $checkoutIntent = $this->helloassoClient->checkout->retrieve((int) $id);
-        if (null === $order = $checkoutIntent->getOrder()) {
+        if (!($order = $checkoutIntent->getOrder()) instanceof OrderDetail) {
             if ($payment->isExpired()) {
                 return PaymentSyncReport::nothingDone("Pas d'order chez Helloasso mais c'est normal pour un paiement expiré.");
             }
@@ -62,7 +62,7 @@ final readonly class PaymentSynchronizer
 
             $this->paymentRefundHandler->refund($payment);
 
-            return PaymentSyncReport::updated('Le paiement était remboursé chez Helloasso mais pas chez nous. C\'est maintenant corrigé !');
+            return PaymentSyncReport::updated("Le paiement était remboursé chez Helloasso mais pas chez nous. C'est maintenant corrigé !");
         }
 
         if ($payment->isApproved()) {
@@ -71,7 +71,7 @@ final readonly class PaymentSynchronizer
 
         $this->paymentHandler->handlePaymentSuccess($payment, $order);
 
-        return PaymentSyncReport::updated('Le paiement n\'était pas approuvé chez nous mais maintenant, c\'est bien le cas !');
+        return PaymentSyncReport::updated("Le paiement n'était pas approuvé chez nous mais maintenant, c'est bien le cas !");
     }
 
     private function isOrderRefunded(OrderDetail $order): bool

@@ -45,7 +45,7 @@ final class MembershipCreator
         }
 
         // No registration ? We only have to create a membership for the payer.
-        if (null === $registration = $payment->getRegistration()) {
+        if (!($registration = $payment->getRegistration()) instanceof Registration) {
             return [Membership::createForUser($payment->getPayer(), $payment)];
         }
 
@@ -68,11 +68,11 @@ final class MembershipCreator
 
     private function isMembershipValidForRegistration(?Membership $membership, Registration $registration): bool
     {
-        if (null === $membership) {
+        if (!$membership instanceof Membership) {
             return false;
         }
 
-        if (null === $endAt = $registration->getEndAt()) {
+        if (!($endAt = $registration->getEndAt()) instanceof \DateTimeImmutable) {
             throw new \LogicException('Given registration does have an end date (does not contains stage registrations?).');
         }
 
@@ -81,7 +81,7 @@ final class MembershipCreator
 
     private function getMembershipStartAtFromRegistration(Registration $registration): \DateTimeImmutable
     {
-        if (null === $registrationDate = $registration->getEndAt()) {
+        if (!($registrationDate = $registration->getEndAt()) instanceof \DateTimeImmutable) {
             throw new \LogicException('Given registration does have an end date (does not contains stage registrations?).');
         }
 

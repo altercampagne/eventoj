@@ -29,13 +29,13 @@ class DeleteController extends AbstractController
         Alternative $alternative,
     ): Response {
         if ($alternative->isUsed()) {
-            $this->addFlash('error', 'L\'alternative est liée à une ou plusieurs étapes et ne peut être supprimée !');
+            $this->addFlash('error', "L'alternative est liée à une ou plusieurs étapes et ne peut être supprimée !");
         }
 
         $this->em->remove($alternative);
         $this->em->flush();
 
-        $this->addFlash('success', 'L\'alternative a été supprimée !');
+        $this->addFlash('success', "L'alternative a été supprimée !");
 
         return $this->redirectToRoute('admin_alternative_list');
     }

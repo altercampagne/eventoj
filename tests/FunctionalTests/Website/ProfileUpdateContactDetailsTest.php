@@ -87,6 +87,6 @@ class ProfileUpdateContactDetailsTest extends WebTestCase
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertRouteSame('profile_update_contact_details');
-        $this->assertSelectorTextContains('.alert-info', 'Ton adresse mail a été modifiée, merci de la valider grâce au mail qui vient de t\'être envoyé.');
+        $this->assertSelectorTextContains('.alert-info', "Ton adresse mail a été modifiée, merci de la valider grâce au mail qui vient de t'être envoyé.");
     }
 }

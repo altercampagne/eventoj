@@ -51,7 +51,7 @@ class ListController extends AbstractController
             ->orderBy('p.createdAt', 'DESC')
         ;
 
-        if (null !== $status) {
+        if ($status instanceof PaymentStatus) {
             $qb
                 ->andWhere('p.status = :status')
                 ->setParameter('status', $status)

@@ -24,7 +24,7 @@ final readonly class UploadedImageUrlGenerator
      */
     public function getImageUrl(?AbstractUploadedImage $file, string $size = 'md', ?int $width = null, ?int $height = null): string
     {
-        if (null === $file) {
+        if (!$file instanceof AbstractUploadedImage) {
             return $this->notFoundImageUrl($size, $width, $height);
         }
 

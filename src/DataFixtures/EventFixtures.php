@@ -58,7 +58,7 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
         RegistrationFactory::new()->withStagesRegistrations()->confirmed()->many(10)->create([
             'event' => EventFactory::new()->EB()->published()->withRandomStages('first day of August', 10)->create([
                 'name' => 'EB à venir (ouvert mais complet)',
-                'description' => 'Voilà un EB dans le futur et dont les réservations sont ouvertes même s\'il n\'y a plus de places ! 🥳',
+                'description' => "Voilà un EB dans le futur et dont les réservations sont ouvertes même s'il n'y a plus de places ! 🥳",
                 'openingDateForBookings' => new \DateTimeImmutable('-1 month'),
                 'adultsCapacity' => 10,
                 'childrenCapacity' => 0,
@@ -69,7 +69,7 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
         // A coming AT not yet published
         EventFactory::new()->AT()->withRandomStages()->create([
             'name' => 'AT (draft)',
-            'description' => 'Voilà un AT dans le futur qui n\'est pas encore publié.',
+            'description' => "Voilà un AT dans le futur qui n'est pas encore publié.",
         ]);
     }
 

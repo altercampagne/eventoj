@@ -42,7 +42,7 @@ class DetailsFormType extends AbstractType
                 'label_attr' => ['class' => 'col-form-label'],
             ])
             ->add('start', DateType::class, [
-                'label' => 'Jour d\'arrivée',
+                'label' => "Jour d'arrivée",
             ])
             ->add('firstMeal', EnumType::class, [
                 'label' => 'Premier repas',

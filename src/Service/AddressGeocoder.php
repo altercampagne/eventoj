@@ -39,7 +39,7 @@ final readonly class AddressGeocoder
             return false;
         }
 
-        if (null === $coordinates = $this->extractCoordinatesForAddress($address, $results)) {
+        if (!($coordinates = $this->extractCoordinatesForAddress($address, $results)) instanceof Coordinates) {
             return false;
         }
 

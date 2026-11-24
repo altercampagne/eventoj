@@ -48,7 +48,7 @@ final class CreateOrUpdateController extends AbstractController
             $this->em->persist($alternative);
             $this->em->flush();
 
-            $this->addFlash('success', \sprintf('L\'alternative a bien été %s ! 🥳', $creation ? 'créée' : 'modifiée'));
+            $this->addFlash('success', \sprintf("L'alternative a bien été %s ! 🥳", $creation ? 'créée' : 'modifiée'));
 
             $this->bus->dispatch(new GeocodeAlternativeAddressMessage($alternative->getId()));
 

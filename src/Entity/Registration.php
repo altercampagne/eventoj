@@ -168,7 +168,7 @@ class Registration
 
     public function getCancelationDate(): \DateTimeImmutable
     {
-        if (null === $firstStage = $this->event->getFirstStage()) {
+        if (!($firstStage = $this->event->getFirstStage()) instanceof Stage) {
             throw new \RuntimeException('Registration linked to an event without stages!');
         }
 
@@ -199,7 +199,7 @@ class Registration
     {
         $payingDaysOfPresence = $this->daysOfPresence() - $this->freeDaysOfPresence();
 
-        if (null === $firstStageRegistration = $this->getStageRegistrationStart()) {
+        if (!($firstStageRegistration = $this->getStageRegistrationStart()) instanceof StageRegistration) {
             throw new \LogicException('No stage registration found for given registration');
         }
 
@@ -207,7 +207,7 @@ class Registration
             $payingDaysOfPresence -= $firstStageRegistration->includesMeal(Meal::LUNCH) ? .2 : .6;
         }
 
-        if (null === $lastStageRegistration = $this->getStageRegistrationEnd()) {
+        if (!($lastStageRegistration = $this->getStageRegistrationEnd()) instanceof StageRegistration) {
             throw new \LogicException('No stage registration found for given registration');
         }
 
@@ -258,7 +258,7 @@ class Registration
 
     public function getStartAt(): ?\DateTimeImmutable
     {
-        if (null === $stageRegistration = $this->getStageRegistrationStart()) {
+        if (!($stageRegistration = $this->getStageRegistrationStart()) instanceof StageRegistration) {
             return null;
         }
 
@@ -267,7 +267,7 @@ class Registration
 
     public function getEndAt(): ?\DateTimeImmutable
     {
-        if (null === $stageRegistration = $this->getStageRegistrationEnd()) {
+        if (!($stageRegistration = $this->getStageRegistrationEnd()) instanceof StageRegistration) {
             return null;
         }
 
@@ -285,7 +285,7 @@ class Registration
      */
     public function getFirstMeal(): Meal
     {
-        if (null === $firstStageRegistration = $this->getStageRegistrationStart()) {
+        if (!($firstStageRegistration = $this->getStageRegistrationStart()) instanceof StageRegistration) {
             throw new \LogicException('No stage registration found for given registration');
         }
 
@@ -298,7 +298,7 @@ class Registration
      */
     public function getLastMeal(): Meal
     {
-        if (null === $lastStageRegistration = $this->getStageRegistrationEnd()) {
+        if (!($lastStageRegistration = $this->getStageRegistrationEnd()) instanceof StageRegistration) {
             throw new \LogicException('No stage registration found for given registration');
         }
 
@@ -330,7 +330,7 @@ class Registration
             // If available, we use the date of the first select stage to count
             // children / adults at this date.
             $atDate = new \DateTimeImmutable();
-            if (null !== $stageRegistration = $this->getStageRegistrationEnd()) {
+            if (($stageRegistration = $this->getStageRegistrationEnd()) instanceof StageRegistration) {
                 $atDate = $stageRegistration->getStage()->getDate();
             }
 

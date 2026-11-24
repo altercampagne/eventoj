@@ -30,7 +30,7 @@ class CompanionCreateOrUpdateController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        if (null === $companion) {
+        if (!$companion instanceof Companion) {
             $companion = new Companion($user);
             $creation = true;
         }

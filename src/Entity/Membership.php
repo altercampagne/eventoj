@@ -59,11 +59,11 @@ class Membership
         ?Companion $companion = null,
         ?\DateTimeImmutable $startAt = null,
     ) {
-        if (null === $user && null === $companion) {
+        if (!$user instanceof User && !$companion instanceof Companion) {
             throw new \LogicException('Membership must be attached to a user or a companion.');
         }
 
-        if (null !== $payment && !$payment->isApproved()) {
+        if ($payment instanceof Payment && !$payment->isApproved()) {
             throw new \LogicException('Given payment must be approved.');
         }
 
@@ -118,7 +118,7 @@ class Membership
 
     public function isCanceled(): bool
     {
-        return null !== $this->canceledAt;
+        return $this->canceledAt instanceof \DateTimeImmutable;
     }
 
     public function isValidAt(\DateTimeImmutable $date): bool

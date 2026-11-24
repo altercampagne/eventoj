@@ -53,7 +53,7 @@ class AlternativeFormType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating mb-3',
                 ],
-                'help' => '<b>Ne surtout pas</b> indiquer d\'informations spécifiques à ton étape (lieu de rencontre, date, ...) dans cette description, ce n\'est pas prévu pour ! 🙏',
+                'help' => "<b>Ne surtout pas</b> indiquer d'informations spécifiques à ton étape (lieu de rencontre, date, ...) dans cette description, ce n'est pas prévu pour ! 🙏",
                 'help_html' => true,
             ])
             ->add('categories', EnumType::class, [
@@ -71,7 +71,7 @@ class AlternativeFormType extends AbstractType
                     'type' => UploadedImageTypeEnum::ALTERNATIVE,
                     'prefix' => (string) $alternative->getId(),
                     'label' => false,
-                    'help' => 'Merci de choisir une image <b>au format paysage 4/3</b> (c\'est le format standard) et de bonne qualité (640 x 480 minimum). Ce n\'est pas grave si l\'image est un peu lourde, ce sera automagiquement optimisé ! 👌',
+                    'help' => "Merci de choisir une image <b>au format paysage 4/3</b> (c'est le format standard) et de bonne qualité (640 x 480 minimum). Ce n'est pas grave si l'image est un peu lourde, ce sera automagiquement optimisé ! 👌",
                     'help_html' => true,
                     'preview_width' => 300,
                     'preview_height' => 225,

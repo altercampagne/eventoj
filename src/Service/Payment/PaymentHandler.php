@@ -101,7 +101,7 @@ final readonly class PaymentHandler
 
     private function getHelloassoItemName(Payment $payment): string
     {
-        if (null === $registration = $payment->getRegistration()) {
+        if (!($registration = $payment->getRegistration()) instanceof \App\Entity\Registration) {
             return 'Adhésion de '.$payment->getPayer()->getFullName();
         }
 

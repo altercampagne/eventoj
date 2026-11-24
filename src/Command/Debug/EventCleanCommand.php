@@ -47,7 +47,7 @@ class EventCleanCommand
             return Command::SUCCESS;
         }
 
-        if (null === $event = $this->eventRepository->findOneBySlugJoinedToAllChildEntities($slug)) {
+        if (!($event = $this->eventRepository->findOneBySlugJoinedToAllChildEntities($slug)) instanceof \App\Entity\Event) {
             $io->error("L'évènement \"{$slug}\" n'a pas été trouvé.");
 
             return Command::FAILURE;
