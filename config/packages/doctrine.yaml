@@ -44,7 +44,6 @@ doctrine:
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
-                alias: App
         dql:
             string_functions:
                 # alternative implementation of ALL() and ANY() where subquery is not required, useful for arrays
