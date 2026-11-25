@@ -36,10 +36,6 @@ jobs:
       APP_DEBUG: 1
       DATABASE_HOST: localhost
       S3_ENDPOINT: http://localhost:9000
-      AWS_ENDPOINT_URL: http://localhost:900
-      AWS_ACCESS_KEY_ID: S3User
-      AWS_SECRET_ACCESS_KEY: ThisIsS3Password
-      AWS_DEFAULT_REGION: eu-west-1
 
     steps:
       - name: Check out repository code
