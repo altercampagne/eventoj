@@ -101,7 +101,7 @@ sanitize-and-check: phpstan rector-fix cs-fix db-reset-test test ## Run Rector, 
 .PHONY: test
 test: assets-build ## Run all tests
 	$(DOCKER_COMPOSE) run --rm php rm -f var/cache/bab_tested_routes_checker_bundle_route_storage
-	$(DOCKER_COMPOSE) run --rm php bin/phpunit
+	$(DOCKER_COMPOSE) run --rm php php -d opcache.enable_cli=1 bin/phpunit
 	$(DOCKER_COMPOSE) run --rm php bin/console bab:tested-routes-checker:check
 
 .PHONY: phpstan
